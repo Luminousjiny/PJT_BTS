@@ -45,6 +45,28 @@
 
 ## 📑 Gantt Chart     
 
+```mermaid
+gantt
+    title BTS 진행상황
+    dateFormat  YYYY-MM-DD
+    section 프로젝트 준비
+    
+    프로젝트 기획 및 명세서제작 : done, 2021-04-12, 5d
+    ira,Git 생성  :done, 2021-04-15, 6h
+    와이어프레임ppt : active, 2021-05-03, 1d
+    사전학습   :done, 2021-04-13, 7d
+    UI/UX 다지인  : done,   2021-04-19, 2d
+    
+
+    section Frontend
+    웹캠페이지 : active, 2021-04-21, 3d
+    
+    
+    section Backend
+    
+    section Game
+    
+```
 
 <br/>  
 <br/>     
