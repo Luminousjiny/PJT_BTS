@@ -37,7 +37,7 @@
 | 김지형 | 팀원 | 유니티 개발, 프론트앤드 개발    |
 | 정다운 | 팀원 | 풀스택 개발, QA(Jira관리), UI/UX디자인 |
 | 황호연 | 팀원 | 유니티 개발, QA(Jira관리), 백앤드 개발, 영상제작    |
-| 정혜지 | 팀원 | 프론트앤드 개발, 테스트케이스       |  
+| 정혜지 | 팀원 | 프론트앤드 개발, 테스트케이스       |
 
 <br/>  
 <br/>    
@@ -50,22 +50,29 @@ gantt
     title BTS 진행상황
     dateFormat  YYYY-MM-DD
     section 프로젝트 준비
-    
     프로젝트 기획 및 명세서제작 : done, 2021-04-12, 5d
-    ira,Git 생성  :done, 2021-04-15, 6h
-    와이어프레임ppt : active, 2021-05-03, 1d
-    사전학습   :done, 2021-04-13, 7d
+    jira,Git 생성  :done, 2021-04-15, 6h
     UI/UX 다지인  : done,   2021-04-19, 2d
-    
+    로고제작 : active, 2021-04-23, 2d
+    와이어프레임ppt : active, 2021-05-03, 1d
+    사전학습  : active, 2021-04-14, 10d
 
     section Frontend
-    웹캠페이지 : active, 2021-04-21, 3d
-    
+    웹캠페이지 : crit, 2021-04-21, 4d
+    로그인/회원가입/비번찾기 페이지 UI : crit, 2021-04-23, 3d
+    로그인/회원가입/비번찾기 페이지 동적구현 : active, 2021-04-27, 3d
+    마이페이지 UI : crit, 2021-04-23, 1d
+    마이페이지 동적구현 : active, 2021-04-28, 1d
     
     section Backend
+    DB설계 : crit, 2021-04-21, 2d
+    유저 CRUD : active, 2021-04-26, 2d
     
     section Game
     
+    section 발표관리
+    Sub1 ppt 제작 : crit, 2021-04-21, 2d
+    Sub1 발표준비 : crit, 2021-04-22, 1d
 ```
 
 <br/>  
@@ -159,7 +166,7 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 **리드미** : "README_날짜: 수정한 부분" 
 		ex) S04P22B107-56_ [feat] : README_0118: 와이어프레임 수정
 
-```      
+```
 ```
 [ 작업 분류 ]
 - feat : 새로운 기능 추가
@@ -169,7 +176,7 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 - refactor : 코드 리펙토링
 - test : 테스트 코드, 리펙토링 테스트 코드 추가
 - chore : 빌드 업무 수정, 패키지 매니저 수정
-```     
+```
 <br />
 
 
