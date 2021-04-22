@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    componenet: Login,
+    component: Login,
     children: [
       {
         path:"character",
@@ -44,12 +44,12 @@ const routes = [
   {
     path: '/join',
     name: 'Join',
-    componenet: Join
+    component: Join
   },
   {
     path: '/findpw',
     name: 'FindPw',
-    componenet: FindPw,
+    component: FindPw,
     children: [
       {
         path:"confirm",
@@ -66,7 +66,7 @@ const routes = [
   {
     path: '/mypage',
     name: 'MyPage',
-    componenet: MyPage
+    component: MyPage
   },
   // { // 게임 부분 수정 필요 - 잘모름
   //   path: '/school',
@@ -83,7 +83,7 @@ const routes = [
   {
     path: '/computer',
     name: 'Computer',
-    componenet: Computer,
+    component: Computer,
     children: [
       {
         path:"webcam",
@@ -100,7 +100,7 @@ const routes = [
   {
     path: '/cook',
     name: 'Cook',
-    componenet: Cook,
+    component: Cook,
     children: [
       {
         path:"webcam",
@@ -112,7 +112,7 @@ const routes = [
   {
     path: '/library',
     name: 'Library',
-    componenet: Library,
+    component: Library,
     children: [
       {
         path:"youtube",
@@ -141,7 +141,7 @@ const routes = [
   {
     path: '/rest',
     name: 'Rest',
-    componenet: Rest,
+    component: Rest,
     children: [
       {
         path:"webcam",
@@ -153,12 +153,12 @@ const routes = [
   {
     path: '/play',
     name: 'Play',
-    componenet : Play
+    component : Play
   },
   {
     path: '/office',
     name: 'Office',
-    componenet : Office
+    component : Office
   },
 ];
 
