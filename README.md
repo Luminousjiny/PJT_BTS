@@ -58,7 +58,7 @@ gantt
     사전학습  : active, 2021-04-14, 10d
 
     section Frontend
-    웹캠페이지 : crit, 2021-04-21, 4d
+    웹캠페이지+채팅 : crit, 2021-04-21, 4d
     로그인/회원가입/비번찾기 페이지 UI : crit, 2021-04-23, 3d
     로그인/회원가입/비번찾기 페이지 동적구현 : active, 2021-04-27, 3d
     마이페이지 UI : crit, 2021-04-23, 1d
@@ -69,6 +69,10 @@ gantt
     유저 CRUD : active, 2021-04-26, 2d
     
     section Game
+	네트워크 동기화 : crit, 2021-04-22, 4d
+	로컬 리모트 및 호스트 : active, 2021-04-23 1d
+	로비 구현 : active, 2021-04-21, 2d
+    방 리스트 : active, 2021-04-24, 2d
     
     section 발표관리
     Sub1 ppt 제작 : crit, 2021-04-21, 2d
