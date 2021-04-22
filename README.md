@@ -65,7 +65,7 @@ gantt
     마이페이지 동적구현 : active, 2021-04-28, 1d
     
     section Backend
-    DB설계 : crit, 2021-04-21, 2d
+    DB설계 : done, 2021-04-21, 2d
     유저 CRUD : active, 2021-04-26, 2d
     
     section Game
