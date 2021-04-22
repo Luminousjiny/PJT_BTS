@@ -300,6 +300,9 @@
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/PackageCache/com.unity.cinemachine@2.7.3/Runtime/ThirdParty/clipper_library.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>

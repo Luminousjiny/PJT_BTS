@@ -23,19 +23,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         //접속 버튼 비활성화
         joinButton.interactable = false;
-        connectionInfoText.text = "Connection To Master Server....";
+        connectionInfoText.text = "마스터 서버에 접속 중......";
     }
     // 마스터 서버에 접속 성공했을 때 
     public override void OnConnectedToMaster()
     {
         joinButton.interactable = true;
-        connectionInfoText.text = "Online : Connected to Master Server";
+        connectionInfoText.text = "온라인 : 마스터 서버와 연결됨";
     }
     // 마스터 서버에 실패 했을때 다시 접속
     public override void OnDisconnected(DisconnectCause cause)
     {
         joinButton.interactable = false;
-        connectionInfoText.text = $"Offline : Connection Disabled {cause.ToString()}";
+        connectionInfoText.text = $"오프라인 : 마스터 서버와 연결되지 않음\n {cause.ToString()}";
 
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -46,12 +46,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("이건 언제 시작되는데");
         if (PhotonNetwork.IsConnected)
         {
-            connectionInfoText.text = "Connection to Room....";
+            connectionInfoText.text = "방에 연결 중....";
             PhotonNetwork.JoinRandomRoom();
         }
         else
         {
-            connectionInfoText.text = "Offline : Connection Disabled - Try reconnecting....";
+            connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음 \n 접속 재시도 중.....";
 
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -59,7 +59,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 아마 이 실패는 빈방이 없을경우 즉 처음일 경우
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        connectionInfoText.text = "There is no empty room, Creating new Room";
+        connectionInfoText.text = "매치메이킹 가능한 방이 없습니다. 방을 생성합니다.";
         // parm :  방이름 , 룸옵션 
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 5 });
     }
@@ -69,7 +69,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        connectionInfoText.text = "Connected with Room.";
+        connectionInfoText.text = "방에 접속합니다.";
         // 여기서 씬 매니저로 가면 안됌 ex) SceneManager.LoadScene() : 독자적으로 이동하게 됌
         PhotonNetwork.LoadLevel("Main");
     }

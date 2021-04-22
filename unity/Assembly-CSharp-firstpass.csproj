@@ -86,6 +86,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -94,6 +97,9 @@
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
@@ -298,6 +304,9 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>C:/Users/HwangHoYeon/git/s04p31b107/unity/Library/PackageCache/com.unity.cinemachine@2.7.3/Runtime/ThirdParty/clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.12f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
