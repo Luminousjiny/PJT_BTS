@@ -37,17 +37,17 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 {
                     user = inputField.text;
                 }
-                Debug.Log(user + "님 환영합니다.");
-                isConn = true;
-                if (isConn)
-                {
-                    CanvasGroupOn(mainGroup);
-                    CanvasGroupOff(connGroup);
-                }
+                Debug.Log(user+ "님 환영합니다.");
+
+                CanvasGroupOn(mainGroup);
+                CanvasGroupOff(connGroup);
+                
                 break;
             case BTNType.Start:
                 Debug.Log("게임시작");
-                SceneManager.LoadScene("Main");
+                CanvasGroupOff(mainGroup);
+                CanvasGroupOff(connGroup);
+                CanvasGroupOff(optionGroup);
                 break;
 
             case BTNType.Option:

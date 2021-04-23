@@ -8,6 +8,7 @@ ScriptsOnlyBuild:
     - ChatSystem
     - GameManager
     - LobbyManager
+    - LookCam
     - MainUI
     - SimpleSampleCharacterControl
     - TalkScript
@@ -163,31 +164,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10646}
     - Class: 114
-      Script: {instanceID: 10752}
+      Script: {instanceID: 10702}
     - Class: 114
-      Script: {instanceID: 10796}
+      Script: {instanceID: 10754}
     - Class: 114
-      Script: {instanceID: 10804}
+      Script: {instanceID: 10798}
     - Class: 114
-      Script: {instanceID: 10816}
+      Script: {instanceID: 10806}
     - Class: 114
-      Script: {instanceID: 10854}
+      Script: {instanceID: 10818}
     - Class: 114
-      Script: {instanceID: 11136}
+      Script: {instanceID: 10856}
     - Class: 114
-      Script: {instanceID: 11230}
+      Script: {instanceID: 11138}
     - Class: 114
-      Script: {instanceID: 11258}
+      Script: {instanceID: 11232}
     - Class: 114
-      Script: {instanceID: 11350}
+      Script: {instanceID: 11260}
     - Class: 114
-      Script: {instanceID: 11362}
+      Script: {instanceID: 11352}
+    - Class: 114
+      Script: {instanceID: 11364}
     - Class: 114
       Script: {instanceID: 15622}
     - Class: 114
       Script: {instanceID: 15624}
-    - Class: 114
-      Script: {instanceID: 17818}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -282,19 +283,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10632}
     - Class: 114
-      Script: {instanceID: 10716}
+      Script: {instanceID: 10702}
     - Class: 114
-      Script: {instanceID: 10752}
+      Script: {instanceID: 10718}
     - Class: 114
-      Script: {instanceID: 11230}
+      Script: {instanceID: 10754}
     - Class: 114
-      Script: {instanceID: 11258}
+      Script: {instanceID: 11232}
     - Class: 114
-      Script: {instanceID: 11296}
+      Script: {instanceID: 11260}
     - Class: 114
-      Script: {instanceID: 17714}
+      Script: {instanceID: 11298}
     - Class: 114
-      Script: {instanceID: 17818}
+      Script: {instanceID: 18682}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1740,6 +1741,12 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.Cockpit
     className: AppVersionProperty
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LookCam
   - hash:
       serializedVersion: 2
       Hash: 88cc9df3c6fc697bfbeacd24c0d6f2d7

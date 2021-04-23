@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public GameObject playerPrefab; // 생성할 플레이어 캐릭터 프리팹
 
-    private int score = 0; // 현재 게임 점수
-    public bool isGameover { get; private set; } // 게임 오버 상태
 
     // 주기적으로 자동 실행되는, 동기화 메서드
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
