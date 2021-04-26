@@ -56,6 +56,7 @@ gantt
     로고제작 : active, 2021-05-01, 2d
     와이어프레임ppt : active, 2021-05-03, 1d
     사전학습  : done, 2021-04-14, 10d
+    교보재 jpa 학습 : 2021-04-26, 2d
 
     section Frontend
     웹캠페이지+채팅 : crit, 2021-04-21, 7d
