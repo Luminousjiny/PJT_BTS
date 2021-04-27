@@ -28,31 +28,16 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         switch (currentType)
         {
             case BTNType.Connection:
-                Debug.Log("커넥션");
-                
-                if(inputField.text == "")
-                {
-                    user = "장국";
-                }else
-                {
-                    user = inputField.text;
-                }
-                Debug.Log(user+ "님 환영합니다.");
-
                 CanvasGroupOn(mainGroup);
                 CanvasGroupOff(connGroup);
-                
                 break;
             case BTNType.Start:
-                Debug.Log("게임시작");
                 CanvasGroupOff(mainGroup);
                 CanvasGroupOff(connGroup);
                 CanvasGroupOff(optionGroup);
                 break;
 
             case BTNType.Option:
-                Debug.Log("옵션");
-
                 CanvasGroupOn(optionGroup);
                 CanvasGroupOff(mainGroup);
                 break;
@@ -68,10 +53,8 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 isSound = !isSound;
                 break;
             case BTNType.Char:
-                Debug.Log("캐릭터 변경");
                 break;
             case BTNType.Back:
-                Debug.Log("뒤로가기");
                 CanvasGroupOn(mainGroup);
                 CanvasGroupOff(optionGroup);
                 break;
@@ -79,7 +62,6 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 CanvasGroupOff(optionGroup);
                 CanvasGroupOff(mainGroup);
                 CanvasGroupOn(connGroup);
-                Debug.Log("초기");
                 break;
         }
     }
