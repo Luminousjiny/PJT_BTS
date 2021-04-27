@@ -1,6 +1,8 @@
 <template>
   <div class="login">
-    <div class="content">로그인</div>
+    <div class="content">
+      <v-btn color="success">Success</v-btn> 
+    </div>
   </div>
 </template>
 
