@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>로그인</h1>
+    <div class="content">로그인</div>
   </div>
 </template>
 
@@ -11,3 +11,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import '../../css/Login.css';
+</style>
