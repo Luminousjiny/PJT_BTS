@@ -86,11 +86,6 @@ const routes = [
     component: Computer,
     children: [
       {
-        path:"webcam",
-        name: "WebCam",
-        component: WebCam
-      },
-      {
         path:"board",
         name: "Board",
         component: Board
