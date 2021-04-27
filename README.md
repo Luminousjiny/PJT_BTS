@@ -8,7 +8,8 @@
  <img src="https://img.shields.io/badge/Vue.js-v4.5.10-green?logo=vue.js">
  <img src="https://img.shields.io/badge/Vuetify-v3-green?logo=Vuetify">
  <img src="https://img.shields.io/badge/Java-v1.8-blue?logo=java">
- <img src="https://img.shields.io/badge/spring data JPA-v3.9.15-blue?logo=spring">
+ <img src="https://img.shields.io/badge/spring JPA-v3.9.15-blue?logo=spring">
+ <img src="https://img.shields.io/badge/spring Boot-v3.9.15-blue?logo=spring">
  <img src="https://img.shields.io/badge/AWS%20RDS----blue?logo=amazonaws">
  <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
  <img src="https://img.shields.io/badge/Unity-v4.0-yellow?logo=unity">
@@ -19,6 +20,7 @@
 <br/> 
 </p>    
 </div>
+
 
 > 서비스명: BTS       
 > 팀명: 끄덕끄덕  
@@ -58,18 +60,20 @@ gantt
     사전학습  : active, 2021-04-14, 10d
 
     section Frontend
-    웹캠페이지+채팅 : crit, 2021-04-21, 4d
-    로그인/회원가입/비번찾기 페이지 UI : crit, 2021-04-23, 3d
+    웹캠페이지 : crit, 2021-04-21, 4d
+    채팅 : done, 2021-04-25, 3d
+    로그인/회원가입/비번찾기 페이지 UI : crit, 2021-04-26, 3d
     로그인/회원가입/비번찾기 페이지 동적구현 : active, 2021-04-27, 3d
-    마이페이지 UI : crit, 2021-04-23, 1d
+    마이페이지 UI : crit, 2021-04-26, 2d
     마이페이지 동적구현 : active, 2021-04-28, 1d
     
     section Backend
     DB설계 : done, 2021-04-21, 2d
+    매핑관계 설정 : crit, 2021-04-28, 1d
     유저 CRUD : active, 2021-04-26, 2d
     
     section Game
-	네트워크 동기화 : crit, 2021-04-22, 4d
+	네트워크 동기화 : done, 2021-04-22, 4d
 	로컬 리모트 및 호스트 : active, 2021-04-23 1d
 	로비 구현 : active, 2021-04-21, 2d
     방 리스트 : active, 2021-04-24, 2d
