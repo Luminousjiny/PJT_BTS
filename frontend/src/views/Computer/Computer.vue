@@ -26,7 +26,8 @@ import Chat from '@/common/WebCam/Chat';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-const OPENVIDU_SERVER_SECRET = "BACK_TO_SCHOOL";
+// const OPENVIDU_SERVER_SECRET = "BACK_TO_SCHOOL";
+const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 export default {
     name : "Computer",
     components : {
@@ -206,8 +207,7 @@ export default {
 }
 </script>
 
-<style>
-@import '../../css/WebCam.css';
+<style scoped>
 #computer {
     text-align: center;
     height : 100vh;

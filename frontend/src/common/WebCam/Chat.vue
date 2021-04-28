@@ -56,10 +56,6 @@ export default {
         receiveMessage : Array,
         participants : Number,
     },
-    created() {
-        console.log(this.userName);
-        console.log(this.receiveMessage);
-    },
     methods: {
         send(){
             this.$emit('sendMessage', this.sendMessage);
@@ -68,6 +64,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import '../../css/Chat.css';
 </style>

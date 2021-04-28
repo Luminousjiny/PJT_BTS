@@ -135,6 +135,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import '../../css/WebCam.css';
 </style>

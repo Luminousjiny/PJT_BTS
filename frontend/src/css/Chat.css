@@ -9,11 +9,12 @@
 #chat-nav{
     border-right: 1px solid var(--color-grey-6);
     flex-grow: 3;
+    background-color: #202540;
 }
 #chat-nav .icon{
     width : 55px;
     height: 55px;
-    background-color: var(--color-mainBlue);
+    background-color: var(--color-white);
     margin: 5px;
     border: 1px solid var(--color-mainBlue);
     border-radius: 20px;
@@ -28,13 +29,14 @@
     align-content: center;
     flex-wrap: nowrap;
     height: 100%;
+    background-color: #282D4E;
 }
-#chat-main > #chat-title{
+#chat-main #chat-title{
     width: 100%;
     border-bottom: 1px solid var(--color-grey-6);
     text-align: left;
 }
-#chat-main > #chat-title p{
+#chat-main #chat-title p{
     font-size: var(--font-size-30);
     font-weight: bold;
     color : var(--color-mainBlue);
@@ -55,6 +57,9 @@
     text-align: left;
     padding : 10px;
     table-layout: fixed;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
 }
 #receive-container .my-message{
     text-align: right;
