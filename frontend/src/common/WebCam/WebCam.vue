@@ -19,7 +19,6 @@
       </div>
     </div>
     <div id="webcam-nav">
-        
         <button id="btnSetvideo" @click="updateStream(0)" class="webcam-button">
             <div v-if="!setting.publishVideo"><v-icon id="unpublish-video">fas fa-video-slash</v-icon></div>
             <div v-else><v-icon id="publish-video">fas fa-video</v-icon></div>
