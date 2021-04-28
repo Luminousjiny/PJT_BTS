@@ -21,10 +21,15 @@ public class User { // DB에 매핑용
     private String userNickname;
 
     @Column(nullable = false)
-    private Integer userPhone;
+    private int userPhone;
 
     @Column(columnDefinition = "TEXT")
     private String userImg;
 
+    @Column(nullable = false)
+    private String userLank;
+
+    @Column(nullable = false)
+    private int userPoint;
 
 }
