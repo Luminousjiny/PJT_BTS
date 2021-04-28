@@ -7,6 +7,7 @@
       </div>
     </div>
     <div id="video-container">
+      <!-- 여기 화면공유 들어갈 것 -->
       <div id="prev">
         <button class="webcam-button page-button" @click="page -= 1;" v-if="prev"><v-icon>fas fa-chevron-left</v-icon></button>
       </div>
