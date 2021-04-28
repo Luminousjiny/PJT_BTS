@@ -1,5 +1,6 @@
 package com.ssafy.bts.Domain.Qna;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.bts.Domain.User.User;
 
 import lombok.Getter;
@@ -13,14 +14,17 @@ import java.util.Date;
 public class Qna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 생성을 db에 위임
-    private Integer qnaId;
+    private int qnaId;
 
-//    private User user;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private String qnaTitle;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String qnaContent;
 
     @Column(nullable = false)
