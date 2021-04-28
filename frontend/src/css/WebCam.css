@@ -22,11 +22,22 @@ body{
     width: 100%;
     text-align: left;
 }
-#webcam-title p{
+#webcam-title #school-title{
     width: 90%;
     margin: 30px auto 0px;
+}
+#webcam-title #school-title p{
+    display: block;
+    margin : 0px 0px 0px 10px;
     font-size: var(--font-size-30);
-    font-weight: bold;
+    font-weight: var(--weight-bold);
+    float: left;
+}
+#school-icon{
+    display: block;
+    height : 50px;
+    width : 50px;
+    float: left;
 }
 #video-container {
     height: 90%;
@@ -67,7 +78,7 @@ body{
     padding-right: 5px;
     color: var(--color-grey-2);
     font: normal normal normal 16px/32px AppleSDGothicNeoSB00;
-    font-weight: bold;
+    font-weight: var(--weight-bold);
     border-bottom-left-radius: 20px;
     border-top-right-radius: 20px;
     width : 100%;
@@ -104,6 +115,27 @@ video {
     background-color : var(--color-white) 0% 0% no-repeat padding-box;
     border: 1px solid var(--color-grey-2);
     border-radius : 20px;
-    opacity : 1;
-    min-height: 50px;
+    width: 100px;
+    height: 45px;
+}
+#publish-video{
+    color : var(--color-grey-2);
+}
+#unpublish-video{
+    color : var(--color-red);
+}
+#publish-audio{
+    color : var(--color-grey-2);
+}
+#unpublish-audio{
+    color : var(--color-red);
+}
+#btnLeaveSession{
+    width: 45px;
+    border-radius: 50px;
+    border-color: var(--color-red);
+    background-color: var( --color-red);
+}
+#leave-session{
+    color : var(--color-white);
 }
