@@ -12,6 +12,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     Vector3 defaultScale;
     bool isSound;
     bool isConn;
+    public GameObject LobbyObject;
     public CanvasGroup mainGroup;
     public CanvasGroup optionGroup;
     public CanvasGroup connGroup;
@@ -28,8 +29,11 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         switch (currentType)
         {
             case BTNType.Connection:
-                CanvasGroupOn(mainGroup);
+                LobbyObject.GetComponent<Animator>().Rebind();
+                LobbyObject.GetComponent<Animator>().speed = 0.0f;
+
                 CanvasGroupOff(connGroup);
+                CanvasGroupOn(mainGroup);
                 break;
             case BTNType.Start:
                 CanvasGroupOff(mainGroup);

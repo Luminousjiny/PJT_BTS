@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 
 // 포톤 Pun 서비스 이벤트 감지 : 메소드명 맞춰서 오버라이드 MonoBehaviourPunCallbacks
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private readonly string gameVersion = "1.0";
 
-    public Text connectionInfoText;
-    public Button joinButton;
+    public TextMeshProUGUI connectionInfoText;
+    public Button connectionBtn;
     public Text userName;
 
     List<RoomInfo> myList = new List<RoomInfo>();
@@ -33,34 +34,34 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
         //접속 버튼 비활성화
-        joinButton.interactable = false;
+        connectionBtn.interactable = false;
         connectionInfoText.text = "마스터 서버에 접속 중......";
 
     }
     // 마스터 서버에 접속 성공했을 때 
     public override void OnConnectedToMaster()
     {
-        joinButton.interactable = true;
+        connectionBtn.interactable = true;
         connectionInfoText.text = "온라인 : 마스터 서버와 연결됨";
     }
     // 로비 연결
     public void JoinLobby()
     {
-        PhotonNetwork.JoinLobby();
+        //PhotonNetwork.JoinLobby();
     }
     // 로비 연결 성공했을 때
     public override void OnJoinedLobby()
     {
-        PhotonNetwork.LocalPlayer.NickName = userName.text;
-        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다!";
-        connectionInfoText.text = "온라인 : 로비와 연결됨";
-        myList.Clear();
+        //PhotonNetwork.LocalPlayer.NickName = userName.text;
+        //WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다!";
+        //connectionInfoText.text = "온라인 : 로비와 연결됨";
+        //myList.Clear();
     }
 
     // 마스터 서버에 실패 했을때 다시 접속
     public override void OnDisconnected(DisconnectCause cause)
     {
-        joinButton.interactable = false;
+        connectionBtn.interactable = false;
         connectionInfoText.text = $"오프라인 : 마스터 서버와 연결되지 않음\n {cause.ToString()}";
 
         PhotonNetwork.ConnectUsingSettings();
@@ -85,7 +86,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 수동으로 메인에 있으면 조인룸 및 예외처리
     public void Connect()
     {
-        joinButton.interactable = false;
+        connectionBtn.interactable = false;
         Debug.Log("이건 언제 시작되는데");
         if (PhotonNetwork.IsConnected)
         {
