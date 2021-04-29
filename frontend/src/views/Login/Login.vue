@@ -10,10 +10,10 @@
           <p class="text">환영합니다. 로그인 해주세요!</p>
 
           <p class="mid_header">아이디</p>
-          <v-text-field class="input" placeholder="최대 10자 " single-line></v-text-field>
+          <v-text-field class="input" placeholder="최대 10자입니다. " single-line></v-text-field>
 
           <p class="mid_header">비밀번호</p>
-          <v-text-field class="input" placeholder="8자~11자 " single-line></v-text-field>
+          <v-text-field class="input" placeholder="8자~11자입니다. " single-line></v-text-field>
 
           <input type="checkbox" id="checkbox" v-model="checked">
           <label class="id_remember" for="checkbox">아이디 기억하기</label>

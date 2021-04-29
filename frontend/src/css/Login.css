@@ -46,7 +46,6 @@
     color: var(--color-mainBlue);
     font-size: var(--font-size-28);
     font-family: "AppleSDGothicNeoEB";
-    font-weight: 900;
     margin-top: 28px;
 }
 
@@ -61,7 +60,6 @@
     color: var(--color-grey-1);
     font-size: var(--font-size-18);
     font-family: "AppleSDGothicNeoB";
-    font-weight: 700;
     margin-bottom: 0px!important;
 }
 
