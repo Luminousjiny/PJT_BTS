@@ -31,7 +31,5 @@ public class Swagger2Config {
                 .description("BTS에 필요한 메소드와 파라미터를 표시합니다.")
                 .build();
     }
-
-
 }
 
