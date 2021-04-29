@@ -24,7 +24,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
 --- # 배포
 spring:
   profiles: prod
@@ -32,10 +32,10 @@ spring:
     url: jdbc:mysql://btsdb.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com:3306/btsDB?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: admin
     password: btsbts123
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
 --- # AWS S3
 #cloud:ㄴ
 #  aws:
