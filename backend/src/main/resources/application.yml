@@ -24,7 +24,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
 --- # 배포
 spring:
   profiles: prod
@@ -37,7 +37,7 @@ spring:
     hibernate:
       ddl-auto: validate
 --- # AWS S3
-#cloud:ㄴ
+#cloud:
 #  aws:
 #    credentials:
 #      accessKey: AKIAV4C36BHFEEJUSSMI
