@@ -6,17 +6,26 @@
         <p>{{roomName}}</p>
       </div>
     </div>
-    <div id="video-container">
-      <!-- 여기 화면공유 들어갈 것 -->
-      <div id="prev">
-        <button class="webcam-button page-button" @click="page -= 1;" v-if="prev"><v-icon>fas fa-chevron-left</v-icon></button>
+    <div id="webcam-main">
+      <div id="share-container" v-if="share.active">
+        <div id="share-screen" v-if="share.screen">
+          <user-video :class="{subscribers : true, 'flex-item': true}" :stream-manager="share.screen"></user-video>
+        </div>
+        <div id="share-youtube" v-if="youtube">
+          <div><p>야호호호</p></div>
+        </div>
       </div>
-      <div id="videos">
-        <user-video :class="{publisher : true, 'flex-item': true, 'width-40': !setWidth, 'width-30' : setWidth}" :stream-manager="publisher" v-if="page == 0"></user-video>
-        <user-video :class="{subscribers : true, 'flex-item': true, 'width-40': !setWidth, 'width-30' : setWidth}" v-for="sub in pageSub" :key="sub.stream.connection.connectionId" :stream-manager="sub"></user-video>
-      </div>
-      <div id="next">
-        <button class="webcam-button page-button" @click="page += 1;" v-if="next"><v-icon>fas fa-chevron-right</v-icon></button>
+      <div id="video-container" :class="{'flex-column': share.active}">
+        <div id="prev">
+          <button class="webcam-button page-button" @click="page -= 1;" v-if="prev"><v-icon>fas fa-chevron-left</v-icon></button>
+        </div>
+        <div id="videos" :class="{'flex-column': share.active}">
+          <user-video :class="{publisher : true, 'flex-item': true, 'width-40': !setWidth, 'width-30' : setWidth}" :stream-manager="publisher" v-if="page == 0"></user-video>
+          <user-video :class="{subscribers : true, 'flex-item': true, 'width-40': !setWidth, 'width-30' : setWidth}" v-for="(sub, idx) in pageSub" :key="idx" :stream-manager="sub"></user-video>
+        </div>
+        <div id="next">
+          <button class="webcam-button page-button" @click="page += 1;" v-if="next"><v-icon>fas fa-chevron-right</v-icon></button>
+        </div>
       </div>
     </div>
     <div id="webcam-nav">
@@ -46,8 +55,8 @@ export default {
   },
   data() {
     return {
-      screen : undefined,
       page : 0,
+      youtube : false,
     }
   },
   props :{
@@ -58,6 +67,7 @@ export default {
     subscribers : Array,
     setting : Object,
     userName : String,
+    share : Object,
   },
   computed : {
     setWidth : function(){
@@ -105,12 +115,12 @@ export default {
         this.setting.publishVideo = !this.setting.publishVideo;
         this.publisher.publishVideo(this.setting.publishVideo);
       }
-      this.$emit('updatet:publisher', this.publisher);
     },
     shareScreen() {
       let screen = this.OV.initPublisher(undefined, {
         resolution: "1280x720",
         videoSource: "screen",
+        publishAudio : this.setting.publishAudio,
       });
 
       screen.once("accessAllowed", () => {
@@ -123,11 +133,11 @@ export default {
             this.screen = undefined;
             this.session.publish(this.publisher);
           });
+        
         this.session.unpublish(this.publisher);
         this.screen = screen;
         this.session.publish(this.screen);
       });
-
       screen.once("accessDenied", () => {
         console.warn("ScreenShare: Access Denied");
       });

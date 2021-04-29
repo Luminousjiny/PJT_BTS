@@ -1,13 +1,3 @@
-html{
-    height: 100vh;
-    min-width: 850px;
-    min-height: 480px;
-}
-body{
-    margin : 0px auto;
-    height : 100vh;
-    overflow: hidden;
-}
 #webcam-container{
     display: flex;
     flex-direction: column;
@@ -39,7 +29,7 @@ body{
     width : 50px;
     float: left;
 }
-#video-container {
+#webcam-main{
     height: 90%;
     width : 100%;
     display: flex;
@@ -49,9 +39,20 @@ body{
     justify-content: space-around;
     align-items: center;
 }
-#video-container #prev,#next{
+#webcam-main #video-container {
+    width : 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+}
+#webcam-main #video-container #prev,#next{
     flex : 1 auto;
     width : 10%;
+}
+.flex-column{
+    flex-direction: column;
 }
 .page-button{
     margin : 0px;
@@ -66,6 +67,7 @@ body{
     width: 80%;
     margin: auto;
 }
+
 #videos video + div {
     width: 30%;
     position: absolute;
@@ -84,16 +86,6 @@ body{
     width : 100%;
     margin : 0px;
 }
-#webcam-nav{
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    width: 100%;
-    border-top: 1px solid var(--color-grey-6);
-}
 video {
     width: 100%;
     height: auto;
@@ -109,6 +101,17 @@ video {
 }
 .width-30{
     max-width : 30%;
+}
+
+#webcam-nav{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid var(--color-grey-6);
 }
 .webcam-button{
     margin: 15px 10px;

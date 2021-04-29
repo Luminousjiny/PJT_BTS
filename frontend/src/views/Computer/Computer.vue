@@ -12,7 +12,8 @@
     </div>
     <div id="session" v-if="session">
         <Chat :user-name="userName" :session="session" :receive-message="receiveMessage" :participants="participants" v-on:sendMessage="send"/>
-        <WebCam :room-name="roomName" :OV="OV" :session="session" :publisher="publisher" :subscribers="subscribers" :setting="setting" :user-name="userName" v-on:leaveSession="leaveSession"/>
+        <WebCam :share="share" :room-name="roomName" :OV="OV" :session="session" :publisher="publisher" :subscribers="subscribers" :setting="setting" :user-name="userName" 
+                  v-on:leaveSession="leaveSession"/>
     </div>
   </div>
 </template>
@@ -55,7 +56,10 @@ export default {
           mirror: false,
         },
         receiveMessage: [],
-        screen: undefined,
+        share : {
+          active : false,
+          screen : undefined,
+        },
       }
     },
     destroyed(){
@@ -77,11 +81,19 @@ export default {
 
         this.session.on("streamCreated", ({ stream }) => {
           const subscriber = this.session.subscribe(stream);
+          if(subscriber.stream.typeOfVideo == "SCREEN"){
+            this.share.active = true;
+            this.share.screen = subscriber;
+          }
           this.subscribers.push(subscriber);
           this.participants = this.subscribers.length+1;
         });
         this.session.on("streamDestroyed", ({ stream }) => {
           const index = this.subscribers.indexOf(stream.streamManager, 0);
+          if(stream.typeOfVideo == "SCREEN"){
+            this.share.active = false;
+            this.share.screen = undefined;
+          }
           if (index >= 0) {
             this.subscribers.splice(index, 1);
           }
@@ -99,6 +111,7 @@ export default {
         this.session.on("publisherStopSpeaking", (event) => {
           console.log( "Publisher " + event.connection.connectionId + " stop speaking" );
         });
+
         this.getToken(this.roomName).then((token) => {
           this.session
             .connect(token, { userName: this.userName })
@@ -207,6 +220,16 @@ export default {
 </script>
 
 <style scoped>
+.computer-html{
+    height: 100vh;
+    min-width: 850px;
+    min-height: 480px;
+}
+.computer-body{
+    margin : 0px auto;
+    height : 100vh;
+    overflow: hidden;
+}
 #computer {
     text-align: center;
     height : 100vh;
