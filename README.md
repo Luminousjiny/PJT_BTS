@@ -8,7 +8,8 @@
  <img src="https://img.shields.io/badge/Vue.js-v4.5.10-green?logo=vue.js">
  <img src="https://img.shields.io/badge/Vuetify-v3-green?logo=Vuetify">
  <img src="https://img.shields.io/badge/Java-v1.8-blue?logo=java">
- <img src="https://img.shields.io/badge/spring data JPA-v3.9.15-blue?logo=spring">
+ <img src="https://img.shields.io/badge/spring JPA-v3.9.15-blue?logo=spring">
+ <img src="https://img.shields.io/badge/spring Boot-v3.9.15-blue?logo=spring">
  <img src="https://img.shields.io/badge/AWS%20RDS----blue?logo=amazonaws">
  <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
  <img src="https://img.shields.io/badge/Unity-v4.0-yellow?logo=unity">
@@ -19,6 +20,7 @@
 <br/> 
 </p>    
 </div>
+
 
 > 서비스명: BTS       
 > 팀명: 끄덕끄덕  
@@ -53,26 +55,34 @@ gantt
     프로젝트 기획 및 명세서제작 : done, 2021-04-12, 5d
     jira,Git 생성  :done, 2021-04-15, 6h
     UI/UX 다지인  : done,   2021-04-19, 2d
-    로고제작 : active, 2021-04-23, 2d
+    로고제작 : active, 2021-05-01, 2d
     와이어프레임ppt : active, 2021-05-03, 1d
     사전학습  : done, 2021-04-14, 10d
+    교보재 jpa 학습 : done, 2021-04-26, 2d
 
     section Frontend
-    웹캠페이지+채팅 : crit, 2021-04-21, 4d
-    로그인/회원가입/비번찾기 페이지 UI : crit, 2021-04-23, 2d
-    로그인/회원가입/비번찾기 페이지 동적구현 : active, 2021-04-28, 2d
-    마이페이지 UI : crit, 2021-04-23, 1d
-    마이페이지 동적구현 : active, 2021-04-28, 1d
+    웹캠페이지 : crit, 2021-04-21, 8d
+    채팅 : done, 2021-04-24, 3d
+    유트브 : active, 2021-04-29, 2d
+    로그인/회원가입/비번찾기 페이지 UI : crit, 2021-04-27, 4d
+    로그인/회원가입/비번찾기 페이지 동적구현 : active, 2021-04-30, 3d
+    마이페이지 UI : crit, 2021-04-26, 4d
+    정보공유 페이지 : crit, 2021-04-26, 4d
     
     section Backend
     DB설계 : done, 2021-04-21, 2d
-    유저 CRUD : active, 2021-04-26, 2d
+    매핑관계 설정 : done, 2021-04-28, 1d
+    유저 CRUD : crit, 2021-04-29, 2d
+    게시판 CRUD : crit, 2021-04-29, 3d
     
     section Game
-	네트워크 동기화 : crit, 2021-04-22, 4d
-	로컬 리모트 및 호스트 : active, 2021-04-23 1d
-	로비 구현 : active, 2021-04-21, 2d
-    방 리스트 : active, 2021-04-24, 2d
+	네트워크 동기화 : done, 2021-04-22, 3d
+	로컬 리모트 및 호스트 : done, 2021-04-23 1d
+	채팅 : done, 2021-04-24, 2d
+	로비 구현 : done, 2021-04-24, 4d
+    방 리스트 : done, 2021-04-24, 4d
+    게임(운동장) : active, 2021-04-28,3d
+    유니티 보완작업 : crit, 2021-04-28, 7d
     
     section 발표관리
     Sub1 ppt 제작 : done, 2021-04-22, 1d

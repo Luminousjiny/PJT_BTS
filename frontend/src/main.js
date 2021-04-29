@@ -2,11 +2,13 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import vuetify from "./plugins/vuetify";
 import VueModal from '@kouts/vue-modal';
 import '@kouts/vue-modal/dist/vue-modal.css';
 import VueMoment from 'vue-moment'
 Vue.use(VueMoment);
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+Vue.use(Vuetify);
 Vue.config.productionTip = false;
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -25,6 +27,6 @@ Vue.component('Modal',VueModal);
 new Vue({
   router,
   store,
-  vuetify,
+  vuetify : new Vuetify(),
   render: (h) => h(App),
 }).$mount("#app");

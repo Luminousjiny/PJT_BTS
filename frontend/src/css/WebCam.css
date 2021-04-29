@@ -1,0 +1,141 @@
+html{
+    height: 100vh;
+    min-width: 850px;
+    min-height: 480px;
+}
+body{
+    margin : 0px auto;
+    height : 100vh;
+    overflow: hidden;
+}
+#webcam-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    height: 100%;
+    border : 1px solid var(--color-grey-6);
+    border-radius: 0px 20px 0px 0px;
+    flex : 1;
+}
+#webcam-title{
+    width: 100%;
+    text-align: left;
+}
+#webcam-title #school-title{
+    width: 90%;
+    margin: 30px auto 0px;
+}
+#webcam-title #school-title p{
+    display: block;
+    margin : 0px 0px 0px 10px;
+    font-size: var(--font-size-30);
+    font-weight: var(--weight-bold);
+    float: left;
+}
+#school-icon{
+    display: block;
+    height : 50px;
+    width : 50px;
+    float: left;
+}
+#video-container {
+    height: 90%;
+    width : 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+}
+#video-container #prev,#next{
+    flex : 1 auto;
+    width : 10%;
+}
+.page-button{
+    margin : 0px;
+    width : 80%;
+}
+#videos {
+    flex : 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    width: 80%;
+    margin: auto;
+}
+#videos video + div {
+    width: 30%;
+    position: absolute;
+    bottom: 3px;
+}
+#videos p {
+    display: inline-block;
+    background: var(--color-grey-5);
+    padding-left: 5px;
+    padding-right: 5px;
+    color: var(--color-grey-2);
+    font: normal normal normal 16px/32px AppleSDGothicNeoSB00;
+    font-weight: var(--weight-bold);
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width : 100%;
+    margin : 0px;
+}
+#webcam-nav{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid var(--color-grey-6);
+}
+video {
+    width: 100%;
+    height: auto;
+    border-radius : 20px;
+}
+.flex-item {
+    flex: 1 auto;
+    position:relative;
+    margin : 5px;
+}
+.width-40{
+    max-width: 40%;
+}
+.width-30{
+    max-width : 30%;
+}
+.webcam-button{
+    margin: 15px 10px;
+    background-color : var(--color-white) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--color-grey-2);
+    border-radius : 20px;
+    width: 100px;
+    height: 45px;
+}
+#publish-video{
+    color : var(--color-grey-2);
+}
+#unpublish-video{
+    color : var(--color-red);
+}
+#publish-audio{
+    color : var(--color-grey-2);
+}
+#unpublish-audio{
+    color : var(--color-red);
+}
+#btnLeaveSession{
+    width: 45px;
+    border-radius: 50px;
+    border-color: var(--color-red);
+    background-color: var( --color-red);
+}
+#leave-session{
+    color : var(--color-white);
+}

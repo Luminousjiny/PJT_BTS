@@ -92,7 +92,7 @@ const routes = [
         component: WebCam,
       },
       {
-        path: "board",
+        path:"board",
         name: "Board",
         component: Board,
       },
