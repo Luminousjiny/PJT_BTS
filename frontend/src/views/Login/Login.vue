@@ -1,12 +1,12 @@
 <template>
   <div class="login">
-    <div class="content">
-      <div class="leftBox">
+    <div class="login_content">
+      <div class="login_leftBox">
         <img class="login_img" src="../../../public/Image/login_img.png"> 
       </div>
-      <div class="rightBox">
+      <div class="login_rightBox">
         <div class="login_input">
-          <h1 class="header">로그인</h1>
+          <h1 class="login_header">로그인</h1>
           <p class="text">환영합니다. 로그인 해주세요!</p>
 
           <p class="mid_header">아이디</p>
