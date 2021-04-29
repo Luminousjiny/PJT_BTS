@@ -7,9 +7,11 @@
   min-height: 100vh;
   background-image: url("../../public/Image/mypage_bg.png");
   background-size: cover;
-    
   }
-  .container {
+
+  .wrap {
+    display: flex;
+    flex-direction: column;  
     width: 60%;
     height: 400px;
     font-size: 2rem;
@@ -20,14 +22,124 @@
     font-family: 'AppleSDGothicNeoEB00';
   }
 
-  .left_con h4{
+  .container_top{
+    display:flex;
+    flex-direction: row;
+  }
+
+  .left_con{
+    flex: 1 1 0;
+    height: 400px;
+    overflow: hidden;
+      background-color:red;
+  }
+
+  .left_con_h{
+    padding:0 0 0 10%;
+      font-size: var(--font-size-40);
       color: var(--color-mainBlue);
   }
 
   .left_con_p{
-      padding-top: 5px;
+    margin-top: -25px;
+    padding-left: 10%;
       font-size: var(--font-size-16);
       color: var(--color-grey-3);
   }
 
+  .left_con_name{
+    padding-left: 10%;
+      font-size:var(--font-size-20);
+      color: var(--color-mainBlue);
+  }
+
+  .profile{
+      width: 150px;
+      height: 141px;
+      margin:0 auto;
+  }
+
+  .txt_ul{
+    margin:0 auto;
+    width: 100px;
+    background-color:yellow;
+    font-size: var(--font-size-14);
+ 
+}
+
+.txt_ul li:first-child {
+    float:left;
+    color: var(--color-mainBlue);
+    padding-right: 5px;
+    border-right:2px solid var(--color-grey-3);
+}
+
+.txt_ul li:last-child {
+  float:left;
+  color: var(--color-red);
+  padding-left: 5px;
+}
+
+  .right_con{
+    flex: 1 1 0;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .right_con p{
+    float:right;
+    font-size: var(--font-size-14);
+    color: var(--color-grey-3);
+  }
+
+  .input_div{
+      display: block;
+      float:left;
+  }
+
+
+  label{
+    float:left;
+     font-size: var(--font-size-18);
+     color:  var(--color-grey-1);
+  }
+
+  input{
+    margin-top:5%;
+    border-bottom:1px solid #ccc;
+    width: 100%;
+    float:left;
+  }
+
+  .input_nickname{
+    padding-left: 10%;
+    margin-top:30px;
+    float:left;
+  }
+
+  .container_bottom{
+    flex:1;
+    background-color: green;
+    height:10px;
+  }
+
+  .input_pw{
+    margin-top: 5%;
+    padding-left: 20%;
+  }
+
+  .input_pw2{
+    margin-top: 5%;
+    padding-left: 20%;
+  }
+
+  .input_phone{
+    margin-top: 5%;
+    padding-left:20%;
+  }
+
+  .input_number{
+    margin-top: 5%;
+    padding-left: 20%;
+  }
   
