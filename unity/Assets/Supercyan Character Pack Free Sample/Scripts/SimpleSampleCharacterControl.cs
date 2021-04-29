@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
-public class SimpleSampleCharacterControl : MonoBehaviour
+using Photon.Pun;
+using Cinemachine;
+public class SimpleSampleCharacterControl : MonoBehaviourPun
 {
+   
     private enum ControlMode
     {
         /// <summary>
@@ -106,6 +108,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (!m_jumpInput && Input.GetKey(KeyCode.Space))
         {
             m_jumpInput = true;
@@ -114,6 +120,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         m_animator.SetBool("Grounded", m_isGrounded);
 
         switch (m_controlMode)
@@ -137,6 +147,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void TankUpdate()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
 
@@ -165,11 +179,18 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void DirectUpdate()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
 
-        Transform camera = Camera.main.transform;
-
+        //Transform camera = Camera.main.transform;
+        // 씬에 있는 시네머신 가상 카메라를 찾고
+        CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
+        // 가상 카메라의 추적 대상을 자신의 트랜스폼으로 변경
+  
         if (Input.GetKey(KeyCode.LeftShift))
         {
             v *= m_walkScale;
@@ -179,7 +200,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         m_currentV = Mathf.Lerp(m_currentV, v, Time.deltaTime * m_interpolation);
         m_currentH = Mathf.Lerp(m_currentH, h, Time.deltaTime * m_interpolation);
 
-        Vector3 direction = camera.forward * m_currentV + camera.right * m_currentH;
+        Vector3 direction = camera.transform.forward * m_currentV + camera.transform.right * m_currentH;
 
         float directionLength = direction.magnitude;
         direction.y = 0;
@@ -200,6 +221,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void JumpingAndLanding()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         bool jumpCooldownOver = (Time.time - m_jumpTimeStamp) >= m_minJumpInterval;
 
         if (jumpCooldownOver && m_isGrounded && m_jumpInput)
