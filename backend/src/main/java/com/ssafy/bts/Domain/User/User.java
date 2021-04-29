@@ -11,7 +11,6 @@ import javax.persistence.*;
 @ApiModel(value = "사용자 entity", description = "사용자에 대한 테이블과 1대1로 매핑이되는 데이터이다.")
 public class User { // DB에 매핑용
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 생성을 db에 위임
     private String userId;
 
     @Column(nullable = false)
