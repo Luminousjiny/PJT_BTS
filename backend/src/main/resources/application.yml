@@ -4,7 +4,7 @@ server:
     context-path: /api
 spring:
   profiles:
-    active: local # local : ∑Œƒ¡ , prod : RDS
+    active: local # local : Î°úÏª¨ , prod : RDS
   jpa:
     properties:
       hibernate:
@@ -14,7 +14,7 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
---- # ∞≥πﬂ
+--- # Í∞úÎ∞ú
 spring:
   profiles: local
   datasource:
@@ -24,8 +24,8 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
---- # πË∆˜
+      ddl-auto: validate
+--- # Î∞∞Ìè¨
 spring:
   profiles: prod
   datasource:
@@ -37,7 +37,7 @@ spring:
     hibernate:
       ddl-auto: validate
 --- # AWS S3
-#cloud:
+#cloud:„Ñ¥
 #  aws:
 #    credentials:
 #      accessKey: AKIAV4C36BHFEEJUSSMI

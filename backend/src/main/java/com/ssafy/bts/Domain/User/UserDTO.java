@@ -13,8 +13,10 @@ public class UserDTO { // 반환에서 필요한 DTO
     private String userId;
     private String userPw;
     private String userNickname;
-    private Integer userPhone;
+    private int userPhone;
     private String userImg;
+    private String userLank;
+    private int userPoint;
 
     public UserDTO(User user){
         this.userId = user.getUserId();
@@ -22,6 +24,8 @@ public class UserDTO { // 반환에서 필요한 DTO
         this.userNickname = user.getUserNickname();
         this.userPhone = user.getUserPhone();
         this.userImg = user.getUserImg();
+        this.userLank = user.getUserLank();
+        this.userPoint = user.getUserPoint();
 
         if(user.getUserImg() != null){
             this.userImg = user.getUserImg();

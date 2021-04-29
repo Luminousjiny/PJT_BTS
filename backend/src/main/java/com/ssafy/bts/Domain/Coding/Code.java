@@ -1,6 +1,5 @@
-package com.ssafy.bts.Domain.Comment;
+package com.ssafy.bts.Domain.Coding;
 
-import com.ssafy.bts.Domain.Qna.Qna;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,22 +9,33 @@ import java.util.Date;
 
 @Entity
 @Getter @Setter
-public class Comment {
+public class Code {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int comId;
+    private int codeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "qna_id")
-    private Qna qna;
+    @JoinColumn(name = "pro_id")
+    private Problem problem;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String comContent;
+    private String codeContent;
 
     @Column(nullable = false)
-    private Date comDate;
+    private String codeMemory;
+
+    @Column(nullable = false)
+    private String codeTime;
+
+    @Column(nullable = false)
+    private String codeLan;
+
+    @Column(nullable = false)
+    private Date codeDate;
+
 }
