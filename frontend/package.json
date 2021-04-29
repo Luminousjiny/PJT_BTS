@@ -31,7 +31,6 @@
     "tiptap": "^1.32.2",
     "tiptap-extensions": "^1.35.2",
     "axios": "^0.21.1",
-    "core-js": "^3.6.5",
     "openvidu-browser": "^2.17.0",
     "vue": "^2.6.11",
     "vue-moment": "^4.1.0",

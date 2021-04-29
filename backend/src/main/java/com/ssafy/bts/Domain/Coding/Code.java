@@ -1,15 +1,19 @@
 package com.ssafy.bts.Domain.Coding;
 
+import com.ssafy.bts.Domain.Coding.Problem;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Getter @Setter
-public class Code {
+@NoArgsConstructor
+public class Code implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

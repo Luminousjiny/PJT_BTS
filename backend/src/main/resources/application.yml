@@ -4,7 +4,7 @@ server:
     context-path: /api
 spring:
   profiles:
-    active: local # local : 로컬 , prod : RDS
+    active: prod # local : 로컬 , prod : RDS
   jpa:
     properties:
       hibernate:
@@ -24,7 +24,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
 --- # 배포
 spring:
   profiles: prod
@@ -35,9 +35,9 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
 --- # AWS S3
-#cloud:
+#cloud:ㄴ
 #  aws:
 #    credentials:
 #      accessKey: AKIAV4C36BHFEEJUSSMI
