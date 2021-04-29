@@ -1,0 +1,29 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("../../public/Image/login_bg.gif");
+  background-size: cover;
+}
+
+.content {
+    font-family: system-ui, serif;
+    padding: 1.5rem;
+    border-radius: 20px;
+    width: 60%;
+    height: 400px;
+    background: var(--color-white);
+    box-shadow: 0px 3px 15px var(--color-shadow);
+}
+
+.left{
+    border-right: 1px solid var(--color-grey-4);
+}
+
+.login_img{
+    display: block;
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+}

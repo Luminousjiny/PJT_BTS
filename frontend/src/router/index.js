@@ -1,24 +1,25 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "@/src/views/Login/Login.vue";
-import Character from "@/src/components/Login/Character.vue";
-import Camera from "@/src/components/Login/Camere.vue";
-import Join from "@/src/views/Join/Join.vue";
-import FindPw from "@/src/views/FindPw/FindPw.vue";
-import Change from "@/src/components/FindPw/Change.vue";
-import Confirm from "@/src/components/FindPw/Confirm.vue";
-import Computer from "@/src/views/Computer/Computer.vue";
-import Board from "@/src/components/Computer/Board.vue";
-import Cook from "@/src/views/Cook/Cook.vue";
-import Library from "@/src/views/Library/Library.vue";
-import Calender from "@/src/components/Library/Calender.vue";
-import Youtube from "@/src/components/Library/Youtube.vue";
-import Monthly from "@/src/components/Library/Monthly.vue";
-import Weekly from "@/src/components/Library/Weekly.vue";
-import Rest from "@/src/views/Library/Rest.vue";
-import Play from "@/src/views/Library/Play.vue";
-import Office from "@/src/views/Library/Office.vue";
-import WebCam from "@/src/common/WebCam/WebCam.vue";
+import Login from "../views/Login/Login.vue";
+import Character from "../components/Login/Character.vue";
+import Camera from "../components/Login/Camere.vue";
+import Join from "../views/Join/Join.vue";
+import FindPw from "../views/FindPw/FindPw.vue";
+import MyPage from "../views/MyPage/MyPage.vue";
+import Change from "../components/FindPw/Change.vue";
+import Confirm from "../components/FindPw/Confirm.vue";
+import Computer from "../views/Computer/Computer.vue";
+import Board from "../components/Computer/Board.vue";
+import Cook from "../views/Cook/Cook.vue";
+import Library from "../views/Library/Library.vue";
+import Calender from "../components/Library/Calender.vue";
+import Youtube from "../components/Library/Youtube.vue";
+import Monthly from "../components/Library/Monthly.vue";
+import Weekly from "../components/Library/Weekly.vue";
+import Rest from "../views/Rest/Rest.vue";
+import Play from "../views/Play/Play.vue";
+import Office from "../views/Office/Office.vue";
+import WebCam from "../common/WebCam/WebCam.vue";
 
 Vue.use(VueRouter);
 
@@ -26,7 +27,7 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    componenet: Login,
+    component: Login,
     children: [
       {
         path:"character",
@@ -43,12 +44,12 @@ const routes = [
   {
     path: '/join',
     name: 'Join',
-    componenet: Join
+    component: Join
   },
   {
     path: '/findpw',
     name: 'FindPw',
-    componenet: FindPw,
+    component: FindPw,
     children: [
       {
         path:"confirm",
@@ -65,7 +66,7 @@ const routes = [
   {
     path: '/mypage',
     name: 'MyPage',
-    componenet: MyPage
+    component: MyPage
   },
   // { // 게임 부분 수정 필요 - 잘모름
   //   path: '/school',
@@ -82,13 +83,8 @@ const routes = [
   {
     path: '/computer',
     name: 'Computer',
-    componenet: Computer,
+    component: Computer,
     children: [
-      {
-        path:"webcam",
-        name: "WebCam",
-        component: WebCam
-      },
       {
         path:"board",
         name: "Board",
@@ -99,7 +95,7 @@ const routes = [
   {
     path: '/cook',
     name: 'Cook',
-    componenet: Cook,
+    component: Cook,
     children: [
       {
         path:"webcam",
@@ -111,7 +107,7 @@ const routes = [
   {
     path: '/library',
     name: 'Library',
-    componenet: Library,
+    component: Library,
     children: [
       {
         path:"youtube",
@@ -140,7 +136,7 @@ const routes = [
   {
     path: '/rest',
     name: 'Rest',
-    componenet: Rest,
+    component: Rest,
     children: [
       {
         path:"webcam",
@@ -152,12 +148,12 @@ const routes = [
   {
     path: '/play',
     name: 'Play',
-    componenet : Play
+    component : Play
   },
   {
     path: '/office',
     name: 'Office',
-    componenet : Office
+    component : Office
   },
 ];
 

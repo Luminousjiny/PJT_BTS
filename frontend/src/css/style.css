@@ -1,0 +1,100 @@
+/* Global */
+:root {
+    /* Color */
+    --color-white: #FFFFFF;
+    --color-black : #000000;
+    --color-grey-1: #333333;
+    --color-grey-2: #666666;
+    --color-grey-3: #999999;
+    --color-grey-4: #CCCCCC;
+    --color-grey-5: #F8F8F8; /*검색바, 핸드폰입력창, 카메라 설정창 등 .. */
+    --color-grey-6: #E1E1E1; /*선*/
+    --color-shadow : #33333340; /*그림자*/
+    --color-skyBlue : #C6D6F6;
+    --color-midBlue : #7AA6FF;
+    --color-mainBlue: #04338C; /* 메인블루 */
+    --color-mainYellow: #F9E783; /* 메인노랑*/
+    --color-red:#DB0000;
+    --color-pink : #F7A9A9;
+    --color-green-live:#92DB6F;
+    --color-green : #66C835;
+    --color-puple : #6D58C3;
+    
+    /* 플래너 작성 컬러 */
+    --color-pink1 : #F5BBBB;
+    --color-yellow2 : #F5EDBB;
+    --color-green3 : #D8F5BB;
+    --color-blue4 : #BBEDF5;
+    --color-blue5 : #BBDBF5;
+    --color-puple6 : #CEBBF5;
+    --color-grey7 : #DBD9D9;
+    
+  
+    /* font-size */
+    --font-size-12: 12px;
+    --font-size-14: 14px;
+    --font-size-16: 16px;
+    --font-size-18: 18px;
+    --font-size-20: 20px;
+    --font-size-22: 22px;
+    --font-size-24: 24px;
+    --font-size-26: 26px;
+    --font-size-28: 28px;
+    --font-size-30: 30px;
+    --font-size-35: 35px;
+    --font-size-40: 40px;
+    --font-size-50: 50px;
+    --font-size-60: 60px;
+    --font-size-80: 80px;
+  
+    /* font-weight */
+    --weight-light: 300;
+    --weight-regular: 400;
+    --weight-bold: 700;
+    --weight-exbold: 800;
+
+  }
+
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed, 
+  figure, figcaption, footer, header, hgroup, 
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure, 
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  body {
+    line-height: 1;
+  }
+  ol, ul {
+    list-style: none;
+  }
+  blockquote, q {
+    quotes: none;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
