@@ -4,7 +4,7 @@ server:
     context-path: /api
 spring:
   profiles:
-    active: local # local : 로컬 , prod : RDS
+    active: prod # local : 로컬 , prod : RDS
   jpa:
     properties:
       hibernate:
@@ -32,12 +32,12 @@ spring:
     url: jdbc:mysql://btsdb.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com:3306/btsDB?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: admin
     password: btsbts123
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: validate
 --- # AWS S3
-#cloud:
+#cloud:ㄴ
 #  aws:
 #    credentials:
 #      accessKey: AKIAV4C36BHFEEJUSSMI
