@@ -19,8 +19,9 @@
 #webcam-title #school-title p{
     display: block;
     margin : 0px 0px 0px 10px;
-    font-size: var(--font-size-30);
-    font-weight: var(--weight-bold);
+    font-size : var(--font-size-30);
+    font-family: 'AppleSDGothicNeoEB';
+    font-weight: var(--weight-regular);
     float: left;
 }
 #school-icon{
@@ -39,6 +40,11 @@
     justify-content: space-around;
     align-items: center;
 }
+#webcam-main #share-container{
+    border : 1px solid var(--color-grey-6);
+    border-radius: 10px;
+    padding : 10px;
+}
 #webcam-main #video-container {
     width : 100%;
     display: flex;
@@ -47,12 +53,31 @@
     justify-content: space-around;
     align-items: center;
 }
-#webcam-main #video-container #prev,#next{
+.screen-share{
+    width : 30%!important;
+    height: 100%!important;
+}
+.screen-share #videos{
+    flex : none!important;
+}
+.screen-share #prev{
+    height: 10%!important;
+    width : 100%!important;
+}
+.screen-share #next{
+    height: 10%!important;
+    width : 100%!important;
+}
+#webcam-main #video-container #prev{
+    flex : 1 auto;
+    width : 10%;
+}
+#webcam-main #video-container #next{
     flex : 1 auto;
     width : 10%;
 }
 .flex-column{
-    flex-direction: column;
+    flex-direction: column!important;
 }
 .page-button{
     margin : 0px;
@@ -67,29 +92,35 @@
     width: 80%;
     margin: auto;
 }
-
-#videos video + div {
-    width: 30%;
-    position: absolute;
-    bottom: 3px;
-}
-#videos p {
-    display: inline-block;
-    background: var(--color-grey-5);
-    padding-left: 5px;
-    padding-right: 5px;
-    color: var(--color-grey-2);
-    font: normal normal normal 16px/32px AppleSDGothicNeoSB00;
-    font-weight: var(--weight-bold);
-    border-bottom-left-radius: 20px;
-    border-top-right-radius: 20px;
-    width : 100%;
-    margin : 0px;
-}
-video {
+.video-user {
     width: 100%;
     height: auto;
     border-radius : 20px;
+    vertical-align: middle;
+}
+.video-user-name {
+    width: 30%;
+    position: absolute;
+    bottom: 0px;
+}
+.video-user-name p {
+    display: inline-block;
+    background: var(--color-grey-5);
+    padding : 5px;
+    color: var(--color-grey-2);
+    font-size : var(--font-size-16);
+    font-family: 'AppleSDGothicNeoSB';
+    font-weight: var(--weight-regular);
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width : 100%;
+    margin : 0px!important;
+}
+.screen-video video{
+    border-radius: 0px;
+}
+.screen-video .video-user-name{
+    display: none;
 }
 .flex-item {
     flex: 1 auto;
@@ -120,6 +151,9 @@ video {
     border-radius : 20px;
     width: 100px;
     height: 45px;
+}
+#publish-screen{
+    color : var(--color-mainBlue);
 }
 #publish-video{
     color : var(--color-grey-2);

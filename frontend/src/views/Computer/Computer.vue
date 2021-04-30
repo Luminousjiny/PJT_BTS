@@ -220,17 +220,7 @@ export default {
 </script>
 
 <style scoped>
-/* .computer-html{
-    height: 100vh;
-    min-width: 850px;
-    min-height: 480px;
-}
-.computer-body{
-    margin : 0px auto;
-    height : 100vh;
-    overflow: hidden;
-    
-} */
+@import '../../css/style.css';
 #computer {
     text-align: center;
     height : 100vh;
@@ -246,6 +236,5 @@ export default {
     height : 90%;
     margin : 0 auto;
     text-align: center;
-    overflow: hidden;
 }
 </style>

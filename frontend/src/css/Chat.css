@@ -33,7 +33,6 @@
     width: 50px;
     height: 50px;
     margin : auto;
-    vertical-align: -webkit-baseline-middle;
 }
 #chat-nav .active{
     border : 1px solid var(--color-white);
@@ -53,7 +52,9 @@
     display: inline-block;
 }
 #chat-nav #participant-counter{
-    font-size : var(--font-size-16);
+    font-size : var(--font-size-14);
+    font-family: 'AppleSDGothicNeoB';
+    font-weight: var(--weight-regular);
     color : var(--color-green-live);
     display: inline-block;
     vertical-align: middle;
@@ -75,8 +76,9 @@
     text-align: left;
 }
 #chat-main #chat-title p{
-    font-size: var(--font-size-30);
-    font-weight: var(--weight-bold);
+    font-size : var(--font-size-30);
+    font-family: 'AppleSDGothicNeoEB';
+    font-weight: var(--weight-regular);
     color : var(--color-white);
     margin : 25px 0px 0px 0px;
     padding-left: 20px;
@@ -109,10 +111,14 @@
 }
 #receive-container .user-profile .user-name{
     font-size: var(--font-size-18);
+    font-family: 'AppleSDGothicNeoSB';
+    font-weight: var(--weight-regular);
     margin-left : 5px;
 }
 #receive-container .message .user-message{
-    font-size: var(--font-size-16);
+    font-size : var(--font-size-16);
+    font-family: 'AppleSDGothicNeoSB';
+    font-weight: var(--weight-regular);
 }
 #input-container{
     width : 100%;
@@ -133,6 +139,9 @@
     text-align: left;
     letter-spacing: 0px;
     color: var(--color-grey-2);
+    font-size : var(--font-size-16);
+    font-family: 'AppleSDGothicNeoSB';
+    font-weight: var(--weight-regular);
     margin : 0px 5px 0px 0px;
     width: 80%;
 }
@@ -144,5 +153,4 @@
     color : var(--color-mainBlue);
     opacity: 1;
     font-size: 15px;
-    vertical-align: baseline;
 }
