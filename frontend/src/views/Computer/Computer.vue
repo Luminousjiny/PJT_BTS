@@ -12,7 +12,7 @@
     </div>
     <div id="session" v-if="data.session">
         <Chat :data="data" v-on:sendMessage="send"/>
-        <WebCam :data="data" v-on:leaveSession="leaveSession"/>
+        <WebCam :data="data" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
     </div>
   </div>
 </template>
@@ -216,6 +216,15 @@ export default {
             console.error(error);
         });
       },
+      updateStream(type){
+        if (type == 1) {
+          this.data.setting.publishAudio = !this.data.setting.publishAudio;
+          this.data.publisher.publishAudio(this.data.setting.publishAudio);
+        } else {
+          this.data.setting.publishVideo = !this.data.setting.publishVideo;
+          this.data.publisher.publishVideo(this.data.setting.publishVideo);
+        }
+      }
     },
 }
 </script>

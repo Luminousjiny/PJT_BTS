@@ -125,13 +125,14 @@ export default {
       this.data.mainStreamManager = stream;
     },
     updateStream(type) {
-      if (type == 1) {
-        this.data.setting.publishAudio = !this.data.setting.publishAudio;
-        this.data.publisher.publishAudio(this.data.setting.publishAudio);
-      } else {
-        this.data.setting.publishVideo = !this.data.setting.publishVideo;
-        this.data.publisher.publishVideo(this.data.setting.publishVideo);
-      }
+      // if (type == 1) {
+      //   this.data.setting.publishAudio = !this.data.setting.publishAudio;
+      //   this.data.publisher.publishAudio(this.data.setting.publishAudio);
+      // } else {
+      //   this.data.setting.publishVideo = !this.data.setting.publishVideo;
+      //   this.data.publisher.publishVideo(this.data.setting.publishVideo);
+      // }
+      this.$emit('updateStream', type);
     },
     shareScreen() {
       let screen = this.data.OV.initPublisher(undefined, {
