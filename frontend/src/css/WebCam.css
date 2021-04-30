@@ -92,18 +92,18 @@
     width: 80%;
     margin: auto;
 }
-.video-user {
+.active-user {
     width: 100%;
     height: auto;
     border-radius : 20px;
     vertical-align: middle;
 }
-.video-user-name {
+.active-user-name {
     width: 30%;
     position: absolute;
     bottom: 0px;
 }
-.video-user-name p {
+.active-user-name p {
     display: inline-block;
     background: var(--color-grey-5);
     padding : 5px;
@@ -116,6 +116,28 @@
     width : 100%;
     margin : 0px!important;
 }
+.inactive-user-info{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0px;
+}
+.inactive-user-img{
+    width : 30%;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    display: block;
+    margin: auto;
+    margin-top : 10%;
+    margin-bottom: 5%;
+}
+.inactive-user-name{
+    font-size : var(--font-size-30);
+    font-family: 'AppleSDGothicNeoSB';
+    font-weight: var(--weight-regular);
+    color : var(--color-white);
+}
+
 .screen-video video{
     border-radius: 0px;
 }
