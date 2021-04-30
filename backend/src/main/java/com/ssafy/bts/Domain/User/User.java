@@ -20,7 +20,7 @@ public class User { // DB에 매핑용
     private String userNickname;
 
     @Column(nullable = false)
-    private int userPhone;
+    private String userPhone;
 
     @Column(columnDefinition = "TEXT")
     private String userImg;
