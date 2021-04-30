@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     /**
      * 아이디로 유저객체 찾기
@@ -20,5 +20,4 @@ public class UserService {
     public User findByUserId(String userId){
         return userRepository.findByUserId(userId);
     }
-
 }

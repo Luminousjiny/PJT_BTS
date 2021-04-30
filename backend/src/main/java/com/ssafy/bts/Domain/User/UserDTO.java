@@ -13,7 +13,7 @@ public class UserDTO { // 반환에서 필요한 DTO
     private String userId;
     private String userPw;
     private String userNickname;
-    private int userPhone;
+    private String userPhone;
     private String userImg;
     private String userLank;
     private int userPoint;
