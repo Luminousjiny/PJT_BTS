@@ -10,18 +10,19 @@
         </div>
         <div id="live-container">
             <div id="live-circle"></div>
-            <div id="participant-counter">{{ participants }}명</div>
+            <div id="participant-counter">{{ data.participants }}명</div>
         </div>
     </div>
-    <div id="chat-main">
+    <div id="chat-main" v-if="showChatting || showUsers">
         <div id="chat-title">
-            <p>Chat</p>
+            <p v-if="showChatting">Chat</p>
+            <p v-if="showUsers">User</p>
         </div>
-        <div id="receive-container">
-            <div class="message"  v-for="(message, index) in receiveMessage" :key="index">
-            <table class="message-table" v-if="message.sender.userName !== userName">
+        <div id="receive-container" v-if="showChatting">
+            <div class="message"  v-for="(message, index) in data.receiveMessage" :key="index">
+            <table class="message-table" v-if="message.sender.userName !== data.userName">
                 <tr class="user-profile">
-                <td class="user-img" rowspan="2"></td>
+                <td class="user-img" rowspan="2"><v-icon color="white">fas fa-smile</v-icon></td>
                 <td class="user-name">{{message.sender.userName}}</td>
                 </tr>
                 <tr>
@@ -31,7 +32,7 @@
             <table class="message-table my-message" v-else>
                 <tr class="user-profile">
                 <td class="user-name">{{message.sender.userName}}</td>
-                <td class="user-img" rowspan="2"></td>
+                <td class="user-img" rowspan="2"><v-icon color="white">fas fa-smile</v-icon></td>
                 </tr>
                 <tr>
                 <td class="user-message">{{message.message}}</td>
@@ -39,7 +40,17 @@
             </table>
             </div>
         </div>
-        <div id="input-container">
+        <div id="participant-container" v-if="showUsers">
+            <div class="participant-info my-info">
+                <v-icon color="white">fas fa-smile</v-icon>
+                {{JSON.parse(data.publisher.session.connection.data).userName}} (me)
+            </div>
+            <div class="participant-info" v-for="(sub, index) in data.subscribers" :key="index">
+                <v-icon color="white">fas fa-smile</v-icon>
+                {{JSON.parse(sub.stream.connection.data).userName}}
+            </div>
+        </div>
+        <div id="input-container" v-if="showChatting">
             <div id="input-form">
             <input id="sendMessage" class="input-message" type="text" v-model="sendMessage" @keyup.enter="send">
             <v-icon id="btnSendMessage" @click="send">fas fa-location-arrow</v-icon>
@@ -60,10 +71,7 @@ export default {
         }
     },
     props :{
-        session : Object,
-        userName : String,
-        receiveMessage : Array,
-        participants : Number,
+        data : Object,
     },
     methods: {
         send(){

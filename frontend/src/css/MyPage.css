@@ -1,0 +1,167 @@
+@import "style.css";
+
+.mypage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("../../public/Image/mypage_bg.png");
+    background-size: cover;
+}
+
+.mypage_content {
+    display: flex;
+    flex-direction: column;
+    font-family: system-ui, serif;
+    padding: 1.5rem;
+    border-radius: 20px;
+    width: 60%;
+    height: 500px;
+    background: var(--color-white);
+    box-shadow: 0px 3px 15px var(--color-shadow);
+}
+
+.content_top{
+    display:flex;
+    flex-direction: row;
+    flex: 10; 
+    overflow: hidden; 
+}
+
+.top_leftBox{
+    flex: 1 1 0;
+    overflow:hidden;
+    padding-top: 2rem;
+    padding-left: 8rem;
+}
+
+.left_h{
+    color: var(--color-mainBlue);
+    font-size: var(--font-size-28);
+    font-family: "AppleSDGothicNeoEB";
+}
+
+.left_p{
+    font-size: var(--font-size-14);
+    color: var(--color-grey-3);
+    font-family: "AppleSDGothicNeoB";
+}
+
+.left_name{
+    margin-top: 42px;
+    color: var(--color-mainBlue);
+    font-size: var(--font-size-18);
+    font-family: "AppleSDGothicNeoB";
+}
+
+
+.mid_header{
+    margin-top:1.8vh;
+    color: var(--color-grey-1);
+    font-size: var(--font-size-16);
+    font-family: "AppleSDGothicNeoB";
+}
+
+.input{
+    margin-top: -10px!important;
+    width: 80%;
+}
+
+input::placeholder { 
+    font-size: var(--font-size-12); 
+    font-family: "AppleSDGothicNeoR";
+}
+
+.user_img{
+    padding-left: 5.2vw;
+}
+
+.left_ul{
+    padding-top: 6px;
+    padding-left: 7.8vw;
+    height: 26px;
+}
+
+.left_ul > li {
+    float:left;
+}
+
+.left_ul > li:first-child{
+    padding-right: 8px;
+    font-size: var(--font-size-14); 
+    color: var(--color-mainBlue);
+    font-family: "AppleSDGothicNeoR";
+}
+
+.left_ul > li:nth-child(2){
+    font-size:  var(--font-size-12); 
+}
+
+.left_ul > li:last-child{
+    padding-left: 8px;
+    font-size: var(--font-size-14); 
+    color: var(--color-red);
+    font-family: "AppleSDGothicNeoR";
+}
+
+.top_rightBox{
+    flex:1 1 0;
+    overflow:hidden;
+    padding-right: 4rem;
+    padding-top: 1rem;
+}
+
+.goCamera{
+    float:left;
+    height:10px;
+    padding-left: 13rem;
+    font-family: "AppleSDGothicNeoR";
+    font-size: var(--font-size-14);
+    
+}
+
+.modify_btn{
+    margin-left: 18vw;
+    width: 300px;
+    height: 55px;
+}
+
+
+.content_btm{
+    flex: 1; 
+    overflow: hidden;
+}
+
+.goDelete{
+    float:right;
+    margin-top:1vh;
+    margin-right: 8rem;
+    color: var(--color-red);
+    font-size: var(--font-size-14);
+    font-family: "AppleSDGothicNeoR";
+}
+
+.col-sm-4, .col-sm-6, .col-sm-2{
+    font-size: var(--font-size-10);
+    font-family: "AppleSDGothicNeoR";
+    padding:0px!important;
+}
+
+.send_msg{
+    min-height: 50px!important;  
+}
+
+.input_certify{
+    width: 100%;
+}
+
+.certify{
+    font-size: var(--font-size-12);
+    font-family: "AppleSDGothicNeoR";
+    padding:0px!important;
+}
+
+.certifyBtn{
+    margin-left: -0.5vw;
+    min-height: 50px!important; 
+}

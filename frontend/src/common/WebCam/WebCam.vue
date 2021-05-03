@@ -3,32 +3,32 @@
     <div id="webcam-title">
       <div id="school-title">
         <img src="@/../public/Image/school_icon.png" id="school-icon">
-        <p>{{roomName}}</p>
+        <p>{{data.roomName}}</p>
       </div>
     </div>
     <div id="webcam-main">
-      <div id="share-container" v-if="share.active">
-        <div id="share-screen" v-if="share.screen">
-          <user-video class="flex-item screen-video" :stream-manager="share.screen"></user-video>
+      <div id="share-container" v-if="data.share.active">
+        <div id="share-screen" v-if="data.share.screen">
+          <user-video class="flex-item screen-video" :stream-manager="data.share.screen"></user-video>
         </div>
         <div id="share-youtube" v-if="youtube">
           <div><p>야호호호</p></div>
         </div>
       </div>
-      <div id="video-container" :class="{'flex-column': share.active, 'screen-share' : share.active}">
+      <div id="video-container" :class="{'flex-column': data.share.active, 'screen-share' : data.share.active}">
         <div id="prev">
           <button class="webcam-button page-button" @click="page -= 1;" v-if="prev">
-            <v-icon v-if="!share.active">fas fa-chevron-left</v-icon>
+            <v-icon v-if="!data.share.active">fas fa-chevron-left</v-icon>
             <v-icon v-else>fas fa-angle-up</v-icon>
           </button>
         </div>
-        <div id="videos" :class="{'flex-column': share.active}">
-          <user-video :class="{publisher : true, 'flex-item': true, 'width-40': setWidth40, 'width-30' : setWidth30}" :stream-manager="publisher" v-if="page == 0"></user-video>
+        <div id="videos" :class="{'flex-column': data.share.active}">
+          <user-video :class="{publisher : true, 'flex-item': true, 'width-40': setWidth40, 'width-30' : setWidth30}" :stream-manager="data.publisher" v-if="page == 0"></user-video>
           <user-video :class="{subscribers : true, 'flex-item': true, 'width-40': setWidth40, 'width-30' : setWidth30}" v-for="(sub, idx) in pageSub" :key="idx" :stream-manager="sub"></user-video>
         </div>
         <div id="next">
           <button class="webcam-button page-button" @click="page += 1;" v-if="next">
-            <v-icon v-if="!share.active">fas fa-chevron-right</v-icon>
+            <v-icon v-if="!data.share.active">fas fa-chevron-right</v-icon>
             <v-icon v-else>fas fa-angle-down</v-icon>
           </button>
         </div>
@@ -36,11 +36,11 @@
     </div>
     <div id="webcam-nav">
         <button id="btnSetvideo" @click="updateStream(0)" class="webcam-button">
-            <div v-if="!setting.publishVideo"><v-icon id="unpublish-video">fas fa-video-slash</v-icon></div>
+            <div v-if="!data.setting.publishVideo"><v-icon id="unpublish-video">fas fa-video-slash</v-icon></div>
             <div v-else><v-icon id="publish-video">fas fa-video</v-icon></div>
         </button>
         <button id="btnSetAudio" @click="updateStream(1)" class="webcam-button">
-            <div v-if="!setting.publishAudio"><v-icon id="unpublish-audio">fas fa-microphone-slash</v-icon></div>
+            <div v-if="!data.setting.publishAudio"><v-icon id="unpublish-audio">fas fa-microphone-slash</v-icon></div>
             <div v-else><v-icon id="publish-audio">fas fa-microphone</v-icon></div>
         </button>
         <button id="btnShareScreen" @click="shareScreen" class="webcam-button">
@@ -70,80 +70,75 @@ export default {
     }
   },
   props :{
-    OV : Object,
-    roomName : String,
-    session : Object,
-    publisher : Object,
-    subscribers : Array,
-    setting : Object,
-    userName : String,
-    share : Object,
+    data : Object,
   },
   computed : {
     setWidth40 : function(){
-      if(this.subscribers.length < 4 && !this.share.active){
+      if(this.data.subscribers.length < 4 && !this.data.share.active){
         return true;
       }
       return false;
     },
     setWidth30 : function(){
-      if(this.subscribers.length >= 4 && !this.share.active){
+      if(this.data.subscribers.length >= 4 && !this.data.share.active){
         return true;
       }
       return false;
     },
     next : function(){
-      if((!this.share.active && this.subscribers.length+1 - (this.page+1)*6 > 0 ) || (this.share.active && this.subscribers.length+1 - (this.page+1)*5 > 0 )){
+      if((!this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*6 > 0 ) || (this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*5 > 0 )){
         return true;
       }
       return false;
     },
     prev : function(){
+      console.log(this.data);
       if(this.page > 0){
         return true;
       }
       return false;
     },
     totalPage : function(){
-      let remain = (this.subscribers.length+1)%6;
+      let remain = (this.data.subscribers.length+1)%6;
       if(remain != 0){
-        return (this.subscribers.length+1)/6+1;
+        return (this.data.subscribers.length+1)/6+1;
       }
-      return (this.subscribers.length+1)/6;
+      return (this.data.subscribers.length+1)/6;
     },
     pageSub : function(){
       if(this.page == 0){
-        if(!this.share.active){
-          return this.subscribers.slice(0,5);
+        if(!this.data.share.active){
+          return this.data.subscribers.slice(0,5);
         }
-        return this.subscribers.slice(0,4);
+        return this.data.subscribers.slice(0,4);
       }else{
-        if(!this.share.active){
-          return this.subscribers.slice(this.page*5, Math.min(this.page*5+6,this.subscribers.length));
+        if(!this.data.share.active){
+          return this.data.subscribers.slice(this.page*5, Math.min(this.page*5+6,this.data.subscribers.length));
         }
-        return this.subscribers.slice(this.page*4, Math.min(this.page*4+5,this.subscribers.length));
+        return this.data.subscribers.slice(this.page*4, Math.min(this.page*4+5,this.data.subscribers.length));
       }
     }
   },
   methods: {
     updateMainVideoStreamManager(stream) {
-      if (this.mainStreamManager === stream) return;
-      this.mainStreamManager = stream;
+      if (this.data.mainStreamManager === stream) return;
+      this.data.mainStreamManager = stream;
     },
     updateStream(type) {
-      if (type == 1) {
-        this.setting.publishAudio = !this.setting.publishAudio;
-        this.publisher.publishAudio(this.setting.publishAudio);
-      } else {
-        this.setting.publishVideo = !this.setting.publishVideo;
-        this.publisher.publishVideo(this.setting.publishVideo);
-      }
+      // if (type == 1) {
+      //   this.data.setting.publishAudio = !this.data.setting.publishAudio;
+      //   this.data.publisher.publishAudio(this.data.setting.publishAudio);
+      // } else {
+      //   this.data.setting.publishVideo = !this.data.setting.publishVideo;
+      //   this.data.publisher.publishVideo(this.data.setting.publishVideo);
+      // }
+      this.$emit('updateStream', type);
     },
     shareScreen() {
-      let screen = this.OV.initPublisher(undefined, {
+      let screen = this.data.OV.initPublisher(undefined, {
         resolution: "1280x720",
         videoSource: "screen",
-        publishAudio : this.setting.publishAudio,
+        publishAudio : this.data.setting.publishAudio,
       });
 
       screen.once("accessAllowed", () => {
@@ -152,18 +147,18 @@ export default {
           .getVideoTracks()[0]
           .addEventListener("ended", () => {
             console.log('User pressed the "Stop sharing" button');
-            this.session.unpublish(screen);
-            this.sharing = false;
-            this.share.active = false;
-            this.share.screen = undefined;
-            this.session.publish(this.publisher);
+            this.data.session.unpublish(screen);
+            this.data.sharing = false;
+            this.data.share.active = false;
+            this.data.share.screen = undefined;
+            this.data.session.publish(this.data.publisher);
           });
         
-        this.session.unpublish(this.publisher);
-        this.sharing = true;
-        this.share.active = true;
-        this.share.screen = screen;
-        this.session.publish(this.share.screen);
+        this.data.session.unpublish(this.data.publisher);
+        this.data.sharing = true;
+        this.data.share.active = true;
+        this.data.share.screen = screen;
+        this.data.session.publish(this.data.share.screen);
       });
       screen.once("accessDenied", () => {
         console.warn("ScreenShare: Access Denied");
