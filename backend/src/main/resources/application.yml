@@ -37,7 +37,7 @@ spring:
     hibernate:
       ddl-auto: validate
 --- # AWS S3
-#cloud:ㄴ
+#cloud:
 #  aws:
 #    credentials:
 #      accessKey: AKIAV4C36BHFEEJUSSMI
