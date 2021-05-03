@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using System;
 
 // 포톤 Pun 서비스 이벤트 감지 : 메소드명 맞춰서 오버라이드 MonoBehaviourPunCallbacks
 public class LobbyManager : MonoBehaviourPunCallbacks
@@ -13,14 +14,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public TextMeshProUGUI connectionInfoText;
     public Button connectionBtn;
-    public Text userName;
 
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
 
-    public InputField RoomInput;
-    public Text WelcomeText;
-    public Text LobbyInfoText;
+    public TMP_InputField RoomNameInput;
+    public TMP_InputField RoomPullInput;
+    public Toggle RoomprivateToggle;
+
+    public TextMeshProUGUI WelcomeText;
     public Button[] CellBtn;
     public Button PreviousBtn;
     public Button NextBtn;
@@ -47,15 +49,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 로비 연결
     public void JoinLobby()
     {
-        //PhotonNetwork.JoinLobby();
+        PhotonNetwork.JoinLobby();
     }
     // 로비 연결 성공했을 때
     public override void OnJoinedLobby()
     {
-        //PhotonNetwork.LocalPlayer.NickName = userName.text;
+        PhotonNetwork.LocalPlayer.NickName = "황호연";
         //WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다!";
-        //connectionInfoText.text = "온라인 : 로비와 연결됨";
-        //myList.Clear();
+        connectionInfoText.text = "온라인 : 로비와 연결됨";
+        myList.Clear();
     }
 
     // 마스터 서버에 실패 했을때 다시 접속
@@ -70,7 +72,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 방 만들기
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text, new RoomOptions { MaxPlayers = 4 });
+        string maxPlayer = RoomPullInput.text;
+        if(maxPlayer == "")
+        {
+            maxPlayer = "4";
+        }
+        PhotonNetwork.CreateRoom(RoomNameInput.text == "" ? "Room" + UnityEngine.Random.Range(0, 100) : RoomNameInput.text, new RoomOptions { MaxPlayers = Convert.ToByte(maxPlayer), IsVisible = !RoomprivateToggle.isOn, CleanupCacheOnLeave = true});
     }
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
@@ -79,15 +86,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("Main");
     }
-    public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
+    public override void OnCreateRoomFailed(short returnCode, string message) { RoomNameInput.text = ""; CreateRoom(); }
 
-    public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
+    public override void OnJoinRandomFailed(short returnCode, string message) { RoomNameInput.text = ""; CreateRoom(); }
 
     // 수동으로 메인에 있으면 조인룸 및 예외처리
     public void Connect()
     {
         connectionBtn.interactable = false;
-        Debug.Log("이건 언제 시작되는데");
         if (PhotonNetwork.IsConnected)
         {
             connectionInfoText.text = "방에 연결 중....";
@@ -96,7 +102,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         else
         {
             connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음 \n 접속 재시도 중.....";
-
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -108,7 +113,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         else if (num == -1) ++currentPage;
         else
         {
-            Debug.Log("1");
             PhotonNetwork.JoinRoom(myList[multiple + num].Name);
         }
         MyListRenewal();
@@ -121,7 +125,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         // 최대페이지
         maxPage = (myList.Count % CellBtn.Length == 0) ? myList.Count / CellBtn.Length : myList.Count / CellBtn.Length + 1;
-
         // 이전, 다음버튼
         PreviousBtn.interactable = (currentPage <= 1) ? false : true;
         NextBtn.interactable = (currentPage >= maxPage) ? false : true;
@@ -131,8 +134,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < CellBtn.Length; i++)
         {
             CellBtn[i].interactable = (multiple + i < myList.Count) ? true : false;
-            CellBtn[i].transform.GetChild(0).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].Name : "";
-            CellBtn[i].transform.GetChild(1).GetComponent<Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].PlayerCount + "/" + myList[multiple + i].MaxPlayers : "";
+            CellBtn[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (multiple + i < myList.Count) ? myList[multiple + i].Name : "";
+            CellBtn[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (multiple + i < myList.Count) ? myList[multiple + i].PlayerCount + "/" + myList[multiple + i].MaxPlayers : "";
         }
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

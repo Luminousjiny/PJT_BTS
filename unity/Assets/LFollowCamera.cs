@@ -12,8 +12,12 @@ public class LFollowCamera : MonoBehaviour
     public CanvasGroup mainGroup;
     public CanvasGroup optionGroup;
     public CanvasGroup connGroup;
+    public CanvasGroup manualGroup;
+    public CanvasGroup createGroup;
+
 
     private bool check = false;
+    private bool createRoomCheck = false;
     private int lookDir = 0;
     private Quaternion scene1;
     private Quaternion scene2;
@@ -24,10 +28,8 @@ public class LFollowCamera : MonoBehaviour
     void Start()
     {
         scene1 = Quaternion.Euler(0, 0, 0);
-        scene2 = Quaternion.Euler(0, 0, 180);
-        scene3 = Quaternion.Euler(0, -90, 90);
-
-
+        scene2 = Quaternion.Euler(0, -90, 90);
+        scene3 = Quaternion.Euler(0, 0, 180);
     }
     void FixedUpdate()
     {
@@ -51,22 +53,28 @@ public class LFollowCamera : MonoBehaviour
                 case 3:
                     mapObject.transform.rotation = Quaternion.Lerp(mapObject.transform.rotation, scene3, Time.deltaTime * 3f);
                     break;
+
             }
             //GameObject mainPlayer = GameObject.FindGameObjectWithTag("Player");
             //mainPlayer.GetComponent<MeshRenderer>().enabled = true;
             //mainPlayer.transform.position = new Vector3(0, 1.6f, -0.6f);
-            if (angle>=29.5&&angle<=30.5)
+            if (angle>=29.5&&angle<=30.5 && !createRoomCheck)
             {
-                
-            }else if(angle >= 179 && angle <= 180.5)
+                LookMain();
+            }
+            else if(angle >= 179 && angle <= 180.5)
             {
-
-            }else if(angle >= 138 && angle <= 140)
+                LookOption();
+            }
+            else if(angle >= 138 && angle <= 140)
             {
-
+                LookManual();
             }
             else
             {
+                CanvasGroupOff(manualGroup);
+                CanvasGroupOff(mainGroup);
+                CanvasGroupOff(optionGroup);
                 GameObject mainPlayer = GameObject.FindGameObjectWithTag("Player");
                 mainPlayer.GetComponent<MeshRenderer>().enabled = false;
             }
@@ -74,6 +82,7 @@ public class LFollowCamera : MonoBehaviour
     }
     public void LeftClick()
     {
+        createRoomCheck = false;
         lookDir--;
         if (lookDir == 0)
         {
@@ -82,19 +91,17 @@ public class LFollowCamera : MonoBehaviour
     }
     public void RightClick()
     {
+        createRoomCheck = false;
         lookDir++;
         if (lookDir == 4)
         {
             lookDir = 1;
         }
     }
-    public void LookMain()
+    public void InitMain()
     {
         LobbyObject.GetComponent<Animator>().enabled = false;
-
         CanvasGroupOff(connGroup);
-        CanvasGroupOn(mainGroup);
-
         lookDir = 1;
         check = true;
         GameObject[] mainTxt = GameObject.FindGameObjectsWithTag("LobbyText");
@@ -106,48 +113,36 @@ public class LFollowCamera : MonoBehaviour
         mainBtn.GetComponent<Canvas>().enabled = true;
         target.transform.position = new Vector3(0, 1.6f, -0.6f);
     }
-    public void OnBtnClick()
+    public void LookMain()
     {
+        createRoomCheck = false;
+        CanvasGroupOff(manualGroup);
+        CanvasGroupOff(optionGroup);
+        CanvasGroupOff(createGroup);
+        CanvasGroupOn(mainGroup);
+    }
+    public void LookOption()
+    {
+        CanvasGroupOff(manualGroup);
+        CanvasGroupOff(mainGroup);
+        CanvasGroupOff(createGroup);
+        CanvasGroupOn(optionGroup);
+    }
+    public void LookManual()
+    {
+        CanvasGroupOff(optionGroup);
+        CanvasGroupOff(mainGroup);
+        CanvasGroupOff(createGroup);
+        CanvasGroupOn(manualGroup);
+    }
+    public void LookCreat()
+    {
+        createRoomCheck = true;
+        CanvasGroupOff(optionGroup);
+        CanvasGroupOff(mainGroup);
+        CanvasGroupOff(manualGroup);
+        CanvasGroupOn(createGroup);
 
-        switch (currentType)
-        {
-            case BTNType.Connection:
-                //LobbyObject.GetComponent<Animator>().Rebind();
-                //LobbyObject.GetComponent<Animator>().speed = 0.0f;
-               
-                break;
-            case BTNType.Start:
-                CanvasGroupOff(mainGroup);
-                CanvasGroupOff(connGroup);
-                CanvasGroupOff(optionGroup);
-                break;
-
-            case BTNType.Option:
-                CanvasGroupOn(optionGroup);
-                CanvasGroupOff(mainGroup);
-                break;
-            case BTNType.Sound:
-                /*
-                if (isSound)
-                {
-                    Debug.Log("사운드ON");
-                }
-                else
-                {
-                    Debug.Log("사운드OFF");
-                }
-                isSound = !isSound;
-                */
-                break;
-            case BTNType.Char:
-                break;
-            
-            case BTNType.Quit:
-                CanvasGroupOff(optionGroup);
-                CanvasGroupOff(mainGroup);
-                CanvasGroupOn(connGroup);
-                break;
-        }
     }
     public void CanvasGroupOn(CanvasGroup cg)
     {
