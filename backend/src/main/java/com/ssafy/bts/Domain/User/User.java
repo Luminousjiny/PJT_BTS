@@ -1,5 +1,6 @@
 package com.ssafy.bts.Domain.User;
 
+import com.ssafy.bts.Controller.Request.UserRequest;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,15 +21,26 @@ public class User { // DB에 매핑용
     private String userNickname;
 
     @Column(nullable = false)
-    private int userPhone;
+    private String userPhone;
 
     @Column(columnDefinition = "TEXT")
     private String userImg;
 
-    @Column(nullable = false)
+    @Column
     private String userLank;
 
-    @Column(nullable = false)
+    @Column
     private int userPoint;
 
+    public static User createUser(UserRequest request) {
+        User userInput = new User();
+        userInput.userId = request.getUserId();
+        userInput.setUserId(request.getUserId());
+        userInput.setUserPw(request.getUserPw());
+        userInput.setUserNickname(request.getUserNickname());
+        userInput.setUserPhone(request.getUserPhone());
+        userInput.setUserLank("브론즈3");
+        userInput.setUserPoint(0);
+        return userInput;
+    }
 }

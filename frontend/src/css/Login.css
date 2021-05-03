@@ -7,7 +7,7 @@
     background-size: cover;
 }
 
-.content {
+.login_content {
     display: flex;
     flex-direction: row;
     font-family: system-ui, serif;
@@ -19,7 +19,7 @@
     box-shadow: 0px 3px 15px var(--color-shadow);
 }
 
-.leftBox{
+.login_leftBox{
     flex: 1 1 0; 
     overflow: hidden; 
     border-right: 1px solid var(--color-grey-4);
@@ -27,26 +27,26 @@
     line-height: 452px;
 }
 
-.leftBox > .login_img{
+.login_leftBox > .login_img{
     max-width:100%; max-height:100%;
     vertical-align:middle;
 }
 
-.rightBox{
+.login_rightBox{
     flex: 1 1 0; 
     overflow: hidden; 
 }
 
-.rightBox > .login_input{
+.login_rightBox > .login_input{
     width: 65%;
     margin: 0 auto;
 }
 
-.header{
+.login_header{
     color: var(--color-mainBlue);
     font-size: var(--font-size-28);
     font-family: "AppleSDGothicNeoEB";
-    margin-top: 28px;
+    margin-top: 58px;
 }
 
 .text{
@@ -56,19 +56,19 @@
     font-family: "AppleSDGothicNeoB";
 }
 
-.mid_header{
+.login_mid_header{
     color: var(--color-grey-1);
     font-size: var(--font-size-18);
     font-family: "AppleSDGothicNeoB";
     margin-bottom: 0px!important;
 }
 
-.input{
+.login_input_c{
     margin-top: 0px!important;
 }
 
 input::placeholder { 
-    font-size: var(--font-size-14); 
+    font-size: var(--font-size-12); 
     font-family: "AppleSDGothicNeoR";
 }
 
