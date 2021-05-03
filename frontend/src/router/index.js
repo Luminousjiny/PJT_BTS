@@ -9,8 +9,11 @@ import MyPage from "../views/MyPage/MyPage.vue";
 import Change from "../components/FindPw/Change.vue";
 import Confirm from "../components/FindPw/Confirm.vue";
 import Computer from "../views/Computer/Computer.vue";
-import Board from "../components/Computer/Board.vue";
-import ContentDetail from "../components/Computer/ContentDetail.vue";
+import Board from "../views/Board/Board.vue";
+import InfoBoard from "../components/Board/InfoBoard.vue";
+import InfoDetail from "../components/Board/InfoDetail.vue";
+import CodeBoard from "../components/Board/CodeBoard.vue";
+import CodeDetail from "../components/Board/CodeDetail.vue";
 import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
 import Calender from "../components/Library/Calender.vue";
@@ -90,17 +93,34 @@ const routes = [
         path: "webcam",
         name: "WebCam",
         component: WebCam,
-      },
+      }, 
+    ],
+  },
+  {
+    path: "/board",
+    name: "Board",
+    component: Board,
+    children: [
       {
-        path:"board",
-        name: "Board",
-        component: Board,
-      },
+        path: "information",
+        name: "InfoBoard",
+        component: InfoBoard,
+      },     
       {
-        path: "content",
-        name: "ContentDetail",
-        component: ContentDetail,
+        path: "information/:id",
+        name: "InfoDetail",
+        component: InfoDetail,
       },      
+      {
+        path: "code",
+        name: "CodeBoard",
+        component: CodeBoard,
+      },     
+      {
+        path: "code/:id",
+        name: "CodeDetail",
+        component: CodeDetail,
+      },
     ],
   },
   {

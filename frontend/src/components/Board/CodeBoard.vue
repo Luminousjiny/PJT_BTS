@@ -1,18 +1,20 @@
 <template>
-  <div class="qna_board_wrap">
-    <div class="qna_board_title AppleSDGothicNeoB">정보공유 게시판</div>
-    <div class="qna_board_nav">
-      <button class="qna_board_create_btn" @click="handleClickModal">
+  <div class="code_board_wrap">
+    <div class="code_board_title">
+      풀리지 않는 문제가 있다면 친구들과 반례를 공유해보세요
+    </div>
+    <div class="code_board_nav">
+      <button class="code_board_create_btn" @click="handleClickModal">
         <font-awesome-icon :icon="['fas', 'pencil-alt']" size="1x" />
-        글작성
+        문제 올리기
       </button>
       <Modal
         v-model="showModal"
-        title="글 작성"
+        title="문제 작성"
         modal-class="scrollable-modal"
       >
         <div class="scrollable-content">
-          <CreateEditor/>
+          <CreateCode/>
         </div>
         <div class="row scrollable-modal-footer">
           <div class="modal_btn_box">
@@ -26,13 +28,13 @@
           </div>
         </div>
       </Modal>
-      <div class="qna_board_search">검색</div>
+      <div class="code_board_search">검색</div>
     </div>
-    <div class="qna_board_list">
-      <button type="button" class="qna_borad_list_btn" @click="handleClickLeft">
+    <div class="code_board_list">
+      <button type="button" class="code_borad_list_btn" @click="handleClickLeft">
         <font-awesome-icon :icon="['fas', 'chevron-left']" size="2x" />
       </button>
-      <div class="qna_board_contents">
+      <div class="code_board_contents">
         <Content 
           v-for="(content,idx) in slides.slice(slideIdx*showCnt,slideIdx*showCnt+showCnt)"
           :id="idx"
@@ -41,7 +43,7 @@
           :content="content"
         />
       </div>
-      <button type="button" class="qna_borad_list_btn" @click="handleClickRight">
+      <button type="button" class="code_borad_list_btn" @click="handleClickRight">
         <font-awesome-icon :icon="['fas', 'chevron-right']" size="2x" />
       </button>
     </div>
@@ -49,13 +51,13 @@
 </template>
 
 <script>
-import Content from './Content.vue';
-import CreateEditor from './CreateEditor.vue';
+import Content from '../../components/Board/Content.vue';
+import CreateCode from '../../components/Board/CreateCode.vue';
 export default {
-  name:'Board',
+  name:'InfoBoard',
   components:{
     Content,
-    CreateEditor,
+    CreateCode,
   },
   data : ()=>{
     return{
@@ -135,9 +137,7 @@ export default {
         modal.style.height='auto';
         const titlebar = document.querySelector('.vm-titlebar');
         titlebar.style.textAlign="center";
-        const ProseMirror = document.querySelector('.ProseMirror');
-        ProseMirror.style.height='auto';
-        ProseMirror.style.maxHeight="340px";
+        titlebar.style.color="var(--color-grey-2)"
       },1);
 
     },
@@ -150,20 +150,16 @@ export default {
       this.slideIdx++;
     },
     handleSubmit(){
-      const mirror = document.querySelector('.ProseMirror');
-      let html = mirror.innerHTML;
-      while(true){
-        const index=html.indexOf('<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></select>')
-        if(index===-1) break;
-        const length = '<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></select>'.length;
-        html.replaceAll('<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></>','')
-        html = html.slice(0,index)+html.slice(index+length);
-      }
-      const input = document.querySelector('.editor__title__input');      
+      const title=document.querySelector('#code__title').value;
+      const problem=document.querySelector('#code__problem').value;
+      const input=document.querySelector('#code__input').value;
+      const output=document.querySelector('#code__output').value;
       const date = new Date();
       const data = {
-        'title' : input.value,
-        'content' : html,
+        title,
+        problem,
+        input,
+        output,
         'date' : `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
         'name' : '졍',
       };
@@ -175,33 +171,36 @@ export default {
 </script>
 
 <style scoped>
-.qna_board_wrap{
+.code_board_wrap{
   margin: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   width: 80%;
 }
-.qna_board_title{
-  font-size: var(--font-size-22);
-  font-family: "AppleSDGothicNeoEB";
+.code_board_title{
+  font-size: var(--font-size-14);
+  color: var(--color-grey-3);
+  font-family: "AppleSDGothicNeoR";
   text-align: center;
   padding: 0.5em;
 }
-.qna_board_nav{
+.code_board_nav{
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5em;
 }
-.qna_board_create_btn{
+.code_board_create_btn{
   color: var(--color-mainBlue);
   border: 1px solid var(--color-mainBlue);
   padding: 0.25em;
   border-radius: 10px;
   font-family: "AppleSDGothicNeoSB";
 }
-.qna_board_search{
+.code_board_search{
   font-family: "AppleSDGothicNeoSB";
 }
-.qna_board_list{
+.code_board_list{
   background-color: #333333;
   border: 10px solid #9E5E3F;
   width: 100%;
@@ -211,7 +210,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.qna_board_contents{
+.code_board_contents{
   width: 100%;
   display: flex;
   justify-content: center;
@@ -221,7 +220,7 @@ export default {
 .content_list{
 
 }
-.qna_borad_list_btn{
+.code_borad_list_btn{
   color: var(--color-white);
 }
 
@@ -244,6 +243,7 @@ export default {
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
+  max-height: 700px;
   flex-grow: 1;
 }
 .scrollable-modal .scrollable-modal-footer {
@@ -263,5 +263,25 @@ export default {
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   color: var(--color-white);
+}
+@media screen and (max-height: 800px) {
+  .scrollable-modal .vm-content .scrollable-content{
+    max-height: 500px;
+  }
+}
+@media screen and (max-height: 670px) {
+  .scrollable-modal .vm-content .scrollable-content{
+    max-height: 400px;
+  }
+}
+@media screen and (max-height: 570px) {
+  .scrollable-modal .vm-content .scrollable-content{
+    max-height: 300px;
+  }
+}
+@media screen and (max-height: 470px) {
+  .scrollable-modal .vm-content .scrollable-content{
+    max-height: 250px;
+  }
 }
 </style>

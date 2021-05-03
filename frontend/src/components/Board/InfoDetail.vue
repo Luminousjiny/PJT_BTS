@@ -1,6 +1,5 @@
 <template>
   <div class="detail__wrap">
-
     <div class="detail__header">
       <div class="detail__header__left">
         <button class="detail__header__listbtn" @click="handleClickList">
