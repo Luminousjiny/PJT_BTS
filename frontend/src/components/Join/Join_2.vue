@@ -6,11 +6,24 @@
           <h1 class="join_header join2_head">회원가입</h1>
           <p class="text">본인인증을 해주세요.</p>
 
-          <p class="mid_join_header">핸드폰 번호</p>
-          <v-text-field style="padding-top:0px" class="input" placeholder="숫자로만 입력해주세요.(11자)" single-line></v-text-field>
+          <p class="mid_join_header">핸드폰번호</p>
+          <v-text-field style="padding-top:0px" class="input input_id" placeholder="최대 10자입니다. " single-line></v-text-field>
+          <!-- 👨🏻 토글 예정  -->
+          <!-- <v-btn
+            class="id_check_btn"
+            style="color:white;"
+            depressed
+            color="#04338C"
+            >
+            중복확인</v-btn> -->
+        <v-btn
+          class="id_check_btn"
+          outlined
+           color="#04338C"
+          >중복확인</v-btn>
 
           <p class="mid_join_header">인증번호</p>
-          <v-text-field style="padding-top:0px" class="input" placeholder="문자로 안내온 인증번호를 입력해주세요." single-line></v-text-field>
+          <v-text-field style="padding-top:0px" class="input" placeholder="발송된 인증번호 6자리를 입력해주세요" single-line></v-text-field>
 
           <div class="text-center">
             <v-btn
