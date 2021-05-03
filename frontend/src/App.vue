@@ -1,11 +1,11 @@
 <template>
-  <v-app id="app" data-app>
+  <div id="app" data-app>
     <router-view />
-  </v-app>
+  </div>
 </template>
 
 <style>
-@import './css/style.css';
+@import "./css/style.css";
 * {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
