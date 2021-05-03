@@ -7,23 +7,23 @@
           <p class="text">본인인증을 해주세요.</p>
 
           <p class="mid_join_header">핸드폰번호</p>
-          <v-text-field style="padding-top:0px" class="input input_id" placeholder="최대 10자입니다. " single-line></v-text-field>
+          <v-text-field style="padding-top:0px" class="join_input join_input_phone" placeholder="핸드폰번호를 입력해주세요. " single-line></v-text-field>
           <!-- 👨🏻 토글 예정  -->
           <!-- <v-btn
-            class="id_check_btn"
+            class="join_id_check_btn"
             style="color:white;"
             depressed
             color="#04338C"
             >
             중복확인</v-btn> -->
         <v-btn
-          class="id_check_btn"
+          class="join_id_check_btn"
           outlined
            color="#04338C"
-          >중복확인</v-btn>
+          >전송</v-btn>
 
           <p class="mid_join_header">인증번호</p>
-          <v-text-field style="padding-top:0px" class="input" placeholder="발송된 인증번호 6자리를 입력해주세요" single-line></v-text-field>
+          <v-text-field style="padding-top:0px" class="join_input" placeholder="발송된 인증번호 6자리를 입력해주세요" single-line></v-text-field>
 
           <div class="text-center">
             <v-btn

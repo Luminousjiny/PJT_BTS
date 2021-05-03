@@ -68,7 +68,7 @@ const routes = [
     component: FindPw,
     children: [
       {
-        path: "confirm",
+        path: "",
         name: "Confirm",
         component: Confirm,
       },

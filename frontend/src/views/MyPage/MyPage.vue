@@ -41,7 +41,7 @@
               <v-col cols="12" sm="4">
                 <v-select :items="newAgency" label="통신사" solo></v-select>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="6" >
                 <v-text-field label="01071231815" solo></v-text-field>
               </v-col>
               <v-col cols="12" sm="2">
