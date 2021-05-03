@@ -7,7 +7,7 @@
           <p class="text">회원정보를 입력하세요.</p>
 
           <p class="mid_join_header">아이디</p>
-          <v-text-field style="padding-top:0px" class="input input_id" placeholder="최대 10자입니다. " single-line></v-text-field>
+          <v-text-field style="padding-top:0px" class="join_input join_input_id" placeholder="최대 10자입니다. " single-line></v-text-field>
           <!-- 👨🏻 토글 예정  -->
           <!-- <v-btn
             class="id_check_btn"
@@ -17,19 +17,19 @@
             >
             중복확인</v-btn> -->
         <v-btn
-          class="id_check_btn"
+          class="join_id_check_btn"
           outlined
            color="#04338C"
           >중복확인</v-btn>
 
           <p class="mid_join_header">닉네임</p>
-          <v-text-field style="padding-top:0px" class="input" placeholder="최대 6자입니다. " single-line></v-text-field>
+          <v-text-field style="padding-top:0px" class="join_input_c" placeholder="최대 6자입니다. " single-line></v-text-field>
 
           <p class="mid_join_header">비밀번호</p>
-          <v-text-field style="padding-top:0px" class="input" placeholder="8자~11자입니다. " single-line></v-text-field>
+          <v-text-field style="padding-top:0px" class="join_input_c" placeholder="8자~11자입니다. " single-line></v-text-field>
 
           <p class="mid_join_header">비밀번호 확인</p>
-          <v-text-field style="padding-top:0px" class="input" placeholder="비밀번호를 다시 입력해주세요. " single-line></v-text-field>
+          <v-text-field style="padding-top:0px" class="join_input_c" placeholder="비밀번호를 다시 입력해주세요. " single-line></v-text-field>
 
           <!-- <div class="text-center">
             <v-btn
