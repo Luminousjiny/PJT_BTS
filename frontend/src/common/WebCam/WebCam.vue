@@ -53,7 +53,7 @@
         <div v-if="!screenShare"><v-icon id="unpublish-screen">fas fa-upload</v-icon></div>
         <div v-else><v-icon id="publish-screen">fas fa-upload</v-icon></div>
       </button>
-      <button id="btnShareYoutube" @click="getYoutubeVideo" class="webcam-button" v-if="location == 'cook'">
+      <button id="btnShareYoutube" @click="getYoutubeVideo" class="webcam-button" v-if="location != 'computer'">
         <div v-if="!youtubeShare.active"><v-icon id="unpublish-youtube">fab fa-youtube</v-icon></div>
         <div v-else><v-icon id="publish-youtube">fab fa-youtube</v-icon></div>
       </button>

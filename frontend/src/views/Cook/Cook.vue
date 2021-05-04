@@ -28,7 +28,7 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "BACK_TO_SCHOOL";
 export default {
-    name : "Computer",
+    name : "Cook",
     components : {
       Nav,
       WebCam,
