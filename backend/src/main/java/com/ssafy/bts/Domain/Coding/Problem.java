@@ -44,5 +44,7 @@ public class Problem {
     }
 
     @PrePersist
-    private void onCreate() { this.proDate = new Date(); }
+    private void onCreate() {
+        this.proDate = new Date();
+    }
 }

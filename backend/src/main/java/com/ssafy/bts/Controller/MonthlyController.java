@@ -12,6 +12,9 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +38,7 @@ public class MonthlyController {
             monthly.setUser(user);
             monthlyService.save(monthly);
             response = new BaseResponse("success", "작성 성공");
-        }catch(IllegalStateException e){
+        }catch(IllegalStateException | ParseException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -46,9 +49,23 @@ public class MonthlyController {
     public BaseResponse updateMonthly(@ApiParam(value = "Monthly 객체", required=true) @RequestBody MonthlyRequest request) {
         BaseResponse response = null;
         try {
+            //mysql-java 9시간 차이 해결
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(request.getMonStartDate());
+            cal.add(Calendar.HOUR, -9);
+            String startTime = sdf.format(cal.getTime());
+
+            cal.setTime(request.getMonEndDate());
+            cal.add(Calendar.HOUR, -9);
+            String endTime = sdf.format(cal.getTime());
+
+            request.setMonStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(startTime));
+            request.setMonEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(endTime));
+
             monthlyService.updateMonthly(request);
             response = new BaseResponse("success", "수정 성공");
-        } catch (IllegalStateException | IOException e) {
+        } catch (IllegalStateException | IOException | ParseException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
