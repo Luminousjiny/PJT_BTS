@@ -1,0 +1,137 @@
+#youtube-container{
+    text-align: left;
+}
+#youtube-videos{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    position: relative;
+    max-height: 600px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+}
+.share-youtube{
+    max-width: 50%!important;
+    width: 40%;
+}
+.youtube{
+    max-width: 20%;
+    height: auto;
+    padding: 10px;
+    cursor: pointer;
+    display: grid;
+}
+.youtube p{
+    display: block;
+    margin-bottom : 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width : 100%;
+    white-space: nowrap;
+}
+.youtube-title{
+    font-size : var(--font-size-20);
+    font-family: 'AppleSDGothicNeoEB';
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1);
+}
+.youtube-channel{
+    font-size : var(--font-size-16);
+    font-family: 'AppleSDGothicNeoR';
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1);
+    border-bottom: 1px solid var(--color-grey-6);
+}
+.youtube-description{
+    font-size : var(--font-size-14);
+    font-family: 'AppleSDGothicNeoR';
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1);
+}
+.youtube-thumbnails{
+    width : 100%;
+    cursor: pointer;
+}
+.youtube-play{
+    display: none;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.youtube-play .play{
+    font-size: 50px!important;
+    color: var(--color-white)!important;
+    opacity: 0.8;
+    width: 100%;
+    height: 85%;
+}
+.youtube:hover .youtube-play{
+    display: block!important;
+}
+#mostPopular-title{
+    font-size : var(--font-size-22);
+    font-family: 'AppleSDGothicNeoEB';
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1);
+    margin : 5px;
+    position: relative;
+}
+#mostPopular-title p{
+    display: inline-block;
+    margin-bottom: 0px;
+}
+#mostPopular-title #mostPopular-icon{
+    margin : 0px 5px;
+}
+#youtube-detail{
+    width: 80%;
+    margin: auto;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#youtube-detail p{
+    text-align: left;
+    margin-bottom : 0px;
+}
+#youtube-detail .youtube-video{
+    width: 100%;
+}
+#youtube-detail .youtube-video iframe{
+    width: 100%;
+    height: 400px;
+}
+#btnLeaveYoutube{
+    color : var(--color-grey-2);
+    font-size : 25px;
+    position: absolute;
+    right: 5px;
+}
+.youtube-info{
+    width : 100%;
+    height: 150px;
+    overflow: auto;
+    white-space: break-spaces;
+}
+.btnShowDesc{
+    font-size : var(--font-size-14);
+    font-family: 'AppleSDGothicNeoR';
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-2);
+    cursor: pointer;
+}
+.scroll::-webkit-scrollbar{
+    width : 8px;
+}
+.scroll::-webkit-scrollbar-thumb{
+    background-color: var(--color-mainYellow);
+}
+.scroll::-webkit-scrollbar{
+    background-color: var(--color-grey-5);
+}

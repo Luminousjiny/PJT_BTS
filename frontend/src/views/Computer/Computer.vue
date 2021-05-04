@@ -232,9 +232,10 @@ export default {
 <style scoped>
 @import '../../css/style.css';
 #computer {
-    text-align: center;
-    height : 100vh;
-    overflow: hidden;
+  display: flex;
+  height : 100vh;
+  overflow: hidden;
+  flex-direction: column;
 }
 #session{
     display: flex;
@@ -243,8 +244,8 @@ export default {
     justify-content: center;
     align-items: center;
     width : 80%;
-    height : 90%;
     margin : 0 auto;
     text-align: center;
+    flex : 1;
 }
 </style>
