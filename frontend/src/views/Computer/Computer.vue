@@ -12,7 +12,7 @@
     </div>
     <div id="session" v-if="data.session">
         <Chat :data="data" v-on:sendMessage="send"/>
-        <WebCam :data="data" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
+        <WebCam :data="data" :location="location" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
     </div>
   </div>
 </template>
@@ -61,6 +61,7 @@ export default {
             screen : undefined,
           },
         },
+        location : "computer",
       }
     },
     destroyed(){
@@ -232,9 +233,10 @@ export default {
 <style scoped>
 @import '../../css/style.css';
 #computer {
-    text-align: center;
-    height : 100vh;
-    overflow: hidden;
+  display: flex;
+  height : 100vh;
+  overflow: hidden;
+  flex-direction: column;
 }
 #session{
     display: flex;
@@ -243,8 +245,8 @@ export default {
     justify-content: center;
     align-items: center;
     width : 80%;
-    height : 90%;
     margin : 0 auto;
     text-align: center;
+    flex : 1;
 }
 </style>
