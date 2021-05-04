@@ -1,9 +1,11 @@
 package com.ssafy.bts.Repository;
 
-import com.ssafy.bts.Domain.Info.Info;
 import com.ssafy.bts.Domain.Sms.Sms;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface SmsRepository extends JpaRepository<Sms, Long> {
-    Sms findByPhoneNumber(String phoneNumber);
+    List<Sms> findByPhoneNumber(String phoneNumber);
+    Sms findByAuthNumber(String smsCheckNum);
 }
