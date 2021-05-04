@@ -41,7 +41,7 @@ public class UserService {
     }
 
     /**
-     * 아이디로 유저객체 찾기
+     * 아이디로 중복확인
      */
     @Transactional
     public boolean checkUserId(String userId) {
@@ -100,5 +100,12 @@ public class UserService {
     @Transactional
     public User findByUserIdAndUserPhone(String userId, String userPhone) {
         return userRepository.findByUserIdAndUserPhone(userId, userPhone);
+    }
+
+    /**
+     * 로그인 시 , 아이디 비밀번호로 유저 찾기
+     */
+    public User findByUserIdAndUserPw(String userId, String userPw) {
+        return userRepository.findByUserIdAndUserPw(userId, userPw);
     }
 }
