@@ -14,7 +14,7 @@
         modal-class="scrollable-modal"
       >
         <div class="scrollable-content">
-          <CreateCode/>
+          <CreateProblem/>
         </div>
         <div class="row scrollable-modal-footer">
           <div class="modal_btn_box">
@@ -41,6 +41,7 @@
           :key="idx"
           :color="colorList[idx%7]"
           :content="content"
+          @handleClickContent="handleClickContent"
         />
       </div>
       <button type="button" class="code_borad_list_btn" @click="handleClickRight">
@@ -51,13 +52,13 @@
 </template>
 
 <script>
-import Content from '../../components/Board/Content.vue';
-import CreateCode from '../../components/Board/CreateCode.vue';
+import Content from './Content.vue';
+import CreateProblem from './CreateProblem.vue';
 export default {
-  name:'InfoBoard',
+  name:'ProblemBoard',
   components:{
     Content,
-    CreateCode,
+    CreateProblem,
   },
   data : ()=>{
     return{
@@ -69,30 +70,10 @@ export default {
       slides: [
         {
           name:'졍',
-          title:'오늘 수업내용',
-          content:`
-<div data-v-38b2e751="" data-node-view-wrapper="" class="code-block" style="white-space: normal;"><pre data-v-38b2e751=""><code data-v-38b2e751="" data-node-view-content="" style="white-space: pre-wrap;"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):
-    <span class="hljs-built_in">print</span>(i);</code></pre></div>
-      `,
-//           content:`        <p>
-//           That’s a boring paragraph followed by a fenced code block:
-//         </p>
-//         <pre><code class="language-javascript">for (var i=1; i <= 20; i++)
-// {
-//   if (i % 15 == 0)
-//     console.log("FizzBuzz");
-//   else if (i % 3 == 0)
-//     console.log("Fizz");
-//   else if (i % 5 == 0)
-//     console.log("Buzz");
-//   else
-//     console.log(i);
-// }</code></pre>
-//         <p>
-//           Press Command/Ctrl + Enter to leave the fenced code block and continue typing in boring paragraphs.
-//         </p>
-//       `,      
-          // content:`<p>afdsafdsa</p>`,
+          title:'[5663] 피보나치 수열',
+          problem: '피보나치 수는~~~',
+          input: '3',
+          output: '3',
           date: '2021.04.29'
         }
       ],
@@ -116,6 +97,15 @@ export default {
   mounted(){
   },
   methods:{
+    handleClickContent(id,content){
+      this.$router.push({
+        name:"ProblemDetail",
+        params:{
+          id,
+          content,
+        }
+      })
+    }, 
     handleWindowSize(){
       this.windowSize=window.innerWidth;
       if(this.windowSize>1024)
@@ -170,7 +160,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .code_board_wrap{
   margin: auto;
   margin-top: 0.5rem;
@@ -223,36 +213,6 @@ export default {
 .code_borad_list_btn{
   color: var(--color-white);
 }
-
-.scrollable-modal {
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 50px);
-}
-.scrollable-modal .vm-titlebar {
-  flex-shrink: 0;
-}
-.scrollable-modal .vm-content {
-  padding: 0;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0; 
-}
-.scrollable-modal .vm-content .scrollable-content {
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 700px;
-  flex-grow: 1;
-}
-.scrollable-modal .scrollable-modal-footer {
-  padding: 15px 0px 15px 0px;
-  border-top: 1px solid #e5e5e5;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-}
 .modal_btn_box{
   display: flex;
   justify-content: center;
@@ -262,26 +222,7 @@ export default {
   padding: 0.5rem 3rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
+  font-family: "AppleSDGothicNeoB";
   color: var(--color-white);
-}
-@media screen and (max-height: 800px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    max-height: 500px;
-  }
-}
-@media screen and (max-height: 670px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    max-height: 400px;
-  }
-}
-@media screen and (max-height: 570px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    max-height: 300px;
-  }
-}
-@media screen and (max-height: 470px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    max-height: 250px;
-  }
 }
 </style>

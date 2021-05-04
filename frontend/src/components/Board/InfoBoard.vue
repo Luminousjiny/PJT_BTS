@@ -41,6 +41,7 @@
           :key="idx"
           :color="colorList[idx%7]"
           :content="content"
+          @handleClickContent="handleClickContent"
         />
       </div>
       <button type="button" class="qna_borad_list_btn" @click="handleClickRight">
@@ -61,6 +62,7 @@ export default {
   },
   data : ()=>{
     return{
+      routeName:'information',
       windowSize:0,
       showModal: false,
       slideIdx:0,
@@ -116,6 +118,15 @@ export default {
   mounted(){
   },
   methods:{
+    handleClickContent(id,content){
+      this.$router.push({
+        name:"InfoDetail",
+        params:{
+          content,
+          id,
+        }
+      })
+    },
     handleWindowSize(){
       this.windowSize=window.innerWidth;
       if(this.windowSize>1024)
@@ -134,12 +145,11 @@ export default {
       setTimeout(function(){
         const modal = document.querySelector('.scrollable-modal');
         modal.style.maxWidth='80%';
-        // modal.style.height='auto';
         const titlebar = document.querySelector('.vm-titlebar');
         titlebar.style.textAlign="center";
+        titlebar.style.color="var(--color-grey-2)"
         const ProseMirror = document.querySelector('.ProseMirror');
-        ProseMirror.style.height='300px';
-        // ProseMirror.style.maxHeight="340px";
+        ProseMirror.style.height='360px';
       },1);
 
     },
@@ -176,7 +186,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .qna_board_wrap{
   margin: auto;
   margin-top: 0.5rem;
@@ -229,36 +239,6 @@ export default {
 .qna_borad_list_btn{
   color: var(--color-white);
 }
-
-.scrollable-modal {
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 50px);
-}
-.scrollable-modal .vm-titlebar {
-  flex-shrink: 0;
-}
-.scrollable-modal .vm-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0; 
-}
-.scrollable-modal .vm-content .scrollable-content {
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 600px;
-  height: 600px;
-  flex-grow: 1;
-}
-.scrollable-modal .scrollable-modal-footer {
-  padding: 15px 0px 15px 0px;
-  border-top: 1px solid #e5e5e5;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-}
 .modal_btn_box{
   display: flex;
   justify-content: center;
@@ -268,30 +248,7 @@ export default {
   padding: 0.5rem 3rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
-  color: var(--color-white);
-}
-@media screen and (max-height: 800px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    height: 500px;
-    max-height: 500px;
-  }
-}
-@media screen and (max-height: 670px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    height: 400px;
-    max-height: 400px;
-  }
-}
-@media screen and (max-height: 570px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    height: 300px;
-    max-height: 300px;
-  }
-}
-@media screen and (max-height: 470px) {
-  .scrollable-modal .vm-content .scrollable-content{
-    height: 250px;
-    max-height: 250px;
-  }
+  font-family: "AppleSDGothicNeoB";
+  color: var(--color-white) !important;
 }
 </style>
