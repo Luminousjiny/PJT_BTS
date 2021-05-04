@@ -1,11 +1,9 @@
 package com.ssafy.bts.Domain.Coding;
 
-import com.ssafy.bts.Controller.Request.SolveRequest;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity

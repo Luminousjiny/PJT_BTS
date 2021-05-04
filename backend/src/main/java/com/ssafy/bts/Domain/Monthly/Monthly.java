@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -39,12 +42,24 @@ public class Monthly {
     @Column(nullable = false)
     private int monColor;
 
-    public static Monthly createMonthly(MonthlyRequest request) {
+    public static Monthly createMonthly(MonthlyRequest request) throws ParseException {
         Monthly monthlyInput = new Monthly();
         monthlyInput.setMonYear(request.getMonYear());
         monthlyInput.setMonMonth(request.getMonMonth());
-        monthlyInput.setMonStartDate(request.getMonStartDate());
-        monthlyInput.setMonEndDate(request.getMonEndDate());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(request.getMonStartDate());
+        cal.add(Calendar.HOUR, -9);
+        String startTime = sdf.format(cal.getTime());
+
+        monthlyInput.setMonStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(startTime));
+
+        cal.setTime(request.getMonEndDate());
+        cal.add(Calendar.HOUR, -9);
+        String endTime = sdf.format(cal.getTime());
+
+        monthlyInput.setMonEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(endTime));
         monthlyInput.setMonContent(request.getMonContent());
         monthlyInput.setMonColor(request.getMonColor());
         return monthlyInput;
