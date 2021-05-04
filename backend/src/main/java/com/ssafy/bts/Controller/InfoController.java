@@ -30,7 +30,6 @@ public class InfoController {
     @PostMapping
     public BaseResponse writeInfo(@ApiParam(value = "info 객체", required=true) @RequestBody InfoRequest request) throws IOException {
         BaseResponse response = null;
-        System.out.println(request.getUserId());
 
         try{
             Info info = Info.createInfo(request);

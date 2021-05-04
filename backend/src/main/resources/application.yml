@@ -29,7 +29,7 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://btsdb.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com:3306/btsDB?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://btsdb.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com:3306/btsDB?serverTimezone=UTC&useSSL=false&characterEncoding=UTF-8
     username: admin
     password: btsbts123
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -37,7 +37,7 @@ spring:
     hibernate:
       ddl-auto: validate
 --- # AWS S3
-#cloud:ㄴ
+#cloud:
 #  aws:
 #    credentials:
 #      accessKey: AKIAV4C36BHFEEJUSSMI
