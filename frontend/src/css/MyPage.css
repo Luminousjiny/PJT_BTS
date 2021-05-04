@@ -24,7 +24,7 @@
 .content_top{
     display:flex;
     flex-direction: row;
-    flex: 10; 
+    flex: 8; 
     overflow: hidden; 
 }
 
@@ -108,7 +108,7 @@ input::placeholder {
     flex:1 1 0;
     overflow:hidden;
     padding-right: 4rem;
-    padding-top: 1rem;
+    padding-top: 3rem;
 }
 
 .goCamera{
@@ -121,21 +121,22 @@ input::placeholder {
 }
 
 .modify_btn{
-    margin-left: 18vw;
+    margin-top: 0vh !important;
+    margin-left: 19vw !important;
     width: 300px;
     height: 55px;
 }
 
 
 .content_btm{
+    display:flex;
     flex: 1; 
     overflow: hidden;
 }
 
 .goDelete{
-    float:right;
     margin-top:1vh;
-    margin-right: 8rem;
+    margin-left: 8vw !important;
     color: var(--color-red);
     font-size: var(--font-size-14);
     font-family: "AppleSDGothicNeoR";
@@ -162,6 +163,6 @@ input::placeholder {
 }
 
 .certifyBtn{
-    margin-left: -0.5vw;
-    min-height: 50px!important; 
+    margin-left: -0.8vw;
+    margin-top: 1.3vh;
 }

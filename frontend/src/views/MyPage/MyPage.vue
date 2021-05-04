@@ -35,31 +35,30 @@
           <v-text-field class="input" single-line></v-text-field>
 
           <p class="mid_header">핸드폰번호</p>
-
-          <v-container style="width: 78%; margin-left: -0.000001vw">
-            <v-row>
-              <v-col cols="12" sm="4">
-                <v-select :items="newAgency" label="통신사" solo></v-select>
-              </v-col>
-              <v-col cols="12" sm="6" >
-                <v-text-field label="01071231815" solo></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="2">
-                <v-btn class="send_msg" color="#04338C" dark>중복확인</v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-row>
+            <v-col cols="12" sm="8">
+              <v-text-field
+                class="input input_certify"
+                label="ex)01071231815"
+                single-line
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-btn class="certifyBtn" color="#04338C" dark>중복확인</v-btn>
+            </v-col>
+          </v-row>
 
           <p class="mid_header">인증번호</p>
           <v-row>
             <v-col cols="12" sm="8">
               <v-text-field
                 class="input input_certify"
+                label="ex)12345"
                 single-line
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="4">
-              <v-btn class="certifyBtn" color="#04338C" dark>인증</v-btn>
+              <v-btn class="certifyBtn" color="#04338C" dark>본인인증</v-btn>
             </v-col>
           </v-row>
         </div>
