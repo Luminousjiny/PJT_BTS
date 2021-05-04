@@ -11,8 +11,14 @@
         <div id="share-screen" v-if="data.share.screen">
           <user-video class="flex-item screen-video" :stream-manager="data.share.screen"></user-video>
         </div>
-        <div id="share-youtube" v-if="youtube">
-          <div><p>야호호호</p></div>
+        <div id="youtube-container" v-if="youtubeShare.active">
+          <div id="mostPopular-title">
+              <v-icon color="red" id="mostPopular-icon">fab fa-youtube</v-icon>
+              <p>인기 동영상</p>
+              <v-icon id="btnLeaveYoutube" @click="leaveYoutube">fas fa-times</v-icon>
+          </div>
+          <youtube-list :youtubeShare="youtubeShare" v-on:showVideoDetail="showVideoDetail" v-if="youtubeShare.showList"/>
+          <youtube-detail :videoDetail="youtubeShare.videoDetail" v-if="youtubeShare.showDetail"/>
         </div>
       </div>
       <div id="video-container" :class="{'flex-column': data.share.active, 'screen-share' : data.share.active}">
@@ -35,19 +41,23 @@
       </div>
     </div>
     <div id="webcam-nav">
-        <button id="btnSetvideo" @click="updateStream(0)" class="webcam-button">
-            <div v-if="!data.setting.publishVideo"><v-icon id="unpublish-video">fas fa-video-slash</v-icon></div>
-            <div v-else><v-icon id="publish-video">fas fa-video</v-icon></div>
-        </button>
-        <button id="btnSetAudio" @click="updateStream(1)" class="webcam-button">
-            <div v-if="!data.setting.publishAudio"><v-icon id="unpublish-audio">fas fa-microphone-slash</v-icon></div>
-            <div v-else><v-icon id="publish-audio">fas fa-microphone</v-icon></div>
-        </button>
-        <button id="btnShareScreen" @click="shareScreen" class="webcam-button">
-          <div v-if="!sharing"><v-icon id="unpublish-screen">fas fa-upload</v-icon></div>
-          <div v-else><v-icon id="publish-screen">fas fa-upload</v-icon></div>
-        </button>
-        <button id="btnLeaveSession" @click="leaveSession" class="webcam-button"><v-icon id="leave-session">fas fa-phone-alt</v-icon></button>
+      <button id="btnSetvideo" @click="updateStream(0)" class="webcam-button">
+          <div v-if="!data.setting.publishVideo"><v-icon id="unpublish-video">fas fa-video-slash</v-icon></div>
+          <div v-else><v-icon id="publish-video">fas fa-video</v-icon></div>
+      </button>
+      <button id="btnSetAudio" @click="updateStream(1)" class="webcam-button">
+          <div v-if="!data.setting.publishAudio"><v-icon id="unpublish-audio">fas fa-microphone-slash</v-icon></div>
+          <div v-else><v-icon id="publish-audio">fas fa-microphone</v-icon></div>
+      </button>
+      <button id="btnShareScreen" @click="shareScreen" class="webcam-button">
+        <div v-if="!screenShare"><v-icon id="unpublish-screen">fas fa-upload</v-icon></div>
+        <div v-else><v-icon id="publish-screen">fas fa-upload</v-icon></div>
+      </button>
+      <button id="btnShareYoutube" @click="getYoutubeVideo" class="webcam-button" v-if="location == 'cook'">
+        <div v-if="!youtubeShare.active"><v-icon id="unpublish-youtube">fab fa-youtube</v-icon></div>
+        <div v-else><v-icon id="publish-youtube">fab fa-youtube</v-icon></div>
+      </button>
+      <button id="btnLeaveSession" @click="leaveSession" class="webcam-button"><v-icon id="leave-session">fas fa-phone-alt</v-icon></button>
     </div>
   </div>
 </template>
@@ -55,22 +65,32 @@
 <script>
 import axios from "axios";
 import UserVideo from "@/components/WebCam/UserVideo";
+import YoutubeList from "@/components/Youtube/YoutubeList"
+import YoutubeDetail from '@/components/Youtube/YoutubeDetail';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export default {
   name: "WebCam",
   components: {
     UserVideo,
+    YoutubeList,
+    YoutubeDetail
   },
   data() {
     return {
       page : 0,
-      youtube : false,
-      sharing : false,
+      youtubeShare : {
+        active : false,
+        showList : false,
+        showDetail : false,
+        videoDetail : undefined,
+      },
+      screenShare : false,
     }
   },
   props :{
     data : Object,
+    location : String,
   },
   computed : {
     setWidth40 : function(){
@@ -125,13 +145,6 @@ export default {
       this.data.mainStreamManager = stream;
     },
     updateStream(type) {
-      // if (type == 1) {
-      //   this.data.setting.publishAudio = !this.data.setting.publishAudio;
-      //   this.data.publisher.publishAudio(this.data.setting.publishAudio);
-      // } else {
-      //   this.data.setting.publishVideo = !this.data.setting.publishVideo;
-      //   this.data.publisher.publishVideo(this.data.setting.publishVideo);
-      // }
       this.$emit('updateStream', type);
     },
     shareScreen() {
@@ -148,14 +161,19 @@ export default {
           .addEventListener("ended", () => {
             console.log('User pressed the "Stop sharing" button');
             this.data.session.unpublish(screen);
-            this.data.sharing = false;
+            this.screenShare = false;
             this.data.share.active = false;
             this.data.share.screen = undefined;
             this.data.session.publish(this.data.publisher);
           });
         
         this.data.session.unpublish(this.data.publisher);
-        this.data.sharing = true;
+        this.screenShare = true;
+        if(this.youtubeShare.active){
+          this.youtubeShare.active = false;
+          this.youtubeShare.showList = false;
+          this.youtubeShare.showDetail = false;
+        }
         this.data.share.active = true;
         this.data.share.screen = screen;
         this.data.session.publish(this.data.share.screen);
@@ -167,10 +185,33 @@ export default {
     leaveSession() {
         this.$emit('leaveSession');
     },
+    getYoutubeVideo(){
+      this.data.share.active = true;
+      this.data.share.screen = false;
+      this.youtubeShare.active = true;
+      this.youtubeShare.showList = true;
+      this.screenShare = false;
+    },
+    showVideoDetail(video){
+      this.youtubeShare.showList = false;
+      this.youtubeShare.showDetail = true;
+      this.youtubeShare.videoDetail = video;
+    },
+    leaveYoutube(){
+      if(this.youtubeShare.showDetail){
+        this.youtubeShare.showList = true;
+        this.youtubeShare.showDetail = false;
+      }else{
+        this.data.share.active = false;
+        this.youtubeShare.active = false;
+        this.youtubeShare.showList = false;
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
 @import '../../css/WebCam.css';
+@import '../../css/Youtube.css';
 </style>
