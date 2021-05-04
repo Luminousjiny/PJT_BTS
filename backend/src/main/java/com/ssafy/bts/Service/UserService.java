@@ -108,4 +108,18 @@ public class UserService {
     public User findByUserIdAndUserPw(String userId, String userPw) {
         return userRepository.findByUserIdAndUserPw(userId, userPw);
     }
+
+    /**
+     * 유저 포인트, 랭크 수정시 사용)
+     */
+    public void updateUser(User user) {
+        Optional<User> findUser = Optional.ofNullable(userRepository.findByUserId(user.getUserId()));
+        if(findUser.isPresent()) { // 값이 있는지 확인 => .isPresent()
+            findUser.get().setUserPoint(user.getUserPoint());
+            findUser.get().setUserLank(user.getUserLank());
+        }
+        else{
+            throw new IllegalStateException("잘못된 유저 아이디입니다.");
+        }
+    }
 }
