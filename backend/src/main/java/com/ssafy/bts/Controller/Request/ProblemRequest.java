@@ -1,6 +1,5 @@
 package com.ssafy.bts.Controller.Request;
 
-import com.ssafy.bts.Domain.User.UserDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

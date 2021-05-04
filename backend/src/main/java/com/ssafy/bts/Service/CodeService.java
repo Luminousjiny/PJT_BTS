@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.net.CookieHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

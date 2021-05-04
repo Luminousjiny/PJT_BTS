@@ -3,10 +3,7 @@ package com.ssafy.bts.Controller;
 import com.ssafy.bts.Controller.Request.CodeRequest;
 import com.ssafy.bts.Controller.Request.ProblemRequest;
 import com.ssafy.bts.Controller.Request.SolveRequest;
-import com.ssafy.bts.Controller.Request.UserRequest;
 import com.ssafy.bts.Domain.Coding.*;
-import com.ssafy.bts.Domain.Info.Info;
-import com.ssafy.bts.Domain.Info.InfoDTO;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Service.CodeService;
 import com.ssafy.bts.Service.ProblemService;
@@ -186,7 +183,7 @@ public class CodingController {
 
     @ApiOperation(value = "제출한 코드 맞으면 50포인트 적립, 레벨 업데이트", notes = "문제 처음 풀었으면 포인트 적립하고 1반환, 이미 푼 문제면 적립 안하고 0 반환 / 에러 메시지", response = BaseResponse.class)
     @PostMapping("/solve")
-    public BaseResponse modifyHelpCnt(@ApiParam(value = "도움 객체")@RequestBody SolveRequest request){
+    public BaseResponse modifyHelpCnt(@ApiParam(value = "Solve 객체")@RequestBody SolveRequest request){
         BaseResponse response = null;
         int result = 0;
         try {
