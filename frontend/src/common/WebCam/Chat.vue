@@ -73,6 +73,10 @@ export default {
     props :{
         data : Object,
     },
+    updated() {
+        let container = this.$el.querySelector("#receive-container");
+        container.scrollTop = container.scrollHeight;
+    },
     methods: {
         send(){
             this.$emit('sendMessage', this.sendMessage);
