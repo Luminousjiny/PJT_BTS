@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,7 +111,7 @@ public class UserService {
     }
 
     /**
-     * 유저 포인트, 랭크 수정시 사용)
+     * 유저 포인트, 랭크 수정시 사용
      */
     public void updateUser(User user) {
         Optional<User> findUser = Optional.ofNullable(userRepository.findByUserId(user.getUserId()));
@@ -121,5 +122,23 @@ public class UserService {
         else{
             throw new IllegalStateException("잘못된 유저 아이디입니다.");
         }
+    }
+
+    /**
+     * 명예의전당 포인트 내림차순 10명 조회
+     */
+    @Transactional
+    public List<User> findAwardList() {
+        List<User> userList = userRepository.findAwardList();
+        List<User> top10List = new ArrayList<>();
+        int cnt = 0;
+        if(userList.size()>0){
+            for(User u : userList){
+                if(cnt>9) break;
+                top10List.add(u);
+                cnt++;
+            }
+        }
+        return top10List;
     }
 }
