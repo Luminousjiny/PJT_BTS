@@ -169,6 +169,11 @@ export default {
         
         this.data.session.unpublish(this.data.publisher);
         this.screenShare = true;
+        if(this.youtubeShare.active){
+          this.youtubeShare.active = false;
+          this.youtubeShare.showList = false;
+          this.youtubeShare.showDetail = false;
+        }
         this.data.share.active = true;
         this.data.share.screen = screen;
         this.data.session.publish(this.data.share.screen);
