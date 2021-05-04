@@ -73,8 +73,8 @@ public class InfoController {
     public BaseResponse findAllInfo(){
         BaseResponse response = null;
         try{
-            List<Info> reviewList  = infoService.findAll();
-            List<InfoDTO> collect = reviewList.stream()
+            List<Info> infoList  = infoService.findAll();
+            List<InfoDTO> collect = infoList.stream()
                     .map(m-> new InfoDTO(m))
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
