@@ -4,7 +4,7 @@ import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -15,8 +15,8 @@ public class WeeklyDTO {
     private int weekYear;
     private int weekMonth;
     private int weekDate;
-    private LocalTime weekStartTime;
-    private LocalTime weekEndTime;
+    private Date weekStartTime;
+    private Date weekEndTime;
     private String weekContent;
 
     public WeeklyDTO(Weekly weekly){

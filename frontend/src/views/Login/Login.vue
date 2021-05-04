@@ -1,33 +1,40 @@
 <template>
   <div class="login">
-    <div class="content">
-      <v-row>
-        <v-col cols="12" sm="6" class="left">
-          <img class="login_img" src="../../../public/Image/login_img.png"> 
-        </v-col>
-        <v-col cols="12" sm="6">
-          <div>
-            <h1>로그인</h1>
-            <p>환영합니다. 로그인 해주세요!</p>
+    <div class="login_content">
+      <div class="login_leftBox">
+        <img class="login_img" src="../../../public/Image/login_img.png" />
+      </div>
+      <div class="login_rightBox">
+        <div class="login_input">
+          <h1 class="login_header">로그인</h1>
+          <p class="text">환영합니다. 로그인 해주세요!</p>
 
-            <p>아이디</p>
-            <v-text-field
-              label="최대 10자 "
-              single-line></v-text-field>
+          <p class="login_mid_header">아이디</p>
+          <v-text-field
+            class="login_input_c"
+            placeholder="최대 10자입니다. "
+            single-line
+          ></v-text-field>
 
-            <p>비밀번호</p>
-            <v-text-field
-              label="8자~11자 "
-              single-line></v-text-field>
+          <p class="login_mid_header">비밀번호</p>
+          <v-text-field
+            class="login_input_c"
+            placeholder="8자~11자입니다. "
+            single-line
+          ></v-text-field>
 
-            <v-checkbox
-                v-model="checkbox"
-                :label="`Checkbox 1: ${checkbox.toString()}`"
-                color ="red"
-              ></v-checkbox>
+          <input type="checkbox" id="checkbox" v-model="checked" />
+          <label class="id_remember" for="checkbox">아이디 기억하기</label>
+
+          <div class="text-center">
+            <v-btn class="login_btn" rounded color="#04338C" dark>LOGIN</v-btn>
           </div>
-        </v-col>
-      </v-row>
+          <div class="moves">
+            <router-link class="move" to="/join">회원가입</router-link> |
+            <router-link class="move" to="/findpw">비밀번호 찾기</router-link>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,16 +42,15 @@
 <script>
 export default {
   name: "Login",
-  data () {
-      return {
-        checkbox: true,
-      }
-    },
-  components: {
+  data() {
+    return {
+      checked: false,
+    };
   },
+  components: {},
 };
 </script>
 
 <style scoped>
-@import '../../css/Login.css';
+@import "../../css/Login.css";
 </style>

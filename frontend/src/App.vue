@@ -5,7 +5,7 @@
 </template>
 
 <style>
-@import './css/style.css';
+@import "./css/style.css";
 * {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;

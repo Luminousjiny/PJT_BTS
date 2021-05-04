@@ -27,6 +27,9 @@ import Rest from "../views/Rest/Rest.vue";
 import Play from "../views/Play/Play.vue";
 import Office from "../views/Office/Office.vue";
 import WebCam from "../common/WebCam/WebCam.vue";
+import joinUserInfo from "../components/Join/Join_1.vue";
+import joinUserCheck from "../components/Join/Join_2.vue";
+import CamSetting from "../views/MyPage/CamSetting.vue";
 
 Vue.use(VueRouter);
 
@@ -52,6 +55,18 @@ const routes = [
     path: "/join",
     name: "Join",
     component: Join,
+    children: [
+      {
+        path: "",
+        name: "joinUserInfo",
+        component: joinUserInfo
+      },
+      {
+        path: "check",
+        name: "joinUserCheck",
+        component: joinUserCheck
+      }
+    ]
   },
   {
     path: "/findpw",
@@ -59,7 +74,7 @@ const routes = [
     component: FindPw,
     children: [
       {
-        path: "confirm",
+        path: "",
         name: "Confirm",
         component: Confirm,
       },
@@ -74,6 +89,11 @@ const routes = [
     path: "/mypage",
     name: "MyPage",
     component: MyPage,
+  },
+  {
+    path: "/camSetting",
+    name: "CamSetting",
+    component: CamSetting,
   },
   // { // 게임 부분 수정 필요 - 잘모름
   //   path: '/school',
