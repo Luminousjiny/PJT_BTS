@@ -1,5 +1,6 @@
 package com.ssafy.bts.Domain.Monthly;
 
+import com.ssafy.bts.Controller.Request.MonthlyRequest;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,9 +26,11 @@ public class Monthly {
     private int monMonth;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date monStartDate;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date monEndDate;
 
     @Column(nullable = false, columnDefinition = "text")
@@ -35,4 +38,15 @@ public class Monthly {
 
     @Column(nullable = false)
     private int monColor;
+
+    public static Monthly createMonthly(MonthlyRequest request) {
+        Monthly monthlyInput = new Monthly();
+        monthlyInput.setMonYear(request.getMonYear());
+        monthlyInput.setMonMonth(request.getMonMonth());
+        monthlyInput.setMonStartDate(request.getMonStartDate());
+        monthlyInput.setMonEndDate(request.getMonEndDate());
+        monthlyInput.setMonContent(request.getMonContent());
+        monthlyInput.setMonColor(request.getMonColor());
+        return monthlyInput;
+    }
 }
