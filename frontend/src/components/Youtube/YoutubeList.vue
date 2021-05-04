@@ -34,7 +34,7 @@ export default {
             http += `key=${YOUTUBE_KEY}&part=snippet&chart=mostPopular&regionCode=kr&maxResults=50`
 
             axios.get(http).then(( data ) => {
-                this.videoList = data.data.items.slice(0,3);
+                this.videoList = data.data.items;
                 console.log(data);
             }).catch((error) => {
                 console.log(error);
