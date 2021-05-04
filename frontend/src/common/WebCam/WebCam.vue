@@ -53,7 +53,7 @@
         <div v-if="!screenShare"><v-icon id="unpublish-screen">fas fa-upload</v-icon></div>
         <div v-else><v-icon id="publish-screen">fas fa-upload</v-icon></div>
       </button>
-      <button id="btnShareYoutube" @click="getYoutubeVideo" class="webcam-button">
+      <button id="btnShareYoutube" @click="getYoutubeVideo" class="webcam-button" v-if="location == 'cook'">
         <div v-if="!youtubeShare.active"><v-icon id="unpublish-youtube">fab fa-youtube</v-icon></div>
         <div v-else><v-icon id="publish-youtube">fab fa-youtube</v-icon></div>
       </button>
@@ -90,6 +90,7 @@ export default {
   },
   props :{
     data : Object,
+    location : String,
   },
   computed : {
     setWidth40 : function(){

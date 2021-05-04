@@ -12,7 +12,7 @@
     </div>
     <div id="session" v-if="data.session">
         <Chat :data="data" v-on:sendMessage="send"/>
-        <WebCam :data="data" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
+        <WebCam :data="data" :location="location" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
     </div>
   </div>
 </template>
@@ -61,6 +61,7 @@ export default {
             screen : undefined,
           },
         },
+        location : "computer",
       }
     },
     destroyed(){
