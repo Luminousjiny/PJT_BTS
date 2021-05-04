@@ -15,6 +15,8 @@ public class ProblemDTO {
     private UserDTO user;
     private String proTitle;
     private String proContent;
+    private String proInput;
+    private String proOutput;
     private Date proDate;
 
     public ProblemDTO(Problem problem){
@@ -27,6 +29,8 @@ public class ProblemDTO {
         }
         this.proTitle = problem.getProTitle();
         this.proContent = problem.getProContent();
+        this.proInput = problem.getProInput();
+        this.proOutput = problem.getProOutput();
         this.proDate = problem.getProDate();
     }
 }

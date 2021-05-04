@@ -40,5 +40,4 @@ public class CodeDTO {
         this.codeLan = code.getCodeLan();
         this.codeDate = code.getCodeDate();
     }
-
 }
