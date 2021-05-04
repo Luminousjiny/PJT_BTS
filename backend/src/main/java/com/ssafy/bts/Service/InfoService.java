@@ -5,9 +5,7 @@ import com.ssafy.bts.Domain.Info.Info;
 import com.ssafy.bts.Repository.InfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Temporal;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Date;
