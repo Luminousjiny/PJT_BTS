@@ -1,6 +1,7 @@
 package com.ssafy.bts.Domain.Qna;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.ssafy.bts.Controller.Request.QnaRequest;
 import com.ssafy.bts.Domain.User.User;
 
 import lombok.Getter;
@@ -29,4 +30,17 @@ public class Qna {
 
     @Column(nullable = false)
     private Date qnaDate;
+
+    public static Qna createQna(QnaRequest request) {
+        Qna qnaInput = new Qna();
+        qnaInput.setQnaTitle(request.getQnaTitle());
+        qnaInput.setQnaContent(request.getQnaContent());
+        return qnaInput;
+    }
+
+    @PrePersist // manager persist 의해 처음 호출될 때 실행
+    private void onCreate() {
+        this.qnaDate = new Date();
+    }
+
 }

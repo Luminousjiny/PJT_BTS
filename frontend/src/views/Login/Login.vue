@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login_content">
       <div class="login_leftBox">
-        <img class="login_img" src="../../../public/Image/login_img.png"> 
+        <img class="login_img" src="../../../public/Image/login_img.png" />
       </div>
       <div class="login_rightBox">
         <div class="login_input">
@@ -10,24 +10,27 @@
           <p class="text">환영합니다. 로그인 해주세요!</p>
 
           <p class="login_mid_header">아이디</p>
-          <v-text-field class="login_input_c" placeholder="최대 10자입니다. " single-line></v-text-field>
+          <v-text-field
+            class="login_input_c"
+            placeholder="최대 10자입니다. "
+            single-line
+          ></v-text-field>
 
           <p class="login_mid_header">비밀번호</p>
-          <v-text-field class="login_input_c" placeholder="8자~11자입니다. " single-line></v-text-field>
+          <v-text-field
+            class="login_input_c"
+            placeholder="8자~11자입니다. "
+            single-line
+          ></v-text-field>
 
-          <input type="checkbox" id="checkbox" v-model="checked">
+          <input type="checkbox" id="checkbox" v-model="checked" />
           <label class="id_remember" for="checkbox">아이디 기억하기</label>
 
           <div class="text-center">
-            <v-btn
-              class="login_btn"
-              rounded
-              color="#04338C"
-              dark
-            >LOGIN</v-btn>
+            <v-btn class="login_btn" rounded color="#04338C" dark>LOGIN</v-btn>
           </div>
           <div class="moves">
-            <router-link class="move" to="/join">회원가입</router-link> | 
+            <router-link class="move" to="/join">회원가입</router-link> |
             <router-link class="move" to="/findpw">비밀번호 찾기</router-link>
           </div>
         </div>
@@ -39,16 +42,15 @@
 <script>
 export default {
   name: "Login",
-  data () {
-      return {
-        checked: false
-      }
-    },
-  components: {
+  data() {
+    return {
+      checked: false,
+    };
   },
+  components: {},
 };
 </script>
 
 <style scoped>
-@import '../../css/Login.css';
+@import "../../css/Login.css";
 </style>

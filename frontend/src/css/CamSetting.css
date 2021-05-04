@@ -62,6 +62,7 @@
 .box_ul li:first-child{
     float:left;
 }
+
 .box_ul li{
     width:100%;
     float:left;
@@ -77,8 +78,8 @@
 }
 
 .modify_btn{
-    margin-left: 10vw;
-    margin-top: 7vh;
+    margin-left: 10vw !important;
+    margin-top: 8vh !important;
     width: 300px;
     height: 55px;
 }

@@ -1,5 +1,6 @@
 package com.ssafy.bts.Domain.Coding;
 
+import com.ssafy.bts.Controller.Request.SolveRequest;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,4 @@ public class Solve {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Solve(Problem problem, User user){
-        this.problem = problem;
-        this.user = user;
-    }
 }

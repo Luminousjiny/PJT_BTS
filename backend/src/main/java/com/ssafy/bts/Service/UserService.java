@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class UserService {
     }
 
     /**
-     * 아이디로 유저객체 찾기
+     * 아이디로 중복확인
      */
     @Transactional
     public boolean checkUserId(String userId) {
@@ -100,5 +101,44 @@ public class UserService {
     @Transactional
     public User findByUserIdAndUserPhone(String userId, String userPhone) {
         return userRepository.findByUserIdAndUserPhone(userId, userPhone);
+    }
+
+    /**
+     * 로그인 시 , 아이디 비밀번호로 유저 찾기
+     */
+    public User findByUserIdAndUserPw(String userId, String userPw) {
+        return userRepository.findByUserIdAndUserPw(userId, userPw);
+    }
+
+    /**
+     * 유저 포인트, 랭크 수정시 사용
+     */
+    public void updateUser(User user) {
+        Optional<User> findUser = Optional.ofNullable(userRepository.findByUserId(user.getUserId()));
+        if(findUser.isPresent()) { // 값이 있는지 확인 => .isPresent()
+            findUser.get().setUserPoint(user.getUserPoint());
+            findUser.get().setUserLank(user.getUserLank());
+        }
+        else{
+            throw new IllegalStateException("잘못된 유저 아이디입니다.");
+        }
+    }
+
+    /**
+     * 명예의전당 포인트 내림차순 10명 조회
+     */
+    @Transactional
+    public List<User> findAwardList() {
+        List<User> userList = userRepository.findAwardList();
+        List<User> top10List = new ArrayList<>();
+        int cnt = 0;
+        if(userList.size()>0){
+            for(User u : userList){
+                if(cnt>9) break;
+                top10List.add(u);
+                cnt++;
+            }
+        }
+        return top10List;
     }
 }
