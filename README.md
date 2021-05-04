@@ -59,13 +59,13 @@ gantt
     와이어프레임ppt : active, 2021-05-10, 1d
     사전학습  : done, 2021-04-14, 10d
     교보재 jpa 학습 : done, 2021-04-26, 2d
-    ucc 기획 : active, 2021-05-07, 1d
-    ucc 촬영 및 제작 : active, 2021-05-10, 4d
+    ucc 기획 : active, 2021-05-13, 1d
+    ucc 촬영 및 제작 : active, 2021-05-14, 4d
 
     section Frontend
     웹캠페이지 : done, 2021-04-21, 10d
     채팅 : done, 2021-04-24, 3d
-    유트브 : crit, 2021-04-29, 5d
+    유트브 : crit, 2021-04-29, 6d
     로그인/회원가입/비번찾기 페이지 : done, 2021-04-27, 4d
     로그인/회원가입/비번찾기 페이지 백연결 : active, 2021-05-05, 3d
     마이페이지 : done, 2021-04-26, 5d
@@ -82,7 +82,8 @@ gantt
     유저 CRUD : done, 2021-04-30, 2d
     jwt토큰, 핸드폰 인증 : crit, 2021-05-02,2d 
     정보공유 게시판 CRUD : done, 2021-04-30, 3d
-    플래너 : crit, 2021-05-03, 4d
+    플래너 : done, 2021-05-04, 1d
+    코드공유 게시판 CRUD + 명예의 전당 : crit, 2021-05-04, 2d 
     
     section Game
 	네트워크 동기화 : done, 2021-04-22, 3d
@@ -96,8 +97,6 @@ gantt
     section 발표관리
     Sub1 ppt 제작 : done, 2021-04-22, 1d
     Sub1 발표준비 : done, 2021-04-22, 1d
-    Sub2 ppt 제작 : active, 2021-05-05, 1d
-    Sub2 발표준비 : active, 2021-05-06, 1d
 ```
 
 <br/>  
