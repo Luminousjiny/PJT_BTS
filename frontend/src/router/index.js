@@ -9,8 +9,14 @@ import MyPage from "../views/MyPage/MyPage.vue";
 import Change from "../components/FindPw/Change.vue";
 import Confirm from "../components/FindPw/Confirm.vue";
 import Computer from "../views/Computer/Computer.vue";
-import Board from "../components/Computer/Board.vue";
-import ContentDetail from "../components/Computer/ContentDetail.vue";
+import Board from "../views/Board/Board.vue";
+import InfoBoard from "../components/Board/InfoBoard.vue";
+import InfoDetail from "../components/Board/InfoDetail.vue";
+import ProblemBoard from "../components/Board/ProblemBoard.vue";
+import ProblemDetail from "../components/Board/ProblemDetail.vue";
+import CreateCode from '../components/Board/CreateCode.vue';
+import UpdateCode from '../components/Board/UpdateCode.vue';
+import CodeDetail from '../components/Board/CodeDetail.vue';
 import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
 import Calender from "../components/Library/Calender.vue";
@@ -110,16 +116,48 @@ const routes = [
         path: "webcam",
         name: "WebCam",
         component: WebCam,
+      }, 
+    ],
+  },
+  {
+    path: "/board",
+    name: "Board",
+    component: Board,
+    children: [
+      {
+        path: "information",
+        name: "InfoBoard",
+        component: InfoBoard,
+      },     
+      {
+        path: "information/:id",
+        name: "InfoDetail",
+        component: InfoDetail,
+      },      
+      {
+        path: "problem",
+        name: "ProblemBoard",
+        component: ProblemBoard,
+      },     
+      {
+        path: "problem/:id",
+        name: "ProblemDetail",
+        component: ProblemDetail,
       },
       {
-        path: "board",
-        name: "Board",
-        component: Board,
+        path: "problem/:id/code",
+        name: "CreateCode",
+        component: CreateCode,
       },
       {
-        path: "content",
-        name: "ContentDetail",
-        component: ContentDetail,
+        path: "problem/:id/code/:codeId/:userName",
+        name: "UpdateCode",
+        component: UpdateCode,
+      },
+      {
+        path: "problem/:id/code/:codeId",
+        name: "CodeDetail",
+        component: CodeDetail,
       },
     ],
   },
