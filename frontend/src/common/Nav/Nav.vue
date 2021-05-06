@@ -55,7 +55,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import "../../css/style.css";
 @import "../../css/Nav.css";
 </style>
