@@ -2,22 +2,25 @@
     text-align: left;
 }
 #youtube-videos{
-    overflow-y: scroll;
     overflow-x: hidden;
     display: flex;
     position: relative;
-    max-height: 600px;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
     align-content: space-between;
 }
+.share{
+    overflow-y: scroll!important;
+    max-height: 600px;
+}
 .share-youtube{
     max-width: 50%!important;
-    width: 40%;
+    width: 40%!important;
 }
 .youtube{
-    max-width: 20%;
+    width: 18%;
+    max-width: 18%;
     height: auto;
     padding: 10px;
     cursor: pointer;

@@ -2,9 +2,15 @@ package com.ssafy.bts.Domain.Comment;
 
 import com.ssafy.bts.Domain.Qna.QnaDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommetDTO {
     private int comId;
     private QnaDTO qna;
@@ -16,7 +22,7 @@ public class CommetDTO {
         this.comId = comment.getComId();
         if(comment.getQna() != null){
             qna = new QnaDTO();
-            this.qna.setQnaId(this.qna.getQnaId());
+            this.qna.setQnaId(comment.getQna().getQnaId());
         }
         if(comment.getUser() != null){
             user = new UserDTO();

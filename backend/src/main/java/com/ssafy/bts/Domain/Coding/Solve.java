@@ -4,7 +4,6 @@ import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
@@ -23,8 +22,4 @@ public class Solve {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Solve(Problem problem, User user){
-        this.problem = problem;
-        this.user = user;
-    }
 }

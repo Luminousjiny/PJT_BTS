@@ -2,6 +2,8 @@ package com.ssafy.bts.Controller;
 
 import com.ssafy.bts.Controller.Request.ChangePwRequest;
 import com.ssafy.bts.Controller.Request.UserRequest;
+import com.ssafy.bts.Domain.Info.Info;
+import com.ssafy.bts.Domain.Info.InfoDTO;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Domain.User.UserDTO;
 import com.ssafy.bts.Service.UserService;
@@ -142,6 +144,23 @@ public class UserController {
         }
         catch(Exception e){
             response = new BaseResponse("fail",e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "명예의 전당 포인트 내림차순 10명 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/award")
+    public BaseResponse findAward(){
+        BaseResponse response = null;
+        try{
+            List<User> userList  = userService.findAwardList();
+            List<UserDTO> collect = userList.stream()
+                    .map(m-> new UserDTO(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        }
+        catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
