@@ -138,7 +138,10 @@ export default {
       this.showModal=false;
     },
     handleClickCode(){
-      location.href="http://localhost:8000/board/problem/0/code";
+      this.$router.push({
+        name:'CreateCode',
+      })
+      // location.href="http://localhost:8000/board/problem/0/code";
     },
   }
 }
