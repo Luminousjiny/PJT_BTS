@@ -36,7 +36,7 @@ dependencies {
 //	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 
     // AWS S3
-    //compile('org.springframework.cloud:spring-cloud-starter-aws')
+    compile('org.springframework.cloud:spring-cloud-starter-aws')
 
     // handlebars
     compile 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.3.0'
@@ -54,18 +54,18 @@ dependencies {
 }
 
 //aws s3
-/*dependencyManagement {
+dependencyManagement {
     imports {
         mavenBom 'org.springframework.cloud:spring-cloud-aws:2.0.0.RC2'
     }
-}*/
+}
 //aws s3
 
 test {
     useJUnitPlatform()
 }
 
-//bootJar{
-//    archiveBaseName="backend"
-//    archiveVersion="0.0.1-SNAPSHOT"
-//}
+bootJar{
+    archiveBaseName="bts"
+    archiveVersion="0.0.1-SNAPSHOT"
+}
