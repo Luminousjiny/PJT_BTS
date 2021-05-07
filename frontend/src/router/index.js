@@ -19,7 +19,7 @@ import UpdateCode from '../components/Board/UpdateCode.vue';
 import CodeDetail from '../components/Board/CodeDetail.vue';
 import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
-import Calender from "../components/Library/Calender.vue";
+import Calendar from "../components/Library/Calendar.vue";
 import Youtube from "../components/Library/Youtube.vue";
 import Monthly from "../components/Library/Monthly.vue";
 import Weekly from "../components/Library/Weekly.vue";
@@ -185,9 +185,9 @@ const routes = [
         component: Youtube,
       },
       {
-        path: "calender",
-        name: "Calender",
-        component: Calender,
+        path: "calendar",
+        name: "Calendar",
+        component: Calendar,
         children: [
           {
             path: "monthly",
