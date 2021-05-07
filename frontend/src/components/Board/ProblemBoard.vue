@@ -219,7 +219,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 0.5rem 3rem;
+  padding: 1rem 3rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";
