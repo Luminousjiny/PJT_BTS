@@ -9,6 +9,8 @@
     --color-grey-4: #CCCCCC;
     --color-grey-5: #F8F8F8; /*검색바, 핸드폰입력창, 카메라 설정창 등 .. */
     --color-grey-6: #E1E1E1; /*선*/
+    --color-grey-7: #F3F3F3;
+    --color-grey-8: #B4B4B4;
     --color-shadow : #33333340; /*그림자*/
     --color-skyBlue : #C6D6F6;
     --color-midBlue : #7AA6FF;
@@ -19,6 +21,7 @@
     --color-green-live:#92DB6F;
     --color-green : #66C835;
     --color-puple : #6D58C3;
+    --color-award : #282D4E; /* 명예의전당 배경 */
     
     /* 플래너 작성 컬러 */
     --color-pink1 : #F5BBBB;

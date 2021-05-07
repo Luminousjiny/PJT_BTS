@@ -1,6 +1,8 @@
 <template>
   <div class="qna_board_wrap">
-    <div class="qna_board_title AppleSDGothicNeoB">정보공유 게시판</div>
+    <div class="qna_board_title">
+      수업을 들으며 학습한 내용을 올려보세요
+    </div>
     <div class="qna_board_nav">
       <button class="qna_board_create_btn" @click="handleClickModal">
         <font-awesome-icon :icon="['fas', 'pencil-alt']" size="1x" />
@@ -39,6 +41,7 @@
           :key="idx"
           :color="colorList[idx%7]"
           :content="content"
+          @handleClickContent="handleClickContent"
         />
       </div>
       <button type="button" class="qna_borad_list_btn" @click="handleClickRight">
@@ -49,16 +52,17 @@
 </template>
 
 <script>
-import Content from './Content.vue';
-import CreateEditor from './CreateEditor.vue';
+import Content from '../../components/Board/Content.vue';
+import CreateEditor from '../../components/Board/CreateEditor.vue';
 export default {
-  name:'Board',
+  name:'InfoBoard',
   components:{
     Content,
     CreateEditor,
   },
   data : ()=>{
     return{
+      routeName:'information',
       windowSize:0,
       showModal: false,
       slideIdx:0,
@@ -114,6 +118,15 @@ export default {
   mounted(){
   },
   methods:{
+    handleClickContent(id,content){
+      this.$router.push({
+        name:"InfoDetail",
+        params:{
+          content,
+          id,
+        }
+      })
+    },
     handleWindowSize(){
       this.windowSize=window.innerWidth;
       if(this.windowSize>1024)
@@ -132,12 +145,11 @@ export default {
       setTimeout(function(){
         const modal = document.querySelector('.scrollable-modal');
         modal.style.maxWidth='80%';
-        modal.style.height='auto';
         const titlebar = document.querySelector('.vm-titlebar');
         titlebar.style.textAlign="center";
+        titlebar.style.color="var(--color-grey-2)"
         const ProseMirror = document.querySelector('.ProseMirror');
-        ProseMirror.style.height='auto';
-        ProseMirror.style.maxHeight="340px";
+        ProseMirror.style.height='360px';
       },1);
 
     },
@@ -174,14 +186,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .qna_board_wrap{
   margin: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   width: 80%;
 }
 .qna_board_title{
-  font-size: var(--font-size-22);
-  font-family: "AppleSDGothicNeoEB";
+  font-size: var(--font-size-14);
+  color: var(--color-grey-3);
+  font-family: "AppleSDGothicNeoR";
   text-align: center;
   padding: 0.5em;
 }
@@ -224,44 +239,16 @@ export default {
 .qna_borad_list_btn{
   color: var(--color-white);
 }
-
-.scrollable-modal {
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 50px);
-}
-.scrollable-modal .vm-titlebar {
-  flex-shrink: 0;
-}
-.scrollable-modal .vm-content {
-  padding: 0;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0; 
-}
-.scrollable-modal .vm-content .scrollable-content {
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  flex-grow: 1;
-}
-.scrollable-modal .scrollable-modal-footer {
-  padding: 15px 0px 15px 0px;
-  border-top: 1px solid #e5e5e5;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-}
 .modal_btn_box{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .modal_btn{
-  padding: 0.5rem 3rem;
+  padding: 1rem 3rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
-  color: var(--color-white);
+  font-family: "AppleSDGothicNeoB";
+  color: var(--color-white) !important;
 }
 </style>

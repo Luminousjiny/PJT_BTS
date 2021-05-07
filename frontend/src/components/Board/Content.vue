@@ -22,8 +22,10 @@ export default {
     content: Object,
     color: String,
     id: Number,
+
   },
   created(){
+
   },
   mounted(){
     const wrap = document.getElementById(String(this.id));
@@ -31,18 +33,13 @@ export default {
   },
   methods:{
     onClickContent(){
-      this.$router.push({
-        name:"ContentDetail",
-        params:{
-          'content':this.content,
-        }
-      })
+      this.$emit('handleClickContent',this.id,this.content);
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .content_wrap{
   background-color: white;
   border-radius: 10px;
