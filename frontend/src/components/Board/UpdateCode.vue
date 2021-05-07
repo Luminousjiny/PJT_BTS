@@ -1,0 +1,417 @@
+<template>
+  <div class="code__wrap">
+    <div class="code__header">
+      <div class="code__header__left">
+        <button class="code__header__listbtn" @click="handleClickList">
+          <font-awesome-icon :icon="['fas', 'chevron-left']" size="1x"/>
+          제출 목록보기
+        </button>
+      </div>
+    </div>
+
+    <div class="code__profile">
+      <div class="code__profile__image"></div>
+      <div>
+        <div class="code__profile__name">
+          {{content.name}}
+        </div>
+        <div class="code__profile__date">
+          <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
+          {{content.date}}
+        </div>
+      </div>
+    </div>
+    <div class="code__title">
+      {{content.title}}
+    </div>
+    <div class="code__problem">
+      {{content.problem}}
+    </div>
+
+    <div class="code__example">
+      <div class="code__example__box">
+        <div class="code__example__title">
+          예제 입력
+        </div>
+        <div class="code__example__input">
+          <div v-for="(input,idx) in content.input.split('\n')" :key="idx">{{input}}</div>
+        </div>
+      </div>
+      <div class="code__example__box">
+        <div class="code__example__title">
+          예제 출력
+        </div>
+        <div class="code__example__output" >
+          <div v-for="(output,idx) in content.output.split('\n')" :key="idx">{{output}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="code__editor__box">
+      <select name="code__languages" id="code__languages" v-model="mode" class="code__select">
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="java">JAVA</option>
+        <option value="python">PYTHON</option>
+      </select>
+      <select name="code__languages" id="code__languages" v-model="theme" class="code__select">
+        <option value="vs">VS</option>
+        <option value="vs-dark">VS-DARK</option>
+      </select>
+      <m-monaco-editor v-model="code" :mode="mode" :theme="theme"></m-monaco-editor>
+    </div>
+    <div class="code__example">
+      <div class="code__example__box">
+        <div class="code__example__title">
+          입력
+        </div>
+        <textarea name="" id="" cols="30" rows="10" class="code__example__input" v-model="input"></textarea>
+      </div>
+      <div class="code__example__box">
+        <div class="code__example__title">
+          출력
+        </div>
+        <textarea name="" id="" cols="30" rows="10" class="code__example__output" v-model="output" readonly></textarea>
+      </div>
+    </div>
+    <div class="code__btn__box">
+      <button class="code__btn code__btn__white" @click="handleCompile">컴파일</button>
+      <button class="code__btn code__btn__blue" @click="handleSubmit">제출하기</button>      
+    </div>
+  </div>
+</template>
+
+<script>
+import UpdateProblem from './UpdateProblem.vue';
+import http from '@/util/http-common.js';
+export default {
+  name:'CreateCode',
+  components:{
+    UpdateProblem,
+  },
+  data(){
+    return{
+      content:{
+        name:'졍',
+        date:'2021.04.21',
+        title:'[5663] 피보나치 수열',
+        problem:'피보나치 수는 0과 1로 시작',
+        input:'3',
+        output:'23\n24\n25',
+      },
+      code:"",
+      mode:"python",
+      theme:'vs-dark',
+      input:'',
+      output:'',
+    }
+  },
+  created(){
+    // this.content=this.$route.params.content;
+  },
+  mounted(){
+    const editor=document.querySelector('.code__editor__box');
+    editor.childNodes[2].id='a'
+    // console.log(editor.childNodes);
+    // console.log(editor.childNodes[2]);
+    console.log(document.querySelector('.monaco-editor'))
+  },
+  methods:{
+    handleClickList(){
+      this.$router.push({
+        name:'ProblemDetail',
+        params:{
+          id:0,
+        }
+      });
+    },
+    handleSubmit(){
+      const compiler={
+        'c':10,
+        'cpp':1,
+        'java':10,
+        'python':99
+      };
+      this.code=document.querySelector('.inputarea').value;
+      var formdata = new FormData();
+      formdata.append("source", this.code);
+      formdata.append("compilerId", compiler[this.mode]);
+      formdata.append("input", this.input);
+      console.log(formdata);
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow'
+      };
+      fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        setTimeout(()=>{
+          fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+            .then(response2 => response2.json())
+            .then(result2 => {
+              console.log(result2);
+              if(result2.result.status.code===15){
+                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+                  .then(response3 => response3.text())
+                  .then(result3 => {
+                    console.log(result3.trim(),this.content.output.trim())
+                    if(result3.trim()===this.content.output.trim()){
+                      console.log('축하합니다. Pass입니다.\n제출이 완료되었습니다.');
+                    } else{
+                      console.log('오답입니다.');
+                    }
+                  })
+                  .catch(error3 => console.log('error', error3));
+              } else{
+                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/error?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+                  .then(response3 => response3.text())
+                  .then(result3 => {
+                    console.log(`오답입니다.\n ${result3}`);
+                  })
+                  .catch(error3 => console.log('error', error3));
+              }
+
+                })
+              .catch(error2 => console.log('error', error2));
+        },5000);
+        })
+        .catch(error => console.log('error', error));
+    },
+    handleCompile(){
+      // 1 c++
+      // 11 c
+      // 10 java
+      // 99 python
+      const compiler={
+        'c':10,
+        'cpp':1,
+        'java':10,
+        'python':99
+      };
+      this.code=document.querySelector('.inputarea').value;
+      console.log(this.code,compiler[this.mode],this.input);
+      var formdata = new FormData();
+      formdata.append("source", this.code);
+      formdata.append("compilerId", compiler[this.mode]);
+      formdata.append("input", this.input);
+      console.log(formdata);
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow'
+      };
+      fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        // 0 waiting
+        // 1 compilation
+        // 3 execution
+        // 11 compilation error
+        // 12 runtime error (ex. division zero)
+        // 13 time limit exceded
+        // 15 success
+        // 17 memory limit exceeded
+        this.output+='소스 코드를 컴파일 중 입니다...\n'
+        setTimeout(()=>{
+          fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+            .then(response2 => response2.json())
+            .then(result2 => {
+              console.log(result2);
+              if(result2.result.status.code===15){
+                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+                  .then(response3 => response3.text())
+                  .then(result3 => {
+                    this.output+=`메모리 용량 : ${result2.result.memory}, 실행 시간 : ${result2.result.time}s\n`
+                    this.output+=`${result3}\n\n`;
+                    if(result3===this.content.output){
+                      console.log('축하합니다. Pass입니다.\n제출이 완료되었습니다.');
+                    } else{
+                      console.log('오답입니다.');
+                    }
+                  })
+                  .catch(error3 => console.log('error', error3));
+              } else{
+                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/error?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+                  .then(response3 => response3.text())
+                  .then(result3 => {
+                    this.output+=`error : ${result2.result.status.name}\n`;
+                    this.output+=`${result3}\n\n`;
+                    console.log(`오답입니다.\n ${result3}`);
+                  })
+                  .catch(error3 => console.log('error', error3));
+              }
+
+                })
+              .catch(error2 => console.log('error', error2));
+        },5000);
+        })
+        .catch(error => console.log('error', error));
+    },
+  }
+}
+</script>
+<style lang="scss">
+.monaco-editor,
+.overflow-guard{
+  width: 100% !important;
+}
+// .minimap{
+//   width:50% !important;
+//   canvas{
+//     width:50% !important;
+//   }
+//   &-slider{
+//     width: 50% !important;
+//     &-horizontal{
+//       width: 50% !important;
+//     }
+//   }
+// }
+</style>
+<style lang="scss" scoped>
+
+.code__wrap{
+  width: 80%;
+  margin: auto;
+}
+.code__header{
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 0;
+  align-items: center;
+}
+.code__header__left .code__header__listbtn{
+  font-size: var(--font-size-14);
+  font-family: "AppleSDGothicNeoR";
+  border: 1px solid var(--color-grey-2);
+  padding: 0.25rem;
+  color: var(--color-grey-2);
+}
+.code__header__right .code__header__editbtn{
+  font-family: "AppleSDGothicNeoB";
+  font-size: var(--font-size-14);
+  padding: 0.25rem;
+  color: var(--color-grey-2);
+}
+.code__header__right .code__header__deletebtn{
+  font-family: "AppleSDGothicNeoB";
+  font-size: var(--font-size-14);
+  padding: 0.25rem;
+  color: var(--color-pink);
+}
+.code__profile{
+  padding: 1em 0;
+  display: flex;
+  align-items: center;
+}
+.code__profile__image{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--color-pink);
+  display: inline-block;
+}
+.code__profile__name{
+  padding-left: 1rem;
+  font-size: var(--font-size-20);
+  font-family: "AppleSDGothicNeoB";
+}
+.code__profile__date{
+  padding-left: 1rem;
+  font-family: "AppleSDGothicNeoB";
+  font-size: var(--font-size-14);
+  color: var(--color-grey-2);
+}
+.code__title{
+  padding: 1rem 0;
+  font-family: "AppleSDGothicNeoB";
+  font-size: var(--font-size-20);
+}
+.code__problem{
+  font-family: "AppleSDGothicNeoB";
+  padding: 1rem 0;
+  // padding: 1rem 1.5rem;
+  // border: 1px solid var(--color-grey-4);
+}
+.modal_btn_box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal_btn{
+  padding: 1rem 3rem;
+  border-radius: var(--font-size-12);
+  background-color: var(--color-mainBlue);
+  font-family: "AppleSDGothicNeoB";
+  color: var(--color-white);
+}
+.code__example{
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  font-family: "AppleSDGothicNeoB";
+  &__box{
+    width: 48%;
+  }
+  &__title{
+    padding: 1rem 0;
+    font-size: var(--font-size-18);
+  }
+  &__input, &__output{
+    padding: 1rem;
+    width: 100%;
+    background-color: var(--color-grey-7);
+    border: 1px solid var(--color-grey-8);
+    div{
+      padding: 0.25rem 0;
+    }
+  }
+}
+.code__editor{
+  &__box{
+    padding: 0.5rem;
+    border: 1px solid var(--color-grey-8);
+  }
+}
+.m-monaco-editor div{
+  width: 100% !important;
+}
+.code__btn{
+  font-family: "AppleSDGothicNeoB";
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: 2px solid var(--color-mainBlue);
+  margin-left: 1rem;
+  &__box{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+  &__white{
+    color: var(--color-mainBlue);
+    background-color: var(--color-white);
+  }
+  &__blue{
+    color: var(--color-white);
+    background-color: var(--color-mainBlue);
+  }
+}
+.code__select{
+  font-family: "AppleSDGothicNeoB";
+  font-size: var(--font-size-14);
+  padding: 0.5rem 1rem;
+}
+.code__block{
+  width: 100%;
+}
+</style>

@@ -25,8 +25,7 @@
       {{content.title}}
     </div>
     <div class="code__problem">
-      <!-- {{content.problem}} -->
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nostrum veniam, voluptatum architecto iusto recusandae? Magni sequi beatae quibusdam provident, suscipit porro rem commodi blanditiis nisi sed quaerat facere repudiandae.
+      {{content.problem}}
     </div>
 
     <div class="code__example">
@@ -35,15 +34,15 @@
           예제 입력
         </div>
         <div class="code__example__input">
-          {{content.input}}
+          <div v-for="(input,idx) in content.input.split('\n')" :key="idx">{{input}}</div>
         </div>
       </div>
       <div class="code__example__box">
         <div class="code__example__title">
           예제 출력
         </div>
-        <div class="code__example__output">
-          {{content.output}}
+        <div class="code__example__output" >
+          <div v-for="(output,idx) in content.output.split('\n')" :key="idx">{{output}}</div>
         </div>
       </div>
     </div>
@@ -91,7 +90,14 @@ export default {
   },
   data(){
     return{
-      content:{},
+      content:{
+        name:'졍',
+        date:'2021.04.21',
+        title:'[5663] 피보나치 수열',
+        problem:'피보나치 수는 0과 1로 시작',
+        input:'3',
+        output:'23\n24\n25',
+      },
       code:"",
       mode:"python",
       theme:'vs-dark',
@@ -101,7 +107,6 @@ export default {
   },
   created(){
     // this.content=this.$route.params.content;
-    // location.reload();
   },
   mounted(){
     const editor=document.querySelector('.code__editor__box');
@@ -120,10 +125,62 @@ export default {
       });
     },
     handleSubmit(){
-      // document.domain="sphere-engine.com";
-      // console.log(document.domain);
-      // const a = document.querySelector('#sec-widget-1').contentWindow;
-      // console.log(a);
+      const compiler={
+        'c':10,
+        'cpp':1,
+        'java':10,
+        'python':99
+      };
+      this.code=document.querySelector('.inputarea').value;
+      var formdata = new FormData();
+      formdata.append("source", this.code);
+      formdata.append("compilerId", compiler[this.mode]);
+      formdata.append("input", this.input);
+      console.log(formdata);
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow'
+      };
+      fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        setTimeout(()=>{
+          fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+            .then(response2 => response2.json())
+            .then(result2 => {
+              console.log(result2);
+              if(result2.result.status.code===15){
+                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+                  .then(response3 => response3.text())
+                  .then(result3 => {
+                    console.log(result3.trim(),this.content.output.trim())
+                    if(result3.trim()===this.content.output.trim()){
+                      console.log('축하합니다. Pass입니다.\n제출이 완료되었습니다.');
+                    } else{
+                      console.log('오답입니다.');
+                    }
+                  })
+                  .catch(error3 => console.log('error', error3));
+              } else{
+                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/error?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+                  .then(response3 => response3.text())
+                  .then(result3 => {
+                    console.log(`오답입니다.\n ${result3}`);
+                  })
+                  .catch(error3 => console.log('error', error3));
+              }
+
+                })
+              .catch(error2 => console.log('error', error2));
+        },5000);
+        })
+        .catch(error => console.log('error', error));
     },
     handleCompile(){
       // 1 c++
@@ -176,6 +233,11 @@ export default {
                   .then(result3 => {
                     this.output+=`메모리 용량 : ${result2.result.memory}, 실행 시간 : ${result2.result.time}s\n`
                     this.output+=`${result3}\n\n`;
+                    if(result3===this.content.output){
+                      console.log('축하합니다. Pass입니다.\n제출이 완료되었습니다.');
+                    } else{
+                      console.log('오답입니다.');
+                    }
                   })
                   .catch(error3 => console.log('error', error3));
               } else{
@@ -184,6 +246,7 @@ export default {
                   .then(result3 => {
                     this.output+=`error : ${result2.result.status.name}\n`;
                     this.output+=`${result3}\n\n`;
+                    console.log(`오답입니다.\n ${result3}`);
                   })
                   .catch(error3 => console.log('error', error3));
               }
@@ -286,7 +349,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 0.5rem 3rem;
+  padding: 1rem 3rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";
@@ -309,6 +372,9 @@ export default {
     width: 100%;
     background-color: var(--color-grey-7);
     border: 1px solid var(--color-grey-8);
+    div{
+      padding: 0.25rem 0;
+    }
   }
 }
 .code__editor{
@@ -342,6 +408,7 @@ export default {
 }
 .code__select{
   font-family: "AppleSDGothicNeoB";
+  font-size: var(--font-size-14);
   padding: 0.5rem 1rem;
 }
 .code__block{

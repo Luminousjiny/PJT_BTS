@@ -6,6 +6,8 @@
       <span class="board__link__divider">|</span>
       <router-link id="code" class="board__link" :to="{name:'ProblemBoard'}">코드공유</router-link>
     </div>
+    <div class="board__title" v-if="showLink2===1">정보공유 게시판</div>
+    <div class="board__title" v-else-if="showLink2===2">코드공유 게시판</div>
     <router-view/>
   </div>
 </template>
@@ -18,6 +20,7 @@ export default {
   data(){
     return {
       showLink:true,
+      showLink2:0,
     }
   },
   created(){
@@ -30,6 +33,14 @@ export default {
       this.showLink=true;
     } else{
       this.showLink=false;
+    }
+    if(this.$route.name==='InfoDetail'){
+      this.showLink2=1;
+    } else if(this.$route.name==='ProblemDetail' || this.$route.name==='CreateCode' || 
+    this.$route.name==='UpdateCode' || this.$route.name==='CodeDetail'){
+      this.showLink2=2;
+    } else{
+      this.showLink2=0;
     }    
   },
   beforeUpdate(){
@@ -37,6 +48,14 @@ export default {
       this.showLink=true;
     } else{
       this.showLink=false;
+    }
+    if(this.$route.name==='InfoDetail'){
+      this.showLink2=1;
+    } else if(this.$route.name==='ProblemDetail' || this.$route.name==='CreateCode' || 
+    this.$route.name==='UpdateCode' || this.$route.name==='CodeDetail'){
+      this.showLink2=2;
+    } else{
+      this.showLink2=0;
     }
   }
 }
@@ -62,6 +81,13 @@ export default {
   font-size: var(--font-size-22);
   font-family: "AppleSDGothicNeoEB";
   color: var(--color-black);
+}
+.board__title{
+  font-size: var(--font-size-22);
+  font-family: "AppleSDGothicNeoEB";
+  color: var(--color-black);
+  text-align: center;
+  padding: 1rem 0;
 }
 .router-link-active{
   color: var(--color-mainBlue);
