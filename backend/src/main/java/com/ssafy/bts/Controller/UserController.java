@@ -2,17 +2,19 @@ package com.ssafy.bts.Controller;
 
 import com.ssafy.bts.Controller.Request.ChangePwRequest;
 import com.ssafy.bts.Controller.Request.UserRequest;
-import com.ssafy.bts.Domain.Info.Info;
-import com.ssafy.bts.Domain.Info.InfoDTO;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Domain.User.UserDTO;
+import com.ssafy.bts.Service.S3Service;
 import com.ssafy.bts.Service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final S3Service s3Service;
 
     @ApiOperation(value = "회원가입", notes = "가입 성공시 BaseResponse에 data값으로 '성공적으로 가입' 설정 후 반환", response = BaseResponse.class)
     @PostMapping("/join")
@@ -88,15 +91,46 @@ public class UserController {
         return response;
     }
 
-    @ApiOperation(value = "사용자 정보 수정(마이페이지)", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
+    @ApiOperation(value = "사용자 정보 수정(마이페이지)", notes = "정보 수정 성공 시 이미지 url 반환 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/{userId}") // 전체 수정은 put
+    @ResponseStatus(HttpStatus.CREATED)
     public BaseResponse updateUser(@ApiParam(value = "사용자 로그인 아이디")@PathVariable String userId,
-                                   @ApiParam(value = "사용자 객체")@RequestBody UserRequest request) {
+                                   @ApiParam(value = "사용자 객체")@RequestBody UserRequest request,
+                                   @ApiParam(value = "프로필 사진", required=true) @RequestParam(value = "file", required=false) MultipartFile file) {
         BaseResponse response = null;
         try {
+            // 이미지 쪽 처리
+            String url=null;
+            User user = userService.findByUserId(userId);
+            System.out.println(file);
+            if(file != null){ // 파일이 있는 경우만
+                User u = userService.findByUserId(userId);
+                if(u.getUserImg() != null) s3Service.delete(url); // s3 이미지 삭제
+                url = s3Service.upload(file); // s3에 이미지 업로드 후 url 반환
+                user.setUserImg(url);// 이미지 주소 변경
+            }else{ // 파일이 없다면 원래 저장된 것
+                url = user.getUserImg();
+                System.out.println(user.getUserImg());
+            }
+            // 나머지 정보 수정
             userService.updateUser(userId, request);
+            response = new BaseResponse("success", url);
+        } catch (IllegalStateException | IOException e ) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "회원 프로필 이미지 기본(null)으로 변경하기 - 초기 or 삭제", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = Boolean.class)
+    @PostMapping("/defaultImg")
+    public BaseResponse initUserImg(@ApiParam(value = "아이디")@RequestBody String userId) {
+        BaseResponse response = null;
+        try {
+            User user = userService.findByUserId(userId);
+            user.setUserImg(null);
+            userService.updateUser(user);
             response = new BaseResponse("success", "수정 성공");
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -121,7 +155,10 @@ public class UserController {
     public BaseResponse deleteUser(@ApiParam(value = "사용자 로그인 정보")@PathVariable String userId){
         BaseResponse response = null;
         try {
-            userService.deleteUser(userId);
+            User user = userService.findByUserId(userId);
+            String url = user.getUserImg();
+            s3Service.delete(url); // s3 이미지 삭제
+            userService.deleteUser(userId); // 유저정보 삭제
             response = new BaseResponse("success", "삭제 성공");
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
