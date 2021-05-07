@@ -93,10 +93,9 @@ public class UserController {
 
     @ApiOperation(value = "사용자 정보 수정(마이페이지)", notes = "정보 수정 성공 시 이미지 url 반환 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/{userId}") // 전체 수정은 put
-    @ResponseStatus(HttpStatus.CREATED)
     public BaseResponse updateUser(@ApiParam(value = "사용자 로그인 아이디")@PathVariable String userId,
                                    @ApiParam(value = "사용자 객체")@RequestBody UserRequest request,
-                                   @ApiParam(value = "프로필 사진", required=true) @RequestParam(value = "file", required=false) MultipartFile file) {
+                                   @ApiParam(value = "프로필 사진", required=true) @RequestPart(value = "file", required=false) MultipartFile file) {
         BaseResponse response = null;
         try {
             // 이미지 쪽 처리
