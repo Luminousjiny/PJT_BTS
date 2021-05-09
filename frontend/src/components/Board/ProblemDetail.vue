@@ -59,7 +59,7 @@
       {{content.problem}}
     </div>
     <div class="detail__btn__box">
-      <button class="modal_btn" @click="handleClickCode">코드 작성하기</button>
+      <button class="modal_btn" @click="handleClickCreate">코드 작성하기</button>
     </div>
     <div class="detail__example">
       <div class="detail__example__box">
@@ -67,7 +67,7 @@
           예제 입력
         </div>
         <div class="detail__example__input">
-          {{content.input}}
+          <div v-for="(input,idx) in content.input.split('\n')" :key="idx">{{input}}</div>
         </div>
       </div>
       <div class="detail__example__box">
@@ -75,9 +75,30 @@
           예제 출력
         </div>
         <div class="detail__example__output">
-          {{content.output}}
+          <div v-for="(output,idx) in content.output.split('\n')" :key="idx">{{output}}</div>
         </div>
       </div>
+    </div>
+    <div class="detail__code__table">
+      <div class="detail__code__table__cnt">
+        제출 {{codeList.length}}개
+      </div>
+      <table>
+        <th>닉네임</th>
+        <th>메모리</th>
+        <th>시간</th>
+        <th>통과여부</th>
+        <th>언어</th>
+        <th>제출날짜</th>
+        <tr v-for="(code, idx) in codeList" :key="idx" @click="handleClickCode">
+          <td>{{code.name}}</td>
+          <td>{{code.memory}}<span>KB</span></td>
+          <td>{{code.time}}<span>s</span></td>
+          <td>{{code.status}}</td>
+          <td>{{code.language}}</td>
+          <td>{{code.date}}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -92,8 +113,41 @@ export default {
   },
   data(){
     return{
-      content:{},
+      content:{
+        name:'졍',
+        date:'2021.04.21',
+        title:'[5663] 피보나치 수열',
+        problem:'피보나치 수는 0과 1로 시작',
+        input:'3',
+        output:'23',
+      },
       showModal: false,
+      codeList:[
+        {
+          name:'졍',
+          memory: '1024',
+          time:'0.153',
+          status:'Pass',
+          language:'Java',
+          date: '2021.04.21',
+        },
+        {
+          name:'졍',
+          memory: '1024',
+          time:'0.153',
+          status:'Pass',
+          language:'Java',
+          date: '2021.04.21',
+        },
+        {
+          name:'졍',
+          memory: '1024',
+          time:'0.153',
+          status:'Pass',
+          language:'Java',
+          date: '2021.04.21',
+        }
+      ]
     }
   },
   created(){
@@ -137,12 +191,20 @@ export default {
       // this.content=data;
       this.showModal=false;
     },
-    handleClickCode(){
+    handleClickCreate(){
       this.$router.push({
         name:'CreateCode',
       })
-      // location.href="http://localhost:8000/board/problem/0/code";
     },
+    handleClickCode(){
+      this.$router.push({
+        name:'CodeDetail',
+        params:{
+          id:0,
+          codeId:0,
+        }
+      })
+    }
   }
 }
 </script>
@@ -221,7 +283,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 0.5rem 3rem;
+  padding: 1rem 3rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";
@@ -243,6 +305,49 @@ export default {
     padding: 1rem;
     background-color: var(--color-grey-7);
     border: 1px solid var(--color-grey-8);
+    div{
+      padding: 0.25rem 0;
+    }    
+  }
+}
+.detail__code__table{
+  width: 100%;
+  margin-bottom: 2rem;
+  &__cnt{
+    padding: 1rem 0;
+    font-family: "AppleSDGothicNeoB";
+    
+  }
+  table{
+    width: 100%;
+    th,td{
+      text-align: center;
+      border: 1px solid var(--color-grey-8);
+      padding: 0.5rem 0;
+      color: var(--color-grey-2);
+    }
+    tr{
+      cursor: pointer;
+    }
+    th{
+      font-family: "AppleSDGothicNeoM";
+      font-size: var(--font-size-14);
+      
+    }
+    td{
+      font-family: "AppleSDGothicNeoB";
+      span{
+        color: var(--color-red);
+      }
+    }
+    td:nth-child(1){
+      font-size: var(--font-size-18);
+      font-family: "AppleSDGothicNeoB";
+    }
+    td:nth-child(6){
+      font-size: var(--font-size-14);
+      color: var(--color-grey-3);
+    }
   }
 }
 </style>
