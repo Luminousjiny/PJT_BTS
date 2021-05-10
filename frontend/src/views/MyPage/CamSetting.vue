@@ -83,7 +83,6 @@ export default {
 </script>
 
 
-<style scoped>
-@import "../../css/CamSetting.css";
+<style scoped src="../../css/CamSetting.css">
 </style>
 

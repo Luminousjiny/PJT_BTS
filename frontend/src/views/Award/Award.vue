@@ -86,6 +86,4 @@ export default {
 };
 </script>
 
-<style scoped>
-@import "../../css/Award.css";
-</style>
+<style scoped src="../../css/Award.css">
