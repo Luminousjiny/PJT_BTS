@@ -2,7 +2,7 @@ package com.ssafy.bts.Controller;
 
 import com.ssafy.bts.Controller.Request.CommentRequest;
 import com.ssafy.bts.Domain.Comment.Comment;
-import com.ssafy.bts.Domain.Comment.CommetDTO;
+import com.ssafy.bts.Domain.Comment.CommentDTO;
 import com.ssafy.bts.Domain.Qna.Qna;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Service.CommentService;
@@ -28,7 +28,7 @@ public class CommentController {
     private final UserService userService;
     private final QnaService qnaService;
 
-    @ApiOperation(value = "댓글 작성", notes = "댓글 작성 성공시 BaseResponse에 data값으로 '성공적으로 작성' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "댓글 작성", notes = "댓글 작성 성공시 BaseResponse에 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping
     public BaseResponse writeComment(@ApiParam(value = "댓글 객체", required=true) @RequestBody CommentRequest request) throws IOException {
         BaseResponse response = null;
@@ -39,9 +39,16 @@ public class CommentController {
             Qna qna = qnaService.findByQnaId(request.getQnaId());
             comment.setUser(user);
             comment.setQna(qna);
-            if(qna != null && user != null){ //
+            if(qna != null && user != null){
                 commentService.save(comment);
-                response = new BaseResponse("success", "성공적으로 작성");
+
+                //전체 리스트 반환
+                Qna q = qnaService.findByQnaId(request.getQnaId());
+                List<Comment> commentList  = commentService.findByQna(q);
+                List<CommentDTO> collect = commentList.stream()
+                        .map(m-> new CommentDTO(m))
+                        .collect(Collectors.toList());
+                response = new BaseResponse("success", collect);
             }else{
                 response = new BaseResponse("success", "작성 실패");
             }
@@ -52,13 +59,17 @@ public class CommentController {
         return response;
     }
 
-    @ApiOperation(value = "댓글 수정", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
+    @ApiOperation(value = "댓글 수정", notes = "댓글 수정 성공시 data값으로 상세정보 반환", response = BaseResponse.class)
     @PutMapping
     public BaseResponse updateComment(@ApiParam(value = "댓글 객체", required=false) @RequestBody CommentRequest request) {
         BaseResponse response = null;
         try {
             commentService.updateComment(request);
-            response = new BaseResponse("success", "수정 성공");
+
+            //댓글 상세정보 반환
+            Comment comment = commentService.findByComId(request.getComId());
+            CommentDTO commentDTO = new CommentDTO(comment);
+            response = new BaseResponse("success", commentDTO);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -85,8 +96,8 @@ public class CommentController {
         try{
             Qna qna = qnaService.findByQnaId(qnaId);
             List<Comment> commentList  = commentService.findByQna(qna);
-            List<CommetDTO> collect = commentList.stream()
-                    .map(m-> new CommetDTO(m))
+            List<CommentDTO> collect = commentList.stream()
+                    .map(m-> new CommentDTO(m))
                     .collect(Collectors.toList());
 
             response = new BaseResponse("success", collect);
