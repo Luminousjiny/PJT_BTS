@@ -27,7 +27,7 @@ public class QnaController {
     private final QnaService qnaService;
     private final UserService userService;
 
-    @ApiOperation(value = "Qna 질문 작성", notes = "Qna 질문작성 성공 시 data값으로 '작성 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "Qna 질문 작성", notes = "Qna 질문작성 성공 시 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping
     public BaseResponse writeQna(@ApiParam(value = "Qna 객체", required=true) @RequestBody QnaRequest request) throws IOException {
         BaseResponse response = null;
@@ -37,20 +37,30 @@ public class QnaController {
             User user = userService.findByUserId(request.getUserId());
             qna.setUser(user);
             qnaService.save(qna);
-            response = new BaseResponse("success", "작성 성공");
+
+            //전체 리스트 반환
+            List<Qna> qnaList  = qnaService.findAll();
+            List<QnaDTO> collect = qnaList.stream()
+                    .map(m-> new QnaDTO(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
 
-    @ApiOperation(value = "Qna 질문수정", notes = "Qna 질문 수정 성공시 data값으로 '수정 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "Qna 질문수정", notes = "Qna 질문 수정 성공시 data값으로 상세 정보 반환", response = BaseResponse.class)
     @PutMapping
     public BaseResponse updateQna(@ApiParam(value = "리뷰 객체", required=false) @RequestBody QnaRequest request) {
         BaseResponse response = null;
         try {
             qnaService.updateQna(request);
-            response = new BaseResponse("success", "수정 성공");
+
+            //상세 반환
+            Qna qna = qnaService.findByQnaId(request.getQnaId());
+            QnaDTO qnaDTO = new QnaDTO(qna);
+            response = new BaseResponse("success", qna);
         } catch (IllegalStateException | IOException e) {
             response = new BaseResponse("fail", e.getMessage());
         }

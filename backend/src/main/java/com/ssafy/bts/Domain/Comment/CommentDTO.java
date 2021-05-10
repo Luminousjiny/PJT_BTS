@@ -11,14 +11,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommetDTO {
+public class CommentDTO {
     private int comId;
     private QnaDTO qna;
     private UserDTO user;
     private String comContent;
     private Date comDate;
 
-    public CommetDTO(Comment comment){
+    public CommentDTO(Comment comment){
         this.comId = comment.getComId();
         if(comment.getQna() != null){
             qna = new QnaDTO();
