@@ -180,7 +180,7 @@ const routes = [
             component: Monthly,
           },
           {
-            path: "weekly",
+            path: "",
             name: "Weekly",
             component: Weekly,
           },
