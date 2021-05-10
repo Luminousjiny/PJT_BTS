@@ -65,8 +65,5 @@ export default {
 }
 </script>
 
-<style scoped>
-@import '../../css/style.css';
-@import '../../css/WebCam.css';
-@import '../../css/Youtube.css';
+<style scoped src="../../css/Youtube.css">
 </style>
