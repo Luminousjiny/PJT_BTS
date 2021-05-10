@@ -1,17 +1,22 @@
 <template>
 <div id="chat-container">
     <div id="chat-nav">
-        <div class="icon" @click="showChange(0)">Icon</div>
-        <div @click="showChange(1)">
-            <v-icon id="message-icon" :class="{active : showChatting}">fas fa-comments</v-icon>
+        <div class="icon" @click="showChange(0)">
+            <img src="@/../public/Image/bts_favicon.png" id="bts-icon">
         </div>
-        <div @click="showChange(2)">
-            <v-icon id="participant-icon" :class="{active : showUsers}">fas fa-users</v-icon>
+        <div class="icon-bottom">
+            <div @click="showChange(1)">
+                <v-icon id="message-icon" :class="{active : showChatting}">fas fa-comments</v-icon>
+            </div>
+            <div @click="showChange(2)">
+                <v-icon id="participant-icon" :class="{active : showUsers}">fas fa-users</v-icon>
+            </div>
+            <div id="live-container">
+                <div id="live-circle"></div>
+                <div id="participant-counter">{{ data.participants }}명</div>
+            </div>
         </div>
-        <div id="live-container">
-            <div id="live-circle"></div>
-            <div id="participant-counter">{{ data.participants }}명</div>
-        </div>
+        
     </div>
     <div id="chat-main" v-if="showChatting || showUsers">
         <div id="chat-title">
@@ -43,11 +48,11 @@
         <div id="participant-container" v-if="showUsers">
             <div class="participant-info my-info">
                 <v-icon color="white">fas fa-smile</v-icon>
-                {{JSON.parse(data.publisher.session.connection.data).userName}} (me)
+                <p class="inline-p">{{JSON.parse(data.publisher.session.connection.data).userName}} (me)</p>
             </div>
             <div class="participant-info" v-for="(sub, index) in data.subscribers" :key="index">
                 <v-icon color="white">fas fa-smile</v-icon>
-                {{JSON.parse(sub.stream.connection.data).userName}}
+                <p class="inline-p">{{JSON.parse(sub.stream.connection.data).userName}}</p>
             </div>
         </div>
         <div id="input-container" v-if="showChatting">
@@ -93,11 +98,11 @@ export default {
                 this.showChatting = false;
                 this.showUsers = false;
             }
+            console.log(this.showChatting, this.showUsers);
         }
     },
 }
 </script>
 
-<style scoped>
-@import '../../css/Chat.css';
+<style scoped src="../../css/Chat.css">
 </style>

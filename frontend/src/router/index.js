@@ -26,7 +26,6 @@ import Weekly from "../components/Library/Weekly.vue";
 import Rest from "../views/Rest/Rest.vue";
 import Play from "../views/Play/Play.vue";
 import Office from "../views/Office/Office.vue";
-import WebCam from "../common/WebCam/WebCam.vue";
 import joinUserInfo from "../components/Join/Join_1.vue";
 import joinUserCheck from "../components/Join/Join_2.vue";
 import CamSetting from "../views/MyPage/CamSetting.vue";
@@ -112,13 +111,6 @@ const routes = [
     path: "/computer",
     name: "Computer",
     component: Computer,
-    children: [
-      {
-        path: "webcam",
-        name: "WebCam",
-        component: WebCam,
-      },
-    ],
   },
   {
     path: "/board",
@@ -166,13 +158,6 @@ const routes = [
     path: "/cook",
     name: "Cook",
     component: Cook,
-    children: [
-      {
-        path: "webcam",
-        name: "WebCam",
-        component: WebCam,
-      },
-    ],
   },
   {
     path: "/library",
@@ -207,13 +192,6 @@ const routes = [
     path: "/rest",
     name: "Rest",
     component: Rest,
-    children: [
-      {
-        path: "webcam",
-        name: "WebCam",
-        component: WebCam,
-      },
-    ],
   },
   {
     path: "/play",
