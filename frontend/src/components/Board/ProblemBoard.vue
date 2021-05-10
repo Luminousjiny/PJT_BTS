@@ -182,9 +182,10 @@ export default {
 }
 .code_board_create_btn{
   color: var(--color-mainBlue);
-  border: 1px solid var(--color-mainBlue);
-  padding: 0.25em;
-  border-radius: 10px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-mainBlue);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
   font-family: "AppleSDGothicNeoSB";
 }
 .code_board_search{
@@ -219,7 +220,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";

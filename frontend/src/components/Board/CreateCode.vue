@@ -57,7 +57,7 @@
         <option value="vs">VS</option>
         <option value="vs-dark">VS-DARK</option>
       </select>
-      <m-monaco-editor v-model="code" :mode="mode" :theme="theme"></m-monaco-editor>
+      <m-monaco-editor v-model="code" :mode="mode" :theme="theme" @init="handleInit"></m-monaco-editor>
     </div>
     <div class="code__example">
       <div class="code__example__box">
@@ -98,24 +98,26 @@ export default {
         input:'3',
         output:'23\n24\n25',
       },
-      code:"",
+      code:"print('hello')",
       mode:"python",
+      editor:{},
       theme:'vs-dark',
       input:'',
       output:'',
     }
   },
   created(){
-    // this.content=this.$route.params.content;
+
   },
   mounted(){
-    const editor=document.querySelector('.code__editor__box');
-    editor.childNodes[2].id='a'
-    // console.log(editor.childNodes);
-    // console.log(editor.childNodes[2]);
-    console.log(document.querySelector('.monaco-editor'))
+
+  },
+  beforeDestroy(){
   },
   methods:{
+    handleInit(editor,editorDom,monaco){
+      this.editor=editor;
+    },
     handleClickList(){
       this.$router.push({
         name:'ProblemDetail',
@@ -131,12 +133,11 @@ export default {
         'java':10,
         'python':99
       };
-      this.code=document.querySelector('.inputarea').value;
+      this.code=this.editor.getValue();
       var formdata = new FormData();
       formdata.append("source", this.code);
       formdata.append("compilerId", compiler[this.mode]);
       formdata.append("input", this.input);
-      console.log(formdata);
       var requestOptions = {
         method: 'POST',
         body: formdata,
@@ -193,7 +194,7 @@ export default {
         'java':10,
         'python':99
       };
-      this.code=document.querySelector('.inputarea').value;
+      this.code=this.editor.getValue();
       console.log(this.code,compiler[this.mode],this.input);
       var formdata = new FormData();
       formdata.append("source", this.code);
@@ -248,14 +249,14 @@ export default {
                     this.output+=`${result3}\n\n`;
                     console.log(`오답입니다.\n ${result3}`);
                   })
-                  .catch(error3 => console.log('error', error3));
+                  .catch(error3 => console.error('error', error3));
               }
 
                 })
-              .catch(error2 => console.log('error', error2));
+              .catch(error2 => console.error('error', error2));
         },5000);
         })
-        .catch(error => console.log('error', error));
+        .catch(error => console.error('error', error));
     },
   }
 }
@@ -349,7 +350,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";
