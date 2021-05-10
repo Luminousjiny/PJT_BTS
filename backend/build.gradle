@@ -19,8 +19,8 @@ repositories {
     //aws s3
     maven { url 'https://repo.spring.io/libs-milestone'}
 }
-
-dependencies {
+// 빌드중
+dependencies { 
     apply plugin: 'java'
 //	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     compile group: 'net.nurigo', name: 'javaSDK', version: '2.2'
