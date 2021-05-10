@@ -83,8 +83,7 @@ export default {
     http.get('v1/info/list')
     .then((res)=>{
       if(res.status===200){
-        this.infoList=res.data.data;
-        this.infoList=this.infoList.reverse();
+        this.infoList=res.data.data.reverse();
       } else{
         console.error(res.data);
       }
@@ -144,7 +143,7 @@ export default {
       .then((res)=>{
         console.log(res);
         if(res.status===200){
-          this.infoList.unshift(data);
+          this.infoList=res.data.data.reverse();
           this.showModal=false;
         }
       })
