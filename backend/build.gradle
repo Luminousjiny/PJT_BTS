@@ -16,7 +16,6 @@ configurations {
 
 repositories {
     mavenCentral()
-    jcenter()
     //aws s3
     maven { url 'https://repo.spring.io/libs-milestone'}
 }
