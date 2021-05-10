@@ -141,3 +141,8 @@
 .scroll::-webkit-scrollbar{
     background-color: var(--color-grey-5);
 }
+.flex-item {
+    flex: 1 auto;
+    position:relative;
+    margin : 5px;
+}
