@@ -30,7 +30,7 @@ public class CodingController {
     private final UserService userService;
     private final SolveService solveService;
 
-    @ApiOperation(value = "문제 작성", notes = "문제 작성 성공시 data값으로 '작성 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "문제 작성", notes = "문제 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping("/pro")
     public BaseResponse writeProblem(@ApiParam(value = "Problem 객체", required=true) @RequestBody ProblemRequest request) throws IOException {
         BaseResponse response = null;
@@ -40,20 +40,31 @@ public class CodingController {
             User user = userService.findByUserId(request.getUserId());
             p.setUser(user);
             problemService.save(p);
-            response = new BaseResponse("success", "작성 성공");
+
+            //전체 리스트 반환
+            List<Problem> problemList  = problemService.findAll();
+            List<ProblemDTO> collect = problemList.stream()
+                    .map(m-> new ProblemDTO(m))
+                    .collect(Collectors.toList());
+
+            response = new BaseResponse("success", collect);
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
 
-    @ApiOperation(value = "문제 수정", notes = "문제 수정 성공시 data값으로 '수정 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "문제 수정", notes = "문제 수정 성공시 data값으로 상세정보 반환", response = BaseResponse.class)
     @PutMapping("/pro")
     public BaseResponse updateProblem(@ApiParam(value = "Problem 객체", required=false) @RequestBody ProblemRequest request) {
         BaseResponse response = null;
         try {
             problemService.updateProblem(request);
-            response = new BaseResponse("success", "수정 성공");
+
+            //상세정보 반환
+            Problem problem = problemService.findByProId(request.getProId());
+            ProblemDTO problemDTO = new ProblemDTO(problem);
+            response = new BaseResponse("success", problemDTO);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -104,7 +115,7 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "코드 작성", notes = "코드 작성 성공시 data값으로 '작성 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "코드 작성", notes = "코드 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping("/code")
     public BaseResponse writeCode(@ApiParam(value = "Code 객체", required=true) @RequestBody CodeRequest request) throws IOException {
         BaseResponse response = null;
@@ -116,20 +127,33 @@ public class CodingController {
             c.setUser(user);
             c.setProblem(problem);
             codeService.save(c);
-            response = new BaseResponse("success", "작성 성공");
+
+            //전체 리스트 반환
+            Problem p = problemService.findByProId(request.getProId());
+            List<Code> codeList  = codeService.findByProblem(p);
+            List<CodeDTO> collect = codeList.stream()
+                    .map(m-> new CodeDTO(m))
+                    .collect(Collectors.toList());
+
+            response = new BaseResponse("success", collect);
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
 
-    @ApiOperation(value = "코드 수정", notes = "코드 수정 성공시 data값으로 '수정 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "코드 수정", notes = "코드 수정 성공시 data값으로 상세정보 반환", response = BaseResponse.class)
     @PutMapping("/code")
     public BaseResponse updateCode(@ApiParam(value = "Code 객체", required=false) @RequestBody CodeRequest request) {
         BaseResponse response = null;
         try {
             codeService.updateCode(request);
-            response = new BaseResponse("success", "수정 성공");
+
+            //상세정보 반환
+            Code code = codeService.findByCodeId(request.getCodeId());
+            CodeDTO codeDTO = new CodeDTO(code);
+
+            response = new BaseResponse("success", codeDTO);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
