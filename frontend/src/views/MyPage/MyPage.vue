@@ -85,7 +85,7 @@ export default {
 </script>
 
 
-<style scoped>
-@import "../../css/MyPage.css";
+<style scoped src="../../css/MyPage.css">
+
 </style>
 

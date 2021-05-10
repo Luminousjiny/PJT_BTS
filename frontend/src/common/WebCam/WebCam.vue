@@ -1,217 +1,238 @@
 <template>
-  <div id="webcam-container">
-    <div id="webcam-title">
-      <div id="school-title">
-        <img src="@/../public/Image/school_icon.png" id="school-icon">
-        <p>{{data.roomName}}</p>
+  <div id="webcam">
+    <div id="join" v-if="!data.session">
+      <div id="join-form">
+        <label>사용자 이름 : </label>
+        <input type="text" v-model="data.userName" required />
+        <button @click="joinSession">입장</button>
       </div>
     </div>
-    <div id="webcam-main">
-      <div id="share-container" v-if="data.share.active">
-        <div id="share-screen" v-if="data.share.screen">
-          <user-video class="flex-item screen-video" :stream-manager="data.share.screen"></user-video>
-        </div>
-        <div id="youtube-container" v-if="youtubeShare.active">
-          <div id="mostPopular-title">
-              <v-icon color="red" id="mostPopular-icon">fab fa-youtube</v-icon>
-              <p>인기 동영상</p>
-              <v-icon id="btnLeaveYoutube" @click="leaveYoutube">fas fa-times</v-icon>
-          </div>
-          <youtube-list :youtubeShare="youtubeShare" v-on:showVideoDetail="showVideoDetail" v-if="youtubeShare.showList"/>
-          <youtube-detail :videoDetail="youtubeShare.videoDetail" v-if="youtubeShare.showDetail"/>
-        </div>
-      </div>
-      <div id="video-container" :class="{'flex-column': data.share.active, 'screen-share' : data.share.active}">
-        <div id="prev">
-          <button class="webcam-button page-button" @click="page -= 1;" v-if="prev">
-            <v-icon v-if="!data.share.active">fas fa-chevron-left</v-icon>
-            <v-icon v-else>fas fa-angle-up</v-icon>
-          </button>
-        </div>
-        <div id="videos" :class="{'flex-column': data.share.active}">
-          <user-video :class="{publisher : true, 'flex-item': true, 'width-40': setWidth40, 'width-30' : setWidth30}" :stream-manager="data.publisher" v-if="page == 0"></user-video>
-          <user-video :class="{subscribers : true, 'flex-item': true, 'width-40': setWidth40, 'width-30' : setWidth30}" v-for="(sub, idx) in pageSub" :key="idx" :stream-manager="sub"></user-video>
-        </div>
-        <div id="next">
-          <button class="webcam-button page-button" @click="page += 1;" v-if="next">
-            <v-icon v-if="!data.share.active">fas fa-chevron-right</v-icon>
-            <v-icon v-else>fas fa-angle-down</v-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div id="webcam-nav">
-      <button id="btnSetvideo" @click="updateStream(0)" class="webcam-button">
-          <div v-if="!data.setting.publishVideo"><v-icon id="unpublish-video">fas fa-video-slash</v-icon></div>
-          <div v-else><v-icon id="publish-video">fas fa-video</v-icon></div>
-      </button>
-      <button id="btnSetAudio" @click="updateStream(1)" class="webcam-button">
-          <div v-if="!data.setting.publishAudio"><v-icon id="unpublish-audio">fas fa-microphone-slash</v-icon></div>
-          <div v-else><v-icon id="publish-audio">fas fa-microphone</v-icon></div>
-      </button>
-      <button id="btnShareScreen" @click="shareScreen" class="webcam-button">
-        <div v-if="!screenShare"><v-icon id="unpublish-screen">fas fa-upload</v-icon></div>
-        <div v-else><v-icon id="publish-screen">fas fa-upload</v-icon></div>
-      </button>
-      <button id="btnShareYoutube" @click="getYoutubeVideo" class="webcam-button" v-if="location != 'computer'">
-        <div v-if="!youtubeShare.active"><v-icon id="unpublish-youtube">fab fa-youtube</v-icon></div>
-        <div v-else><v-icon id="publish-youtube">fab fa-youtube</v-icon></div>
-      </button>
-      <button id="btnLeaveSession" @click="leaveSession" class="webcam-button"><v-icon id="leave-session">fas fa-phone-alt</v-icon></button>
+    <div id="session" v-if="data.session">
+        <Chat :data="data" v-on:sendMessage="send"/>
+        <Camera :data="data" :location="location" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import UserVideo from "@/components/WebCam/UserVideo";
-import YoutubeList from "@/components/Youtube/YoutubeList"
-import YoutubeDetail from '@/components/Youtube/YoutubeDetail';
+import { OpenVidu } from "openvidu-browser";
+import Nav from "@/common/Nav/Nav"
+import Camera from '@/components/WebCam/Camera';
+import Chat from '@/components/WebCam/Chat';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
+const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+const OPENVIDU_SERVER_SECRET = "BACK_TO_SCHOOL";
 export default {
-  name: "WebCam",
-  components: {
-    UserVideo,
-    YoutubeList,
-    YoutubeDetail
-  },
-  data() {
-    return {
-      page : 0,
-      youtubeShare : {
-        active : false,
-        showList : false,
-        showDetail : false,
-        videoDetail : undefined,
-      },
-      screenShare : false,
-    }
-  },
-  props :{
-    data : Object,
-    location : String,
-  },
-  computed : {
-    setWidth40 : function(){
-      if(this.data.subscribers.length < 4 && !this.data.share.active){
-        return true;
+    name : "Webcam",
+    components : {
+      Nav,
+      Camera,
+      Chat
+    },
+    data() {
+      return {
+        data : {
+          OV: undefined,
+          session: undefined,
+          mainStreamManager: undefined,
+          publisher: undefined,
+          subscribers: [],
+          participants : 1,
+          roomName: "",
+          userName: "user1",
+          setting: {
+            audioSource: undefined,
+            videoSource: undefined,
+            publishAudio: false,
+            publishVideo: false,
+            resolution: "640x480",
+            frameRate: 30,
+            insertMode: "APPEND",
+            mirror: false,
+          },
+          receiveMessage: [],
+          share : {
+            active : false,
+            screen : undefined,
+          },
+        },
       }
-      return false;
     },
-    setWidth30 : function(){
-      if(this.data.subscribers.length >= 4 && !this.data.share.active){
-        return true;
-      }
-      return false;
+    props : {
+      location : String,
     },
-    next : function(){
-      if((!this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*6 > 0 ) || (this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*5 > 0 )){
-        return true;
-      }
-      return false;
+    created(){
+      this.data.roomName = this.location;
     },
-    prev : function(){
-      console.log(this.data);
-      if(this.page > 0){
-        return true;
-      }
-      return false;
+    destroyed(){
+      this.data.session = undefined;
+      this.data.mainStreamManager = undefined;
+      this.data.publisher = undefined;
+      this.data.subscribers = [];
+      this.data.OV = undefined;
+      this.data.receiveMessage = [];
+      this.share.active = false;
+      this.share.screen = undefined;
     },
-    totalPage : function(){
-      let remain = (this.data.subscribers.length+1)%6;
-      if(remain != 0){
-        return (this.data.subscribers.length+1)/6+1;
-      }
-      return (this.data.subscribers.length+1)/6;
-    },
-    pageSub : function(){
-      if(this.page == 0){
-        if(!this.data.share.active){
-          return this.data.subscribers.slice(0,5);
-        }
-        return this.data.subscribers.slice(0,4);
-      }else{
-        if(!this.data.share.active){
-          return this.data.subscribers.slice(this.page*5, Math.min(this.page*5+6,this.data.subscribers.length));
-        }
-        return this.data.subscribers.slice(this.page*4, Math.min(this.page*4+5,this.data.subscribers.length));
-      }
-    }
-  },
-  methods: {
-    updateMainVideoStreamManager(stream) {
-      if (this.data.mainStreamManager === stream) return;
-      this.data.mainStreamManager = stream;
-    },
-    updateStream(type) {
-      this.$emit('updateStream', type);
-    },
-    shareScreen() {
-      let screen = this.data.OV.initPublisher(undefined, {
-        resolution: "1280x720",
-        videoSource: "screen",
-        publishAudio : this.data.setting.publishAudio,
-      });
+    methods: {
+      joinSession() {
+        this.data.OV = new OpenVidu();
+        // this.OV.setAdvancedConfiguration({
+        //   screenShareChromeExtension: "https://chrome.google.com/webstore/detail/YOUR_EXTENSION_NAME/YOUR_EXTENSION_ID",
+        // });
 
-      screen.once("accessAllowed", () => {
-        screen.stream
-          .getMediaStream()
-          .getVideoTracks()[0]
-          .addEventListener("ended", () => {
-            console.log('User pressed the "Stop sharing" button');
-            this.data.session.unpublish(screen);
-            this.screenShare = false;
+        this.data.session = this.data.OV.initSession();
+
+        this.data.session.on("streamCreated", ({ stream }) => {
+          const subscriber = this.data.session.subscribe(stream);
+          if(subscriber.stream.typeOfVideo == "SCREEN"){
+            this.data.share.active = true;
+            this.data.share.screen = subscriber;
+          }
+          this.data.subscribers.push(subscriber);
+          this.data.participants = this.data.subscribers.length+1;
+        });
+        this.data.session.on("streamDestroyed", ({ stream }) => {
+          const index = this.data.subscribers.indexOf(stream.streamManager, 0);
+          if(stream.typeOfVideo == "SCREEN"){
             this.data.share.active = false;
             this.data.share.screen = undefined;
-            this.data.session.publish(this.data.publisher);
-          });
-        
-        this.data.session.unpublish(this.data.publisher);
-        this.screenShare = true;
-        if(this.youtubeShare.active){
-          this.youtubeShare.active = false;
-          this.youtubeShare.showList = false;
-          this.youtubeShare.showDetail = false;
+          }
+          if (index >= 0) {
+            this.data.subscribers.splice(index, 1);
+          }
+          this.data.participants = this.data.subscribers.length+1;
+        });
+        this.data.session.on("signal:my-chat", (event) => {
+          this.data.receiveMessage.push({sender : JSON.parse(event.from.data), message : event.data});
+          console.log(event.from);
+        });
+
+        this.data.session.on("publisherStartSpeaking", (event) => {
+          console.log( "Publisher " + event.connection.connectionId + " start speaking" );
+        });
+
+        this.data.session.on("publisherStopSpeaking", (event) => {
+          console.log( "Publisher " + event.connection.connectionId + " stop speaking" );
+        });
+
+        this.getToken(this.data.roomName).then((token) => {
+          this.data.session
+            .connect(token, { userName: this.data.userName })
+            .then(() => {
+              let publisher = this.data.OV.initPublisher(undefined, this.data.setting);
+
+              this.data.mainStreamManager = publisher;
+              this.data.publisher = publisher;
+
+              this.data.session.publish(this.data.publisher);
+            })
+            .catch((error) => {
+              console.log(
+                "There was an error connecting to the session:",
+                error.code,
+                error.message
+              );
+            });
+        });
+
+        window.addEventListener("beforeunload", this.data.leaveSession);
+      },
+      leaveSession() {
+        if (this.data.session) this.data.session.disconnect();
+
+        this.data.session = undefined;
+        this.data.mainStreamManager = undefined;
+        this.data.publisher = undefined;
+        this.data.subscribers = [];
+        this.data.OV = undefined;
+        this.data.receiveMessage = [];
+        window.removeEventListener("beforeunload", this.data.leaveSession);
+      },
+      getToken(roomName) {
+        return this.createSession(roomName).then((sessionId) =>
+          this.createToken(sessionId)
+        );
+      },
+      createSession(sessionId) {
+        return new Promise((resolve, reject) => {
+          axios
+            .post(
+              `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
+              JSON.stringify({
+                customSessionId: sessionId,
+              }),
+              {
+                auth: {
+                  username: "OPENVIDUAPP",
+                  password: OPENVIDU_SERVER_SECRET,
+                },
+              }
+            )
+            .then((response) => response.data)
+            .then((data) => resolve(data.id))
+            .catch((error) => {
+              if (error.response.status === 409) {
+                resolve(sessionId);
+              } else {
+                console.warn(
+                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`
+                );
+                if (
+                  window.confirm(
+                    `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
+                  )
+                ) {
+                  location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
+                }
+                reject(error.response);
+              }
+            });
+        });
+      },
+      createToken(sessionId) {
+        return new Promise((resolve, reject) => {
+          axios
+            .post(
+              `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
+              {},
+              {
+                auth: {
+                  username: "OPENVIDUAPP",
+                  password: OPENVIDU_SERVER_SECRET,
+                },
+              }
+            )
+            .then((response) => response.data)
+            .then((data) => resolve(data.token))
+            .catch((error) => reject(error.response));
+        });
+      },
+      send(sendMessage) {
+        this.data.session.signal({
+            data: sendMessage,
+            to: [],
+            type: "my-chat",
+        }).then(() => {
+            console.log("Message successfully sent");
+        }).catch((error) => {
+            console.error(error);
+        });
+      },
+      updateStream(type){
+        if (type == 1) {
+          this.data.setting.publishAudio = !this.data.setting.publishAudio;
+          this.data.publisher.publishAudio(this.data.setting.publishAudio);
+        } else {
+          this.data.setting.publishVideo = !this.data.setting.publishVideo;
+          this.data.publisher.publishVideo(this.data.setting.publishVideo);
         }
-        this.data.share.active = true;
-        this.data.share.screen = screen;
-        this.data.session.publish(this.data.share.screen);
-      });
-      screen.once("accessDenied", () => {
-        console.warn("ScreenShare: Access Denied");
-      });
-    },
-    leaveSession() {
-        this.$emit('leaveSession');
-    },
-    getYoutubeVideo(){
-      this.data.share.active = true;
-      this.data.share.screen = false;
-      this.youtubeShare.active = true;
-      this.youtubeShare.showList = true;
-      this.screenShare = false;
-    },
-    showVideoDetail(video){
-      this.youtubeShare.showList = false;
-      this.youtubeShare.showDetail = true;
-      this.youtubeShare.videoDetail = video;
-    },
-    leaveYoutube(){
-      if(this.youtubeShare.showDetail){
-        this.youtubeShare.showList = true;
-        this.youtubeShare.showDetail = false;
-      }else{
-        this.data.share.active = false;
-        this.youtubeShare.active = false;
-        this.youtubeShare.showList = false;
       }
-    }
-  },
-};
+    },
+}
 </script>
 
-<style scoped>
-@import '../../css/WebCam.css';
-@import '../../css/Youtube.css';
+<style scoped src="../../css/WebCam.css">
 </style>

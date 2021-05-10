@@ -39,6 +39,7 @@ public class User { // DB에 매핑용
         userInput.setUserPw(request.getUserPw());
         userInput.setUserNickname(request.getUserNickname());
         userInput.setUserPhone(request.getUserPhone());
+        userInput.setUserImg(null);
         userInput.setUserLank("브론즈3");
         userInput.setUserPoint(0);
         return userInput;

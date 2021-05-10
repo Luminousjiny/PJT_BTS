@@ -41,3 +41,5 @@ export default {
 	},
 };
 </script>
+<style scoped src="../../css/Camera.css">
+</style>
