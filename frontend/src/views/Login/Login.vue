@@ -7,7 +7,7 @@
       <div class="login_rightBox">
         <div class="login_input">
           <h1 class="login_header">로그인</h1>
-          <p class="text">환영합니다. 로그인 해주세요!</p>
+          <p class="text">환영합니다. 로그인 해주세요</p> 
 
           <p class="login_mid_header">아이디</p>
           <v-text-field

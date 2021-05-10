@@ -63,4 +63,13 @@ public class CommentService {
         List<Comment> commentList = commentRepository.findByQna(qna);
         return commentList;
     }
+
+    /**
+     * 현재 댓글 상세정보 가져오기
+     * @return
+     */
+    @Transactional
+    public Comment findByComId(int comId) {
+        return commentRepository.findByComId(comId);
+    }
 }

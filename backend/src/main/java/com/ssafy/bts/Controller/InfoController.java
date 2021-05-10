@@ -25,7 +25,7 @@ public class InfoController {
     private final InfoService infoService;
     private final UserService userService;
 
-    @ApiOperation(value = "정보 글작성", notes = "글 작성 성공시 data값으로 '작성 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "정보 글작성", notes = "글 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping
     public BaseResponse writeInfo(@ApiParam(value = "info 객체", required=true) @RequestBody InfoRequest request) throws IOException {
         BaseResponse response = null;
@@ -35,20 +35,30 @@ public class InfoController {
             User user = userService.findByUserId(request.getUserId());
             info.setUser(user);
             infoService.save(info);
-            response = new BaseResponse("success", "작성 성공");
+
+            //전체 리스트 반환
+            List<Info> infoList  = infoService.findAll();
+            List<InfoDTO> collect = infoList.stream()
+                    .map(m-> new InfoDTO(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
 
-    @ApiOperation(value = "정보 글수정", notes = "글 수정 성공시 data값으로 '수정 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "정보 글수정", notes = "글 수정 성공시 data값으로 상세정보 반환", response = BaseResponse.class)
     @PutMapping
     public BaseResponse updateInfo(@ApiParam(value = "리뷰 객체", required=false) @RequestBody InfoRequest request) {
         BaseResponse response = null;
         try {
             infoService.updateInfo(request);
-            response = new BaseResponse("success", "수정 성공");
+
+            //상세 정보 반환
+            Info info = infoService.findByInfoId(request.getInfoId());
+            InfoDTO infoDTO = new InfoDTO(info);
+            response = new BaseResponse("success", infoDTO);
         } catch (IllegalStateException | IOException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
