@@ -9,7 +9,11 @@
             <div id="month-next" class="calendar-button"><v-icon>fas fa-angle-right</v-icon></div>
         </div>
         <v-sheet>
-            <v-calendar ref="calendar" v-model="value" type="month" color="red"></v-calendar>
+            <v-calendar ref="calendar" 
+                v-model="value" 
+                type="month" 
+                :events="events"
+            ></v-calendar>
         </v-sheet>
     </div>
 </template>
