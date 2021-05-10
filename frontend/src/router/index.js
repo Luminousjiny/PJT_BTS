@@ -32,6 +32,7 @@ import WebCam from "../common/WebCam/WebCam.vue";
 import joinUserInfo from "../components/Join/Join_1.vue";
 import joinUserCheck from "../components/Join/Join_2.vue";
 import CamSetting from "../views/MyPage/CamSetting.vue";
+import Award from "../views/Award/Award.vue";
 
 Vue.use(VueRouter);
 
@@ -118,7 +119,7 @@ const routes = [
         path: "webcam",
         name: "WebCam",
         component: WebCam,
-      }, 
+      },
     ],
   },
   {
@@ -130,17 +131,17 @@ const routes = [
         path: "information",
         name: "InfoBoard",
         component: InfoBoard,
-      },     
+      },
       {
         path: "information/:id",
         name: "InfoDetail",
         component: InfoDetail,
-      },      
+      },
       {
         path: "problem",
         name: "ProblemBoard",
         component: ProblemBoard,
-      },     
+      },
       {
         path: "problem/:id",
         name: "ProblemDetail",
@@ -236,6 +237,11 @@ const routes = [
     name: "Office",
     component: Office,
   },
+  {
+    path: "/award",
+    name: "Award",
+    component: Award
+  }
 ];
 
 const router = new VueRouter({
