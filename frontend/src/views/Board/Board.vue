@@ -99,6 +99,7 @@ export default {
 }
 .scrollable-modal {
   display: flex;
+  max-width: 80% !important;
   flex-direction: column;
   height: calc(100% - 50px);
 }
@@ -126,8 +127,8 @@ export default {
   flex-grow: 1;
 }
 .scrollable-modal .scrollable-modal-footer {
-  padding: 15px 0px 15px 0px;
   border-top: 1px solid #e5e5e5;
+  width: 100%;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -348,6 +349,7 @@ export default {
   outline: none;
 }
 .ProseMirror {
+  height:360px;
   cursor:text;
   > * + * {
     margin-top: 0.75em;

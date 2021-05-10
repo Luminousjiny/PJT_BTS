@@ -44,35 +44,26 @@
     <div class="infodetail__profile">
       <div class="infodetail__profile__image"></div>
       <div>
-        <div class="infodetail__profile__name">{{content.name}}</div>
+        <div class="infodetail__profile__name">{{content.user.userNickname}}</div>
         <div class="infodetail__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          {{content.date}}
+          {{$moment(content.infoDate).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
 
     <div class="infodetail__title">
-      {{content.title}}
+      {{content.infoTitle}}
     </div>
     <div class="infodetail__content">
         <div class="editor__content"></div>
     </div>
-    <!-- <div class="sec-widget" data-widget="0a6d29d3367a0672ae82d5a3477e189f"></div> -->
   </div>
 </template>
 
 <script>
-// import CreateEditor from './CreateEditor.vue';
 import UpdateEditor from './UpdateEditor.vue';
-// var SEC_HTTPS = true;
-// var SEC_BASE = "compilers.widgets.sphere-engine.com"; 
-// (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
-//   var js, fjs = d.getElementsByTagName(s)[0];
-//   if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; 
-//   js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
-//   fjs.parentNode.insertBefore(js, fjs);   
-// }(document, "script", "sphere-engine-compilers-jssdk"));
+import http from '../../util/http-common.js';
 export default {
   name:'ContentDetail',
   components:{
@@ -81,15 +72,39 @@ export default {
   },
   data(){
     return{
-      content:{},
+      content:{
+        infoContent:'',
+        infoData:'',
+        infoId: Number(),
+        user: {
+          userId:'',
+          userImg:'',
+          userLank:'',
+          userNickname:'',
+          userPhone:'',
+          userPoint:'',
+          userPw:'',
+        },
+      },
       showModal: false,
     }
   },
   created(){
-    this.content=this.$route.params.content;
+    http.get(`v1/info/detail/${this.$route.params.id}`)
+    .then((res)=>{
+      if(res.status===200){
+        this.content=res.data.data;
+
+        console.log(this.content);
+        document.querySelector('.editor__content').innerHTML=this.content.infoContent;
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
   mounted(){
-    document.querySelector('.editor__content').innerHTML=this.content.content;
+    
   },
   methods:{
     handleClickList(){

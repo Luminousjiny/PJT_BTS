@@ -2,14 +2,14 @@
   <div :id="id" class="content_wrap" @click="onClickContent">
     <div class="content_header"></div>
     <div class="content_title">
-      {{content.title}}
+      {{content.infoTitle.length>13 ? `${content.infoTitle.slice(0,11)}..` : content.infoTitle}}
     </div>
     <div class="content_footer">
       <div class="content_footer_date">
-        {{content.date}}
+        {{$moment(content.infoDate).format('YYYY-MM-DD')}}
       </div>
       <div class="content_footer_name">
-        {{content.name}}
+        {{content.userNickname}}
       </div>
     </div>
   </div>
@@ -18,6 +18,11 @@
 <script>
 export default {
   name:'Content',
+  data(){
+    return{
+      colorList:['#FE9C9B','#FCB849','#69F5CE','#7A89FF','#60BDFF','#D06BF7','#F36B9D'],
+    }
+  },
   props:{
     content: Object,
     color: String,
@@ -29,11 +34,11 @@ export default {
   },
   mounted(){
     const wrap = document.getElementById(String(this.id));
-    wrap.querySelector('.content_header').style.backgroundColor=this.color;
+    wrap.querySelector('.content_header').style.backgroundColor=this.colorList[this.id%7];
   },
   methods:{
     onClickContent(){
-      this.$emit('handleClickContent',this.id,this.content);
+      this.$emit('handleClickContent',this.id);
     }
   }
 }
