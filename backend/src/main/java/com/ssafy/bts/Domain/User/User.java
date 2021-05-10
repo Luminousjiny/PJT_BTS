@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-@ApiModel(value = "사용자 entity", description = "사용자에 대한 테이블과 1대1로 매핑이되는 데이터이다.")
+@ApiModel(value = "사용자 엔티티", description = "사용자에 대한 테이블과 1대1로 매핑이되는 데이터이다.")
 public class User { // DB에 매핑용
     @Id
     private String userId;
