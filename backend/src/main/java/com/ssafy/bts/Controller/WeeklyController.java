@@ -86,14 +86,16 @@ public class WeeklyController {
     }
 
     @ApiOperation(value = "현재 년도, 주에 작성된 플랜 리스트 조회", notes = "List 형식 반환(날짜/시작 시간순 오름차순)", response = BaseResponse.class)
-    @GetMapping("/{weekYear}/{weekMonth}/{startDate}/{endDate}")
-    public BaseResponse findThisWeekly(@ApiParam(value = "현재 년도")@PathVariable int weekYear,
+    @GetMapping("/{userId}/{weekYear}/{weekMonth}/{startDate}/{endDate}")
+    public BaseResponse findThisWeekly(@ApiParam(value = "사용자 아이디")@PathVariable String userId,
+                                       @ApiParam(value = "현재 년도")@PathVariable int weekYear,
                                        @ApiParam(value = "현재 달")@PathVariable int weekMonth,
                                        @ApiParam(value = "현재 주 시작날짜")@PathVariable int startDate,
                                        @ApiParam(value = "현재 주 끝나는 날짜")@PathVariable int endDate){
         BaseResponse response = null;
         try{
-            List<Weekly> weeklyList  = weeklyService.findThisWeekly(weekYear, weekMonth, startDate, endDate);
+            User user = userService.findByUserId(userId);
+            List<Weekly> weeklyList  = weeklyService.findThisWeekly(user, weekYear, weekMonth, startDate, endDate);
             List<WeeklyDTO> collect = weeklyList.stream()
                     .map(m-> new WeeklyDTO(m))
                     .collect(Collectors.toList());
