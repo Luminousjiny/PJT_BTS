@@ -2,6 +2,7 @@ package com.ssafy.bts.Service;
 
 import com.ssafy.bts.Controller.Request.MonthlyRequest;
 import com.ssafy.bts.Domain.Monthly.Monthly;
+import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Repository.MonthlyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,7 @@ public class MonthlyService {
      * @return
      */
     @Transactional
-    public List<Monthly> findByMonYearAndMonMonth(int monYear, int monMonth) { return monthlyRepository.findByMonYearAndMonMonth(monYear, monMonth);}
+    public List<Monthly> findByUserIdAndMonYearAndMonMonth(User user, int monYear, int monMonth) { return monthlyRepository.findByUserIdAndMonYearAndMonMonth(user, monYear, monMonth);}
 
     /**
      * 플랜 아이디 상세정보 가져오기

@@ -84,13 +84,15 @@ public class MonthlyController {
         return response;
     }
 
-    @ApiOperation(value = "현재 년도, 달에 작성된 플랜 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
-    @GetMapping("/{monYear}/{monMonth}")
-    public BaseResponse findThisMonthly(@ApiParam(value = "현재 년도")@PathVariable int monYear,
+    @ApiOperation(value = "로그인한 아이디가 현재 년도, 달에 작성한 플랜 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/{userId}/{monYear}/{monMonth}")
+    public BaseResponse findThisMonthly(@ApiParam(value = "사용자 아이디")@PathVariable String userId,
+                                        @ApiParam(value = "현재 년도")@PathVariable int monYear,
                                         @ApiParam(value = "현재 달")@PathVariable int monMonth){
         BaseResponse response = null;
         try{
-            List<Monthly> montlyList  = monthlyService.findByMonYearAndMonMonth(monYear, monMonth);
+            User user = userService.findByUserId(userId);
+            List<Monthly> montlyList  = monthlyService.findByUserIdAndMonYearAndMonMonth(user, monYear, monMonth);
             List<MonthlyDTO> collect = montlyList.stream()
                     .map(m-> new MonthlyDTO(m))
                     .collect(Collectors.toList());

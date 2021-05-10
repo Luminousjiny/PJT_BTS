@@ -1,6 +1,7 @@
 package com.ssafy.bts.Service;
 
 import com.ssafy.bts.Controller.Request.WeeklyRequest;
+import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Domain.Weekly.Weekly;
 import com.ssafy.bts.Repository.WeeklyRepository;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,7 @@ public class WeeklyService {
      * @return
      */
     @Transactional
-    public List<Weekly> findThisWeekly(int weekYear, int weekMonth, int startDate, int endDate) { return weeklyRepository.findThisWeekly(weekYear, weekMonth, startDate, endDate);}
+    public List<Weekly> findThisWeekly(User user, int weekYear, int weekMonth, int startDate, int endDate) { return weeklyRepository.findThisWeekly(user, weekYear, weekMonth, startDate, endDate);}
 
     /**
      * 현재 플랜 아이디 상세정보 가져오기
