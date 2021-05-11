@@ -9,6 +9,9 @@ import java.util.Date;
 @Data
 @ApiModel(value = "월간 플랜 객체", description = "클라이언트측에서 보내주는 월간 플랜 객체")
 public class MonthlyRequest {
+    @ApiModelProperty(value="방 번호")
+    private int roomId;
+
     @ApiModelProperty(value="플랜 번호")
     private int monId;
 
