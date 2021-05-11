@@ -28,7 +28,7 @@ public class InfoController {
     private final UserService userService;
     private final RoomService roomService;
 
-    @ApiOperation(value = "정보 글작성", notes = "글 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
+    @ApiOperation(value = "정보 글작성(★방번호 필요)", notes = "글 작성 성공시 data값으로 현재 방에 작성된 전체 글 리스트 반환", response = BaseResponse.class)
     @PostMapping
     public BaseResponse writeInfo(@ApiParam(value = "info 객체", required=true) @RequestBody InfoRequest request) throws IOException {
         BaseResponse response = null;
@@ -53,7 +53,7 @@ public class InfoController {
         return response;
     }
 
-    @ApiOperation(value = "정보 글수정", notes = "글 수정 성공시 data값으로 상세정보 반환", response = BaseResponse.class)
+    @ApiOperation(value = "정보 글수정", notes = "글 수정 성공시 data값으로 수정된 상세정보 반환", response = BaseResponse.class)
     @PutMapping
     public BaseResponse updateInfo(@ApiParam(value = "리뷰 객체", required=false) @RequestBody InfoRequest request) {
         BaseResponse response = null;
@@ -63,6 +63,7 @@ public class InfoController {
             //상세 정보 반환
             Info info = infoService.findByInfoId(request.getInfoId());
             InfoDTO infoDTO = new InfoDTO(info);
+
             response = new BaseResponse("success", infoDTO);
         } catch (IllegalStateException | IOException e) {
             response = new BaseResponse("fail", e.getMessage());
@@ -83,7 +84,7 @@ public class InfoController {
         return response;
     }
 
-    @ApiOperation(value = "현재 방의 정보 글 전체 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
+    @ApiOperation(value = "현재 방의 정보 글 전체 리스트 조회(★방번호 필요)", notes = "List 형식으로 반환", response = BaseResponse.class)
     @GetMapping("/list/{roomId}")
     public BaseResponse findAllInfo(@ApiParam(value = "방 번호")@PathVariable int roomId){
         BaseResponse response = null;
@@ -101,7 +102,7 @@ public class InfoController {
         return response;
     }
 
-    @ApiOperation(value = "현재 글 상세 보여주기", notes = "InfoDto 형식으로 반환", response = BaseResponse.class)
+    @ApiOperation(value = "정보 글 상세 보여주기", notes = "InfoDto 형식으로 반환", response = BaseResponse.class)
     @GetMapping("/detail/{infoId}")
     public BaseResponse detailInfo(@ApiParam(value = "글 아이디")@PathVariable int infoId){
         BaseResponse response = null;
@@ -115,12 +116,15 @@ public class InfoController {
         return response;
     }
 
-    @ApiOperation(value = "제목으로 글 검색", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
-    @GetMapping("/searchTitle/{keyword}")
-    public BaseResponse searchByTitle(@ApiParam(value = "제목 검색 키워드")@PathVariable String keyword){
+    @ApiOperation(value = "현재 방에서 제목으로 정보 글 검색(★방번호 필요)", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
+    @GetMapping("/searchTitle/{roomId}/{keyword}")
+    public BaseResponse searchByTitle(
+            @ApiParam(value = "방 번호")@PathVariable int roomId,
+            @ApiParam(value = "제목 검색 키워드")@PathVariable String keyword){
         BaseResponse response = null;
         try{
-            List<Info> infoList = infoService.searchByTitle(keyword);
+            Room room = roomService.findByRoomId(roomId);
+            List<Info> infoList = infoService.searchByTitle(room, keyword);
             if(infoList == null){
                 response = new BaseResponse("success", null);
                 return response;
@@ -136,12 +140,14 @@ public class InfoController {
         return response;
     }
 
-    @ApiOperation(value = "내용으로 글 검색", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
-    @GetMapping("/searchContent/{keyword}")
-    public BaseResponse searchByContent(@ApiParam(value = "내용 검색 키워드")@PathVariable String keyword){
+    @ApiOperation(value = "현재 방에서 내용으로 정보 글 검색(★방번호 필요)", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
+    @GetMapping("/searchContent/{roomId}/{keyword}")
+    public BaseResponse searchByContent(@ApiParam(value = "방 번호")@PathVariable int roomId,
+                                        @ApiParam(value = "내용 검색 키워드")@PathVariable String keyword){
         BaseResponse response = null;
         try{
-            List<Info> infoList = infoService.searchByContent(keyword);
+            Room room = roomService.findByRoomId(roomId);
+            List<Info> infoList = infoService.searchByContent(room, keyword);
             if(infoList == null){
                 response = new BaseResponse("success", null);
                 return response;
