@@ -52,9 +52,6 @@ a.router-link-exact-active .router-div p{
     display: inline-block;
     text-align: center;
 }
-/* .active i, .active p{
-    color: var(--color-grey-2)!important;
-} */
 
 #monthly-header{
     display: flex;
@@ -65,4 +62,70 @@ a.router-link-exact-active .router-div p{
 .calendar-button{
     display: inline-block;
     cursor: pointer;
+}
+#month-title{
+    color: var(--color-mainBlue);
+    font-size : var(--font-size-24);
+    font-family: 'AppleSDGothicNeoEB';
+    font-weight: var(--weight-regular);
+}
+
+.event{
+    font-size : var(--font-size-14);
+    font-family: 'AppleSDGothicNeoB'; 
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1)!important;
+}
+.event-item{
+    margin : 10px auto;
+    width: 100%;
+}
+.event-item-title{
+    font-size : var(--font-size-18);
+    font-family: 'AppleSDGothicNeoEB'; 
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1)!important;
+    box-shadow: none!important;
+}
+.card-actions{
+    justify-content: space-around;
+}
+.btn-event{
+    margin : 0px 5px;
+    font-size : 18px!important;
+}
+#event-item-detail{
+    margin : 10px auto;
+    text-align: center;
+}
+.event-color{
+    width : 20px;
+    height : 20px;
+    display : inline-block;
+    margin : 5px;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+.active-color{
+    border : 2px solid var(--color-shadow);
+}
+#event-item-detail td{
+    font-size : var(--font-size-18);
+    font-family: 'AppleSDGothicNeoEB'; 
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1);
+    padding : 5px 10px;
+}
+#delete-message{
+    font-size : var(--font-size-24);
+    font-family: 'AppleSDGothicNeoEB'; 
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-1);
+}
+.card-btn{
+    width: 100px;
+    font-size : var(--font-size-18);
+    font-family: 'AppleSDGothicNeoEB'; 
+    font-weight: var(--weight-regular);
+    color : var(--color-grey-2);
 }
