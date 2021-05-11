@@ -3,8 +3,10 @@ package com.ssafy.bts.Controller;
 import com.ssafy.bts.Controller.Request.InfoRequest;
 import com.ssafy.bts.Domain.Info.Info;
 import com.ssafy.bts.Domain.Info.InfoDTO;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Service.InfoService;
+import com.ssafy.bts.Service.RoomService;
 import com.ssafy.bts.Service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class InfoController {
     private final InfoService infoService;
     private final UserService userService;
+    private final RoomService roomService;
 
     @ApiOperation(value = "정보 글작성", notes = "글 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping
@@ -33,11 +36,13 @@ public class InfoController {
         try{
             Info info = Info.createInfo(request);
             User user = userService.findByUserId(request.getUserId());
+            Room room = roomService.findByRoomId(request.getRoomId());
+            info.setRoom(room);
             info.setUser(user);
             infoService.save(info);
 
             //전체 리스트 반환
-            List<Info> infoList  = infoService.findAll();
+            List<Info> infoList  = infoService.findByRoom(room);
             List<InfoDTO> collect = infoList.stream()
                     .map(m-> new InfoDTO(m))
                     .collect(Collectors.toList());
@@ -78,12 +83,13 @@ public class InfoController {
         return response;
     }
 
-    @ApiOperation(value = "정보 글 전체 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
-    @GetMapping("/list")
-    public BaseResponse findAllInfo(){
+    @ApiOperation(value = "현재 방의 정보 글 전체 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/list/{roomId}")
+    public BaseResponse findAllInfo(@ApiParam(value = "방 번호")@PathVariable int roomId){
         BaseResponse response = null;
         try{
-            List<Info> infoList  = infoService.findAll();
+            Room room = roomService.findByRoomId(roomId);
+            List<Info> infoList  = infoService.findByRoom(room);
             List<InfoDTO> collect = infoList.stream()
                     .map(m-> new InfoDTO(m))
                     .collect(Collectors.toList());

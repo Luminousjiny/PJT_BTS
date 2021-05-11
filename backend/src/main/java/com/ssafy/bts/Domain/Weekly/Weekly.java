@@ -20,6 +20,9 @@ public class Weekly {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int weekId;
 
+    @Column(nullable = false)
+    private int roomId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

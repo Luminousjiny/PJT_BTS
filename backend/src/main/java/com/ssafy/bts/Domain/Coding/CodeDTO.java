@@ -1,5 +1,7 @@
 package com.ssafy.bts.Domain.Coding;
 
+import com.ssafy.bts.Domain.Room.Room;
+import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class CodeDTO {
     private int codeId;
+    private RoomDTO room;
     private ProblemDTO problem;
     private UserDTO user;
     private String codeContent;
@@ -22,6 +25,12 @@ public class CodeDTO {
 
     public CodeDTO(Code code){
         this.codeId = code.getCodeId();
+
+        if(code.getRoom() != null){
+            room = new RoomDTO();
+            this.room.setRoomId(code.getRoom().getRoomId());
+        }
+
         if(code.getProblem() != null){
             problem = new ProblemDTO();
             this.problem.setProId(code.getProblem().getProId());

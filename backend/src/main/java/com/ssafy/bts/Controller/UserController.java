@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +33,7 @@ public class UserController {
         BaseResponse response = null;
         try{
             User user = User.createUser(request);
+
             userService.save(user);
             response = new BaseResponse("success", "성공적으로 가입");
         }catch(IllegalStateException e){

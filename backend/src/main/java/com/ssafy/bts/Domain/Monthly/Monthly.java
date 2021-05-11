@@ -1,6 +1,7 @@
 package com.ssafy.bts.Domain.Monthly;
 
 import com.ssafy.bts.Controller.Request.MonthlyRequest;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,10 @@ public class Monthly {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int monId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

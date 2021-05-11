@@ -1,5 +1,6 @@
 package com.ssafy.bts.Domain.Qna;
 
+import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,13 +13,21 @@ import java.util.Date;
 @AllArgsConstructor
 public class QnaDTO {
     private int qnaId;
+    private RoomDTO room;
     private UserDTO user;
     private String qnaTitle;
     private String qnaContent;
     private Date qnaDate;
 
+
     public QnaDTO(Qna qna){
         this.qnaId = qna.getQnaId();
+
+        if(qna.getRoom() != null){
+            room = new RoomDTO();
+            this.room.setRoomId(qna.getRoom().getRoomId());
+        }
+
         if(qna.getUser() != null){
             user = new UserDTO();
             this.user.setUserId(qna.getUser().getUserId());
