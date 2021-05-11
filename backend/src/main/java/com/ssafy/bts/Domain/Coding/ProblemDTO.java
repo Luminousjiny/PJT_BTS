@@ -1,5 +1,6 @@
 package com.ssafy.bts.Domain.Coding;
 
+import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ProblemDTO {
     private int proId;
+    private RoomDTO room;
     private UserDTO user;
     private String proTitle;
     private String proContent;
@@ -21,6 +23,12 @@ public class ProblemDTO {
 
     public ProblemDTO(Problem problem){
         this.proId = problem.getProId();
+
+        if(problem.getRoom() != null){
+            room = new RoomDTO();
+            this.room.setRoomId(problem.getRoom().getRoomId());
+        }
+
         if(problem.getUser() != null){
             user = new UserDTO();
             this.user.setUserId(problem.getUser().getUserId());

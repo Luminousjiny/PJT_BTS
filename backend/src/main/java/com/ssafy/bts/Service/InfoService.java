@@ -2,6 +2,7 @@ package com.ssafy.bts.Service;
 
 import com.ssafy.bts.Controller.Request.InfoRequest;
 import com.ssafy.bts.Domain.Info.Info;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Repository.InfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -89,5 +90,9 @@ public class InfoService {
     @Transactional
     public List<Info> searchByContent(String keyword) {
         return infoRepository.findByInfoContentContaining(keyword);
+    }
+
+    public List<Info> findByRoom(Room room) {
+        return infoRepository.findByRoom(room);
     }
 }

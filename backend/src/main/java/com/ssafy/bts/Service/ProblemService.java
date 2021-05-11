@@ -2,6 +2,7 @@ package com.ssafy.bts.Service;
 
 import com.ssafy.bts.Controller.Request.ProblemRequest;
 import com.ssafy.bts.Domain.Coding.Problem;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Repository.ProblemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -86,5 +87,13 @@ public class ProblemService {
     @Transactional
     public List<Problem> searchByContent(String keyword) {
         return problemRepository.findByProContentContaining(keyword);
+    }
+
+    /**
+     * 현재 방번호에 있는 모든 문제 가져오기
+     * @return
+     */
+    public List<Problem> findByRoom(Room room) {
+        return problemRepository.findByRoom(room);
     }
 }
