@@ -9,6 +9,9 @@ import java.util.Date;
 @Data
 @ApiModel(value = "코드 객체", description = "클라이언트측에서 보내주는 코드 객체")
 public class CodeRequest {
+    @ApiModelProperty(value="방 번호")
+    private int roomId;
+
     @ApiModelProperty(value="코드 번호")
     private int codeId;
 

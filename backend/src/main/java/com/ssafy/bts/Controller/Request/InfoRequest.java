@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 @ApiModel(value = "정보 객체", description = "클라이언트측에서 보내주는 정보 글 객체")
 public class InfoRequest {
+    @ApiModelProperty(value="방 번호")
+    private int roomId;
+
     @ApiModelProperty(value="정보글 번호")
     private int infoId;
 

@@ -4,11 +4,9 @@ import com.ssafy.bts.Controller.Request.CodeRequest;
 import com.ssafy.bts.Controller.Request.ProblemRequest;
 import com.ssafy.bts.Controller.Request.SolveRequest;
 import com.ssafy.bts.Domain.Coding.*;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
-import com.ssafy.bts.Service.CodeService;
-import com.ssafy.bts.Service.ProblemService;
-import com.ssafy.bts.Service.SolveService;
-import com.ssafy.bts.Service.UserService;
+import com.ssafy.bts.Service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,6 +27,7 @@ public class CodingController {
     private final CodeService codeService;
     private final UserService userService;
     private final SolveService solveService;
+    private final RoomService roomService;
 
     @ApiOperation(value = "문제 작성", notes = "문제 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping("/pro")
@@ -37,12 +36,14 @@ public class CodingController {
 
         try{
             Problem p = Problem.createProblem(request);
+            Room room = roomService.findByRoomId(request.getRoomId());
             User user = userService.findByUserId(request.getUserId());
             p.setUser(user);
+            p.setRoom(room);
             problemService.save(p);
 
             //전체 리스트 반환
-            List<Problem> problemList  = problemService.findAll();
+            List<Problem> problemList  = problemService.findByRoom(room);
             List<ProblemDTO> collect = problemList.stream()
                     .map(m-> new ProblemDTO(m))
                     .collect(Collectors.toList());
@@ -84,12 +85,13 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "전체 문제 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
-    @GetMapping("/pro/list")
-    public BaseResponse findAllProblem(){
+    @ApiOperation(value = "현재 방의 전체 문제 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/pro/list/{roomId}")
+    public BaseResponse findAllProblem(@ApiParam(value = "방 번호")@PathVariable int roomId){
         BaseResponse response = null;
         try{
-            List<Problem> problemList  = problemService.findAll();
+            Room room = roomService.findByRoomId(roomId);
+            List<Problem> problemList  = problemService.findByRoom(room);
             List<ProblemDTO> collect = problemList.stream()
                     .map(m-> new ProblemDTO(m))
                     .collect(Collectors.toList());
@@ -122,8 +124,10 @@ public class CodingController {
 
         try{
             Code c = Code.createCode(request);
+            Room room = roomService.findByRoomId(request.getRoomId());
             User user = userService.findByUserId(request.getUserId());
             Problem problem = problemService.findByProId(request.getProId());
+            c.setRoom(room);
             c.setUser(user);
             c.setProblem(problem);
             codeService.save(c);
@@ -233,8 +237,10 @@ public class CodingController {
     }
 
     @ApiOperation(value = "제목으로 문제 검색", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
-    @GetMapping("/pro/searchTitle/{keyword}")
-    public BaseResponse searchByTitle(@ApiParam(value = "제목 검색 키워드")@PathVariable String keyword){
+    @GetMapping("/pro/searchTitle/{roomId}/{keyword}")
+    public BaseResponse searchByTitle(
+            @ApiParam(value = "문제 번호")@PathVariable int roomId,
+            @ApiParam(value = "제목 검색 키워드")@PathVariable String keyword){
         BaseResponse response = null;
         try{
             List<Problem> problemList = problemService.searchByTitle(keyword);

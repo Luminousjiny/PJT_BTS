@@ -1,6 +1,7 @@
 package com.ssafy.bts.Domain.User;
 
 import com.ssafy.bts.Controller.Request.UserRequest;
+import com.ssafy.bts.Domain.Room.Room;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;

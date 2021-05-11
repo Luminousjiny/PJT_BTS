@@ -2,6 +2,7 @@ package com.ssafy.bts.Domain.Qna;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.bts.Controller.Request.QnaRequest;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 
 import lombok.Getter;
@@ -16,6 +17,11 @@ public class Qna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 생성을 db에 위임
     private int qnaId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

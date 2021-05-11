@@ -3,6 +3,7 @@ package com.ssafy.bts.Domain.Comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.bts.Controller.Request.CommentRequest;
 import com.ssafy.bts.Domain.Qna.Qna;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,10 @@ public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int comId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

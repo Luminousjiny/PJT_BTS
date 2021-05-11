@@ -1,6 +1,7 @@
 package com.ssafy.bts.Domain.Coding;
 
 import com.ssafy.bts.Controller.Request.CodeRequest;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,10 @@ public class Code implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codeId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pro_id")
