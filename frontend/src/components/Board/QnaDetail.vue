@@ -19,7 +19,7 @@
             modal-class="scrollable-modal"
           >
             <div class="scrollable-content">
-              <UpdateProblem :content="content"/>
+              <UpdateQuestion :question="question"/>
             </div>
             <div class="row scrollable-modal-footer">
               <div class="modal_btn_box">
@@ -42,22 +42,25 @@
       </div>
 
       <div class="qna__question__profile">
-        <div class="qna__question__profile__image"></div>
+        <div class="qna__question__profile__image">
+          <img :src="question.user.userImg" alt="" v-if="question.user && question.user.userImg!==''">
+          <img src="../../assets/profile.png" alt="" v-else>
+        </div>
         <div>
           <div class="qna__question__profile__name">
-            {{content.name}}
+            {{question.user && question.user.userNickname}}
           </div>
           <div class="qna__question__profile__date">
             <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-            {{content.date}}
+            {{$moment(question.qnaDate).format('YYYY-MM-DD')}}
           </div>
         </div>
       </div>
       <div class="qna__question__title">
-        {{content.title}}
+        {{question.qnatitle}}
       </div>
       <div class="qna__question__problem">
-        {{content.problem}}
+        {{question.qnaContent}}
       </div>
       <div class="qna__question__btn__box">
         <button class="modal_btn" @click="handleClickCreate">답변 작성하기</button>
@@ -72,55 +75,30 @@
 </template>
 
 <script>
-import UpdateProblem from './UpdateProblem.vue';
-
+import UpdateQuestion from './UpdateQuestion.vue';
+import http from '../../util/http-common.js';
 export default {
   name:'ProblemDetail',
   components:{
-    UpdateProblem,
+    UpdateQuestion,
   },
   data(){
     return{
-      content:{
-        name:'졍',
-        date:'2021.04.21',
-        title:'[5663] 피보나치 수열',
-        problem:'피보나치 수는 0과 1로 시작',
-        input:'3',
-        output:'23',
-      },
+      question:{},
       showModal: false,
-      codeList:[
-        {
-          name:'졍',
-          memory: '1024',
-          time:'0.153',
-          status:'Pass',
-          language:'Java',
-          date: '2021.04.21',
-        },
-        {
-          name:'졍',
-          memory: '1024',
-          time:'0.153',
-          status:'Pass',
-          language:'Java',
-          date: '2021.04.21',
-        },
-        {
-          name:'졍',
-          memory: '1024',
-          time:'0.153',
-          status:'Pass',
-          language:'Java',
-          date: '2021.04.21',
-        }
-      ]
+      codeList:[]
     }
   },
   created(){
-    // this.content=this.$route.params.content;
-    // location.reload();
+    http.get(`v1/qna/detail/${this.$route.params.id}`)
+    .then((res)=>{
+      if(res.status===200){
+        this.question=res.data.data;
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
   mounted(){
     // document.querySelector('.editor__content').innerHTML=this.content.problem;
@@ -212,24 +190,28 @@ export default {
     padding: 1em 0;
     display: flex;
     align-items: center;
-  }
-  &__profile__image{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: var(--color-pink);
-    display: inline-block;
-  }
-  &__profile__name{
-    padding-left: 1rem;
-    font-size: var(--font-size-20);
-    font-family: "AppleSDGothicNeoB";
-  }
-  &__profile__date{
-    padding-left: 1rem;
-    font-family: "AppleSDGothicNeoB";
-    font-size: var(--font-size-14);
-    color: var(--color-grey-2);
+    &__image{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--color-pink);
+      display: inline-block;
+    }
+    img{
+      width: 40px;
+      height: 40px;
+    }    
+    &__name{
+      padding-left: 1rem;
+      font-size: var(--font-size-20);
+      font-family: "AppleSDGothicNeoB";
+    }
+    &__date{
+      padding-left: 1rem;
+      font-family: "AppleSDGothicNeoB";
+      font-size: var(--font-size-14);
+      color: var(--color-grey-2);
+    }
   }
   &__title{
     padding: 1rem 0;

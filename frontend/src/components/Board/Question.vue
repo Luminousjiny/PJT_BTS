@@ -1,21 +1,24 @@
 <template>
-  <div class="q__wrap">
+  <div class="q__wrap" @click="handleClickQustion">
     <div class="q__profile">
-      <div class="q__profile__image"></div>
+      <div class="q__profile__image">
+        <img :src="question.user.userImg" alt="" v-if="question.user.userImg!==''">
+        <img src="../../assets/profile.png" alt="" v-else>
+      </div>
       <div>
-        <div class="q__profile__name">졍이</div>
+        <div class="q__profile__name">{{question.user.userNickname}}</div>
         <div class="q__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          2021.05.07
+          {{$moment(question.qnaData).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
     <div class="q__question">
       <div class="q__question__title">
-        Q. 중간고사 시험범위 어디까지??
+        {{question.qnaTitle}}
       </div>
       <div class="q__question__content">
-        중간고사 시험범위 어디까지냐 ㅅㅂ
+        {{question.qnaContent}}
       </div>
       <div class="q__question__answer">
         <font-awesome-icon :icon="['far', 'comment-dots']" size="1x" />
@@ -28,6 +31,16 @@
 <script>
 export default {
   name:'Question',
+  props:{
+    question: Object,
+  },
+  created(){
+  },
+  methods:{
+    handleClickQustion(){
+      this.$emit('handleClickQustion',this.question.qnaId);
+    },
+  },
 }
 </script>
 
@@ -48,11 +61,15 @@ export default {
     display: flex;
     align-items: center;
     &__image{
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background-color: var(--color-pink);
       display: inline-block;
+      img{
+        width: 40px;
+        height: 40px;
+      }
     }
     &__name{
       padding-left: 1rem;

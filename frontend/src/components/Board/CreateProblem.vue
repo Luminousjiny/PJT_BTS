@@ -32,15 +32,17 @@ export default {
 .code__wrap{
   width:80%;
   margin: 0 auto;
-
 }
 .code__title{
+  display: flex;
+  align-items: center;
   padding: 1rem 0;
   font-family: "AppleSDGothicNeoB";
   font-size: var(--font-size-20);
   color: var(--color-grey-1);
 
   input{
+    width: 70%;
     padding: 0.5rem;
   }
 }
