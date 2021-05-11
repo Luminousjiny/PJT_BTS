@@ -1,15 +1,21 @@
 <template>
   <div :id="id" class="content_wrap" @click="onClickContent">
     <div class="content_header"></div>
-    <div class="content_title">
+    <div class="content_title" v-if="routeName==='InfoBoard'">
       {{content.infoTitle.length>13 ? `${content.infoTitle.slice(0,11)}..` : content.infoTitle}}
     </div>
+    <div class="content_title" v-else>
+      {{content.proTitle.length>13 ? `${content.proTitle.slice(0,11)}..` : content.proTitle}}
+    </div>
     <div class="content_footer">
-      <div class="content_footer_date">
+      <div class="content_footer_date" v-if="routeName==='InfoBoard'">
         {{$moment(content.infoDate).format('YYYY-MM-DD')}}
       </div>
+      <div class="content_footer_date" v-else>
+        {{$moment(content.proDate).format('YYYY-MM-DD')}}
+      </div>
       <div class="content_footer_name">
-        {{content.userNickname}}
+        {{content.user.userNickname}}
       </div>
     </div>
   </div>
@@ -20,6 +26,7 @@ export default {
   name:'Content',
   data(){
     return{
+      routeName:"",
       colorList:['#FE9C9B','#FCB849','#69F5CE','#7A89FF','#60BDFF','#D06BF7','#F36B9D'],
     }
   },
@@ -30,7 +37,7 @@ export default {
 
   },
   created(){
-
+    this.routeName=this.$route.name;
   },
   mounted(){
     const wrap = document.getElementById(String(this.id));

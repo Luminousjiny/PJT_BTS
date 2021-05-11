@@ -1,22 +1,22 @@
 <template>
   <div class="code__wrap">
     <div class="code__title">문제 제목 :
-      <input type="text" id="code__title" v-model="content.title" autofocus>
+      <input type="text" id="code__title" v-model="content.proTitle" autofocus>
     </div>
     <div class="code__box">
-      <textarea name="code__problem" id="code__problem" cols="30" rows="10" v-model="content.problem"></textarea>
+      <textarea name="code__problem" id="code__problem" cols="30" rows="10" v-model="content.proContent"></textarea>
     </div>
     <div class="code__example">
       예제 입력
     </div>
     <div class="code__box">
-      <textarea name="code__problem" id="code__input" cols="30" rows="10" v-model="content.input"></textarea>
+      <textarea name="code__problem" id="code__input" cols="30" rows="10" v-model="content.proInput"></textarea>
     </div>
     <div class="code__example">
       예제 출력
     </div>
     <div class="code__box">
-      <textarea name="code__problem" id="code__output" cols="30" rows="10" v-model="content.output"></textarea>
+      <textarea name="code__problem" id="code__output" cols="30" rows="10" v-model="content.proOutput"></textarea>
     </div>
 
   </div>
@@ -28,11 +28,6 @@ export default {
   props:{
     content: Object,
   },
-  // data(){
-  //   return{
-  //     problem:this.problem,
-  //   }
-  // }
 }
 </script>
 

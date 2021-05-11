@@ -36,11 +36,10 @@
       </button>
       <div class="code_board_contents">
         <Content 
-          v-for="(content,idx) in slides.slice(slideIdx*showCnt,slideIdx*showCnt+showCnt)"
-          :id="idx"
-          :key="idx"
-          :color="colorList[idx%7]"
-          :content="content"
+          v-for="pro in proList.slice(proIdx*showCnt,proIdx*showCnt+showCnt)"
+          :id="pro.proId"
+          :key="pro.proId"
+          :content="pro"
           @handleClickContent="handleClickContent"
         />
       </div>
@@ -54,6 +53,7 @@
 <script>
 import Content from './Content.vue';
 import CreateProblem from './CreateProblem.vue';
+import http from '../../util/http-common.js';
 export default {
   name:'ProblemBoard',
   components:{
@@ -64,19 +64,9 @@ export default {
     return{
       windowSize:0,
       showModal: false,
-      slideIdx:0,
+      proIdx:0,
       showCnt:0,
-      colorList:['#FE9C9B','#FCB849','#69F5CE','#7A89FF','#60BDFF','#D06BF7','#F36B9D'],
-      slides: [
-        {
-          name:'졍',
-          title:'[5663] 피보나치 수열',
-          problem: '피보나치 수는~~~',
-          input: '3',
-          output: '3',
-          date: '2021.04.29'
-        }
-      ],
+      proList: [],
     }
   },
   created(){
@@ -90,6 +80,15 @@ export default {
     else
       this.showCnt=2;
     window.addEventListener('resize',this.handleWindowSize);
+    http.get('v1/pro/list')
+    .then((res)=>{
+      if(res.status===200){
+        this.proList=res.data.data.reverse();
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
   beforeDestroy(){
     window.removeEventListener('resize',this.handleWindowSize);
@@ -116,45 +115,43 @@ export default {
         this.showCnt=4;
       else
         this.showCnt=2;
-      while(this.slideIdx*this.showCnt>=this.slides.length)
-        this.slideIdx--;
+      while(this.infoIdx*this.showCnt>=this.proList.length)
+        this.proIdx--;
     },
     handleClickModal(){
       this.showModal = true;
-      setTimeout(function(){
-        const modal = document.querySelector('.scrollable-modal');
-        modal.style.maxWidth='80%';
-        modal.style.height='auto';
-        const titlebar = document.querySelector('.vm-titlebar');
-        titlebar.style.textAlign="center";
-        titlebar.style.color="var(--color-grey-2)"
-      },1);
-
     },
     handleClickLeft() {
-      if((this.slideIdx-1)*this.showCnt < 0) return;
-      this.slideIdx--;
+      if((this.proIdx-1)*this.showCnt < 0) return;
+      this.proIdx--;
     },
     handleClickRight() {
-      if((this.slideIdx+1)*this.showCnt >=this.slides.length) return;
-      this.slideIdx++;
+      if((this.proIdx+1)*this.showCnt >=this.proList.length) return;
+      this.proIdx++;
     },
     handleSubmit(){
-      const title=document.querySelector('#code__title').value;
-      const problem=document.querySelector('#code__problem').value;
-      const input=document.querySelector('#code__input').value;
-      const output=document.querySelector('#code__output').value;
-      const date = new Date();
+      const proTitle=document.querySelector('#code__title').value;
+      const proContent=document.querySelector('#code__problem').value;
+      const proInput=document.querySelector('#code__input').value;
+      const proOutput=document.querySelector('#code__output').value;
       const data = {
-        title,
-        problem,
-        input,
-        output,
-        'date' : `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
-        'name' : '졍',
+        proTitle,
+        proContent,
+        proInput,
+        proOutput,
+        userId: 'jihyeong'
       };
-      this.slides.unshift(data);
-      this.showModal=false;
+      http.post('v1/pro', JSON.stringify(data))
+      .then((res)=>{
+        if(res.status===200){
+          this.proList=res.data.data.reverse();
+          this.showModal=false;
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+        this.showModal=false;
+      })
     },
   },
 };

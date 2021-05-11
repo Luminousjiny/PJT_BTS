@@ -36,7 +36,7 @@
       </button>
       <div class="qna_board_contents">
         <Content 
-          v-for="(info,idx) in infoList.slice(infoIdx*showCnt,infoIdx*showCnt+showCnt)"
+          v-for="info in infoList.slice(infoIdx*showCnt,infoIdx*showCnt+showCnt)"
           :id="info.infoId"
           :key="info.infoId"
           :content="info"
@@ -141,7 +141,6 @@ export default {
       };
       http.post('v1/info', JSON.stringify(data))
       .then((res)=>{
-        console.log(res);
         if(res.status===200){
           this.infoList=res.data.data.reverse();
           this.showModal=false;

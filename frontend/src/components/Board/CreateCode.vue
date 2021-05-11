@@ -13,19 +13,19 @@
       <div class="code__profile__image"></div>
       <div>
         <div class="code__profile__name">
-          {{content.name}}
+          {{content.user.userNickname}}
         </div>
         <div class="code__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          {{content.date}}
+          {{$moment(content.proDate).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
     <div class="code__title">
-      {{content.title}}
+      {{content.proTitle}}
     </div>
     <div class="code__problem">
-      {{content.problem}}
+      {{content.proContent}}
     </div>
 
     <div class="code__example">
@@ -34,7 +34,7 @@
           예제 입력
         </div>
         <div class="code__example__input">
-          <div v-for="(input,idx) in content.input.split('\n')" :key="idx">{{input}}</div>
+          <div v-for="(input,idx) in content.proInput.split('\n')" :key="idx">{{input}}</div>
         </div>
       </div>
       <div class="code__example__box">
@@ -42,7 +42,7 @@
           예제 출력
         </div>
         <div class="code__example__output" >
-          <div v-for="(output,idx) in content.output.split('\n')" :key="idx">{{output}}</div>
+          <div v-for="(output,idx) in content.proOutput.split('\n')" :key="idx">{{output}}</div>
         </div>
       </div>
     </div>
@@ -91,23 +91,39 @@ export default {
   data(){
     return{
       content:{
-        name:'졍',
-        date:'2021.04.21',
-        title:'[5663] 피보나치 수열',
-        problem:'피보나치 수는 0과 1로 시작',
-        input:'3',
-        output:'23\n24\n25',
+        "proId": null,
+        "user": {
+          "userId": "",
+          "userPw": "",
+          "userNickname": "",
+          "userPhone": "",
+          "userImg": "",
+          "userLank": "",
+          "userPoint": null
+        },
+        "proTitle": "",
+        "proContent": "",
+        "proInput": "",
+        "proOutput": "",
+        "proDate": ""
       },
-      code:"print('hello')",
+      code:"",
+      input:"",
+      output:"",
       mode:"python",
-      editor:{},
-      theme:'vs-dark',
-      input:'',
-      output:'',
+      theme:"vs-dark",
     }
   },
   created(){
-
+    http.get(`v1/pro/detail/${this.$route.params.id}`)
+    .then((res)=>{
+      if(res.status===200){
+        this.content=res.data.data;
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
   mounted(){
 
