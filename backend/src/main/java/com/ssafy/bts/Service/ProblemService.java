@@ -76,8 +76,8 @@ public class ProblemService {
      * @return
      */
     @Transactional
-    public List<Problem> searchByTitle(String keyword) {
-        return problemRepository.findByProTitleContaining(keyword);
+    public List<Problem> searchByTitle(Room room, String keyword) {
+        return problemRepository.findByProTitleContaining(room, keyword);
     }
 
     /**
@@ -85,14 +85,15 @@ public class ProblemService {
      * @return
      */
     @Transactional
-    public List<Problem> searchByContent(String keyword) {
-        return problemRepository.findByProContentContaining(keyword);
+    public List<Problem> searchByContent(Room room, String keyword) {
+        return problemRepository.findByProContentContaining(room, keyword);
     }
 
     /**
      * 현재 방번호에 있는 모든 문제 가져오기
      * @return
      */
+    @Transactional
     public List<Problem> findByRoom(Room room) {
         return problemRepository.findByRoom(room);
     }

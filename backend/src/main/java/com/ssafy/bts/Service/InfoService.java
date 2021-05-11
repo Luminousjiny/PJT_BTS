@@ -79,8 +79,8 @@ public class InfoService {
      * @return
      */
     @Transactional
-    public List<Info> searchByTitle(String keyword) {
-        return infoRepository.findByInfoTitleContaining(keyword);
+    public List<Info> searchByTitle(Room room, String keyword) {
+        return infoRepository.findByInfoTitleContaining(room, keyword);
     }
 
     /**
@@ -88,10 +88,15 @@ public class InfoService {
      * @return
      */
     @Transactional
-    public List<Info> searchByContent(String keyword) {
-        return infoRepository.findByInfoContentContaining(keyword);
+    public List<Info> searchByContent(Room room, String keyword) {
+        return infoRepository.findByInfoContentContaining(room, keyword);
     }
 
+    /**
+     * 현재 방의 모든 글리스트 조회
+     * @return
+     */
+    @Transactional
     public List<Info> findByRoom(Room room) {
         return infoRepository.findByRoom(room);
     }

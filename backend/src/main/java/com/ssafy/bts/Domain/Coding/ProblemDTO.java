@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +22,7 @@ public class ProblemDTO {
     private String proInput;
     private String proOutput;
     private Date proDate;
+    private List<CodeDTO> codeList;
 
     public ProblemDTO(Problem problem){
         this.proId = problem.getProId();
@@ -40,5 +43,14 @@ public class ProblemDTO {
         this.proInput = problem.getProInput();
         this.proOutput = problem.getProOutput();
         this.proDate = problem.getProDate();
+
+        if(problem.getCodes() != null){
+            List<CodeDTO> codeDTOList = new ArrayList<>();
+            for(Code code : problem.getCodes()){
+                CodeDTO codeDTO = new CodeDTO(code);
+                codeDTOList.add(codeDTO);
+            }
+            this.codeList = codeDTOList;
+        }
     }
 }

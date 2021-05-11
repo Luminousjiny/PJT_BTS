@@ -1,6 +1,7 @@
 package com.ssafy.bts.Domain.Weekly;
 
 import com.ssafy.bts.Controller.Request.WeeklyRequest;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,6 @@ public class Weekly {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int weekId;
-
-    @Column(nullable = false)
-    private int roomId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

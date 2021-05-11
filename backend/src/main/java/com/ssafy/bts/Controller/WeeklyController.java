@@ -85,7 +85,7 @@ public class WeeklyController {
         return response;
     }
 
-    @ApiOperation(value = "현재 년도, 주에 작성된 플랜 리스트 조회", notes = "List 형식 반환(날짜/시작 시간순 오름차순)", response = BaseResponse.class)
+    @ApiOperation(value = "로그인한 아이디가 현재 년도, 주에 작성된 플랜 리스트 조회", notes = "List 형식 반환(날짜/시작 시간순 오름차순)", response = BaseResponse.class)
     @GetMapping("/{userId}/{weekYear}/{weekMonth}/{startDate}/{endDate}")
     public BaseResponse findThisWeekly(@ApiParam(value = "사용자 아이디")@PathVariable String userId,
                                        @ApiParam(value = "현재 년도")@PathVariable int weekYear,

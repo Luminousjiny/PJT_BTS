@@ -29,7 +29,7 @@ public class CodingController {
     private final SolveService solveService;
     private final RoomService roomService;
 
-    @ApiOperation(value = "문제 작성", notes = "문제 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
+    @ApiOperation(value = "문제 작성(★방번호 필요)", notes = "문제 작성 성공시 data값으로 현제 방의 전체 문제 리스트 반환", response = BaseResponse.class)
     @PostMapping("/pro")
     public BaseResponse writeProblem(@ApiParam(value = "Problem 객체", required=true) @RequestBody ProblemRequest request) throws IOException {
         BaseResponse response = null;
@@ -55,7 +55,7 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "문제 수정", notes = "문제 수정 성공시 data값으로 상세정보 반환", response = BaseResponse.class)
+    @ApiOperation(value = "문제 수정", notes = "문제 수정 성공시 data값으로 수정된 상세정보 반환", response = BaseResponse.class)
     @PutMapping("/pro")
     public BaseResponse updateProblem(@ApiParam(value = "Problem 객체", required=false) @RequestBody ProblemRequest request) {
         BaseResponse response = null;
@@ -85,7 +85,7 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "현재 방의 전체 문제 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
+    @ApiOperation(value = "현재 방의 전체 문제 리스트 조회(★방번호 필요)", notes = "List 형식으로 반환", response = BaseResponse.class)
     @GetMapping("/pro/list/{roomId}")
     public BaseResponse findAllProblem(@ApiParam(value = "방 번호")@PathVariable int roomId){
         BaseResponse response = null;
@@ -103,7 +103,7 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "현재 문제 상세 보여주기", notes = "ProblemDto 형식으로 반환", response = BaseResponse.class)
+    @ApiOperation(value = "현재 문제 상세 조회(문제에 작성된 코드리스트 포함)", notes = "ProblemDTO으로 반환", response = BaseResponse.class)
     @GetMapping("/pro/detail/{proId}")
     public BaseResponse detailProblem(@ApiParam(value = "문제 번호")@PathVariable int proId){
         BaseResponse response = null;
@@ -117,7 +117,7 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "코드 작성", notes = "코드 작성 성공시 data값으로 전체 리스트 반환", response = BaseResponse.class)
+    @ApiOperation(value = "현재 문제에 코드 작성(★방번호 필요)", notes = "코드 작성 성공시 data값으로 현재 문제에 작성된 전체 코드 리스트 반환", response = BaseResponse.class)
     @PostMapping("/code")
     public BaseResponse writeCode(@ApiParam(value = "Code 객체", required=true) @RequestBody CodeRequest request) throws IOException {
         BaseResponse response = null;
@@ -146,7 +146,7 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "코드 수정", notes = "코드 수정 성공시 data값으로 상세정보 반환", response = BaseResponse.class)
+    @ApiOperation(value = "코드 수정", notes = "코드 수정 성공시 data값으로 수정된 상세정보 반환", response = BaseResponse.class)
     @PutMapping("/code")
     public BaseResponse updateCode(@ApiParam(value = "Code 객체", required=false) @RequestBody CodeRequest request) {
         BaseResponse response = null;
@@ -236,14 +236,15 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "제목으로 문제 검색", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
+    @ApiOperation(value = "제목으로 문제 검색(★방번호 필요)", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
     @GetMapping("/pro/searchTitle/{roomId}/{keyword}")
     public BaseResponse searchByTitle(
-            @ApiParam(value = "문제 번호")@PathVariable int roomId,
+            @ApiParam(value = "방 번호")@PathVariable int roomId,
             @ApiParam(value = "제목 검색 키워드")@PathVariable String keyword){
         BaseResponse response = null;
         try{
-            List<Problem> problemList = problemService.searchByTitle(keyword);
+            Room room = roomService.findByRoomId(roomId);
+            List<Problem> problemList = problemService.searchByTitle(room, keyword);
             if(problemList == null){
                 response = new BaseResponse("success", null);
                 return response;
@@ -259,12 +260,14 @@ public class CodingController {
         return response;
     }
 
-    @ApiOperation(value = "내용으로 문제 검색", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
-    @GetMapping("/pro/searchContent/{keyword}")
-    public BaseResponse searchByContent(@ApiParam(value = "내용 검색 키워드")@PathVariable String keyword){
+    @ApiOperation(value = "내용으로 문제 검색(★방번호 필요)", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
+    @GetMapping("/pro/searchContent/{roomId}/{keyword}")
+    public BaseResponse searchByContent(@ApiParam(value = "방 번호")@PathVariable int roomId,
+                                        @ApiParam(value = "내용 검색 키워드")@PathVariable String keyword){
         BaseResponse response = null;
         try{
-            List<Problem> problemList = problemService.searchByContent(keyword);
+            Room room = roomService.findByRoomId(roomId);
+            List<Problem> problemList = problemService.searchByContent(room, keyword);
             if(problemList == null){
                 response = new BaseResponse("success", null);
                 return response;
