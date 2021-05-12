@@ -17,6 +17,8 @@ import ProblemDetail from "../components/Board/ProblemDetail.vue";
 import CreateCode from '../components/Board/CreateCode.vue';
 import UpdateCode from '../components/Board/UpdateCode.vue';
 import CodeDetail from '../components/Board/CodeDetail.vue';
+import QnaBoard from '../components/Board/QnaBoard.vue';
+import QnaDetail from '../components/Board/QnaDetail.vue';
 import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
 import Calendar from "../components/Library/Calendar.vue";
@@ -152,6 +154,16 @@ const routes = [
         path: "problem/:id/code/:codeId",
         name: "CodeDetail",
         component: CodeDetail,
+      },
+      {
+        path: "qna",
+        name: "QnaBoard",
+        component: QnaBoard,
+      },
+      {
+        path: "qna/:id",
+        name: "QnaDetail",
+        component: QnaDetail,
       },
     ],
   },

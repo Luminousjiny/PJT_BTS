@@ -24,7 +24,7 @@
               @click="handleSubmit"
             >
               글 작성하기
-            </button>            
+            </button>
           </div>
         </div>
       </Modal>
@@ -36,11 +36,10 @@
       </button>
       <div class="qna_board_contents">
         <Content 
-          v-for="(content,idx) in slides.slice(slideIdx*showCnt,slideIdx*showCnt+showCnt)"
-          :id="idx"
-          :key="idx"
-          :color="colorList[idx%7]"
-          :content="content"
+          v-for="info in infoList.slice(infoIdx*showCnt,infoIdx*showCnt+showCnt)"
+          :id="info.infoId"
+          :key="info.infoId"
+          :content="info"
           @handleClickContent="handleClickContent"
         />
       </div>
@@ -54,6 +53,7 @@
 <script>
 import Content from '../../components/Board/Content.vue';
 import CreateEditor from '../../components/Board/CreateEditor.vue';
+import http from '../../util/http-common.js';
 export default {
   name:'InfoBoard',
   components:{
@@ -62,42 +62,11 @@ export default {
   },
   data : ()=>{
     return{
-      routeName:'information',
       windowSize:0,
       showModal: false,
-      slideIdx:0,
+      infoIdx:0,
       showCnt:0,
-      colorList:['#FE9C9B','#FCB849','#69F5CE','#7A89FF','#60BDFF','#D06BF7','#F36B9D'],
-      slides: [
-        {
-          name:'졍',
-          title:'오늘 수업내용',
-          content:`
-<div data-v-38b2e751="" data-node-view-wrapper="" class="code-block" style="white-space: normal;"><pre data-v-38b2e751=""><code data-v-38b2e751="" data-node-view-content="" style="white-space: pre-wrap;"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):
-    <span class="hljs-built_in">print</span>(i);</code></pre></div>
-      `,
-//           content:`        <p>
-//           That’s a boring paragraph followed by a fenced code block:
-//         </p>
-//         <pre><code class="language-javascript">for (var i=1; i <= 20; i++)
-// {
-//   if (i % 15 == 0)
-//     console.log("FizzBuzz");
-//   else if (i % 3 == 0)
-//     console.log("Fizz");
-//   else if (i % 5 == 0)
-//     console.log("Buzz");
-//   else
-//     console.log(i);
-// }</code></pre>
-//         <p>
-//           Press Command/Ctrl + Enter to leave the fenced code block and continue typing in boring paragraphs.
-//         </p>
-//       `,      
-          // content:`<p>afdsafdsa</p>`,
-          date: '2021.04.29'
-        }
-      ],
+      infoList: [],
     }
   },
   created(){
@@ -111,6 +80,17 @@ export default {
     else
       this.showCnt=2;
     window.addEventListener('resize',this.handleWindowSize);
+    http.get('v1/info/list')
+    .then((res)=>{
+      if(res.status===200){
+        this.infoList=res.data.data.reverse();
+      } else{
+        console.error(res.data);
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
   beforeDestroy(){
     window.removeEventListener('resize',this.handleWindowSize);
@@ -118,11 +98,10 @@ export default {
   mounted(){
   },
   methods:{
-    handleClickContent(id,content){
+    handleClickContent(id){
       this.$router.push({
         name:"InfoDetail",
         params:{
-          content,
           id,
         }
       })
@@ -137,50 +116,40 @@ export default {
         this.showCnt=4;
       else
         this.showCnt=2;
-      while(this.slideIdx*this.showCnt>=this.slides.length)
-        this.slideIdx--;
+      while(this.infoIdx*this.showCnt>=this.infoList.length)
+        this.infoIdx--;
     },
     handleClickModal(){
       this.showModal = true;
-      setTimeout(function(){
-        const modal = document.querySelector('.scrollable-modal');
-        modal.style.maxWidth='80%';
-        const titlebar = document.querySelector('.vm-titlebar');
-        titlebar.style.textAlign="center";
-        titlebar.style.color="var(--color-grey-2)"
-        const ProseMirror = document.querySelector('.ProseMirror');
-        ProseMirror.style.height='360px';
-      },1);
-
     },
     handleClickLeft() {
-      if((this.slideIdx-1)*this.showCnt < 0) return;
-      this.slideIdx--;
+      if((this.infoIdx-1)*this.showCnt < 0) return;
+      this.infoIdx--;
     },
     handleClickRight() {
-      if((this.slideIdx+1)*this.showCnt >=this.slides.length) return;
-      this.slideIdx++;
+      if((this.infoIdx+1)*this.showCnt >=this.infoList.length) return;
+      this.infoIdx++;
     },
     handleSubmit(){
       const mirror = document.querySelector('.ProseMirror');
       let html = mirror.innerHTML;
-      while(true){
-        const index=html.indexOf('<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></select>')
-        if(index===-1) break;
-        const length = '<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></select>'.length;
-        html.replaceAll('<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></>','')
-        html = html.slice(0,index)+html.slice(index+length);
-      }
       const input = document.querySelector('.editor__title__input');      
-      const date = new Date();
       const data = {
-        'title' : input.value,
-        'content' : html,
-        'date' : `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
-        'name' : '졍',
+        infoTitle : input.value,
+        infoContent : html,
+        userId : 'jihyeong',
       };
-      this.slides.unshift(data);
-      this.showModal=false;
+      http.post('v1/info', JSON.stringify(data))
+      .then((res)=>{
+        if(res.status===200){
+          this.infoList=res.data.data.reverse();
+          this.showModal=false;
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+        this.showModal=false;
+      })
     },
   },
 };
@@ -208,9 +177,10 @@ export default {
 }
 .qna_board_create_btn{
   color: var(--color-mainBlue);
-  border: 1px solid var(--color-mainBlue);
-  padding: 0.25em;
-  border-radius: 10px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-mainBlue);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
   font-family: "AppleSDGothicNeoSB";
 }
 .qna_board_search{
@@ -245,7 +215,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";

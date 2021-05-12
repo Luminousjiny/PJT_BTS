@@ -57,7 +57,7 @@
         <option value="vs">VS</option>
         <option value="vs-dark">VS-DARK</option>
       </select>
-      <m-monaco-editor v-model="code" :mode="mode" :theme="theme"></m-monaco-editor>
+      <m-monaco-editor v-model="code" :mode="mode" :theme="theme" @init="handleInit"></m-monaco-editor>
     </div>
     <div class="code__example">
       <div class="code__example__box">
@@ -99,6 +99,7 @@ export default {
         output:'23\n24\n25',
       },
       code:"",
+      editor:{},
       mode:"python",
       theme:'vs-dark',
       input:'',
@@ -106,7 +107,7 @@ export default {
     }
   },
   created(){
-    // this.content=this.$route.params.content;
+r
   },
   mounted(){
     const editor=document.querySelector('.code__editor__box');
@@ -116,6 +117,9 @@ export default {
     console.log(document.querySelector('.monaco-editor'))
   },
   methods:{
+    handleInit(editor,editorDom,monaco){
+      this.editor=editor;
+    },
     handleClickList(){
       this.$router.push({
         name:'ProblemDetail',
@@ -131,7 +135,7 @@ export default {
         'java':10,
         'python':99
       };
-      this.code=document.querySelector('.inputarea').value;
+      this.code=this.editor.getValue();
       var formdata = new FormData();
       formdata.append("source", this.code);
       formdata.append("compilerId", compiler[this.mode]);
@@ -193,7 +197,7 @@ export default {
         'java':10,
         'python':99
       };
-      this.code=document.querySelector('.inputarea').value;
+      this.code=this.editor.getValue();
       console.log(this.code,compiler[this.mode],this.input);
       var formdata = new FormData();
       formdata.append("source", this.code);
@@ -349,7 +353,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";

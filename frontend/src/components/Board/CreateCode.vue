@@ -13,19 +13,19 @@
       <div class="code__profile__image"></div>
       <div>
         <div class="code__profile__name">
-          {{content.name}}
+          {{content.user.userNickname}}
         </div>
         <div class="code__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          {{content.date}}
+          {{$moment(content.proDate).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
     <div class="code__title">
-      {{content.title}}
+      {{content.proTitle}}
     </div>
     <div class="code__problem">
-      {{content.problem}}
+      {{content.proContent}}
     </div>
 
     <div class="code__example">
@@ -34,7 +34,7 @@
           예제 입력
         </div>
         <div class="code__example__input">
-          <div v-for="(input,idx) in content.input.split('\n')" :key="idx">{{input}}</div>
+          <div v-for="(input,idx) in content.proInput.split('\n')" :key="idx">{{input}}</div>
         </div>
       </div>
       <div class="code__example__box">
@@ -42,7 +42,7 @@
           예제 출력
         </div>
         <div class="code__example__output" >
-          <div v-for="(output,idx) in content.output.split('\n')" :key="idx">{{output}}</div>
+          <div v-for="(output,idx) in content.proOutput.split('\n')" :key="idx">{{output}}</div>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
         <option value="vs">VS</option>
         <option value="vs-dark">VS-DARK</option>
       </select>
-      <m-monaco-editor v-model="code" :mode="mode" :theme="theme"></m-monaco-editor>
+      <m-monaco-editor v-model="code" :mode="mode" :theme="theme" @init="handleInit"></m-monaco-editor>
     </div>
     <div class="code__example">
       <div class="code__example__box">
@@ -91,31 +91,49 @@ export default {
   data(){
     return{
       content:{
-        name:'졍',
-        date:'2021.04.21',
-        title:'[5663] 피보나치 수열',
-        problem:'피보나치 수는 0과 1로 시작',
-        input:'3',
-        output:'23\n24\n25',
+        "proId": null,
+        "user": {
+          "userId": "",
+          "userPw": "",
+          "userNickname": "",
+          "userPhone": "",
+          "userImg": "",
+          "userLank": "",
+          "userPoint": null
+        },
+        "proTitle": "",
+        "proContent": "",
+        "proInput": "",
+        "proOutput": "",
+        "proDate": ""
       },
       code:"",
+      input:"",
+      output:"",
       mode:"python",
-      theme:'vs-dark',
-      input:'',
-      output:'',
+      theme:"vs-dark",
     }
   },
   created(){
-    // this.content=this.$route.params.content;
+    http.get(`v1/pro/detail/${this.$route.params.id}`)
+    .then((res)=>{
+      if(res.status===200){
+        this.content=res.data.data;
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
   mounted(){
-    const editor=document.querySelector('.code__editor__box');
-    editor.childNodes[2].id='a'
-    // console.log(editor.childNodes);
-    // console.log(editor.childNodes[2]);
-    console.log(document.querySelector('.monaco-editor'))
+
+  },
+  beforeDestroy(){
   },
   methods:{
+    handleInit(editor,editorDom,monaco){
+      this.editor=editor;
+    },
     handleClickList(){
       this.$router.push({
         name:'ProblemDetail',
@@ -131,12 +149,11 @@ export default {
         'java':10,
         'python':99
       };
-      this.code=document.querySelector('.inputarea').value;
+      this.code=this.editor.getValue();
       var formdata = new FormData();
       formdata.append("source", this.code);
       formdata.append("compilerId", compiler[this.mode]);
       formdata.append("input", this.input);
-      console.log(formdata);
       var requestOptions = {
         method: 'POST',
         body: formdata,
@@ -193,7 +210,7 @@ export default {
         'java':10,
         'python':99
       };
-      this.code=document.querySelector('.inputarea').value;
+      this.code=this.editor.getValue();
       console.log(this.code,compiler[this.mode],this.input);
       var formdata = new FormData();
       formdata.append("source", this.code);
@@ -248,14 +265,14 @@ export default {
                     this.output+=`${result3}\n\n`;
                     console.log(`오답입니다.\n ${result3}`);
                   })
-                  .catch(error3 => console.log('error', error3));
+                  .catch(error3 => console.error('error', error3));
               }
 
                 })
-              .catch(error2 => console.log('error', error2));
+              .catch(error2 => console.error('error', error2));
         },5000);
         })
-        .catch(error => console.log('error', error));
+        .catch(error => console.error('error', error));
     },
   }
 }
@@ -349,7 +366,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";

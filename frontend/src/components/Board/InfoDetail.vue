@@ -44,52 +44,65 @@
     <div class="infodetail__profile">
       <div class="infodetail__profile__image"></div>
       <div>
-        <div class="infodetail__profile__name">{{content.name}}</div>
+        <div class="infodetail__profile__name">{{content.user.userNickname}}</div>
         <div class="infodetail__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          {{content.date}}
+          {{$moment(content.infoDate).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
 
     <div class="infodetail__title">
-      {{content.title}}
+      {{content.infoTitle}}
     </div>
     <div class="infodetail__content">
         <div class="editor__content"></div>
     </div>
-    <!-- <div class="sec-widget" data-widget="0a6d29d3367a0672ae82d5a3477e189f"></div> -->
   </div>
 </template>
 
 <script>
-// import CreateEditor from './CreateEditor.vue';
 import UpdateEditor from './UpdateEditor.vue';
-// var SEC_HTTPS = true;
-// var SEC_BASE = "compilers.widgets.sphere-engine.com"; 
-// (function(d, s, id){ SEC = window.SEC || (window.SEC = []);
-//   var js, fjs = d.getElementsByTagName(s)[0];
-//   if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; 
-//   js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
-//   fjs.parentNode.insertBefore(js, fjs);   
-// }(document, "script", "sphere-engine-compilers-jssdk"));
+import http from '../../util/http-common.js';
+// import Swal from 'sweetalert2'
 export default {
   name:'ContentDetail',
   components:{
-    // CreateEditor,
     UpdateEditor,
   },
   data(){
     return{
-      content:{},
+      content:{
+        infoContent:'',
+        infoData:'',
+        infoId: Number(),
+        user: {
+          userId:'',
+          userImg:'',
+          userLank:'',
+          userNickname:'',
+          userPhone:'',
+          userPoint:'',
+          userPw:'',
+        },
+      },
       showModal: false,
     }
   },
   created(){
-    this.content=this.$route.params.content;
+    http.get(`v1/info/detail/${this.$route.params.id}`)
+    .then((res)=>{
+      if(res.status===200){
+        this.content=res.data.data;
+        document.querySelector('.editor__content').innerHTML=this.content.infoContent;
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
   mounted(){
-    document.querySelector('.editor__content').innerHTML=this.content.content;
+    
   },
   methods:{
     handleClickList(){
@@ -99,44 +112,46 @@ export default {
     },
     handleClickEdit(){
       this.showModal = true;
-      const content=this.content.content;
-      const title=this.content.title;
+      const content=this.content.infoContent;
+      const title=this.content.infoTitle;
       setTimeout(function(){
-        const modal = document.querySelector('.scrollable-modal');
-        modal.style.maxWidth='80%';
-        const titlebar = document.querySelector('.vm-titlebar');
-        titlebar.style.textAlign="center";
-        titlebar.style.color="var(--color-grey-2)"
-        const ProseMirror = document.querySelector('.editor__content .ProseMirror');
-        ProseMirror.style.height='360px';
-        ProseMirror.innerHTML=content;
-        console.log(document.querySelector('.editor__title__input'))
+        document.querySelector('.editor__content .ProseMirror').innerHTML=content;
         document.querySelector('.editor__title__input').value=title;
       },1);
     },
     handleClickDelete(){
-      
+      http.delete(`v1/info/${this.content.infoId}`)
+      .then((res)=>{
+        if(res.status===200){
+          this.$router.push({
+            name:'InfoBoard'
+          })
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
     },
     handleSubmit(){
       const mirror = document.querySelector('.ProseMirror');
       let html = mirror.innerHTML;
-      while(true){
-        const index=html.indexOf('<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></select>')
-        if(index===-1) break;
-        const length = '<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></select>'.length;
-        html.replaceAll('<select data-v-38b2e751="" contenteditable="false"><option data-v-38b2e751="" value=""><p data-v-38b2e751="">auto</p></option><option data-v-38b2e751="" disabled="disabled"><p data-v-38b2e751=""> — </p></option><option data-v-38b2e751="" value="c"><p data-v-38b2e751="">c</p></option><option data-v-38b2e751="" value="cpp"><p data-v-38b2e751="">cpp</p></option><option data-v-38b2e751="" value="java"><p data-v-38b2e751="">java</p></option><option data-v-38b2e751="" value="javascript"><p data-v-38b2e751="">javascript</p></option><option data-v-38b2e751="" value="python"><p data-v-38b2e751="">python</p></option><option data-v-38b2e751="" value="sql"><p data-v-38b2e751="">sql</p></option></>','')
-        html = html.slice(0,index)+html.slice(index+length);
-      }
       const input = document.querySelector('.editor__title__input');      
-      const date = new Date();
       const data = {
-        'title' : input.value,
-        'content' : mirror.innerHTML,
-        'date' : `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
-        'name' : '졍',
+        infoTitle : input.value,
+        infoContent : html,
+        infoId: this.content.infoId,
+        userId : 'jihyeong',
       };
-      this.slides.unshift(data);
-      this.showModal=false;
+      http.put('v1/info',JSON.stringify(data))
+      .then((res)=>{
+        this.content=res.data.data;
+        document.querySelector('.editor__content').innerHTML=this.content.infoContent;
+        this.showModal=false;
+      })
+      .catch((err)=>{
+        console.error(err);
+        this.showModal=false;
+      })
     },    
   }
 }
@@ -211,7 +226,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";

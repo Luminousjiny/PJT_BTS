@@ -1,8 +1,8 @@
 <template>
   <div class="editor" v-if="editor">
-    <div class="editor__title">
-      <input class="editor__title__input" type="text" placeholder="제목을 입력해주세요." autofocus>
-    </div>
+    <!-- <div class="editor__title">
+      <input class="editor__title__input" type="text" v-model="title" placeholder="제목을 입력해주세요." autofocus>
+    </div> -->
     <menu-bar class="editor__header" :editor="editor" />
     <editor-content class="editor__content" :editor="editor"/>
   </div>
@@ -33,12 +33,11 @@ export default {
     EditorContent,
     MenuBar,
   },
-  props:{
-    content: Object,
-  },
+
   data() {
     return {
       editor: null,
+      title:'',
     }
   },
 
