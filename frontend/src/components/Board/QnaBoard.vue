@@ -57,7 +57,7 @@ export default {
     }
   },
   created(){
-    http.get('v1/qna/list')
+    http.get('v1/qna/list/1')
     .then((res)=>{
       if(res.status===200){
         this.qnaList=res.data.data.reverse();
@@ -85,6 +85,7 @@ export default {
       const data = {
         qnaTitle,
         qnaContent,
+        roomId:1,
         userId: 'jihyeong'
       };
       http.post('v1/qna', JSON.stringify(data))

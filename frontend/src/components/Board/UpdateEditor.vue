@@ -44,7 +44,6 @@ export default {
 
   mounted() {
     this.editor = new Editor({
-      // content: this.content,
       extensions: [
         ...defaultExtensions().filter(extension => extension.name !== 'history'),
         Document,

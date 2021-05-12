@@ -15,11 +15,11 @@
           </button>
           <Modal
             v-model="showModal"
-            title="글 수정"
+            title="질문 수정"
             modal-class="scrollable-modal"
           >
             <div class="scrollable-content">
-              <UpdateQuestion :question="question"/>
+              <UpdateEditor :content="question"/>
             </div>
             <div class="row scrollable-modal-footer">
               <div class="modal_btn_box">
@@ -28,7 +28,7 @@
                   type="button"
                   @click="handleSubmit"
                 >
-                  글 수정하기
+                  질문 수정하기
                 </button>            
               </div>
             </div>
@@ -57,10 +57,9 @@
         </div>
       </div>
       <div class="qna__question__title">
-        {{question.qnatitle}}
+        {{question.qnaTitle}}
       </div>
-      <div class="qna__question__problem">
-        {{question.qnaContent}}
+      <div class="qna__question__problem" v-html="question.qnaContent">
       </div>
       <div class="qna__question__btn__box">
         <button class="modal_btn" @click="handleClickCreate">답변 작성하기</button>
@@ -77,10 +76,12 @@
 <script>
 import UpdateQuestion from './UpdateQuestion.vue';
 import http from '../../util/http-common.js';
+import UpdateEditor from './UpdateEditor.vue';
 export default {
-  name:'ProblemDetail',
+  name:'QnaDetail',
   components:{
     UpdateQuestion,
+    UpdateEditor,
   },
   data(){
     return{
@@ -94,6 +95,7 @@ export default {
     .then((res)=>{
       if(res.status===200){
         this.question=res.data.data;
+        console.log(this.question);
       }
     })
     .catch((err)=>{
@@ -111,31 +113,41 @@ export default {
     },
     handleClickEdit(){
       this.showModal = true;
+      const content=this.question.qnaContent;
+      const title=this.question.qnaTitle;
       setTimeout(function(){
-        const modal = document.querySelector('.scrollable-modal');
-        modal.style.maxWidth='80%';
-        modal.style.height='auto';
+        document.querySelector('.editor__content .ProseMirror').innerHTML=content;
+        document.querySelector('.editor__title__input').value=title;
       },1);
     },
     handleClickDelete(){
       
     },
     handleSubmit(){
-      // const title=document.querySelector('#code__title').value;
-      // const problem=document.querySelector('#code__problem').value;
-      // const input=document.querySelector('#code__input').value;
-      // const output=document.querySelector('#code__output').value;
-      // const date = new Date();
-      // const data = {
-      //   title,
-      //   problem,
-      //   input,
-      //   output,
-      //   'date' : `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
-      //   'name' : '졍',
-      // }
-      // this.content=data;
-      this.showModal=false;
+      const qnaContent = document.querySelector('.ProseMirror').innerHTML;
+      const qnaTitle = document.querySelector('.editor__title__input').value;    
+      const data = {
+        qnaTitle,
+        qnaContent,
+        qnaId:this.question.qnaId,
+        roomId:this.question.room.roomId,
+        userId: 'jihyeong'
+      };
+      console.log(data);
+      http.put('v1/qna', JSON.stringify(data))
+      .then((res)=>{
+        console.log(res);
+        if(res.data.status==="success"){
+          this.question=res.data.data;
+          this.showModal=false;
+        } else{
+          console.error(res.data.data);
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+        this.showModal=false;
+      })
     },
     handleClickCreate(){
       this.$router.push({

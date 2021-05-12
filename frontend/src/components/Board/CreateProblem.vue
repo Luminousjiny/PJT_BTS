@@ -14,7 +14,7 @@
     </div>
     <div class="code__example">
       예제 출력
-    </div>ㅈ
+    </div>
     <div class="code__box">
       <textarea name="code__problem" id="code__output" cols="30" rows="10"></textarea>
     </div>

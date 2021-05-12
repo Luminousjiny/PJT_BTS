@@ -133,7 +133,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.editor__content{
+.editor__content, .qna__question__problem{
   > * + * {
     margin-top: 0.75em;
   }

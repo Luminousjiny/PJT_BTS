@@ -52,7 +52,6 @@ export default {
     content.innerHTML=this.question.qnaContent;
     const children = content.childNodes;
     let text='';
-    console.log(children);
     children.forEach((tag)=>{
       if(tag.nodeName==='IMG'){
         if(this.imgSrc===''){
@@ -70,8 +69,6 @@ export default {
     } else{
       content.innerText=text
     }
-    
-    console.log(this.imgSrc,this.imgCnt);
   },
   methods:{
     handleClickQustion(){
