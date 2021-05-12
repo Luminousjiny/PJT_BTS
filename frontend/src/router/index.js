@@ -222,7 +222,7 @@ const routes = [
     component: Award
   },
   {
-    path : "/unity",
+    path : "/unityGame",
     name : "Unity",
     component : Unity,
   }
