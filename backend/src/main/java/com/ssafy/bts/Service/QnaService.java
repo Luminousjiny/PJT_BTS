@@ -83,16 +83,16 @@ public class QnaService {
      * 제목 검색 결과 글리스트 조회
      */
     @Transactional
-    public List<Qna> searchByTitle(String keyword) {
-        return qnaRepository.findByQnaTitleContaining(keyword);
+    public List<Qna> searchByTitle(String keyword, Room room) {
+        return qnaRepository.findByQnaTitleContaining(keyword, room);
     }
 
     /**
      * 내용 검색 결과 질문 리스트 조회
      */
     @Transactional
-    public List<Qna> searchByContent(String keyword) {
-        return qnaRepository.findByQnaContentContaining(keyword);
+    public List<Qna> searchByContent(String keyword, Room room) {
+        return qnaRepository.findByQnaContentContaining(keyword, room);
     }
 
 
