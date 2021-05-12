@@ -35,6 +35,7 @@
     "vue-m-monaco-editor": "^1.0.0",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0",
+    "vue-unity-webgl": "git+https://github.com/votetake/vue-unity-webgl.git",
     "vuetify": "^2.4.11",
     "vuex": "^3.6.2"
   },

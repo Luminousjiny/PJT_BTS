@@ -19,7 +19,7 @@ import UpdateCode from '../components/Board/UpdateCode.vue';
 import CodeDetail from '../components/Board/CodeDetail.vue';
 import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
-import Calender from "../components/Library/Calender.vue";
+import Calendar from "../components/Library/Calendar.vue";
 import Youtube from "../components/Library/Youtube.vue";
 import Monthly from "../components/Library/Monthly.vue";
 import Weekly from "../components/Library/Weekly.vue";
@@ -30,6 +30,7 @@ import joinUserInfo from "../components/Join/Join_1.vue";
 import joinUserCheck from "../components/Join/Join_2.vue";
 import CamSetting from "../views/MyPage/CamSetting.vue";
 import Award from "../views/Award/Award.vue";
+import Unity from "../views/Unity/Unity.vue";
 
 Vue.use(VueRouter);
 
@@ -170,9 +171,9 @@ const routes = [
         component: Youtube,
       },
       {
-        path: "calender",
-        name: "Calender",
-        component: Calender,
+        path: "calendar",
+        name: "Calendar",
+        component: Calendar,
         children: [
           {
             path: "monthly",
@@ -180,7 +181,7 @@ const routes = [
             component: Monthly,
           },
           {
-            path: "weekly",
+            path: "",
             name: "Weekly",
             component: Weekly,
           },
@@ -207,6 +208,11 @@ const routes = [
     path: "/award",
     name: "Award",
     component: Award
+  },
+  {
+    path : "/unity",
+    name : "Unity",
+    component : Unity,
   }
 ];
 

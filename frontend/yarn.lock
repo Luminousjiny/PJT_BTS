@@ -5676,11 +5676,6 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^2.4.1:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
-  integrity sha1-+t2DS5aDBz2hebPq5tnA0VBT9z4=
-
 lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.3:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -5989,6 +5984,11 @@ moment@^2.19.2:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
+monaco-editor@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.13.1.tgz#6b9ce20e4d1c945042d256825eb133cb23315a52"
+  integrity sha512-0Kssg/O3cl1tXP0qAIxhrtMbRnzusFUEvFyt5/fpUbmuVeY3z+TnUx13+3kW16pgacFPXGUTEO/hOPlDeFU/dw==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -7504,13 +7504,6 @@ relateurl@0.2.x:
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
 
-remix@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/remix/-/remix-0.1.4.tgz#78dafdeeb2cba3906fc2f27d0d91b9d8410325ff"
-  integrity sha1-eNr97rLLo5BvwvJ9DZG52EEDJf8=
-  dependencies:
-    lodash "^2.4.1"
-
 remixicon@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/remixicon/-/remixicon-2.5.0.tgz#b5e245894a1550aa23793f95daceadbf96ad1a41"
@@ -8965,6 +8958,19 @@ vue-loader@^15.9.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-m-loader@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-m-loader/-/vue-m-loader-1.0.1.tgz#7af7cb81b1ebda934708c990e2b082eb480ed4d0"
+  integrity sha512-a0h8H5cdarwrf/r3JJAB6n0NkW+7Wdfh/PhktYeCeeC8jN6aFkCyxQNz1fYmyMfmuO7FmYM/JW6EFyIR9beImg==
+
+vue-m-monaco-editor@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-m-monaco-editor/-/vue-m-monaco-editor-1.0.0.tgz#d3a83be5605861e7ca28dc6db7e40ce2f8f57368"
+  integrity sha512-8OOXMdxIc81gWBV9cGb+WwRx/3gAAKem403T27cZPa2XKiuwhPULW+ZBHxIR8RI3CTF7FTiZCcf694z2Lz9/ag==
+  dependencies:
+    monaco-editor "^0.13.1"
+    vue-m-loader "^1.0.1"
 
 vue-moment@^4.1.0:
   version "4.1.0"
