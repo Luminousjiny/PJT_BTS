@@ -14,19 +14,13 @@ public class WeeklyRequest {
     @ApiModelProperty(value="로그인한 아이디")
     private String userId;
 
-    @ApiModelProperty(value="플랜 년도")
-    private int weekYear;
+    @ApiModelProperty(value="플랜 작성 날짜(0000-00-00)")
+    private Date weekDate;
 
-    @ApiModelProperty(value="플랜 달")
-    private int weekMonth;
-
-    @ApiModelProperty(value="플랜 날짜")
-    private int weekDate;
-
-    @ApiModelProperty(value="플랜 시작 시간")
+    @ApiModelProperty(value="플랜 시작 시간(00:00:00)")
     private Date weekStartTime;
 
-    @ApiModelProperty(value="플랜 끝나는 시간")
+    @ApiModelProperty(value="플랜 끝나는 시간(00:00:00)")
     private Date weekEndTime;
 
     @ApiModelProperty(value="플랜 내용")
