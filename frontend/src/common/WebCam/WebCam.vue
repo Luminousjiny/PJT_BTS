@@ -82,7 +82,13 @@ export default {
         // this.OV.setAdvancedConfiguration({
         //   screenShareChromeExtension: "https://chrome.google.com/webstore/detail/YOUR_EXTENSION_NAME/YOUR_EXTENSION_ID",
         // });
+        this.data.OV.getDevices().then(devices => {
+              let videoDevices = devices.filter(device => device.kind === 'videoinput');
+              let audioDevices = devices.filter(device => device.kind === 'audioinput');
 
+              console.log(videoDevices);
+              console.log(audioDevices);
+        })
         this.data.session = this.data.OV.initSession();
 
         this.data.session.on("streamCreated", ({ stream }) => {
