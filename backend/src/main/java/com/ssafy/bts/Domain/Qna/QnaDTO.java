@@ -1,12 +1,16 @@
 package com.ssafy.bts.Domain.Qna;
 
+import com.ssafy.bts.Domain.Comment.Comment;
+import com.ssafy.bts.Domain.Comment.CommentDTO;
 import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +22,7 @@ public class QnaDTO {
     private String qnaTitle;
     private String qnaContent;
     private Date qnaDate;
-
+    private List<CommentDTO> commentDTOList;
 
     public QnaDTO(Qna qna){
         this.qnaId = qna.getQnaId();
@@ -37,6 +41,15 @@ public class QnaDTO {
         this.qnaTitle = qna.getQnaTitle();
         this.qnaContent = qna.getQnaContent();
         this.qnaDate = qna.getQnaDate();
+
+        if(qna.getComment() != null){
+            List<CommentDTO> commentList = new ArrayList<>();
+            for (Comment comment : qna.getComment()) {
+                CommentDTO commentDTO = new CommentDTO(comment);
+                commentList.add(commentDTO);
+            }
+            this.commentDTOList = commentList;
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 package com.ssafy.bts.Domain.Coding;
 
-import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
@@ -22,6 +21,7 @@ public class CodeDTO {
     private String codeTime;
     private String codeLan;
     private Date codeDate;
+    private String codeResult;
 
     public CodeDTO(Code code){
         this.codeId = code.getCodeId();
@@ -48,5 +48,6 @@ public class CodeDTO {
         this.codeTime = code.getCodeTime();
         this.codeLan = code.getCodeLan();
         this.codeDate = code.getCodeDate();
+        this.codeResult = code.getCodeResult();
     }
 }

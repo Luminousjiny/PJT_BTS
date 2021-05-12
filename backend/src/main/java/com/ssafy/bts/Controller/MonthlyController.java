@@ -3,8 +3,10 @@ package com.ssafy.bts.Controller;
 import com.ssafy.bts.Controller.Request.MonthlyRequest;
 import com.ssafy.bts.Domain.Monthly.Monthly;
 import com.ssafy.bts.Domain.Monthly.MonthlyDTO;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Service.MonthlyService;
+import com.ssafy.bts.Service.RoomService;
 import com.ssafy.bts.Service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 public class MonthlyController {
     private final MonthlyService monthlyService;
     private final UserService userService;
+    private final RoomService roomService;
 
     @ApiOperation(value = "플랜 작성", notes = "플랜 작성 성공시 data값으로 '작성 성공' 설정 후 반환", response = BaseResponse.class)
     @PostMapping

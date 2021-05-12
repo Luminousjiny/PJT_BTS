@@ -35,4 +35,7 @@ public class CodeRequest {
 
     @ApiModelProperty(value="코드 날짜")
     private Date codeDate;
+
+    @ApiModelProperty(value="코드 제출시 성공 실패 여부")
+    private String result;
 }

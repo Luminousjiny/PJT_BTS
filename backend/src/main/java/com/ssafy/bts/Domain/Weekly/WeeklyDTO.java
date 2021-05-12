@@ -11,24 +11,18 @@ import java.util.Date;
 @AllArgsConstructor
 public class WeeklyDTO {
     private int weekId;
-    private int roomId;
     private UserDTO user;
-    private int weekYear;
-    private int weekMonth;
-    private int weekDate;
+    private Date weekDate;
     private Date weekStartTime;
     private Date weekEndTime;
     private String weekContent;
 
     public WeeklyDTO(Weekly weekly){
         this.weekId = weekly.getWeekId();
-        this.roomId = weekly.getRoomId();
         if(weekly.getUser() != null){
             user = new UserDTO();
             this.user.setUserId(weekly.getUser().getUserId());
         }
-        this.weekYear = weekly.getWeekYear();
-        this.weekMonth = weekly.getWeekMonth();
         this.weekDate = weekly.getWeekDate();
         this.weekStartTime = weekly.getWeekStartTime();
         this.weekEndTime = weekly.getWeekEndTime();

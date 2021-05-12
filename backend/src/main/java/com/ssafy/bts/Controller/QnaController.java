@@ -5,8 +5,10 @@ import com.ssafy.bts.Domain.Info.Info;
 import com.ssafy.bts.Domain.Info.InfoDTO;
 import com.ssafy.bts.Domain.Qna.Qna;
 import com.ssafy.bts.Domain.Qna.QnaDTO;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Service.QnaService;
+import com.ssafy.bts.Service.RoomService;
 import com.ssafy.bts.Service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 public class QnaController {
     private final QnaService qnaService;
     private final UserService userService;
+    private final RoomService roomService;
 
     @ApiOperation(value = "Qna 질문 작성", notes = "Qna 질문작성 성공 시 data값으로 전체 리스트 반환", response = BaseResponse.class)
     @PostMapping
@@ -36,6 +39,8 @@ public class QnaController {
             Qna qna = Qna.createQna(request);
             User user = userService.findByUserId(request.getUserId());
             qna.setUser(user);
+            Room room = roomService.findByRoomId(request.getRoomId());
+            qna.setRoom(room);
             qnaService.save(qna);
 
             //전체 리스트 반환
@@ -55,7 +60,8 @@ public class QnaController {
     public BaseResponse updateQna(@ApiParam(value = "리뷰 객체", required=false) @RequestBody QnaRequest request) {
         BaseResponse response = null;
         try {
-            qnaService.updateQna(request);
+            Room room = roomService.findByRoomId(request.getRoomId());
+            qnaService.updateQna(room, request);
 
             //상세 반환
             Qna qna = qnaService.findByQnaId(request.getQnaId());
@@ -80,12 +86,13 @@ public class QnaController {
         return response;
     }
 
-    @ApiOperation(value = "Qna 질문 전체 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
-    @GetMapping("/list")
-    public BaseResponse findAllQna(){
+    @ApiOperation(value = "해당 방의 Qna 질문 전체 리스트 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/list/{roomId}")
+    public BaseResponse findAllQna(@ApiParam(value = "roomId 번호")@PathVariable int roomId){
         BaseResponse response = null;
         try{
-            List<Qna> qnaList  = qnaService.findAll();
+            Room room = roomService.findByRoomId(roomId);
+            List<Qna> qnaList  = qnaService.findByRoom(room);
             List<QnaDTO> collect = qnaList.stream()
                     .map(m-> new QnaDTO(m))
                     .collect(Collectors.toList());
@@ -112,18 +119,20 @@ public class QnaController {
     }
 
     @ApiOperation(value = "제목으로 질문 검색", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
-    @GetMapping("/searchTitle/{keyword}")
-    public BaseResponse searchByTitle(@ApiParam(value = "제목 검색 키워드")@PathVariable String keyword){
+    @GetMapping("/searchTitle/{keyword}/{roomId}")
+    public BaseResponse searchByTitle(@ApiParam(value = "제목 검색 키워드")@PathVariable String keyword,
+                                      @ApiParam(value = "roomId 번호")@PathVariable int roomId){
         BaseResponse response = null;
         try{
-            List<Qna> qnaList = qnaService.searchByTitle(keyword);
+            Room room = roomService.findByRoomId(roomId);
+            List<Qna> qnaList = qnaService.searchByTitle(keyword, room);
             if(qnaList == null){
                 response = new BaseResponse("success", null);
                 return response;
-
             }
             List<QnaDTO> collect = qnaList.stream()
-                    .map(m-> new QnaDTO(m))
+//                    .filter(str -> str.getRoom().getRoomId() == roomId)
+                    .map(m -> new QnaDTO(m))
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         }catch(Exception e){
@@ -133,11 +142,13 @@ public class QnaController {
     }
 
     @ApiOperation(value = "내용으로 질문 검색", notes = "검색 결과 있으면 data값으로 List 형식으로 반환 / 없으면 null반환", response = BaseResponse.class)
-    @GetMapping("/searchContent/{keyword}")
-    public BaseResponse searchByContent(@ApiParam(value = "내용 검색 키워드")@PathVariable String keyword){
+    @GetMapping("/searchContent/{keyword}/{roomId}")
+    public BaseResponse searchByContent(@ApiParam(value = "내용 검색 키워드")@PathVariable String keyword,
+                                        @ApiParam(value = "roomId 번호")@PathVariable int roomId){
         BaseResponse response = null;
         try{
-            List<Qna> qnaList = qnaService.searchByContent(keyword);
+            Room room = roomService.findByRoomId(roomId);
+            List<Qna> qnaList = qnaService.searchByContent(keyword, room);
             if(qnaList == null){
                 response = new BaseResponse("success", null);
                 return response;

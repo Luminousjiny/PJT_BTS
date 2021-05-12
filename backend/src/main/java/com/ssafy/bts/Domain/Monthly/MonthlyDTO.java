@@ -1,6 +1,5 @@
 package com.ssafy.bts.Domain.Monthly;
 
-import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +12,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class MonthlyDTO {
     private int monId;
-    private RoomDTO room;
     private UserDTO user;
     private int monYear;
     private int monMonth;
@@ -24,11 +22,6 @@ public class MonthlyDTO {
 
     public MonthlyDTO(Monthly monthly){
         this.monId = monthly.getMonId();
-
-        if(monthly.getRoom() != null){
-            room = new RoomDTO();
-            this.room.setRoomId(monthly.getRoom().getRoomId());
-        }
 
         if(monthly.getUser() != null){
             user = new UserDTO();
