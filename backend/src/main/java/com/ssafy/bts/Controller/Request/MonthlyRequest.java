@@ -21,10 +21,10 @@ public class MonthlyRequest {
     @ApiModelProperty(value="월")
     private int monMonth;
 
-    @ApiModelProperty(value="시작 날짜")
+    @ApiModelProperty(value="시작 날짜(0000-00-00)")
     private Date monStartDate;
 
-    @ApiModelProperty(value="끝나는 날짜")
+    @ApiModelProperty(value="끝나는 날짜(0000-00-00)")
     private Date monEndDate;
 
     @ApiModelProperty(value="플랜 내용")

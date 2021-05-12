@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +36,6 @@ public class WeeklyService {
     public void updateWeekly(WeeklyRequest request) throws IOException {
         Optional<Weekly> findWeekly = Optional.ofNullable(weeklyRepository.findByWeekId(request.getWeekId()));
         if (findWeekly.isPresent()) {
-            findWeekly.get().setWeekYear(request.getWeekYear());
-            findWeekly.get().setWeekMonth(request.getWeekMonth());
             findWeekly.get().setWeekDate(request.getWeekDate());
             findWeekly.get().setWeekContent(request.getWeekContent());
             findWeekly.get().setWeekEndTime(request.getWeekEndTime());
@@ -65,7 +64,7 @@ public class WeeklyService {
      * @return
      */
     @Transactional
-    public List<Weekly> findThisWeekly(User user, int weekYear, int weekMonth, int startDate, int endDate) { return weeklyRepository.findThisWeekly(user, weekYear, weekMonth, startDate, endDate);}
+    public List<Weekly> findThisWeekly(User user, Date startDate, Date endDate) { return weeklyRepository.findThisWeekly(user, startDate, endDate);}
 
     /**
      * 현재 플랜 아이디 상세정보 가져오기
@@ -75,4 +74,5 @@ public class WeeklyService {
     public Weekly findByWeekId(int weekId) {
         return weeklyRepository.findByWeekId(weekId);
     }
+
 }

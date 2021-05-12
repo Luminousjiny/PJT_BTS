@@ -30,7 +30,7 @@ public class MonthlyController {
     private final UserService userService;
     private final RoomService roomService;
 
-    @ApiOperation(value = "현재 방의 플랜 작성", notes = "플랜 작성 성공시 data값으로 '작성 성공' 설정 후 반환", response = BaseResponse.class)
+    @ApiOperation(value = "플랜 작성", notes = "플랜 작성 성공시 data값으로 '작성 성공' 설정 후 반환", response = BaseResponse.class)
     @PostMapping
     public BaseResponse writeMonthly(@ApiParam(value = "Monthly 객체", required=true) @RequestBody MonthlyRequest request) throws IOException {
         BaseResponse response = null;
