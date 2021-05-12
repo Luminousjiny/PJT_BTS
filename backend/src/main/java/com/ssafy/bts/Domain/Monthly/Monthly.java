@@ -1,7 +1,6 @@
 package com.ssafy.bts.Domain.Monthly;
 
 import com.ssafy.bts.Controller.Request.MonthlyRequest;
-import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
