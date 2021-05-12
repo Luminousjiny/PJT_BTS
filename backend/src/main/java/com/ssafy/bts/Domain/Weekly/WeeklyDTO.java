@@ -12,9 +12,7 @@ import java.util.Date;
 public class WeeklyDTO {
     private int weekId;
     private UserDTO user;
-    private int weekYear;
-    private int weekMonth;
-    private int weekDate;
+    private Date weekDate;
     private Date weekStartTime;
     private Date weekEndTime;
     private String weekContent;
@@ -25,8 +23,6 @@ public class WeeklyDTO {
             user = new UserDTO();
             this.user.setUserId(weekly.getUser().getUserId());
         }
-        this.weekYear = weekly.getWeekYear();
-        this.weekMonth = weekly.getWeekMonth();
         this.weekDate = weekly.getWeekDate();
         this.weekStartTime = weekly.getWeekStartTime();
         this.weekEndTime = weekly.getWeekEndTime();

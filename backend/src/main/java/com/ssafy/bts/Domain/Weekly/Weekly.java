@@ -26,13 +26,8 @@ public class Weekly {
     private User user;
 
     @Column(nullable = false)
-    private int weekYear;
-
-    @Column(nullable = false)
-    private int weekMonth;
-
-    @Column(nullable = false)
-    private int weekDate;
+    @Temporal(TemporalType.DATE)
+    private Date weekDate;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIME)
@@ -48,10 +43,17 @@ public class Weekly {
     public static Weekly createWeekly(WeeklyRequest request) throws ParseException {
         Weekly weeklyInput = new Weekly();
         weeklyInput.setWeekContent(request.getWeekContent());
-        weeklyInput.setWeekDate(request.getWeekDate());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
+        cal.setTime(request.getWeekDate());
+        cal.add(Calendar.HOUR, -9);
+        String weekDate = sdf.format(cal.getTime());
+        weeklyInput.setWeekDate(new SimpleDateFormat("yyyy-MM-dd").parse(weekDate));
+
+
+        sdf = new SimpleDateFormat("HH:mm:ss");
         cal.setTime(request.getWeekStartTime());
         cal.add(Calendar.HOUR, -9);
         String startTime = sdf.format(cal.getTime());
@@ -63,8 +65,7 @@ public class Weekly {
         String endTime = sdf.format(cal.getTime());
 
         weeklyInput.setWeekEndTime(new SimpleDateFormat("HH:mm:ss").parse(endTime));
-        weeklyInput.setWeekMonth(request.getWeekMonth());
-        weeklyInput.setWeekYear(request.getWeekYear());
+
         return weeklyInput;
     }
 }
