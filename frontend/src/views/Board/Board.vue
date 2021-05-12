@@ -133,7 +133,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.editor__content, .qna__question__problem{
+.editor__content, .qna__question__problem, .answer__problem{
   > * + * {
     margin-top: 0.75em;
   }
@@ -348,6 +348,11 @@ export default {
 .ProseMirror:focus{
   outline: none;
 }
+.qna__answer__wrap{
+  .ProseMirror{
+    height: 150px;
+  }
+}
 .ProseMirror {
   height:360px;
   cursor:text;
@@ -527,7 +532,16 @@ export default {
     }
   }
 }
-
+.qna__answer__wrap{
+  .editor{
+    border: 1px solid var(--color-grey-6) !important;
+    margin: 0 !important;
+    &__header{
+      border-top: none !important;
+      border-bottom: 1px solid var(--color-grey-6) !important;
+    }
+  }
+}
 .tableWrapper {
   overflow-x: auto;
 }

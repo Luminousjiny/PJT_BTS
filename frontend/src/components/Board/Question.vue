@@ -22,7 +22,7 @@
         </div>
         <div class="q__question__answer">
           <font-awesome-icon :icon="['far', 'comment-dots']" size="1x" />
-          2개
+          {{question.commentDTOList && question.commentDTOList.length}}개
         </div>
       </div>
       <div class="q__question__img">

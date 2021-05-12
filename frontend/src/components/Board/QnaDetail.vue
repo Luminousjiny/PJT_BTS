@@ -40,35 +40,57 @@
           </button>
         </div>
       </div>
-
-      <div class="qna__question__profile">
-        <div class="qna__question__profile__image">
-          <img :src="question.user.userImg" alt="" v-if="question.user && question.user.userImg!==''">
-          <img src="../../assets/profile.png" alt="" v-else>
-        </div>
-        <div>
-          <div class="qna__question__profile__name">
-            {{question.user && question.user.userNickname}}
+      <div class="qna__question__box">
+        <div class="qna__question__profile">
+          <div class="qna__question__profile__image">
+            <img :src="question.user.userImg" alt="" v-if="question.user && question.user.userImg!==''">
+            <img src="../../assets/profile.png" alt="" v-else>
           </div>
-          <div class="qna__question__profile__date">
-            <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-            {{$moment(question.qnaDate).format('YYYY-MM-DD')}}
+          <div>
+            <div class="qna__question__profile__name">
+              {{question.user && question.user.userNickname}}
+            </div>
+            <div class="qna__question__profile__date">
+              <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
+              {{$moment(question.qnaDate).format('YYYY-MM-DD')}}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="qna__question__title">
-        {{question.qnaTitle}}
-      </div>
-      <div class="qna__question__problem" v-html="question.qnaContent">
-      </div>
-      <div class="qna__question__btn__box">
-        <button class="modal_btn" @click="handleClickCreate">답변 작성하기</button>
+        <div class="qna__question__title">
+          {{question.qnaTitle}}
+        </div>
+        <div class="qna__question__problem" v-html="question.qnaContent">
+        </div>
       </div>
     </div>
     <div class="qna__answer__wrap">
-      <div class="qna__answer__count">
-        답변 2개
+      <div class="qna__answer__header">
+        <div class="qna__answer__profile">
+          <div class="qna__answer__profile__image">
+            <img :src="question.user.userImg" alt="" v-if="question.user && question.user.userImg!==''">
+            <img src="../../assets/profile.png" alt="" v-else>
+          </div>
+          <div class="qna__answer__profile__name">
+            {{question.user && question.user.userNickname}}
+          </div>
+        </div>
+        <div class="qna__answer__btn__box">
+          <button class="modal_btn" @click="handleClickCreateAnswer">답글 작성하기</button>
+        </div>
       </div>
+      <div class="qna__answer__form">
+        <CreateAnswer/>
+      </div>
+      <div class="qna__answer__count" v-if="question.commentDTOList && question.commentDTOList.length>0">
+        <span class="qna__answer__count__text">답변 </span>
+        <span class="qna__answer__count__cnt">{{question.commentDTOList.length}}개</span>
+      </div>
+      <Answer
+        v-for="answer in question.commentDTOList"
+        :key="answer.comId"
+        :answer="answer"
+        @handleClickCommentDelete="handleClickCommentDelete"
+      />
     </div>
   </div>
 </template>
@@ -77,11 +99,15 @@
 import UpdateQuestion from './UpdateQuestion.vue';
 import http from '../../util/http-common.js';
 import UpdateEditor from './UpdateEditor.vue';
+import CreateAnswer from './CreateAnswer.vue';
+import Answer from './Answer.vue';
 export default {
   name:'QnaDetail',
   components:{
     UpdateQuestion,
     UpdateEditor,
+    CreateAnswer,
+    Answer,
   },
   data(){
     return{
@@ -116,12 +142,20 @@ export default {
       const content=this.question.qnaContent;
       const title=this.question.qnaTitle;
       setTimeout(function(){
-        document.querySelector('.editor__content .ProseMirror').innerHTML=content;
+        document.querySelector('.scrollable-content .editor__content .ProseMirror').innerHTML=content;
         document.querySelector('.editor__title__input').value=title;
       },1);
     },
     handleClickDelete(){
-      
+      http.delete(`v1/qna/${this.question.qnaId}`)
+      .then((res)=>{
+        this.$router.push({
+          name:'QnaBoard',
+        })
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
     },
     handleSubmit(){
       const qnaContent = document.querySelector('.ProseMirror').innerHTML;
@@ -133,34 +167,50 @@ export default {
         roomId:this.question.room.roomId,
         userId: 'jihyeong'
       };
-      console.log(data);
       http.put('v1/qna', JSON.stringify(data))
       .then((res)=>{
-        console.log(res);
         if(res.data.status==="success"){
           this.question=res.data.data;
           this.showModal=false;
         } else{
           console.error(res.data.data);
         }
-      })
+      })  
       .catch((err)=>{
         console.error(err);
         this.showModal=false;
       })
     },
-    handleClickCreate(){
-      this.$router.push({
-        name:'CreateCode',
-      })
-    },
-    handleClickCode(){
-      this.$router.push({
-        name:'CodeDetail',
-        params:{
-          id:0,
-          codeId:0,
+    handleClickCreateAnswer(){
+      const comContent = document.querySelector('.ProseMirror').innerHTML;
+      const data = {
+        comContent,
+        qnaId:this.question.qnaId,
+        roomId:this.question.room.roomId,
+        userId: 'jihyeong'
+      };
+      http.post('v1/comment', JSON.stringify(data))
+      .then((res)=>{
+        if(res.data.status==="success"){
+          this.question.commentDTOList=res.data.data;
+        } else{
+          console.error(res.data.data);
         }
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
+      document.querySelector('.ProseMirror').innerHTML='';
+    },
+    handleClickCommentDelete(id){
+      http.delete(`v1/comment/${id}`)
+      .then((res)=>{
+        if(res.data.status==="success"){
+          this.question.commentDTOList=this.question.commentDTOList.filter(comment => comment.comId!==id);
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
       })
     }
   }
@@ -172,6 +222,7 @@ export default {
   &__wrap{
     width: 80%;
     margin: auto;
+    margin-bottom: 2rem;
   }
   &__header{
     display: flex;
@@ -197,6 +248,10 @@ export default {
     font-size: var(--font-size-14);
     padding: 0.25rem;
     color: var(--color-pink);
+  }
+  &__box{
+    padding: 0 1rem;
+    border: 1px solid var(--color-grey-6);
   }
   &__profile{
     padding: 1em 0;
@@ -243,16 +298,72 @@ export default {
     justify-content: flex-end;
   }
 }
+.qna__answer{
+  &__wrap{
+    background-color: #FAFBFC;
+    padding-bottom: 2rem;
+  }
+  &__header{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0;
+    margin:auto;
+  }
+  &__form{
+    padding-bottom: 2rem;
+    width: 80%;
+    margin: auto;
+  }
+  &__profile{
+    
+    display: flex;
+    align-items: center;
+    
+    &__image{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--color-pink);
+      display: inline-block;
+    }
+    img{
+      width: 40px;
+      height: 40px;
+    }    
+    &__name{
+      padding-left: 1rem;
+      font-size: var(--font-size-20);
+      font-family: "AppleSDGothicNeoB";
+    }
+  }
+  &__btn__box{
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__count{
+    width: 80%;
+    margin: auto;
+    &__text{
+      font-family: "AppleSDGothicNeoR";
+    }
+    &__cnt{
+      font-family: "AppleSDGothicNeoB";
+    }
+  }
+}
 .modal_btn_box{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
   border-radius: var(--font-size-12);
-  background-color: var(--color-mainBlue);
+  border: 2px solid var(--color-mainBlue);
+  background-color: var(--color-white);
   font-family: "AppleSDGothicNeoB";
-  color: var(--color-white);
+  color: var(--color-mainBlue);
 }
 </style>
