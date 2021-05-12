@@ -2,6 +2,7 @@ package com.ssafy.bts.Domain.Qna;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.bts.Controller.Request.QnaRequest;
+import com.ssafy.bts.Domain.Comment.Comment;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 
@@ -10,6 +11,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -21,7 +24,6 @@ public class Qna {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
-
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,6 +38,9 @@ public class Qna {
 
     @Column(nullable = false)
     private Date qnaDate;
+
+    @OneToMany(mappedBy = "qna", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Set<Comment> comment = new HashSet<>();
 
     public static Qna createQna(QnaRequest request) {
         Qna qnaInput = new Qna();
