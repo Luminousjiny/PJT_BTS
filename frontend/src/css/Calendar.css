@@ -53,7 +53,7 @@ a.router-link-exact-active .router-div p{
     text-align: center;
 }
 
-#monthly-header{
+.calendar-header{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -62,12 +62,21 @@ a.router-link-exact-active .router-div p{
 .calendar-button{
     display: inline-block;
     cursor: pointer;
+    width : 100px;
+    text-align: center;
 }
-#month-title{
+#month-btn-add{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width : unset;
+}
+.calendar-title{
     color: var(--color-mainBlue);
     font-size : var(--font-size-24);
     font-family: 'AppleSDGothicNeoEB';
     font-weight: var(--weight-regular);
+    width : 400px;
 }
 
 .event{
@@ -94,9 +103,9 @@ a.router-link-exact-active .router-div p{
     margin : 0px 5px;
     font-size : 18px!important;
 }
-#event-item-detail{
+.event-item-detail{
     margin : 10px auto;
-    text-align: center;
+    text-align: right;
 }
 .event-color{
     width : 20px;
@@ -106,10 +115,16 @@ a.router-link-exact-active .router-div p{
     vertical-align: middle;
     border-radius: 5px;
 }
+#month-content{
+    border-bottom: 1px solid var(--color-grey-6);
+}
+#month-content:focus{
+    outline:none;
+}
 .active-color{
     border : 2px solid var(--color-shadow);
 }
-#event-item-detail td{
+.event-item-detail td{
     font-size : var(--font-size-18);
     font-family: 'AppleSDGothicNeoEB'; 
     font-weight: var(--weight-regular);
