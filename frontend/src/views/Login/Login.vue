@@ -32,7 +32,11 @@
             <label class="id_remember" for="checkbox">아이디 기억하기</label>
 
             <div class="text-center">
-              <v-btn class="login_btn" :class="classObject" rounded color="#04338C" dark>LOGIN</v-btn>
+              <v-btn class="login_btn" rounded color="#04338C" dark>LOGIN</v-btn>
+              <v-btn class="login_btn"
+          outlined
+           color="#04338C"
+          >중복확인</v-btn>
             </div>
           </form>
           <div class="moves">
