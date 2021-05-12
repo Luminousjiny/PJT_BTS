@@ -1,6 +1,5 @@
 package com.ssafy.bts.Domain.Monthly;
 
-import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;

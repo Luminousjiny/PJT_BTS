@@ -1,7 +1,7 @@
 package com.ssafy.bts.Domain.GuestBook;
 
-import com.ssafy.bts.Controller.Request.GuestBookRequest;
 import com.ssafy.bts.Domain.Room.Room;
+import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,15 +21,15 @@ public class GuestBook {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @Column(nullable = false)
-    private String userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private Date visitDate;
 
-    public static GuestBook createGuestBook(GuestBookRequest request){
+    public static GuestBook createGuestBook(){
         GuestBook inputGuestBook = new GuestBook();
-        inputGuestBook.setUserId(request.getUserId());
         return inputGuestBook;
     }
 
