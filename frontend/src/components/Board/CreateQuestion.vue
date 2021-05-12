@@ -41,6 +41,7 @@ export default {
     font-family: "AppleSDGothicNeoB";
     
     textarea{
+      width: 100%;
       padding: 1rem;
     }
   }

@@ -13,16 +13,21 @@
         </div>
       </div>
     </div>
-    <div class="q__question">
-      <div class="q__question__title">
-        {{question.qnaTitle}}
+    <div class="q__question__box">
+      <div class="q__question">
+        <div class="q__question__title">
+          {{question.qnaTitle}}
+        </div>
+        <div :id="question.qnaId" class="q__question__content">
+        </div>
+        <div class="q__question__answer">
+          <font-awesome-icon :icon="['far', 'comment-dots']" size="1x" />
+          2개
+        </div>
       </div>
-      <div class="q__question__content">
-        {{question.qnaContent}}
-      </div>
-      <div class="q__question__answer">
-        <font-awesome-icon :icon="['far', 'comment-dots']" size="1x" />
-        2개
+      <div class="q__question__img">
+        <img v-if="imgSrc!==''" :src="imgSrc" alt="">
+        <div v-if="imgCnt>0" class="q__question__img__cnt">+{{imgCnt}}</div>
       </div>
     </div>
   </div>
@@ -31,10 +36,42 @@
 <script>
 export default {
   name:'Question',
+  data(){
+    return{
+      imgSrc:'',
+      imgCnt:0,
+    }
+  },
   props:{
     question: Object,
   },
   created(){
+  },
+  mounted(){
+    const content = document.getElementById(String(this.question.qnaId));
+    content.innerHTML=this.question.qnaContent;
+    const children = content.childNodes;
+    let text='';
+    console.log(children);
+    children.forEach((tag)=>{
+      if(tag.nodeName==='IMG'){
+        if(this.imgSrc===''){
+          this.imgSrc=tag.src;
+        }
+        this.imgCnt++;
+      }
+      if(tag.innerText!==' ')
+        text+=tag.innerText;
+    })
+    text=text.replace(/(\r\n\t|\n|\r\t)/gm,"");
+    text=text.replace(/(\s*)/g,"");
+    if(text.length>40){
+      content.innerText=text.slice(0,40)+'...';
+    } else{
+      content.innerText=text
+    }
+    
+    console.log(this.imgSrc,this.imgCnt);
   },
   methods:{
     handleClickQustion(){
@@ -64,7 +101,6 @@ export default {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: var(--color-pink);
       display: inline-block;
       img{
         width: 40px;
@@ -83,23 +119,48 @@ export default {
       color: var(--color-grey-2);
     }
   }
-  .q__question{
-    &__title{
-      padding: 0.5rem 0;
-      font-family: "AppleSDGothicNeoB";
-      font-size: var(--font-size-20);
-      color: var(--color-grey-1);
+  .q__question__box{
+    display:flex;
+    align-items: center;
+    .q__question{
+      width: 90%;
+      padding-right: 0.5rem;
+      &__title{
+        padding: 0.5rem 0;
+        font-family: "AppleSDGothicNeoB";
+        font-size: var(--font-size-20);
+        color: var(--color-grey-1);
+      }
+      &__content{
+        padding: 0.5rem 0;
+        font-family: "AppleSDGothicNeoR";
+        font-size: var(--font-size-14);
+        color: var(--color-grey-2);
+      }
+      &__answer{
+        padding: 0.5rem 0;
+        font-family: "AppleSDGothicNeoB";
+        color: var(--color-green);
+      }
     }
-    &__content{
-      padding: 0.5rem 0;
-      font-family: "AppleSDGothicNeoR";
-      font-size: var(--font-size-14);
-      color: var(--color-grey-2);
-    }
-    &__answer{
-      padding: 0.5rem 0;
-      font-family: "AppleSDGothicNeoB";
-      color: var(--color-green);
+    .q__question__img{
+      position:relative;
+      width: 70px;
+      height: 70px;
+      img{
+        width: 70px;
+        height: 70px;
+      }
+      &__cnt{
+        position: absolute;
+        font-family: "AppleSDGothicNeoR";
+        font-size: var(--font-size-14);
+        color: var(--color-white);
+        background-color: var(--color-grey-1);
+        padding: 0.25rem;
+        bottom: 0;
+        right: 0;
+      }
     }
   }
 }

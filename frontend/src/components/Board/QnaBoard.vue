@@ -11,7 +11,7 @@
         modal-class="scrollable-modal"
       >
         <div class="scrollable-content">
-          <CreateQuestion/>
+          <CreateEditor/>
         </div>
         <div class="row scrollable-modal-footer">
           <div class="modal_btn_box">
@@ -20,7 +20,7 @@
               type="button"
               @click="handleSubmit"
             >
-              글 작성하기
+              질문 작성하기
             </button>
           </div>
         </div>
@@ -42,10 +42,12 @@
 import Question from './Question.vue'
 import http from '../../util/http-common.js';
 import CreateQuestion from '../../components/Board/CreateQuestion.vue';
+import CreateEditor from '../../components/Board/CreateEditor.vue';
 export default {
   components: { 
     Question,
-    CreateQuestion
+    CreateQuestion,
+    CreateEditor,
   },
   name:'QnaBoard',
   data(){
@@ -78,8 +80,8 @@ export default {
       this.showModal = true;
     },
     handleSubmit(){
-      const qnaTitle=document.querySelector('#question__title').value;
-      const qnaContent=document.querySelector('#question__problem').value;
+      const qnaContent = document.querySelector('.ProseMirror').innerHTML;
+      const qnaTitle = document.querySelector('.editor__title__input').value;    
       const data = {
         qnaTitle,
         qnaContent,
