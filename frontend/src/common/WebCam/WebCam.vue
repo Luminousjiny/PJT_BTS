@@ -22,7 +22,8 @@ import Camera from '@/components/WebCam/Camera';
 import Chat from '@/components/WebCam/Chat';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://localhost:4443";
 const OPENVIDU_SERVER_SECRET = "BACK_TO_SCHOOL";
 export default {
     name : "Webcam",
