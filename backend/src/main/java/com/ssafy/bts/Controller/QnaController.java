@@ -66,7 +66,7 @@ public class QnaController {
             //상세 반환
             Qna qna = qnaService.findByQnaId(request.getQnaId());
             QnaDTO qnaDTO = new QnaDTO(qna);
-            response = new BaseResponse("success", qna);
+            response = new BaseResponse("success", qnaDTO);
         } catch (IllegalStateException | IOException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
