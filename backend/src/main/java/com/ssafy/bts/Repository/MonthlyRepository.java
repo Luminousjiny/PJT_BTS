@@ -1,6 +1,7 @@
 package com.ssafy.bts.Repository;
 
 import com.ssafy.bts.Domain.Monthly.Monthly;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

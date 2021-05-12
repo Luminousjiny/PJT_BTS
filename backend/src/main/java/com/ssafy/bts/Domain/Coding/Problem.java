@@ -1,17 +1,21 @@
 package com.ssafy.bts.Domain.Coding;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ssafy.bts.Controller.Request.ProblemRequest;
+import com.ssafy.bts.Domain.Comment.Comment;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
+import java.util.*;
 
 @Entity
 @Getter @Setter
-public class Problem {
+public class Problem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int proId;
@@ -38,6 +42,14 @@ public class Problem {
 
     @Column(nullable = false)
     private Date proDate;
+
+    @JsonBackReference
+    @OneToMany(mappedBy="problem", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Code> codes = new ArrayList<>();
+
+    @JsonBackReference
+    @OneToMany(mappedBy="problem", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Solve> solve = new ArrayList<>();
 
     public static Problem createProblem(ProblemRequest request) {
         Problem pInput = new Problem();
