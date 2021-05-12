@@ -32,6 +32,7 @@ import joinUserInfo from "../components/Join/Join_1.vue";
 import joinUserCheck from "../components/Join/Join_2.vue";
 import CamSetting from "../views/MyPage/CamSetting.vue";
 import Award from "../views/Award/Award.vue";
+import Unity from "../views/Unity/Unity.vue";
 
 Vue.use(VueRouter);
 
@@ -219,6 +220,11 @@ const routes = [
     path: "/award",
     name: "Award",
     component: Award
+  },
+  {
+    path : "/unity",
+    name : "Unity",
+    component : Unity,
   }
 ];
 
