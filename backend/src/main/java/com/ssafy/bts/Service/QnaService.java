@@ -2,6 +2,7 @@ package com.ssafy.bts.Service;
 
 import com.ssafy.bts.Controller.Request.QnaRequest;
 import com.ssafy.bts.Domain.Qna.Qna;
+import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Repository.QnaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,10 @@ public class QnaService {
      * 질문 수정
      */
     @Transactional
-    public void updateQna(QnaRequest request) throws IOException {
+    public void updateQna(Room room, QnaRequest request) throws IOException {
         Optional<Qna> findQna = Optional.ofNullable(qnaRepository.findByQnaId(request.getQnaId()));
         if(findQna.isPresent()){
+            findQna.get().setRoom(room);
             findQna.get().setQnaTitle(request.getQnaTitle());
             findQna.get().setQnaContent(request.getQnaContent());
             findQna.get().setQnaDate(new Date());
@@ -61,6 +63,14 @@ public class QnaService {
     }
 
     /**
+     * 해당 방의 질문 리스트 조회
+     */
+    @Transactional
+    public List<Qna> findByRoom(Room room) {
+        return qnaRepository.findByRoom(room);
+    }
+
+    /**
      * 현재 QnaI로 상세정보 조회
      * @return
      */
@@ -73,15 +83,17 @@ public class QnaService {
      * 제목 검색 결과 글리스트 조회
      */
     @Transactional
-    public List<Qna> searchByTitle(String keyword) {
-        return qnaRepository.findByQnaTitleContaining(keyword);
+    public List<Qna> searchByTitle(String keyword, Room room) {
+        return qnaRepository.findByQnaTitleContaining(keyword, room);
     }
 
     /**
      * 내용 검색 결과 질문 리스트 조회
      */
     @Transactional
-    public List<Qna> searchByContent(String keyword) {
-        return qnaRepository.findByQnaContentContaining(keyword);
+    public List<Qna> searchByContent(String keyword, Room room) {
+        return qnaRepository.findByQnaContentContaining(keyword, room);
     }
+
+
 }
