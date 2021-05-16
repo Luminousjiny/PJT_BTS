@@ -118,7 +118,6 @@ export default {
   },
   computed:{
     keywordList(){
-      console.log(this.keyword,this.category);
       if(this.keyword==="")
         return this.infoList;
       const search1 = this.keyword;
