@@ -80,7 +80,9 @@ export default {
     },
     updated() {
         let container = this.$el.querySelector("#receive-container");
-        container.scrollTop = container.scrollHeight;
+        if(container.scrollHeight != null){
+            container.scrollTop = container.scrollHeight;
+        }
     },
     methods: {
         send(){
@@ -98,7 +100,6 @@ export default {
                 this.showChatting = false;
                 this.showUsers = false;
             }
-            console.log(this.showChatting, this.showUsers);
         }
     },
 }
