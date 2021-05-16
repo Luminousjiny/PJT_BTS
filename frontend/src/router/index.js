@@ -23,8 +23,6 @@ import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
 import Calendar from "../components/Library/Calendar.vue";
 import Youtube from "../components/Library/Youtube.vue";
-import Monthly from "../components/Library/Monthly.vue";
-import Weekly from "../components/Library/Weekly.vue";
 import Rest from "../views/Rest/Rest.vue";
 import Play from "../views/Play/Play.vue";
 import Office from "../views/Office/Office.vue";
@@ -187,18 +185,6 @@ const routes = [
         path: "calendar",
         name: "Calendar",
         component: Calendar,
-        children: [
-          {
-            path: "monthly",
-            name: "Monthly",
-            component: Monthly,
-          },
-          {
-            path: "",
-            name: "Weekly",
-            component: Weekly,
-          },
-        ],
       },
     ],
   },
