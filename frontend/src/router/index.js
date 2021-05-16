@@ -146,7 +146,7 @@ const routes = [
         component: CreateCode,
       },
       {
-        path: "problem/:id/code/:codeId/:userName",
+        path: "problem/:id/code/:codeId/:userId",
         name: "UpdateCode",
         component: UpdateCode,
       },

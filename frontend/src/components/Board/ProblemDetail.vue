@@ -44,7 +44,7 @@
       <div class="detail__profile__image"></div>
       <div>
         <div class="detail__profile__name">
-          {{content.user.userNickname}}
+          {{content.user && content.user.userNickname}}
         </div>
         <div class="detail__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
@@ -67,7 +67,7 @@
           예제 입력
         </div>
         <div class="detail__example__input">
-          <div v-for="(input,idx) in content.proInput.split('\n')" :key="idx">{{input}}</div>
+          <div v-for="(input,idx) in content.proInput && content.proInput.split('\n')" :key="idx">{{input}}</div>
         </div>
       </div>
       <div class="detail__example__box">
@@ -75,13 +75,13 @@
           예제 출력
         </div>
         <div class="detail__example__output">
-          <div v-for="(output,idx) in content.proOutput.split('\n')" :key="idx">{{output}}</div>
+          <div v-for="(output,idx) in content.proInput && content.proOutput.split('\n')" :key="idx">{{output}}</div>
         </div>
       </div>
     </div>
     <div class="detail__code__table">
       <div class="detail__code__table__cnt">
-        제출 {{codeList.length}}개
+        제출 {{content.codeList && content.codeList.length}}개
       </div>
       <table>
         <th>닉네임</th>
@@ -90,11 +90,11 @@
         <th>통과여부</th>
         <th>언어</th>
         <th>제출날짜</th>
-        <tr v-for="(code, idx) in codeList" :key="idx" @click="handleClickCode">
+        <tr v-for="(code, idx) in content.codeList" :key="idx" @click="function(){ handleClickCode(content.proId,code.codeId) }">
           <td>{{code.user.userNickname}}</td>
           <td>{{code.codeMemory.slice(0,code.codeMemory.length-2)}}<span>{{code.codeMemory.slice(code.codeMemory.length-2,)}}</span></td>
           <td>{{code.codeTime.slice(0,code.codeTime.length-2)}}<span>{{code.codeTime.slice(code.codeTime.length-2,)}}</span></td>
-          <td>{{code.status}}</td>
+          <td>{{code.codeResult}}</td>
           <td>{{code.codeLan}}</td>
           <td>{{$moment(code.codeDate).format('YYYY-MM-DD')}}</td>
         </tr>
@@ -113,25 +113,8 @@ export default {
   },
   data(){
     return{
-      content:{
-      "proId": null,
-        "user": {
-          "userId": "",
-          "userPw": "",
-          "userNickname": "",
-          "userPhone": "",
-          "userImg": "",
-          "userLank": "",
-          "userPoint": null
-        },
-        "proTitle": "",
-        "proContent": "",
-        "proInput": "",
-        "proOutput": "",
-        "proDate": ""
-      },
+      content:{},
       showModal: false,
-      codeList:[]
     }
   },
   created(){
@@ -140,15 +123,6 @@ export default {
       if(res.status===200){
         this.content=res.data.data;
         console.log(this.content);
-      }
-    })
-    .catch((err)=>{
-      console.error(err);
-    })
-    http.get(`v1/code/list/${this.$route.params.id}`)
-    .then((res)=>{
-      if(res.status===200){
-        this.codeList=res.data.data;
       }
     })
     .catch((err)=>{
@@ -210,12 +184,12 @@ export default {
         name:'CreateCode',
       })
     },
-    handleClickCode(){
+    handleClickCode(id,codeId){
       this.$router.push({
         name:'CodeDetail',
         params:{
-          id:0,
-          codeId:0,
+          id,
+          codeId,
         }
       })
     }
