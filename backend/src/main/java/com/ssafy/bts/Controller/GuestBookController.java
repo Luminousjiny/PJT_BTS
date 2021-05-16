@@ -30,16 +30,16 @@ public class GuestBookController {
     private final RoomService roomService;
 
 
-    @ApiOperation(value = "유니티에서 현재 방의 방명록 클릭 시 아이디,닉네임,날짜 및 시간 테이블에 넣고 전체 리스트 반환", notes = "성공시 data값으로 현재 방의 방명록 리스트 반환", response = BaseResponse.class)
-    @PostMapping("/{roomNumber}/{userId}")
-    public BaseResponse insertGuestBook(@ApiParam(value = "유니티에서 주는 방번호(roomNumber)")@PathVariable int roomNumber,
+    @ApiOperation(value = "현재 방의 방명록 클릭 시 아이디,닉네임,날짜 및 시간 테이블에 넣고 전체 리스트 반환", notes = "성공시 data값으로 현재 방의 방명록 리스트 반환", response = BaseResponse.class)
+    @PostMapping("/{roomId}/{userId}")
+    public BaseResponse insertGuestBook(@ApiParam(value = "방번호(roomId)")@PathVariable int roomId,
                                         @ApiParam(value = "로그인한 아이디")@PathVariable String userId) throws IOException {
         BaseResponse response = null;
 
         try{
             GuestBook guestBook = GuestBook.createGuestBook();
             User user = userService.findByUserId(userId);
-            Room room = roomService.findByRoomNumber(roomNumber);
+            Room room = roomService.findByRoomId(roomId);
             guestBook.setRoom(room);
             guestBook.setUser(user);
             guestBookService.save(guestBook);

@@ -76,7 +76,7 @@ export default {
   },
   created() {
     http
-      .get(`api/v1/user/award/`)
+      .get(`/v1/user/award/`)
       .then((res) => {
         this.users = res.data.data;
       })
