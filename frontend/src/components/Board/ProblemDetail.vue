@@ -44,19 +44,19 @@
       <div class="detail__profile__image"></div>
       <div>
         <div class="detail__profile__name">
-          {{content.name}}
+          {{content.user && content.user.userNickname}}
         </div>
         <div class="detail__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          {{content.date}}
+          {{$moment(content.proDate).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
     <div class="detail__title">
-      {{content.title}}
+      {{content.proTitle}}
     </div>
     <div class="detail__problem">
-      {{content.problem}}
+      {{content.proContent}}
     </div>
     <div class="detail__btn__box">
       <button class="modal_btn" @click="handleClickCreate">코드 작성하기</button>
@@ -67,7 +67,7 @@
           예제 입력
         </div>
         <div class="detail__example__input">
-          <div v-for="(input,idx) in content.input.split('\n')" :key="idx">{{input}}</div>
+          <div v-for="(input,idx) in content.proInput && content.proInput.split('\n')" :key="idx">{{input}}</div>
         </div>
       </div>
       <div class="detail__example__box">
@@ -75,13 +75,13 @@
           예제 출력
         </div>
         <div class="detail__example__output">
-          <div v-for="(output,idx) in content.output.split('\n')" :key="idx">{{output}}</div>
+          <div v-for="(output,idx) in content.proInput && content.proOutput.split('\n')" :key="idx">{{output}}</div>
         </div>
       </div>
     </div>
     <div class="detail__code__table">
       <div class="detail__code__table__cnt">
-        제출 {{codeList.length}}개
+        제출 {{content.codeList && content.codeList.length}}개
       </div>
       <table>
         <th>닉네임</th>
@@ -90,13 +90,13 @@
         <th>통과여부</th>
         <th>언어</th>
         <th>제출날짜</th>
-        <tr v-for="(code, idx) in codeList" :key="idx" @click="handleClickCode">
-          <td>{{code.name}}</td>
-          <td>{{code.memory}}<span>KB</span></td>
-          <td>{{code.time}}<span>s</span></td>
-          <td>{{code.status}}</td>
-          <td>{{code.language}}</td>
-          <td>{{code.date}}</td>
+        <tr v-for="(code, idx) in content.codeList" :key="idx" @click="function(){ handleClickCode(content.proId,code.codeId) }">
+          <td>{{code.user.userNickname}}</td>
+          <td>{{code.codeMemory.slice(0,code.codeMemory.length-2)}}<span>{{code.codeMemory.slice(code.codeMemory.length-2,)}}</span></td>
+          <td>{{code.codeTime.slice(0,code.codeTime.length-2)}}<span>{{code.codeTime.slice(code.codeTime.length-2,)}}</span></td>
+          <td>{{code.codeResult}}</td>
+          <td>{{code.codeLan}}</td>
+          <td>{{$moment(code.codeDate).format('YYYY-MM-DD')}}</td>
         </tr>
       </table>
     </div>
@@ -105,7 +105,7 @@
 
 <script>
 import UpdateProblem from './UpdateProblem.vue';
-
+import http from '../../util/http-common.js';
 export default {
   name:'ProblemDetail',
   components:{
@@ -113,49 +113,24 @@ export default {
   },
   data(){
     return{
-      content:{
-        name:'졍',
-        date:'2021.04.21',
-        title:'[5663] 피보나치 수열',
-        problem:'피보나치 수는 0과 1로 시작',
-        input:'3',
-        output:'23',
-      },
+      content:{},
       showModal: false,
-      codeList:[
-        {
-          name:'졍',
-          memory: '1024',
-          time:'0.153',
-          status:'Pass',
-          language:'Java',
-          date: '2021.04.21',
-        },
-        {
-          name:'졍',
-          memory: '1024',
-          time:'0.153',
-          status:'Pass',
-          language:'Java',
-          date: '2021.04.21',
-        },
-        {
-          name:'졍',
-          memory: '1024',
-          time:'0.153',
-          status:'Pass',
-          language:'Java',
-          date: '2021.04.21',
-        }
-      ]
     }
   },
   created(){
-    // this.content=this.$route.params.content;
-    // location.reload();
+    http.get(`v1/pro/detail/${this.$route.params.id}`)
+    .then((res)=>{
+      if(res.status===200){
+        this.content=res.data.data;
+        console.log(this.content);
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   },
+
   mounted(){
-    // document.querySelector('.editor__content').innerHTML=this.content.problem;
   },
   methods:{
     handleClickList(){
@@ -165,43 +140,56 @@ export default {
     },
     handleClickEdit(){
       this.showModal = true;
-      setTimeout(function(){
-        const modal = document.querySelector('.scrollable-modal');
-        modal.style.maxWidth='80%';
-        modal.style.height='auto';
-      },1);
     },
     handleClickDelete(){
-      
+      http.delete(`v1/pro/${this.content.proId}`)
+      .then((res)=>{
+        if(res.status===200){
+          this.$router.push({
+            name:'ProblemBoard'
+          })
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
     },
     handleSubmit(){
-      // const title=document.querySelector('#code__title').value;
-      // const problem=document.querySelector('#code__problem').value;
-      // const input=document.querySelector('#code__input').value;
-      // const output=document.querySelector('#code__output').value;
-      // const date = new Date();
-      // const data = {
-      //   title,
-      //   problem,
-      //   input,
-      //   output,
-      //   'date' : `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
-      //   'name' : '졍',
-      // }
-      // this.content=data;
-      this.showModal=false;
+      const proTitle=document.querySelector('#code__title').value;
+      const proContent=document.querySelector('#code__problem').value;
+      const proInput=document.querySelector('#code__input').value;
+      const proOutput=document.querySelector('#code__output').value;
+      const data = {
+        proTitle,
+        proContent,
+        proInput,
+        proOutput,
+        proId:this.content.proId,
+        userId: 'jihyeong'
+      };
+      http.put('v1/pro', JSON.stringify(data))
+      .then((res)=>{
+        if(res.status===200){
+          this.content=res.data.data;
+          this.showModal=false;
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+        this.showModal=false;
+      })
     },
     handleClickCreate(){
       this.$router.push({
         name:'CreateCode',
       })
     },
-    handleClickCode(){
+    handleClickCode(id,codeId){
       this.$router.push({
         name:'CodeDetail',
         params:{
-          id:0,
-          codeId:0,
+          id,
+          codeId,
         }
       })
     }
@@ -283,7 +271,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";
@@ -320,8 +308,11 @@ export default {
   }
   table{
     width: 100%;
+    border-collapse: collapse;
+    margin: 0;
     th,td{
       text-align: center;
+      margin: 0;
       border: 1px solid var(--color-grey-8);
       padding: 0.5rem 0;
       color: var(--color-grey-2);

@@ -17,6 +17,8 @@ import ProblemDetail from "../components/Board/ProblemDetail.vue";
 import CreateCode from '../components/Board/CreateCode.vue';
 import UpdateCode from '../components/Board/UpdateCode.vue';
 import CodeDetail from '../components/Board/CodeDetail.vue';
+import QnaBoard from '../components/Board/QnaBoard.vue';
+import QnaDetail from '../components/Board/QnaDetail.vue';
 import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
 import Calendar from "../components/Library/Calendar.vue";
@@ -31,6 +33,7 @@ import joinUserCheck from "../components/Join/Join_2.vue";
 import CamSetting from "../views/MyPage/CamSetting.vue";
 import Award from "../views/Award/Award.vue";
 import Unity from "../views/Unity/Unity.vue";
+import GuestBook from "../views/GuestBook/GuestBook.vue";
 
 Vue.use(VueRouter);
 
@@ -144,7 +147,7 @@ const routes = [
         component: CreateCode,
       },
       {
-        path: "problem/:id/code/:codeId/:userName",
+        path: "problem/:id/code/:codeId/:userId",
         name: "UpdateCode",
         component: UpdateCode,
       },
@@ -152,6 +155,16 @@ const routes = [
         path: "problem/:id/code/:codeId",
         name: "CodeDetail",
         component: CodeDetail,
+      },
+      {
+        path: "qna",
+        name: "QnaBoard",
+        component: QnaBoard,
+      },
+      {
+        path: "qna/:id",
+        name: "QnaDetail",
+        component: QnaDetail,
       },
     ],
   },
@@ -210,9 +223,14 @@ const routes = [
     component: Award
   },
   {
-    path : "/unity",
+    path : "/unityGame",
     name : "Unity",
     component : Unity,
+  },
+  {
+    path : "/gb",
+    name : "GuestBook",
+    component : GuestBook,
   }
 ];
 

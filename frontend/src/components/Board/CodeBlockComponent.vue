@@ -1,16 +1,16 @@
 <template>
   <node-view-wrapper class="code-block">
-    <select contenteditable="false" v-model="selectedLanguage">
+    <!-- <select contenteditable="false" v-model="selectedLanguage">
       <option :value="null">
         <p>auto</p>
       </option>
       <option disabled>
-       <p> — </p>
+      <p> — </p>
       </option>
       <option v-for="(language, index) in languages" :value="language" :key="index">
         <p>{{ language }}</p>
       </option>
-    </select>
+    </select> -->
     <pre><node-view-content as="code" /></pre>
   </node-view-wrapper>
 </template>
@@ -26,26 +26,26 @@ export default {
 
   props: nodeViewProps,
 
-  data() {
-    return {
-      languages: this.extension.options.lowlight.listLanguages().filter((language)=>{
-        const a=['c','cpp','java','javascript','python','sql'];
-        if(a.includes(language)) return true
-        return false
-      }),
-    }
-  },
+  // data() {
+  //   return {
+  //     languages: this.extension.options.lowlight.listLanguages().filter((language)=>{
+  //       const a=['c','cpp','java','javascript','python','sql'];
+  //       if(a.includes(language)) return true
+  //       return false
+  //     }),
+  //   }
+  // },
 
-  computed: {
-    selectedLanguage: {
-      get() {
-        return this.node.attrs.language
-      },
-      set(language) {
-        this.updateAttributes({ language })
-      },
-    },
-  },
+  // computed: {
+  //   selectedLanguage: {
+  //     get() {
+  //       return this.node.attrs.language
+  //     },
+  //     set(language) {
+  //       this.updateAttributes({ language })
+  //     },
+  //   },
+  // },
 }
 </script>
 

@@ -13,19 +13,19 @@
       <div class="code__profile__image"></div>
       <div>
         <div class="code__profile__name">
-          {{content.name}}
+          {{content.user.userNickname}}
         </div>
         <div class="code__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          {{content.date}}
+          {{$moment(content.proDate).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
     <div class="code__title">
-      {{content.title}}
+      {{content.proTitle}}
     </div>
     <div class="code__problem">
-      {{content.problem}}
+      {{content.proContent}}
     </div>
 
     <div class="code__example">
@@ -34,7 +34,7 @@
           예제 입력
         </div>
         <div class="code__example__input">
-          <div v-for="(input,idx) in content.input.split('\n')" :key="idx">{{input}}</div>
+          <div v-for="(input,idx) in content.proInput.split('\n')" :key="idx">{{input}}</div>
         </div>
       </div>
       <div class="code__example__box">
@@ -42,7 +42,7 @@
           예제 출력
         </div>
         <div class="code__example__output" >
-          <div v-for="(output,idx) in content.output.split('\n')" :key="idx">{{output}}</div>
+          <div v-for="(output,idx) in content.proOutput.split('\n')" :key="idx">{{output}}</div>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
         <option value="vs">VS</option>
         <option value="vs-dark">VS-DARK</option>
       </select>
-      <m-monaco-editor v-model="code" :mode="mode" :theme="theme"></m-monaco-editor>
+      <m-monaco-editor v-model="code" :mode="mode" :theme="theme" @init="handleInit"></m-monaco-editor>
     </div>
     <div class="code__example">
       <div class="code__example__box">
@@ -83,102 +83,206 @@
 <script>
 import UpdateProblem from './UpdateProblem.vue';
 import http from '@/util/http-common.js';
+import Swal from 'sweetalert2'
+import Loader from '../../common/Loader/Loader.vue';
 export default {
   name:'CreateCode',
   components:{
     UpdateProblem,
+    Loader,
+    Swal,
   },
   data(){
     return{
+      isLoading:true,
       content:{
-        name:'졍',
-        date:'2021.04.21',
-        title:'[5663] 피보나치 수열',
-        problem:'피보나치 수는 0과 1로 시작',
-        input:'3',
-        output:'23\n24\n25',
+        "proId": null,
+        "user": {
+          "userId": "",
+          "userPw": "",
+          "userNickname": "",
+          "userPhone": "",
+          "userImg": "",
+          "userLank": "",
+          "userPoint": null
+        },
+        "proTitle": "",
+        "proContent": "",
+        "proInput": "",
+        "proOutput": "",
+        "proDate": ""
       },
       code:"",
+      memory:"",
+      time:"",
+      result:"",
+      input:"",
+      output:"",
       mode:"python",
-      theme:'vs-dark',
-      input:'',
-      output:'',
+      theme:"vs-dark",
     }
   },
   created(){
-    // this.content=this.$route.params.content;
+    http.get(`v1/pro/detail/${this.$route.params.id}`)
+    .then((res)=>{
+      if(res.status===200){
+        this.content=res.data.data;
+        for(let i=0; i<this.content.codeList.length; i++){
+          console.log(this.content.codeList[i].codeId,this.$route.params.codeId)
+          if(this.content.codeList[i].codeId===Number(this.$route.params.codeId)){
+            this.code = this.content.codeList[i].codeContent;
+            this.mode = this.content.codeList[i].codeLan;
+            break;
+          }
+          
+        }
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
+  },
+  computed:{
+    wrapClass(){
+      if(this.isLoading===false)
+        return "code__wrap"
+      return "code__wrap darkness"
+    }
   },
   mounted(){
-    const editor=document.querySelector('.code__editor__box');
-    editor.childNodes[2].id='a'
-    // console.log(editor.childNodes);
-    // console.log(editor.childNodes[2]);
-    console.log(document.querySelector('.monaco-editor'))
+
+  },
+  beforeDestroy(){
   },
   methods:{
+    handleInit(editor,editorDom,monaco){
+      this.editor=editor;
+    },
     handleClickList(){
       this.$router.push({
         name:'ProblemDetail',
         params:{
-          id:0,
+          id:this.content.proId, 
         }
       });
     },
     handleSubmit(){
       const compiler={
-        'c':10,
+        'c':11,
         'cpp':1,
         'java':10,
-        'python':99
+        'python':116
       };
-      this.code=document.querySelector('.inputarea').value;
+      this.code=this.editor.getValue();
       var formdata = new FormData();
       formdata.append("source", this.code);
       formdata.append("compilerId", compiler[this.mode]);
-      formdata.append("input", this.input);
-      console.log(formdata);
+      formdata.append("input", this.content.proInput);
       var requestOptions = {
         method: 'POST',
         body: formdata,
         redirect: 'follow'
       };
+      this.isLoading=true;
       fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log(result);
-        const requestOptions = {
-          method: 'GET',
-          redirect: 'follow'
-        };
-        setTimeout(()=>{
-          fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-            .then(response2 => response2.json())
-            .then(result2 => {
-              console.log(result2);
-              if(result2.result.status.code===15){
-                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-                  .then(response3 => response3.text())
-                  .then(result3 => {
-                    console.log(result3.trim(),this.content.output.trim())
-                    if(result3.trim()===this.content.output.trim()){
-                      console.log('축하합니다. Pass입니다.\n제출이 완료되었습니다.');
-                    } else{
-                      console.log('오답입니다.');
-                    }
-                  })
-                  .catch(error3 => console.log('error', error3));
-              } else{
-                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/error?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-                  .then(response3 => response3.text())
-                  .then(result3 => {
-                    console.log(`오답입니다.\n ${result3}`);
-                  })
-                  .catch(error3 => console.log('error', error3));
-              }
-
-                })
+          const requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          setTimeout(()=>{
+            fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+              .then(response2 => response2.json())
+              .then(result2 => {
+                console.log(result2);
+                if(result2.result.status.code===15){
+                  fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
+                    .then(response3 => response3.text())
+                    .then(result3 => {
+                      let output1=result3.replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/(\s*)/g,"");
+                      let output2=this.content.proOutput.replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/(\s*)/g,"");
+                      this.isLoading=false;
+                      if(output1===output2){
+                        this.result="성공";
+                      } else{
+                        this.result="실패";
+                      }
+                      this.memory = result2.result.memory;
+                      this.time = result2.result.time;
+                      const data = {
+                        codeContent: this.code,
+                        codeLan : this.mode,
+                        codeMemory: `${this.memory}kB`,
+                        codeTime: `${this.time}s`,
+                        result: this.result,
+                        roomId:1,
+                        proId: this.content.proId,
+                        userId: 'jihyeong'
+                      };                      
+                      http.post('v1/code', JSON.stringify(data))
+                        .then(res=>{
+                          if(res.status===200){
+                            this.$router.push({
+                              name: 'ProblemDetail',
+                              params:{
+                                id: this.proId,
+                              }
+                            })
+                          }
+                        })
+                        .catch(err => {
+                          console.error(err);
+                        })                     
+                    })
+                    .catch(error3 => console.log('error', error3));
+                } else{
+                  switch (result2.result.status.code){
+                    case 11:
+                      this.result="컴파일에러";
+                      break;
+                    case 12:
+                      this.result="런타임 에러"
+                      break;
+                    case 13:
+                      this.result="시간 초과"
+                      break;
+                    case 17:
+                      this.result="메모리 초과"
+                      break;
+                    default:
+                      this.result="실패"
+                  }
+                  this.memory = result2.result.memory;
+                  this.time = result2.result.time;
+                  const data = {
+                    codeContent: this.code,
+                    codeLan : this.mode,
+                    codeMemory: `${this.memory}kB`,
+                    codeTime: `${this.time}s`,
+                    result: this.result,
+                    roomId:1,
+                    proId: this.content.proId,
+                    userId: 'jihyeong'
+                  };
+                  http.post('v1/code', JSON.stringify(data))
+                    .then(res=>{
+                      if(res.status===200){
+                        this.$router.push({
+                          name: 'ProblemDetail',
+                          params:{
+                            id: this.content.proId,
+                          }
+                        })
+                      }
+                    })
+                    .catch(err => {
+                      console.error(error);
+                    }) 
+                }
+              })
               .catch(error2 => console.log('error', error2));
-        },5000);
+          },3000);
         })
         .catch(error => console.log('error', error));
     },
@@ -188,18 +292,17 @@ export default {
       // 10 java
       // 99 python
       const compiler={
-        'c':10,
+        'c':11,
         'cpp':1,
         'java':10,
-        'python':99
+        'python':116
       };
-      this.code=document.querySelector('.inputarea').value;
-      console.log(this.code,compiler[this.mode],this.input);
+      this.code=this.editor.getValue();
       var formdata = new FormData();
       formdata.append("source", this.code);
       formdata.append("compilerId", compiler[this.mode]);
       formdata.append("input", this.input);
-      console.log(formdata);
+      console.log(typeof this.input);
       var requestOptions = {
         method: 'POST',
         body: formdata,
@@ -208,7 +311,6 @@ export default {
       fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log(result);
         const requestOptions = {
           method: 'GET',
           redirect: 'follow'
@@ -231,13 +333,8 @@ export default {
                 fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
                   .then(response3 => response3.text())
                   .then(result3 => {
-                    this.output+=`메모리 용량 : ${result2.result.memory}, 실행 시간 : ${result2.result.time}s\n`
-                    this.output+=`${result3}\n\n`;
-                    if(result3===this.content.output){
-                      console.log('축하합니다. Pass입니다.\n제출이 완료되었습니다.');
-                    } else{
-                      console.log('오답입니다.');
-                    }
+                    this.output+=`메모리 용량 : ${result2.result.memory}kB, 실행 시간 : ${result2.result.time}s\n`
+                    this.output+=`${result3}\n`;
                   })
                   .catch(error3 => console.log('error', error3));
               } else{
@@ -245,17 +342,16 @@ export default {
                   .then(response3 => response3.text())
                   .then(result3 => {
                     this.output+=`error : ${result2.result.status.name}\n`;
-                    this.output+=`${result3}\n\n`;
-                    console.log(`오답입니다.\n ${result3}`);
+                    this.output+=`${result3}\n`;
                   })
-                  .catch(error3 => console.log('error', error3));
+                  .catch(error3 => console.error('error', error3));
               }
 
                 })
-              .catch(error2 => console.log('error', error2));
-        },5000);
+            .catch(error2 => console.error('error', error2));
+        },3000);
         })
-        .catch(error => console.log('error', error));
+        .catch(error => console.error('error', error));
     },
   }
 }
@@ -279,7 +375,6 @@ export default {
 // }
 </style>
 <style lang="scss" scoped>
-
 .code__wrap{
   width: 80%;
   margin: auto;
@@ -349,7 +444,7 @@ export default {
   align-items: center;
 }
 .modal_btn{
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   border-radius: var(--font-size-12);
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";

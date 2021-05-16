@@ -12,6 +12,8 @@ Vue.use(Vuetify);
 Vue.config.productionTip = false;
 import MMonacoEditor from 'vue-m-monaco-editor';
 Vue.use(MMonacoEditor);
+import VueLoading from 'vue-loading-template';
+Vue.use(VueLoading);
 
 import VueCookies from "vue-cookies";
 //쿠키를 사용한다.
@@ -22,7 +24,7 @@ Vue.$cookies.config("7d");
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTrashAlt, faCalendarAlt} from '@fortawesome/free-regular-svg-icons'
+import { faTrashAlt, faCalendarAlt, faCommentDots} from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt, faChevronLeft,faChevronRight, faLink,faBold,faItalic
   ,faStrikethrough,faUnderline,faCode,faFileCode,faParagraph,faListOl,faListUl,
   faQuoteLeft,faWindowMinimize,faUndo,faRedo,faImage,
@@ -30,7 +32,7 @@ import { faPencilAlt, faChevronLeft,faChevronRight, faLink,faBold,faItalic
 library.add(faPencilAlt,faChevronLeft,faChevronRight,faLink,faBold,faItalic,
   faStrikethrough,faUnderline,faCode,faFileCode,faParagraph,faListOl,
   faListUl,faQuoteLeft,faWindowMinimize,faUndo,faRedo,faImage,
-  faTrashAlt,faCalendarAlt);
+  faTrashAlt,faCalendarAlt,faCommentDots);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Modal',VueModal);
 new Vue({

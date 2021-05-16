@@ -8,6 +8,7 @@
     </div>
     <div class="board__title" v-if="showLink2===1">정보공유 게시판</div>
     <div class="board__title" v-else-if="showLink2===2">코드공유 게시판</div>
+    <div class="board__title" v-else-if="showLink2===3">QnA 게시판</div>
     <router-view/>
   </div>
 </template>
@@ -39,6 +40,8 @@ export default {
     } else if(this.$route.name==='ProblemDetail' || this.$route.name==='CreateCode' || 
     this.$route.name==='UpdateCode' || this.$route.name==='CodeDetail'){
       this.showLink2=2;
+    } else if(this.$route.name==='QnaBoard' || this.$route.name==='QnaDetail'){
+      this.showLink2=3;
     } else{
       this.showLink2=0;
     }    
@@ -54,6 +57,8 @@ export default {
     } else if(this.$route.name==='ProblemDetail' || this.$route.name==='CreateCode' || 
     this.$route.name==='UpdateCode' || this.$route.name==='CodeDetail'){
       this.showLink2=2;
+    } else if(this.$route.name==='QnaBoard' || this.$route.name==='QnaDetail'){
+      this.showLink2=3;
     } else{
       this.showLink2=0;
     }
@@ -87,13 +92,14 @@ export default {
   font-family: "AppleSDGothicNeoEB";
   color: var(--color-black);
   text-align: center;
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 .router-link-active{
   color: var(--color-mainBlue);
 }
 .scrollable-modal {
   display: flex;
+  max-width: 80% !important;
   flex-direction: column;
   height: calc(100% - 50px);
 }
@@ -121,13 +127,13 @@ export default {
   flex-grow: 1;
 }
 .scrollable-modal .scrollable-modal-footer {
-  padding: 15px 0px 15px 0px;
   border-top: 1px solid #e5e5e5;
+  width: 100%;
   margin: auto;
   display: flex;
   justify-content: center;
 }
-.editor__content{
+.editor__content, .qna__question__problem, .answer__problem{
   > * + * {
     margin-top: 0.75em;
   }
@@ -342,7 +348,13 @@ export default {
 .ProseMirror:focus{
   outline: none;
 }
+.qna__answer__wrap{
+  .ProseMirror{
+    height: 150px;
+  }
+}
 .ProseMirror {
+  height:360px;
   cursor:text;
   > * + * {
     margin-top: 0.75em;
@@ -520,7 +532,16 @@ export default {
     }
   }
 }
-
+.qna__answer__wrap{
+  .editor{
+    border: 1px solid var(--color-grey-6) !important;
+    margin: 0 !important;
+    &__header{
+      border-top: none !important;
+      border-bottom: 1px solid var(--color-grey-6) !important;
+    }
+  }
+}
 .tableWrapper {
   overflow-x: auto;
 }
