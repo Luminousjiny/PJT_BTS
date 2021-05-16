@@ -80,7 +80,7 @@ export default {
     else
       this.showCnt=2;
     window.addEventListener('resize',this.handleWindowSize);
-    http.get('v1/info/list')
+    http.get('v1/info/list/1')
     .then((res)=>{
       if(res.status===200){
         this.infoList=res.data.data.reverse();
@@ -137,6 +137,7 @@ export default {
       const data = {
         infoTitle : input.value,
         infoContent : html,
+        roomId: 1,
         userId : 'jihyeong',
       };
       http.post('v1/info', JSON.stringify(data))
