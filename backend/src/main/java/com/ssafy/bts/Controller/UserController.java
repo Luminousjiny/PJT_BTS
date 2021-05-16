@@ -156,7 +156,7 @@ public class UserController {
         try {
             User user = userService.findByUserId(userId);
             String url = user.getUserImg();
-            s3Service.delete(url); // s3 이미지 삭제
+//            s3Service.delete(url); // s3 이미지 삭제
             userService.deleteUser(userId); // 유저정보 삭제
             response = new BaseResponse("success", "삭제 성공");
         } catch (IllegalStateException e) {
@@ -172,6 +172,24 @@ public class UserController {
         BaseResponse response = null;
         try{
             User findUser = userService.findByUserIdAndUserPhone(userId, userPhone);
+            if(findUser == null){
+                response = new BaseResponse("fail",null);
+            }else{
+                response = new BaseResponse("success", findUser);
+            }
+        }
+        catch(Exception e){
+            response = new BaseResponse("fail",e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "핸드폰 번호에 해당하는 유저 찾기(인증번호 전송 시)", notes = "찾으면 success, 못찾으면 fail", response = BaseResponse.class)
+    @GetMapping("/phone/{userPhone}")
+    public BaseResponse findUserByPhone(@ApiParam(value = "사용자 핸드폰 번호") @PathVariable String userPhone){
+        BaseResponse response = null;
+        try{
+            User findUser = userService.findByUserPhone(userPhone);
             if(findUser == null){
                 response = new BaseResponse("fail",null);
             }else{

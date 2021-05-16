@@ -60,15 +60,14 @@
     color: var(--color-grey-1);
     font-size: var(--font-size-18);
     font-family: "AppleSDGothicNeoB";
-    margin-bottom: 0px!important;
 }
 
 .login_input_c{
     margin-top: 0px!important;
 }
 
-input::placeholder { 
-    font-size: var(--font-size-12); 
+.theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea::placeholder { 
+    font-size: var(--font-size-14); 
     font-family: "AppleSDGothicNeoR";
 }
 

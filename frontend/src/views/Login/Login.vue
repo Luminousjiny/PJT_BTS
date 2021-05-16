@@ -10,7 +10,7 @@
           <p class="text">환영합니다. 로그인 해주세요</p> 
 
           <form @submit="onSubmit" class="login-form">
-            <p class="login_mid_header">아이디</p>
+            <label class="login_mid_header" for="user-id">아이디</label>
             <v-text-field
               id="user-id"
               v-model="id"
@@ -19,7 +19,7 @@
               single-line
             ></v-text-field>
 
-            <p class="login_mid_header">비밀번호</p>
+            <label class="login_mid_header" for="user-pw">비밀번호</label>
             <v-text-field
               id="user-pw"
               v-model="password"
@@ -32,11 +32,7 @@
             <label class="id_remember" for="checkbox">아이디 기억하기</label>
 
             <div class="text-center">
-              <v-btn class="login_btn" rounded color="#04338C" dark>LOGIN</v-btn>
-              <v-btn class="login_btn"
-          outlined
-           color="#04338C"
-          >중복확인</v-btn>
+              <v-btn class="login_btn" rounded :color="classObject" dark @click="onSubmit">LOGIN</v-btn>
             </div>
           </form>
           <div class="moves">
@@ -50,7 +46,10 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
+import Swal from 'sweetalert2'
 import PV from "password-validator";
+// import VueCookies from 'vue-cookies'
 
 export default {
   name: "Login",
@@ -77,13 +76,55 @@ export default {
   },
   computed: {
     classObject: function(){
-      if(this.id.length>0 && this.password.length>0 )
-        return "purple_btn login-form_btn active"
-      return "purple_btn login-form_btn inactive"
+      if(this.id.length>0 && this.id.length<=10 && this.password.length>=8 && this.password.length<12)
+        return "#04338C";
+      return  "#6482B9";
     },
   },
   methods: {
+    onSubmit(event){
+      event.preventDefault();
 
+      if(this.id.length<=0 || this.id.length>10){
+        Swal.fire({
+          icon: "error",
+          text: "아이디는 최대 10자입니다. ",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        return;
+      }
+      if(this.password.length<8 || this.password.length>=12){
+        Swal.fire({
+          icon: "error",
+          text: "비밀번호는 8 ~ 11자입니다. ",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        return;
+      }
+
+      const user = {
+        userId: this.id,
+        userPw: this.password
+      }
+
+      http
+      .post("api/v1/login", JSON.stringify(user))
+      .then((res) => {
+         const token = res.data["auth_token"];
+         console.log("토큰 : "+token);
+         if(token){
+            this.$router.push("/computer"); // 경로 수정 ✅ 
+          }
+          else{
+            alert(res.data['message']);
+          }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    }
   }
 };
 </script>
