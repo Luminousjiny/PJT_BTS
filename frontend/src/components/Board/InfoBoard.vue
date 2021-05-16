@@ -28,7 +28,7 @@
           </div>
         </div>
       </Modal>
-      <div class="qna_board_search">검색</div>
+      <Search :keyword="keyword" :category="category" @handleSelect="handleSelect" @handleSearch="handleSearch"/>
     </div>
     <div class="qna_board_list">
       <button type="button" class="qna_borad_list_btn" @click="handleClickLeft">
@@ -36,7 +36,7 @@
       </button>
       <div class="qna_board_contents">
         <Content 
-          v-for="info in infoList.slice(infoIdx*showCnt,infoIdx*showCnt+showCnt)"
+          v-for="info in keywordList.slice(infoIdx*showCnt,infoIdx*showCnt+showCnt)"
           :id="info.infoId"
           :key="info.infoId"
           :content="info"
@@ -51,14 +51,17 @@
 </template>
 
 <script>
-import Content from '../../components/Board/Content.vue';
-import CreateEditor from '../../components/Board/CreateEditor.vue';
+import Content from './Content.vue';
+import CreateEditor from './CreateEditor.vue';
 import http from '../../util/http-common.js';
+import * as Hangul from 'hangul-js';
+import Search from './Search.vue';
 export default {
   name:'InfoBoard',
   components:{
     Content,
     CreateEditor,
+    Search,
   },
   data : ()=>{
     return{
@@ -67,6 +70,8 @@ export default {
       infoIdx:0,
       showCnt:0,
       infoList: [],
+      keyword: "",
+      category:"title",
     }
   },
   created(){
@@ -84,6 +89,20 @@ export default {
     .then((res)=>{
       if(res.status===200){
         this.infoList=res.data.data.reverse();
+        this.infoList.forEach(info => {
+          const dis1 = Hangul.disassemble(info.infoTitle, true);
+          const dis2 = Hangul.disassemble(info.user.userNickname, true);
+          const cho1 = dis1.reduce(function (prev, elem) {
+                elem = elem[0] ? elem[0] : elem;
+                return prev + elem;
+            }, "");
+          const cho2 = dis2.reduce(function (prev, elem) {
+                elem = elem[0] ? elem[0] : elem;
+                return prev + elem;
+            }, "");
+          info['infoTitleCho']=cho1;
+          info['infoUserCho']=cho2;
+        })
       } else{
         console.error(res.data);
       }
@@ -97,7 +116,32 @@ export default {
   },
   mounted(){
   },
+  computed:{
+    keywordList(){
+      console.log(this.keyword,this.category);
+      if(this.keyword==="")
+        return this.infoList;
+      const search1 = this.keyword;
+      const search2 = Hangul.disassemble(search1).join("");
+      if(this.category==="title"){
+        console.log('title', search1, search2);
+        return this.infoList.filter(info => 
+          info.infoTitle.includes(search1) || info.infoTitleCho.includes(search2)
+        )
+      }
+      console.log('name', search1, search2);
+      return this.infoList.filter(info => 
+        info.user.userNickname.includes(search1) || info.infoUserCho.includes(search2)
+      )
+    }
+  },
   methods:{
+    handleSearch(val){
+      this.keyword=val;
+    },
+    handleSelect(val){
+      this.category=val;
+    },
     handleClickContent(id){
       this.$router.push({
         name:"InfoDetail",
@@ -221,5 +265,11 @@ export default {
   background-color: var(--color-mainBlue);
   font-family: "AppleSDGothicNeoB";
   color: var(--color-white) !important;
+}
+@media screen and (max-width:800px) {
+  .qna_board_nav{
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>
