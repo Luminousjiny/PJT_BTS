@@ -33,6 +33,7 @@ import joinUserCheck from "../components/Join/Join_2.vue";
 import CamSetting from "../views/MyPage/CamSetting.vue";
 import Award from "../views/Award/Award.vue";
 import Unity from "../views/Unity/Unity.vue";
+import GuestBook from "../views/GuestBook/GuestBook.vue";
 
 Vue.use(VueRouter);
 
@@ -225,6 +226,11 @@ const routes = [
     path : "/unityGame",
     name : "Unity",
     component : Unity,
+  },
+  {
+    path : "/gb",
+    name : "GuestBook",
+    component : GuestBook,
   }
 ];
 
