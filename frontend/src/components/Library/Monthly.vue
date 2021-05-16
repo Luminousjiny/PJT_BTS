@@ -214,12 +214,14 @@ export default {
                 monContent : this.add.name,
                 monColor : this.add.colorId,
             }
-            http.post('/v1/monthly', event)
-            .then(()=>{
-                const start = { month : event.monMonth, year : event.monYear};
-                this.getEventList({ start });
-                this.closeAdd();
-            });
+            if(event.monStartDate != '' && event.monEndDate != '' && monContent != ''){
+                http.post('/v1/monthly', event)
+                .then(()=>{
+                    const start = { month : event.monMonth, year : event.monYear};
+                    this.getEventList({ start });
+                    this.closeAdd();
+                });
+            }
         },
         closeAdd(){
             this.activeAdd = false;
