@@ -61,7 +61,7 @@ export default {
             if(start.month < end.month){
                 
             }
-            http.get(`/api/v1/weekly/${this.userId}/${weekYear}/${weekMonth}/${startDate}/${endDate}`).then(({data})=>{
+            http.get(`/v1/weekly/${this.userId}/${weekYear}/${weekMonth}/${startDate}/${endDate}`).then(({data})=>{
                 this.eventList = data.data;
                 console.log(this.eventList);
                 const events = [];
