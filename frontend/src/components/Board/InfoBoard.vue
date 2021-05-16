@@ -124,12 +124,10 @@ export default {
       const search1 = this.keyword;
       const search2 = Hangul.disassemble(search1).join("");
       if(this.category==="title"){
-        console.log('title', search1, search2);
         return this.infoList.filter(info => 
           info.infoTitle.includes(search1) || info.infoTitleCho.includes(search2)
         )
       }
-      console.log('name', search1, search2);
       return this.infoList.filter(info => 
         info.user.userNickname.includes(search1) || info.infoUserCho.includes(search2)
       )
