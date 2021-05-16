@@ -6,7 +6,7 @@ import Camera from "../components/Login/Camere.vue";
 import Join from "../views/Join/Join.vue";
 import FindPw from "../views/FindPw/FindPw.vue";
 import MyPage from "../views/MyPage/MyPage.vue";
-import Change from "../components/FindPw/Change.vue";
+import ChangePw from "../components/FindPw/Change.vue";
 import Confirm from "../components/FindPw/Confirm.vue";
 import Computer from "../views/Computer/Computer.vue";
 import Board from "../views/Board/Board.vue";
@@ -80,9 +80,9 @@ const routes = [
         component: Confirm,
       },
       {
-        path: "change",
-        name: "Change",
-        component: Change,
+        path: "changePw",
+        name: "ChangePw",
+        component: ChangePw,
       },
     ],
   },

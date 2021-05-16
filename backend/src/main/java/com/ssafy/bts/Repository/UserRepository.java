@@ -10,6 +10,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserId(String userId);
     User findByUserIdAndUserPhone(String userId, String userPhone);
     User findByUserIdAndUserPw(String userId, String userPw);
+    User findByUserPhone(String userPhone);
 
     @Query("select u from User u order by u.userPoint desc")
     List<User> findAwardList();

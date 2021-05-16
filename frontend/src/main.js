@@ -13,6 +13,13 @@ Vue.config.productionTip = false;
 import MMonacoEditor from 'vue-m-monaco-editor';
 Vue.use(MMonacoEditor);
 
+import VueCookies from "vue-cookies";
+//쿠키를 사용한다.
+Vue.use(VueCookies);
+
+//쿠키의 만료일은 7일이다. (글로벌 세팅)
+Vue.$cookies.config("7d");
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrashAlt, faCalendarAlt} from '@fortawesome/free-regular-svg-icons'
