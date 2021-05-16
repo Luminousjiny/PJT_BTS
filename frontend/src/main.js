@@ -12,6 +12,8 @@ Vue.use(Vuetify);
 Vue.config.productionTip = false;
 import MMonacoEditor from 'vue-m-monaco-editor';
 Vue.use(MMonacoEditor);
+import VueLoading from 'vue-loading-template';
+Vue.use(VueLoading);
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
