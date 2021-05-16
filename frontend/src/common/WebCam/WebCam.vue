@@ -22,7 +22,8 @@ import Camera from '@/components/WebCam/Camera';
 import Chat from '@/components/WebCam/Chat';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://k4b107.p.ssafy.io:4443";
 const OPENVIDU_SERVER_SECRET = "BACK_TO_SCHOOL";
 export default {
     name : "Webcam",
@@ -79,10 +80,10 @@ export default {
     methods: {
       joinSession() {
         this.data.OV = new OpenVidu();
+        console.log(this.data.OV);
         // this.OV.setAdvancedConfiguration({
         //   screenShareChromeExtension: "https://chrome.google.com/webstore/detail/YOUR_EXTENSION_NAME/YOUR_EXTENSION_ID",
         // });
-
         this.data.session = this.data.OV.initSession();
 
         this.data.session.on("streamCreated", ({ stream }) => {

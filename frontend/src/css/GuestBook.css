@@ -1,0 +1,79 @@
+@import 'style.css';
+
+.guestbook {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-guestbook);
+  font-family: AppleSDGothicNeoB;
+}
+
+.guestbook .h1 {
+  padding-bottom: 3vh;
+  font-size: var(--font-size-35);
+  font-family: AppleSDGothicNeoB;
+  z-index: 999;
+}
+
+.gb_area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.guestbook .gb_book {
+  width: 833px;
+  height: 537px;
+  background-image: url('../../public/Image/gb_note.png');
+  background-size: cover;
+}
+
+.gb_ul {
+  float: left;
+  padding: 2.3rem 0 0 4rem;
+  list-style: none;
+  font-size: var(--font-size-16);
+  font-family: AppleSDGothicNeoM;
+  border-spacing: 0 2.1vh;
+}
+
+.left_btn {
+  padding-right: 2vw;
+  cursor: pointer;
+}
+
+.right_btn {
+  padding-left: 2vw;
+  cursor: pointer;
+}
+
+.user_id {
+  padding-right: 1vw;
+}
+
+.user_nickname {
+  padding-right: 2vw;
+}
+
+.ul2 {
+  padding-left: 7rem;
+}
+
+.pagenums {
+  list-style: none;
+}
+
+.pagenums li {
+  float: left;
+  padding-top: 2vh;
+  padding-right: 1vw;
+  cursor: pointer;
+}
+
+.pagenums li:first-child {
+  color: blue;
+}
