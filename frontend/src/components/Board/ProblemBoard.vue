@@ -28,7 +28,7 @@
           </div>
         </div>
       </Modal>
-      <div class="code_board_search">검색</div>
+      <Search :keyword="keyword" :category="category" @handleSelect="handleSelect" @handleSearch="handleSearch"/>
     </div>
     <div class="code_board_list">
       <button type="button" class="code_borad_list_btn" @click="handleClickLeft">
@@ -36,7 +36,7 @@
       </button>
       <div class="code_board_contents">
         <Content 
-          v-for="pro in proList.slice(proIdx*showCnt,proIdx*showCnt+showCnt)"
+          v-for="pro in keywordList.slice(proIdx*showCnt,proIdx*showCnt+showCnt)"
           :id="pro.proId"
           :key="pro.proId"
           :content="pro"
@@ -54,11 +54,14 @@
 import Content from './Content.vue';
 import CreateProblem from './CreateProblem.vue';
 import http from '../../util/http-common.js';
+import * as Hangul from 'hangul-js';
+import Search from './Search.vue';
 export default {
   name:'ProblemBoard',
   components:{
     Content,
     CreateProblem,
+    Search
   },
   data : ()=>{
     return{
@@ -67,6 +70,8 @@ export default {
       proIdx:0,
       showCnt:0,
       proList: [],
+      keyword: "",
+      category:"title",      
     }
   },
   created(){
@@ -84,6 +89,20 @@ export default {
     .then((res)=>{
       if(res.status===200){
         this.proList=res.data.data.reverse();
+        this.proList.forEach(pro => {
+          const dis1 = Hangul.disassemble(pro.proTitle, true);
+          const dis2 = Hangul.disassemble(pro.user.userNickname, true);
+          const cho1 = dis1.reduce(function (prev, elem) {
+                elem = elem[0] ? elem[0] : elem;
+                return prev + elem;
+            }, "");
+          const cho2 = dis2.reduce(function (prev, elem) {
+                elem = elem[0] ? elem[0] : elem;
+                return prev + elem;
+            }, "");
+          pro['proTitleCho']=cho1;
+          pro['proUserCho']=cho2;
+        })
       }
     })
     .catch((err)=>{
@@ -95,7 +114,29 @@ export default {
   },
   mounted(){
   },
+  computed:{
+    keywordList(){
+      if(this.keyword==="")
+        return this.proList;
+      const search1 = this.keyword;
+      const search2 = Hangul.disassemble(search1).join("");
+      if(this.category==="title"){
+        return this.proList.filter(pro => 
+          pro.proTitle.includes(search1) || pro.proTitleCho.includes(search2)
+        )
+      }
+      return this.proList.filter(pro => 
+        pro.user.userNickname.includes(search1) || pro.proUserCho.includes(search2)
+      )
+    }
+  },  
   methods:{
+    handleSearch(val){
+      this.keyword=val;
+    },
+    handleSelect(val){
+      this.category=val;
+    },    
     handleClickContent(id,content){
       this.$router.push({
         name:"ProblemDetail",
