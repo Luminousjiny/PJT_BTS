@@ -94,7 +94,7 @@ export default {
 
       // 가입된 정보가 있다면 막기
       http
-      .get(`api/v1/user/phone/${this.user.userPhone}`)
+      .get(`v1/user/phone/${this.user.userPhone}`)
       .then((res) => {
         if(res.data.status === "success"){
           Swal.fire({
@@ -111,7 +111,7 @@ export default {
             }
 
           http
-          .post("api/v1/auth", JSON.stringify(phone))
+          .post("v1/auth", JSON.stringify(phone))
           .then((res) => {
             if(res.data.status === "success"){
               this.checkPhone = true;
@@ -164,13 +164,13 @@ export default {
 
       // 인증번호 확인
       http
-      .get(`api/v1/auth/${this.user.userPhone}/${this.authNumber}`)
+      .get(`v1/auth/${this.user.userPhone}/${this.authNumber}`)
       .then((res) => {
         if(res.data.status === "success"){
           if(res.data.data == "true"){
             // 회원가입 완료하기
             http
-            .post("api/v1/user/join", JSON.stringify(this.user))
+            .post("v1/user/join", JSON.stringify(this.user))
             .then((res) => {
               if(res.data.status === "success"){
                 Swal.fire({

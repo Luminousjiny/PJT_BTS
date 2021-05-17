@@ -1,10 +1,5 @@
 server:
   port: 8080
-  ssl:
-    enable: true
-    key-store: classpath:cert_key.p12
-    key-store-type: PKCS12
-    key-store-password:
   servlet:
     context-path: /api
 spring:
@@ -40,7 +35,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 --- # AWS S3
 cloud:
   aws:

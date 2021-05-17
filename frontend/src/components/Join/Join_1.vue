@@ -105,7 +105,7 @@ export default {
       }
 
       http
-      .get(`api/v1/user/check/${this.id}`)
+      .get(`v1/user/check/${this.id}`)
       .then((res) => {
         const idResult = res.data.data;
          if(idResult == true){

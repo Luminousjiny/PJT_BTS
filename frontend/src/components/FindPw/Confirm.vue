@@ -89,7 +89,7 @@ export default {
 
       // 가입된 정보 찾기
       http
-      .get(`api/v1/user/${this.id}/${this.userPhone}`)
+      .get(`v1/user/${this.id}/${this.userPhone}`)
       .then((res) => {
         if(res.data.status === "success"){ // 가입된 유저가 있으면
           const phone = { // 인증번호 전송
@@ -98,7 +98,7 @@ export default {
             }
           // 인증번호 전송
           http
-          .post("api/v1/auth", JSON.stringify(phone))
+          .post("v1/auth", JSON.stringify(phone))
           .then((res) => {
             if(res.data.status === "success"){
               this.checkPhone = true;
@@ -138,7 +138,7 @@ export default {
     next(){
        // 인증번호 확인
       http
-      .get(`api/v1/auth/${this.userPhone}/${this.authNumber}`)
+      .get(`v1/auth/${this.userPhone}/${this.authNumber}`)
       .then((res) => {
         if(res.data.status === "success"){
           if(res.data.data == "true"){
