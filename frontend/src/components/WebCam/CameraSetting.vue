@@ -1,0 +1,231 @@
+
+<template>
+  <!--배경-->
+  <div class="camSetting">
+    <!--가운데 내용-->
+    <div class="camSetting_content">
+      <div class="content_inner">
+        <p class="h">마이페이지</p>
+        <p class="p">카메라 환경설정을 해주세요</p>
+        <div class="boxes">
+          <div class="left_box">
+            <user-video id="preview-camera" class="publisher flex-item" :stream-manager="publisher"></user-video>
+          </div>
+          <div class="right_box">
+            <ul class="box_ul">
+              <li>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="1">
+                      <i class="fas fa-video icon fa-lg"></i>
+                    </v-col>
+                    <v-col cols="12" sm="11">
+                      <v-select
+                        v-model="selectWebCam"
+                        :items="webcam"
+                        label="카메라 설정"
+                        item-text="label"
+                        item-value="deviceId"
+                        filled
+                        @change="changeCamera"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </li>
+              <li>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="1">
+                      <i class="fas fa-microphone icon fa-lg"></i>
+                    </v-col>
+                    <v-col cols="12" sm="11">
+                      <v-select
+                        v-model="selectAudio"
+                        :items="mic"
+                        label="마이크 설정"
+                        item-text="label"
+                        item-value="deviceId"
+                        filled
+                        @change="changeAudio"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </li>
+              <li>
+                <v-container>
+                  <div class="device_btn"><v-icon @click="findDevices">fas fa-sync-alt</v-icon></div>
+                </v-container>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <v-btn class="modify_btn" rounded color="#04338C" dark @click="changeSetting">변경 완료</v-btn>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+import { OpenVidu } from "openvidu-browser";
+import UserVideo from "@/components/WebCam/UserVideo";
+const OPENVIDU_SERVER_URL = "https://k4b107.p.ssafy.io:4443";
+const OPENVIDU_SERVER_SECRET = "BACK_TO_SCHOOL";
+export default {
+  name: "CameraSetting",
+  components : {
+    UserVideo,
+  },
+  data() {
+    return {
+      OV : undefined,
+      roomName : 'setting',
+      session : undefined,
+      userName : 'dovvn',
+      publisher : undefined,
+      webcam: [],
+      mic: [],
+      selectWebCam : '',
+      selectAudio : '',
+      setting: {
+        audioSource: undefined,
+        videoSource: undefined,
+        publishAudio: false,
+        publishVideo: false,
+        resolution: "640x480",
+        frameRate: 30,
+        insertMode: "APPEND",
+        mirror: false,
+      },
+    };
+  },
+  created(){
+    this.joinSession();
+  },
+  destroyed(){
+    this.leaveSession();
+  },
+  methods: {
+    changeSetting(){
+      // 설정 변경
+      this.leaveSession();
+    },
+    findDevices(){
+      this.OV.getDevices().then(devices => {
+        let videoDevices = devices.filter(device => device.kind === 'videoinput');
+        let audioDevices = devices.filter(device => device.kind === 'audioinput');
+
+        this.webcam = videoDevices;
+        this.mic = audioDevices;
+        console.log(videoDevices);
+        console.log(audioDevices);
+      });
+    },
+    changeCamera(){
+      this.publisher.stream.outboundStreamOpts.publisherProperties.videoSource = this.selectWebCam;
+      this.publisher.publishVideo(true);
+      console.log("change camera =>",this.publisher);
+    },
+    changeAudio(){
+      this.publisher.stream.outboundStreamOpts.publisherProperties.audioSource = this.selectAudio;
+      this.publisher.publishAudio(true);
+      console.log("change audio =>",this.publisher);
+    },
+    joinSession() {
+      this.OV = new OpenVidu();
+      this.session = this.OV.initSession();
+
+      this.getToken(this.roomName).then((token) => {
+        this.session
+          .connect(token, { userName: this.userName })
+          .then(() => {
+            this.findDevices();
+            let publisher = this.OV.initPublisher(undefined, this.setting);
+            this.publisher = publisher;
+
+            this.session.publish(this.publisher);
+            console.log(this.publisher);
+          })
+          .catch((error) => {
+            console.log(
+              "There was an error connecting to the session:",
+              error.code,
+              error.message
+            );
+          });
+      });
+    },
+    leaveSession() {
+      if (this.session) this.session.disconnect();
+      this.session = undefined;
+      this.publisher = undefined;
+      this.OV = undefined;
+    },
+    getToken(roomName) {
+      return this.createSession(roomName).then((sessionId) =>
+        this.createToken(sessionId)
+      );
+    },
+    createSession(sessionId) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
+            JSON.stringify({
+              customSessionId: sessionId,
+            }),
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET,
+              },
+            }
+          )
+          .then((response) => response.data)
+          .then((data) => resolve(data.id))
+          .catch((error) => {
+            if (error.response.status === 409) {
+              resolve(sessionId);
+            } else {
+              console.warn(
+                `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`
+              );
+              if (
+                window.confirm(
+                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
+                )
+              ) {
+                location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
+              }
+              reject(error.response);
+            }
+          });
+      });
+    },
+    createToken(sessionId) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
+            {},
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET,
+              },
+            }
+          )
+          .then((response) => response.data)
+          .then((data) => resolve(data.token))
+          .catch((error) => reject(error.response));
+      });
+    },
+  },
+};
+</script>
+
+
+<style scoped src="../../css/CamSetting.css">
+</style>

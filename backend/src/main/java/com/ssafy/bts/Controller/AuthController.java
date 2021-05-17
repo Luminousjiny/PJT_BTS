@@ -62,9 +62,9 @@ public class AuthController {
             if(findSms.size() > 0){ // 데이터가 있음
                 boolean isCheck = authService.checkNum(smsCheckNum);
                 if(isCheck){
-                    response = new BaseResponse("success", true); // 일치한 번호 있음
+                    response = new BaseResponse("success", "true"); // 일치한 번호 있음
                 }else{
-                    response = new BaseResponse("success", false); // 일치한 번호 없음
+                    response = new BaseResponse("success", "false"); // 일치한 번호 없음
                 }
             }else{
                 response = new BaseResponse("success", "데이터 없음");

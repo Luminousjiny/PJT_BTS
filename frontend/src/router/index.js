@@ -6,7 +6,7 @@ import Camera from "../components/Login/Camere.vue";
 import Join from "../views/Join/Join.vue";
 import FindPw from "../views/FindPw/FindPw.vue";
 import MyPage from "../views/MyPage/MyPage.vue";
-import Change from "../components/FindPw/Change.vue";
+import ChangePw from "../components/FindPw/Change.vue";
 import Confirm from "../components/FindPw/Confirm.vue";
 import Computer from "../views/Computer/Computer.vue";
 import Board from "../views/Board/Board.vue";
@@ -23,8 +23,6 @@ import Cook from "../views/Cook/Cook.vue";
 import Library from "../views/Library/Library.vue";
 import Calendar from "../components/Library/Calendar.vue";
 import Youtube from "../components/Library/Youtube.vue";
-import Monthly from "../components/Library/Monthly.vue";
-import Weekly from "../components/Library/Weekly.vue";
 import Rest from "../views/Rest/Rest.vue";
 import Play from "../views/Play/Play.vue";
 import Office from "../views/Office/Office.vue";
@@ -83,9 +81,9 @@ const routes = [
         component: Confirm,
       },
       {
-        path: "change",
-        name: "Change",
-        component: Change,
+        path: "changePw",
+        name: "ChangePw",
+        component: ChangePw,
       },
     ],
   },
@@ -187,18 +185,6 @@ const routes = [
         path: "calendar",
         name: "Calendar",
         component: Calendar,
-        children: [
-          {
-            path: "monthly",
-            name: "Monthly",
-            component: Monthly,
-          },
-          {
-            path: "",
-            name: "Weekly",
-            component: Weekly,
-          },
-        ],
       },
     ],
   },

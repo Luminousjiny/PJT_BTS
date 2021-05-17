@@ -104,6 +104,15 @@ public class UserService {
     }
 
     /**
+     * 하나의 번호로 하나의 유저만 가입
+     * 핸드폰번호로 유저찾기
+     */
+    @Transactional
+    public User findByUserPhone(String userPhone) {
+        return userRepository.findByUserPhone(userPhone);
+    }
+
+    /**
      * 로그인 시 , 아이디 비밀번호로 유저 찾기
      */
     public User findByUserIdAndUserPw(String userId, String userPw) {
@@ -141,4 +150,5 @@ public class UserService {
         }
         return top10List;
     }
+
 }
