@@ -149,6 +149,7 @@
     font-family: 'AppleSDGothicNeoSB';
     font-weight: var(--weight-regular);
     color : var(--color-white);
+    text-align: center;
 }
 .inactive-user-video{
     display: inline-block;
