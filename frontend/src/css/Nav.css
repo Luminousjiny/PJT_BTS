@@ -71,7 +71,8 @@
     opacity: 1;
 }
 #menus li{
-    margin : 5px 0px;
+    margin : 5px 0px; 
+    list-style:none;
     cursor: pointer;
 }
 #menus li button{

@@ -83,7 +83,6 @@ export default {
     return {
       showMenu: false,
       menus: [
-        { title: "캐릭터 변경" },
         { title: "마이페이지" },
         { title: "로그아웃" },
       ],
@@ -113,7 +112,7 @@ export default {
 
     },
     handleMypage(){
-
+      this.$router.push("/mypage");
     },
     handleLogout(){
       this.$store.commit('logout');
@@ -123,7 +122,5 @@ export default {
 };
 </script>
 
-<style scoped>
-@import "../../css/style.css";
-@import "../../css/Nav.css";
+<style scoped src="../../css/Nav.css">
 </style>
