@@ -212,7 +212,8 @@ Jenkins : 9090
 > 1. 서버 접속 : ssh -i K4B107T.pem ubuntu@k4b107.p.ssafy.io        
 > 2. 프론트 실행 : sudo service nginx start     
 > 3. 폴더 이동 : cd /var/www/html     
-> 4. 백앤드 실행 : sudo java -jar bts-0.0.1-SNAPSHOT.jar     
+> 4. 백앤드 실행 : sudo java -jar bts-0.0.1-SNAPSHOT.jar   
+> 5. 페이지 접속 : https://k4b107.p.ssafy.io:8000/ 
 
 <br/><br/>
 
