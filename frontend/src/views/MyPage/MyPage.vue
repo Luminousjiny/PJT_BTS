@@ -8,7 +8,7 @@
         <div class="top_leftBox">
           <p class="left_h">마이페이지</p>
           <p class="left_p">정보를 변경해주세요</p>
-          <p class="left_name">장국 님</p>
+          <p class="left_name">{{user.userId}}님</p>
           <div class="left_img">
             <img
               class="user_img"
@@ -21,7 +21,7 @@
             <li>삭제</li>
           </ul>
           <p class="mid_header">닉네임</p>
-          <v-text-field class="input" single-line></v-text-field>
+          <v-text-field class="input" v-model="user.userNickname" single-line></v-text-field>
         </div>
         <div class="top_rightBox">
           <router-link class="goCamera" to="/camSetting"
@@ -29,10 +29,10 @@
           >
 
           <p class="mid_header">비밀번호</p>
-          <v-text-field class="input" single-line></v-text-field>
+          <v-text-field class="input" type="password" single-line></v-text-field>
 
           <p class="mid_header">비밀번호 확인</p>
-          <v-text-field class="input" single-line></v-text-field>
+          <v-text-field class="input" type="password" single-line></v-text-field>
 
           <p class="mid_header">핸드폰번호</p>
           <v-row>
@@ -65,7 +65,7 @@
       </div>
       <!--완료-->
       <div class="content_btm">
-        <v-btn class="modify_btn" rounded color="#04338C" dark>완료</v-btn>
+        <v-btn class="modify_btn" @click="update()" rounded color="#04338C" dark>완료</v-btn>
         <a href="#" class="goDelete">탈퇴하기</a>
       </div>
     </div>
@@ -78,7 +78,27 @@ export default {
   data() {
     return {
       newAgency: ["SKT", "KT", "LG U+"],
+      user: {
+        userId: 'hello',
+        userImg: '',
+        userNickname:'다우니',
+        userPhone:'01071231815',
+        userPw:'wjdekdns123',
+      }
     };
+  },
+  created(){
+    //vuex부분
+
+
+  },
+  methods:{
+    update:function(){
+      //수정
+    },
+    out:function(){
+
+    },
   },
   components: {},
 };
