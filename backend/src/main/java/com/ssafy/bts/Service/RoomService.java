@@ -1,7 +1,5 @@
 package com.ssafy.bts.Service;
 
-import com.ssafy.bts.Controller.Request.RoomRequest;
-import com.ssafy.bts.Domain.Qna.Qna;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +32,16 @@ public class RoomService {
     }
 
     /**
-     * 방 검색
+     * 학교이름으로 객체 찾기
      *
      * @return
      */
-    public Room findByRoomNumber(int roomNumber) {
-        return roomRepository.findByRoomNumber(roomNumber);
+    public Room findByRoomName(String roomName) {
+        if(roomRepository.findByRoomName(roomName) == null){
+            return null;
+        }else{
+            return roomRepository.findByRoomName(roomName);
+        }
     }
 
     /**
@@ -47,12 +49,12 @@ public class RoomService {
      *
      * @return
      */
-    public void deleteRoom(int roomId) {
-        Optional<Room> deleteRoom = Optional.ofNullable(roomRepository.findByRoomId(roomId));
-        if(deleteRoom.isPresent()){
-            roomRepository.delete(deleteRoom.get());
-        }else{
-            throw new IllegalStateException("존재하지 않는 방 입니다.");
-        }
-    }
+//    public void deleteRoom(int roomId) {
+//        Optional<Room> deleteRoom = Optional.ofNullable(roomRepository.findByRoomId(roomId));
+//        if(deleteRoom.isPresent()){
+//            roomRepository.delete(deleteRoom.get());
+//        }else{
+//            throw new IllegalStateException("존재하지 않는 방 입니다.");
+//        }
+//    }
 }

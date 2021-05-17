@@ -1,14 +1,11 @@
 package com.ssafy.bts.Domain.Room;
 
-import com.ssafy.bts.Controller.Request.RoomRequest;
 import com.ssafy.bts.Domain.Coding.Code;
 import com.ssafy.bts.Domain.Coding.Problem;
 import com.ssafy.bts.Domain.Coding.Solve;
 import com.ssafy.bts.Domain.Comment.Comment;
 import com.ssafy.bts.Domain.Info.Info;
-import com.ssafy.bts.Domain.Monthly.Monthly;
 import com.ssafy.bts.Domain.Qna.Qna;
-import com.ssafy.bts.Domain.Weekly.Weekly;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +20,6 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomId;
-
-    @Column(nullable = false)
-    private int roomNumber;
 
     @Column(nullable = false)
     private String roomName;
@@ -48,10 +42,9 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<Solve> solves = new HashSet<>();
 
-    public static Room createRoom(RoomRequest roomRequest) {
+    public static Room createRoom(String schoolName) {
         Room roomInput = new Room();
-        roomInput.setRoomNumber(roomRequest.getRoomNumber());
-        roomInput.setRoomName(roomRequest.getRoomName());
+        roomInput.setRoomName(schoolName);
         return roomInput;
     }
 }
