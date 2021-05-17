@@ -1,6 +1,7 @@
 <template>
     <div id="library">
         <Nav/>
+        <stop-watch/>
         <div id="library-container">
             <router-view/>
         </div>
@@ -9,10 +10,12 @@
 
 <script>
 import Nav from "@/common/Nav/Nav"
+import StopWatch from '../../components/Library/StopWatch.vue'
 export default {
     name : 'Library',
     components : {
       Nav,
+      StopWatch,
     },
 }
 </script>
