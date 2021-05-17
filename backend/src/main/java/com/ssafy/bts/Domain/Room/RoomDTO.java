@@ -11,12 +11,10 @@ import javax.persistence.Column;
 @AllArgsConstructor
 public class RoomDTO {
     private int roomId;
-    private int roomNumber;
     private String roomName;
 
     public RoomDTO(Room room){
         this.roomId = room.getRoomId();
-        this.roomNumber = room.getRoomNumber();
         this.roomName = room.getRoomName();
     }
 }

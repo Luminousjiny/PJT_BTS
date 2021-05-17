@@ -24,9 +24,8 @@
             id="menus"
             :class="{ 'menu-inactive': !showMenu, 'menu-active': showMenu }"
           >
-            <li><p>캐릭터 변경</p></li>
-            <li><p>마이페이지</p></li>
-            <li><p>로그아웃</p></li>
+            <li><p @click="goMypage">마이페이지</p></li>
+            <li><p @click="logout" >로그아웃</p></li>
           </ul>
         </div>
       </div>
@@ -41,7 +40,6 @@ export default {
     return {
       showMenu: false,
       menus: [
-        { title: "캐릭터 변경" },
         { title: "마이페이지" },
         { title: "로그아웃" },
       ],
@@ -61,11 +59,16 @@ export default {
       console.log(this.showMenu);
       this.showMenu = !this.showMenu;
     },
+    goMypage(){
+        this.$router.push("/mypage");
+    },
+    logout(){
+      // Vuex 지우기 
+      this.$router.push("/");
+    }
   },
 };
 </script>
 
-<style scoped>
-@import "../../css/style.css";
-@import "../../css/Nav.css";
+<style scoped src="../../css/Nav.css">
 </style>
