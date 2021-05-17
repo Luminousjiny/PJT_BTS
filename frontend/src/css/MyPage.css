@@ -78,7 +78,6 @@ input::placeholder {
 .left_ul {
   list-style: none;
   padding-top: 6px;
-  padding-left: 7.8vw;
   height: 26px;
 }
 
@@ -87,7 +86,6 @@ input::placeholder {
 }
 
 .left_ul > li:first-child {
-  padding-right: 8px;
   font-size: var(--font-size-14);
   color: var(--color-mainBlue);
   font-family: 'AppleSDGothicNeoR';
