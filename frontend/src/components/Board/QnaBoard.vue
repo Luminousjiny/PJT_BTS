@@ -25,11 +25,11 @@
           </div>
         </div>
       </Modal>
-      <div class="qna__header__search">검색</div>    
+      <Search :keyword="keyword" :category="category" @handleSelect="handleSelect" @handleSearch="handleSearch"/>
     </div>
     <div class="qna__q__box">
       <Question
-        v-for="question in qnaList"
+        v-for="question in keywordList"
         :key="question.qnaId"
         :question="question"
         @handleClickQustion="handleClickQuestion"
@@ -41,19 +41,22 @@
 <script>
 import Question from './Question.vue'
 import http from '../../util/http-common.js';
-import CreateQuestion from '../../components/Board/CreateQuestion.vue';
 import CreateEditor from '../../components/Board/CreateEditor.vue';
+import * as Hangul from 'hangul-js';
+import Search from './Search.vue';
 export default {
   components: { 
     Question,
-    CreateQuestion,
     CreateEditor,
+    Search,    
   },
   name:'QnaBoard',
   data(){
     return{
       qnaList:[],
       showModal: false,
+      keyword: "",
+      category:"title",      
     }
   },
   created(){
@@ -61,13 +64,49 @@ export default {
     .then((res)=>{
       if(res.status===200){
         this.qnaList=res.data.data.reverse();
+        this.qnaList.forEach(qna => {
+          const dis1 = Hangul.disassemble(qna.qnaTitle, true);
+          const dis2 = Hangul.disassemble(qna.user.userNickname, true);
+          const cho1 = dis1.reduce(function (prev, elem) {
+                elem = elem[0] ? elem[0] : elem;
+                return prev + elem;
+            }, "");
+          const cho2 = dis2.reduce(function (prev, elem) {
+                elem = elem[0] ? elem[0] : elem;
+                return prev + elem;
+            }, "");
+          qna['qnaTitleCho']=cho1;
+          qna['qnaUserCho']=cho2;
+        })
       }
     })
     .catch((err)=>{
       console.error(err);
     })
   },
+  computed:{
+    keywordList(){
+      if(this.keyword==="")
+        return this.qnaList;
+      const search1 = this.keyword;
+      const search2 = Hangul.disassemble(search1).join("");
+      if(this.category==="title"){
+        return this.qnaList.filter(qna => 
+          qna.qnaTitle.includes(search1) || qna.qnaTitleCho.includes(search2)
+        )
+      }
+      return this.qnaList.filter(qna => 
+        qna.user.userNickname.includes(search1) || qna.qnaUserCho.includes(search2)
+      )
+    }
+  },  
   methods:{
+    handleSearch(val){
+      this.keyword=val;
+    },
+    handleSelect(val){
+      this.category=val;
+    },    
     handleClickQuestion(id){
       this.$router.push({
         name:'QnaDetail',

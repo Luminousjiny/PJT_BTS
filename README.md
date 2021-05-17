@@ -27,7 +27,8 @@
 > 개발 기간: 2021.04.12 ~ 2021.05.28 (약 7주)       
 
 ## 📑 문서 
-> [1️⃣SUB1_문서_1](https://www.notion.so/_SUB1-5fbe04ad315141db9f23d63805cd60dd)        
+> [1️⃣기획문서](https://www.notion.so/_SUB1-5fbe04ad315141db9f23d63805cd60dd)   
+> [2️⃣개발문서](https://www.notion.so/BTS_2-6fe1e0b0cc4949078da839c07f24dd55)     
 > 
 <br/>  
 <br/> 
@@ -195,6 +196,26 @@ gantt
 <br/>  
 <br/> 
 
+## 📑 실행방법     
+### ✔ 포트번호    
+
+```
+프론트 : 8000
+백 : 8080
+게임 : 8081
+DB : 3306
+Jenkins : 9090
+```
+<br/><br/>
+
+### ✔ 실행순서
+> 1. 서버 접속 : ssh -i K4B107T.pem ubuntu@k4b107.p.ssafy.io        
+> 2. 프론트 실행 : sudo service nginx start     
+> 3. 폴더 이동 : cd /var/www/html     
+> 4. 백앤드 실행 : sudo java -jar bts-0.0.1-SNAPSHOT.jar   
+> 5. 페이지 접속 : https://k4b107.p.ssafy.io:8000/ 
+
+<br/><br/>
 
 ## 📑 규칙     
 ### ✔ Branch 규칙  
@@ -203,7 +224,7 @@ develop - feature/기능명/fe or be
 ```
 
 
-<br/>
+<br/><br/><br/>
 
 ### ✔ Code Style
 | FrontEnd   | BackEnd |
@@ -244,19 +265,7 @@ develop - feature/기능명/fe or be
 
 
 <br/>
-
-### ✔ 포트번호    
-
-```
-프론트 : 8000
-백 : 8080
-게임 : 8081
-DB : 3306
-Jenkins : 9090
-```
-
-
-<br/><br/>
+<br/>
 
 
 
