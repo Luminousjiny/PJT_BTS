@@ -105,7 +105,7 @@ export default {
         userPw : this.password
       }
       http
-      .post("api/v1/user/pwd" , JSON.stringify(user))
+      .post("v1/user/pwd" , JSON.stringify(user))
       .then((res) => {
          if(res.data.status === "success"){
             Swal.fire({
