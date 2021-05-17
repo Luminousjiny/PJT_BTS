@@ -3,7 +3,7 @@
     <div id="webcam-title">
       <div id="school-title">
         <img src="@/../public/Image/school_icon.png" id="school-icon">
-        <p>{{data.roomName}}</p>
+        <p>{{schoolName}}</p>
       </div>
     </div>
     <div id="webcam-main">
@@ -91,6 +91,7 @@ export default {
   props :{
     data : Object,
     location : String,
+    schoolName : String,
   },
   computed : {
     setWidth40 : function(){

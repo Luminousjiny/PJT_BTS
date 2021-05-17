@@ -1,9 +1,23 @@
 <template>
   <div id="app" data-app>
-    <router-view />
+    <router-view v-on:showMap="showMap"/>
+    <UnityGame v-if="login"/>
   </div>
 </template>
-
+<script>
+import UnityGame from '@/components/Unity/UnityGame';
+export default {
+  name : "App",
+  components : {
+    UnityGame,
+  },
+  data() {
+    return {
+      login : true,
+    }
+  },
+}
+</script>
 <style>
 @import "./css/style.css";
 * {

@@ -1,15 +1,15 @@
 <template>
   <div id="webcam">
-    <div id="join" v-if="!data.session">
+    <!-- <div id="join" v-if="!data.session">
       <div id="join-form">
         <label>사용자 이름 : </label>
-        <input type="text" v-model="data.userName" required />
+        <input type="text" v-model="userName" required />
         <button @click="joinSession">입장</button>
       </div>
-    </div>
+    </div> -->
     <div id="session" v-if="data.session">
         <Chat :data="data" v-on:sendMessage="send"/>
-        <Camera :data="data" :location="location" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
+        <Camera :data="data" :location="location" :schoolName="schoolName" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ import { OpenVidu } from "openvidu-browser";
 import Nav from "@/common/Nav/Nav"
 import Camera from '@/components/WebCam/Camera';
 import Chat from '@/components/WebCam/Chat';
+import Inko from 'inko';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 // const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
@@ -42,7 +43,6 @@ export default {
           subscribers: [],
           participants : 1,
           roomName: "",
-          userName: "user1",
           setting: {
             audioSource: undefined,
             videoSource: undefined,
@@ -58,14 +58,21 @@ export default {
             active : false,
             screen : undefined,
           },
+          // userName: "user1",
         },
       }
     },
     props : {
       location : String,
+      schoolName : String,
+      userName : String,
     },
     created(){
-      this.data.roomName = this.location;
+      let inko = new Inko();
+      this.data.roomName = inko.ko2en(this.schoolName)+"-"+this.location;
+      // console.log(this.data.roomName);
+
+      this.joinSession();
     },
     destroyed(){
       this.data.session = undefined;
@@ -119,7 +126,7 @@ export default {
 
         this.getToken(this.data.roomName).then((token) => {
           this.data.session
-            .connect(token, { userName: this.data.userName })
+            .connect(token, { userName: this.userName })
             .then(() => {
               let publisher = this.data.OV.initPublisher(undefined, this.data.setting);
 
@@ -149,6 +156,7 @@ export default {
         this.data.OV = undefined;
         this.data.receiveMessage = [];
         window.removeEventListener("beforeunload", this.data.leaveSession);
+        this.$router.push({name : 'Unity'});
       },
       getToken(roomName) {
         return this.createSession(roomName).then((sessionId) =>

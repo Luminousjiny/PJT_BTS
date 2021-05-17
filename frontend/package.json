@@ -27,13 +27,12 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "hangul-js": "^0.2.6",
+    "inko": "^1.1.1",
     "lowlight": "^1.20.0",
     "openvidu-browser": "^2.17.0",
     "password-validator": "^5.1.1",
     "remixicon": "^2.5.0",
-
     "sweetalert2": "^11.0.5",
-
     "tiptap": "^1.32.2",
     "tiptap-extensions": "^1.35.2",
     "vue": "^2.6.11",

@@ -1,41 +1,90 @@
 <template>
     <div id="unity">
-        <unity
-            src = "/unity/Build/webGL.json"
-            width ="900"
-            height = "670"
-            unityLoader = "/unity/Build/UnityLoader.js"
-            ref = "hookInstance"
-        >
-        </unity>
-        <div id="data-name"></div>
-        <button @click="test">연동</button>
+        <Nav/>
+        <div id="unity-container">
+            <User :userName="userName"/>
+            <div id="unity-game-container">
+                <div id="game-container">
+                    <div id="unity-title">
+                        <div id="school-title">
+                            <img src="@/../public/Image/school_icon.png" id="school-icon">
+                            <p>{{schoolName}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
+
 <script>
-import Unity from 'vue-unity-webgl';
+import User from '@/components/Unity/User';
+import Nav from '@/common/Nav/Nav';
 export default {
+    name : "unity",
+    components : {
+        User,
+        Nav
+    },
     data() {
         return {
             userName : 'dovvn',
+            schoolName : '',
         }
     },
-    components : {Unity},
-    methods : {
-        test(){
-            let temp = "";
-            this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.userName);
-            setInterval(()=>{
-                if(document.getElementById('data-name').innerHTML != temp){
-                    temp = document.getElementById('data-name').innerHTML;
-                    if(temp == "guestbook"){
-                        this.$router.push('/library/calendar');
-                    }
-                    window.alert(temp);
-                }
-            },1000);
-
-        },
-    }
+    created(){
+        this.$emit('showMap');
+    },
 }
 </script>
+
+<style>
+#unity{
+    display: flex;
+    height : 100vh;
+    overflow: hidden;
+    flex-direction: column;
+}
+#unity-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    width : 80%;
+    height : 100%;
+    margin : 0 auto;
+    text-align: center;
+    flex : 1;
+}
+#unity-game-container{
+    width : 100%;
+}
+#unity-title{
+    width: 100%;
+    text-align: left;
+}
+#unity-title #school-title{
+    width: 90%;
+    margin: 30px auto 0px;
+}
+#unity-title #school-title p{
+    display: inline-block;
+    margin : 0px 0px 0px 10px;
+    font-size : var(--font-size-30);
+    font-family: 'AppleSDGothicNeoEB';
+    font-weight: var(--weight-regular);
+    vertical-align: bottom;
+}
+#school-icon{
+    display: inline-block;
+    height : 50px;
+    width : 50px;
+    vertical-align: middle;
+}
+#unity-main{
+    width: 100%;
+    flex-grow: 9;
+    flex-basis: 0;
+}
+</style>
