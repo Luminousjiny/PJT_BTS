@@ -1,14 +1,16 @@
 <template>
-    <div id="unity-game" :class="{'small-map' : !showMap}">
-        <unity
+    <div id="unity-game" :class="{'small-map' : !showMap}" @click="test">
+        <div id="game-container">
+            <unity
             src = "/unity/Build/webGL.json"
             unityLoader = "/unity/Build/UnityLoader.js"
-            :width = width
-            :height = height
+            width = '100%'
+            height = '100%'
             ref = "hookInstance"
-        >
-        </unity>
-        <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
+            >
+            </unity>
+            <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
+        </div>
         <div id="unity-school-name" hidden></div>
         <div id="unity-object-name" hidden></div>
     </div>
@@ -22,18 +24,13 @@ export default {
             userName : 'dovvn',
             objectName : '',
             schoolName : '',
-            width : '1000',
-            height : '750',
             linked : false,
-            // showMap : true,
         }
     },
     components : {Unity},
     computed : {
         showMap : function(){
             if(this.$route.name == 'Unity'){
-                this.width = '1000';
-                this.height = '750';
                 return true;
             }
             else false;
@@ -43,62 +40,75 @@ export default {
         getUnityHook(){
             this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.userName);
             this.linked = true;
-            this.objectName = "";
             setInterval(()=>{
+                this.objectName = "";
                 if(document.getElementById('unity-object-name').innerHTML != this.objectName){
                     this.objectName = document.getElementById('unity-object-name').innerHTML;
-                    this.width = '150';
-                    this.height = '100';
+                    // this.width = '150';
+                    // this.height = '100';
                     this.showMap = false;
                     switch (this.objectName) {
-                        case "information": // 정보공유/코드공유
+                        case "blackboard": // 정보공유/코드공유 - information
                             this.$router.push({name : 'InfoBoard'});
                             break;
-                        case "qna": // Q&A게시판
-                            this.$router.push('/board/qna');
+                        case "noticeboard": // Q&A게시판 - qna
+                            this.$router.push({name : 'QnaBoard'});
                             break;
-                        case "computer": // 컴퓨터실 웹캠
-                            this.$router.push({name : 'Computer', params : {schoolName : this.schoolName}});
+                        case "desk": // 컴퓨터실 웹캠 - computer
+                            this.$router.push({name : 'Computer', params : {schoolName : this.schoolName, userName : this.userName}});
                             break;
-                        case "rest": // 휴게실 웹캠
-                            this.$router.push({name : 'Rest', params : {schoolName : this.schoolName}});
+                        case "vendingmachine": // 휴게실 웹캠 - rest
+                            this.$router.push({name : 'Rest', params : {schoolName : this.schoolName, userName : this.userName}});
                             break;
-                        case "cook": // 급식실 웹캠
-                            this.$router.push({name : 'Cook', params : {schoolName : this.schoolName}});
+                        case "table": // 급식실 웹캠 - cook
+                            this.$router.push({name : 'Cook', params : {schoolName : this.schoolName, userName : this.userName}});
                             break;
                         case "calendar": // 공부 플래너
-                            this.$router.push('/library/calendar');
+                            this.$router.push({name : 'Calendar'});
                             break;
-                        case "youtube": // 쓴소리 영상
-                            this.$router.push('/library/youtube');
+                        case "advice": // 쓴소리 영상 - youtube
+                            this.$router.push({name : 'Youtube'});
                             break;
-                        case "questbook":
-                            this.$router.push('/gb');
+                        case "guestbook":
+                            this.$router.push({name : 'GuestBook'});
                             break;
-                        case "desk":
-                            this.$router.push({name : 'Computer', params : {schoolName : this.schoolName, userName : this.userName}});
+                        case "award":
+                            this.$router.push({name : 'Award'});
                             break;
                         default:
                             break;
                     }
                 }else if(document.getElementById('unity-school-name').innerHTML != this.schoolName){
                     this.schoolName = document.getElementById('unity-school-name').innerHTML;
+                    //get 해서 방번호 저장하기
                 }
             },1000);
         },
+        test(){
+            if(!this.showMap){
+                this.showMap = true;
+                this.$router.push({name : "Unity"});
+            }
+        }
     }
 }
 </script>
 <style scoped>
 #unity-game{
     position: absolute;
-    top: 20vh;
-    left: 35vw;
-    overflow: hidden;
+    right: 15%;
+    bottom: 0;
+    width : 80%;
+}
+#game-container{
+    width: 100%;
 }
 .small-map{
     top: 85vh!important;
     left: 90vw!important;
+    width : 10%;
+    height: 10%;
+    cursor: pointer;
 }
 #link-btn{
     position: absolute;
