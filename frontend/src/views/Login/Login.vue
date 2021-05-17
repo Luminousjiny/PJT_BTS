@@ -23,6 +23,7 @@
             <v-text-field
               id="user-pw"
               v-model="password"
+              type=password
               class="login_input_c"
               placeholder="8자~11자입니다. "
               single-line
@@ -49,7 +50,6 @@
 import http from "@/util/http-common";
 import Swal from 'sweetalert2'
 import PV from "password-validator";
-// import VueCookies from 'vue-cookies'
 
 export default {
   name: "Login",
@@ -73,6 +73,11 @@ export default {
       .digits()
       .has()
       .letters();
+    
+    if(this.$cookie.get('rememberId') != undefined){
+      this.id = this.$cookie.get('rememberId');
+      this.checked = true;
+    }
   },
   computed: {
     classObject: function(){
@@ -80,6 +85,7 @@ export default {
         return "#04338C";
       return  "#6482B9";
     },
+
   },
   methods: {
     onSubmit(event){
@@ -104,16 +110,21 @@ export default {
         return;
       }
 
+      if(this.checked){
+        this.$cookie.set('rememberId', this.id , 1);
+      }else{
+        this.$cookie.delete('rememberId');
+      }
+
       const user = {
         userId: this.id,
         userPw: this.password
       }
 
       http
-      .post("api/v1/login", JSON.stringify(user))
+      .post("v1/login", JSON.stringify(user))
       .then((res) => {
          const token = res.data["auth_token"];
-         console.log("토큰 : "+token);
          if(token){
             this.$router.push("/computer"); // 경로 수정 ✅ 
           }

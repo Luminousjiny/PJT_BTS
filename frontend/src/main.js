@@ -15,12 +15,9 @@ Vue.use(MMonacoEditor);
 import VueLoading from 'vue-loading-template';
 Vue.use(VueLoading);
 
-import VueCookies from "vue-cookies";
+var VueCookie = require('vue-cookie');
 //쿠키를 사용한다.
-Vue.use(VueCookies);
-
-//쿠키의 만료일은 7일이다. (글로벌 세팅)
-Vue.$cookies.config("7d");
+Vue.use(VueCookie);
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
