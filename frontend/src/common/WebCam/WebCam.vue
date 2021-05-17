@@ -70,7 +70,7 @@ export default {
     created(){
       let inko = new Inko();
       this.data.roomName = inko.ko2en(this.schoolName)+"-"+this.location;
-      console.log(this.data.roomName);
+      // console.log(this.data.roomName);
 
       this.joinSession();
     },
@@ -156,6 +156,7 @@ export default {
         this.data.OV = undefined;
         this.data.receiveMessage = [];
         window.removeEventListener("beforeunload", this.data.leaveSession);
+        this.$router.push({name : 'Unity'});
       },
       getToken(roomName) {
         return this.createSession(roomName).then((sessionId) =>
