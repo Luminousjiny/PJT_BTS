@@ -1,7 +1,7 @@
 <template>
   <div id="computer">
     <Nav />
-    <web-cam :location="location"/>
+    <web-cam :location="location" :schoolName="schoolName" :userName="userName"/>
   </div>  
 </template>
 
@@ -16,9 +16,15 @@ export default {
   },
   data() {
     return {
-      location : "computer"
+      location : "computer",
+      schoolName : '',
+      userName : '',
     }
   },
+  created(){
+    this.schoolName = this.$route.params.schoolName;
+    this.userName = this.$route.params.userName;
+  }
 }
 </script>
 

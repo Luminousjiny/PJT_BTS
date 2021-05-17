@@ -15,14 +15,11 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <script>
-      var schoolName = '';
       function _funcJShook(object){
-          document.getElementById('data-name').innerHTML = object;
-          this.data = object;
+          document.getElementById('unity-object-name').innerHTML = object;
       };
       function _roomJShook(school){
-          document.getElementById('data-name').innerHTML = school;
-          this.data = school;
+          document.getElementById('unity-school-name').innerHTML = school;
       };
     </script>
     <div id="app"></div>
