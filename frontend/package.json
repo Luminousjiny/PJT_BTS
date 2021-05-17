@@ -44,7 +44,8 @@
     "vue-router": "^3.2.0",
     "vue-unity-webgl": "git+https://github.com/votetake/vue-unity-webgl.git",
     "vuetify": "^2.4.11",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

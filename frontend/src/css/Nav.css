@@ -58,6 +58,7 @@
     width: max-content;
     right: 0px;
     transition : .3s ease-in-out;
+    list-style: none;
 }
 .menu-inactive{
     visibility : hidden;
@@ -73,7 +74,7 @@
     margin : 5px 0px;
     cursor: pointer;
 }
-#menus li p{
+#menus li button{
     font-size : var(--font-size-14);
     font-family: 'AppleSDGothicNeoSB';
     font-weight: var(--weight-regular);

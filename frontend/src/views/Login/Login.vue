@@ -126,6 +126,7 @@ export default {
       .then((res) => {
          const token = res.data["auth_token"];
          if(token){
+            this.$store.commit('login',res.data.user);
             this.$router.push("/computer"); // 경로 수정 ✅ 
           }
           else{
