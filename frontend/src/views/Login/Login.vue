@@ -23,6 +23,7 @@
             <v-text-field
               id="user-pw"
               v-model="password"
+              type=password
               class="login_input_c"
               placeholder="8자~11자입니다. "
               single-line
