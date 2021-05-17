@@ -73,10 +73,11 @@ export default {
       .digits()
       .has()
       .letters();
-    // if(this.$cookie.get('rememberId') != undefined){
-    //   this.id = this.$cookie.get('rememberId');
-    //   checked = true;
-    // }
+    
+    if(this.$cookie.get('rememberId') != undefined){
+      this.id = this.$cookie.get('rememberId');
+      this.checked = true;
+    }
   },
   computed: {
     classObject: function(){
@@ -109,11 +110,11 @@ export default {
         return;
       }
 
-      // if(this.checked){
-      //   this.$cookie.set('rememberId', this.id , 1);
-      // }else{
-      //   this.$cookie.delete('rememberId');
-      // }
+      if(this.checked){
+        this.$cookie.set('rememberId', this.id , 1);
+      }else{
+        this.$cookie.delete('rememberId');
+      }
 
       const user = {
         userId: this.id,
@@ -124,7 +125,6 @@ export default {
       .post("v1/login", JSON.stringify(user))
       .then((res) => {
          const token = res.data["auth_token"];
-         console.log("토큰 : "+token);
          if(token){
             this.$router.push("/computer"); // 경로 수정 ✅ 
           }
