@@ -14,8 +14,19 @@
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <script>
+      var schoolName = '';
+      function _funcJShook(object){
+          document.getElementById('data-name').innerHTML = object;
+          this.data = object;
+      };
+      function _roomJShook(school){
+          document.getElementById('data-name').innerHTML = school;
+          this.data = school;
+      };
+    </script>
     <div id="app"></div>
-    <script src="/unity/Build/UnityLoader.js"></script>
+    <!-- <script src="/unity/Build/UnityLoader.js"></script> -->
     <!-- built files will be auto injected -->
   </body>
 </html>
