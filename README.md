@@ -57,13 +57,13 @@ gantt
     jira,Git 생성  :done, 2021-04-15, 6h
     UI/UX 다지인  : done,   2021-04-19, 2d
     로고제작 : done, 2021-05-01, 2d
-    와이어프레임ppt : crit, 2021-05-17, 1d
+    와이어프레임ppt : crit, 2021-05-18, 1d
     사전학습  : done, 2021-04-14, 10d
     교보재 jpa 학습 : done, 2021-04-26, 2d
     교보재 2차 학습 : active, 2021-05-17, 4d
     ucc 기획 : done, 2021-05-13, 1d
     ucc 촬영 : done, 2021-05-14, 1d
-    ucc 제작 : crit, 2021-05-17, 4d
+    ucc 제작 : crit, 2021-05-16, 5d
     리드미 작성 : done, 2021-05-10, 1d
 
     section Frontend
