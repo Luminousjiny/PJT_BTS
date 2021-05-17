@@ -81,7 +81,7 @@ public class AuthService {
         params.put("to", phoneNumber);
         params.put("from", "01071231815"); //무조건 자기번호 (인증)
         params.put("type", "SMS");
-        params.put("text", "Sera 휴대폰 인증입니다.\n인증번호는 "+"["+ secret+"]" + "입니다.");
+        params.put("text", "BTS 휴대폰 인증입니다.\n인증번호는 "+"["+ secret+"]" + "입니다.");
         params.put("app_version", "test app 1.2"); // application name and version
         SMS.send(params);
     }

@@ -80,7 +80,6 @@ export default {
     methods: {
       joinSession() {
         this.data.OV = new OpenVidu();
-        console.log(this.data.OV);
         // this.OV.setAdvancedConfiguration({
         //   screenShareChromeExtension: "https://chrome.google.com/webstore/detail/YOUR_EXTENSION_NAME/YOUR_EXTENSION_ID",
         // });
@@ -108,16 +107,15 @@ export default {
         });
         this.data.session.on("signal:my-chat", (event) => {
           this.data.receiveMessage.push({sender : JSON.parse(event.from.data), message : event.data});
-          console.log(event.from);
         });
 
-        this.data.session.on("publisherStartSpeaking", (event) => {
-          console.log( "Publisher " + event.connection.connectionId + " start speaking" );
-        });
+        // this.data.session.on("publisherStartSpeaking", (event) => {
+        //   console.log( "Publisher " + event.connection.connectionId + " start speaking" );
+        // });
 
-        this.data.session.on("publisherStopSpeaking", (event) => {
-          console.log( "Publisher " + event.connection.connectionId + " stop speaking" );
-        });
+        // this.data.session.on("publisherStopSpeaking", (event) => {
+        //   console.log( "Publisher " + event.connection.connectionId + " stop speaking" );
+        // });
 
         this.getToken(this.data.roomName).then((token) => {
           this.data.session
