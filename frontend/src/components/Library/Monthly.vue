@@ -214,12 +214,14 @@ export default {
                 monContent : this.add.name,
                 monColor : this.add.colorId,
             }
-            http.post('/api/v1/monthly', event)
-            .then(()=>{
-                const start = { month : event.monMonth, year : event.monYear};
-                this.getEventList({ start });
-                this.closeAdd();
-            });
+            if(event.monStartDate != '' && event.monEndDate != '' && monContent != ''){
+                http.post('/v1/monthly', event)
+                .then(()=>{
+                    const start = { month : event.monMonth, year : event.monYear};
+                    this.getEventList({ start });
+                    this.closeAdd();
+                });
+            }
         },
         closeAdd(){
             this.activeAdd = false;
@@ -242,7 +244,7 @@ export default {
                 monContent : this.modify.name,
                 monColor : this.modify.colorId,
             }
-            http.put(`/api/v1/monthly`, event)
+            http.put(`/v1/monthly`, event)
             .then(()=>{
                 const start = { month : event.monMonth, year : event.monYear};
                 this.getEventList({ start });
@@ -260,7 +262,7 @@ export default {
             this.activeModify = false;
         },
         deleteEvent(){
-            http.delete(`/api/v1/monthly/${this.selectedEvent.id}`)
+            http.delete(`/v1/monthly/${this.selectedEvent.id}`)
             .then(()=>{
                 const start = {month : this.selectedEvent.start.getMonth()+1, year : this.selectedEvent.start.getFullYear()};
                 console.log(start);
@@ -296,7 +298,7 @@ export default {
             };
         },
         getEventList ({ start}) {
-            http.get(`/api/v1/monthly/${this.userId}/${start.year}/${start.month}`).then(({data})=>{
+            http.get(`/v1/monthly/${this.userId}/${start.year}/${start.month}`).then(({data})=>{
                 this.eventList = data.data;
                 const events = [];
                 const eventCount = this.eventList.length;

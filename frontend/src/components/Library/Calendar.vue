@@ -4,29 +4,19 @@
       <img src="@/../public/Image/calendar_icon.png" id="calendar-icon">
       <p id="calendar-title">calendar</p>
     </div>
-    <div id="calendar-nav">
-      <router-link :to="{name : 'Weekly'}">
-        <div :class="{'router-div' : true}">
-          <v-icon id="weekly-icon">fas fa-tasks</v-icon>
-          <p class="inline-p router-link">Week</p>
-        </div>
-      </router-link>
-      <router-link :to="{name : 'Monthly'}" >
-        <div :class="{'router-div' : true}">
-          <v-icon id="monthly-icon">fas fa-th</v-icon>
-          <p class="inline-p router-link">Month</p>
-        </div>
-      </router-link>
-    </div>
     <div id="calendar-container">
-      <router-view/>
+      <Monthly/>
     </div>
   </div>
 </template>
 
 <script>
+import Monthly from '@/components/Library/Monthly';
 export default {
   name : "Calendar",
+  components : {
+    Monthly,
+  }
 }
 </script>
 
