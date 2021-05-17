@@ -40,8 +40,8 @@ export default {
         getUnityHook(){
             this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.userName);
             this.linked = true;
+            this.objectName = "";
             setInterval(()=>{
-                this.objectName = "";
                 if(document.getElementById('unity-object-name').innerHTML != this.objectName){
                     this.objectName = document.getElementById('unity-object-name').innerHTML;
                     // this.width = '150';
