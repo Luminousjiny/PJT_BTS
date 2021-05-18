@@ -9,7 +9,7 @@
     </div> -->
     <div id="session" v-if="data.session">
         <Chat :data="data" v-on:sendMessage="send"/>
-        <Camera :data="data" :location="location" :schoolName="schoolName" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
+        <Camera :data="data" :location="location" v-on:leaveSession="leaveSession" v-on:updateStream="updateStream"/>
     </div>
   </div>
 </template>
@@ -60,14 +60,21 @@ export default {
           },
           // userName: "user1",
         },
+        user : {},
+        schoolName : '',
       }
     },
     props : {
       location : String,
-      schoolName : String,
-      userName : String,
     },
     created(){
+      if(this.$store.state.user===null || this.$store.state.schoolName===null){
+        this.$router.push('/');
+        return ;
+      }
+      this.user = this.$store.getters.getUser;
+      this.schoolName = this.$store.state.SchoolName;
+
       let inko = new Inko();
       this.data.roomName = inko.ko2en(this.schoolName)+"-"+this.location;
       // console.log(this.data.roomName);
@@ -81,8 +88,8 @@ export default {
       this.data.subscribers = [];
       this.data.OV = undefined;
       this.data.receiveMessage = [];
-      this.share.active = false;
-      this.share.screen = undefined;
+      this.data.share.active = false;
+      this.data.share.screen = undefined;
     },
     methods: {
       joinSession() {
@@ -126,7 +133,7 @@ export default {
 
         this.getToken(this.data.roomName).then((token) => {
           this.data.session
-            .connect(token, { userName: this.userName })
+            .connect(token, this.user)
             .then(() => {
               let publisher = this.data.OV.initPublisher(undefined, this.data.setting);
 

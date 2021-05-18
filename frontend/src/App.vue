@@ -1,6 +1,6 @@
 <template>
   <div id="app" data-app>
-    <router-view v-on:showMap="showMap"/>
+    <router-view />
     <UnityGame v-if="$store.state.user!==null"/>
   </div>
 </template>
@@ -10,11 +10,6 @@ export default {
   name : "App",
   components : {
     UnityGame,
-  },
-  data() {
-    return {
-      login : true,
-    }
   },
 }
 </script>

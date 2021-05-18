@@ -25,10 +25,10 @@
         </div>
         <div id="receive-container" v-if="showChatting">
             <div class="message"  v-for="(message, index) in data.receiveMessage" :key="index">
-            <table class="message-table" v-if="message.sender.userName !== data.userName">
+            <table class="message-table" v-if="message.sender.userId !== user.userId">
                 <tr class="user-profile">
                 <td class="user-img" rowspan="2"><v-icon color="white">fas fa-smile</v-icon></td>
-                <td class="user-name">{{message.sender.userName}}</td>
+                <td class="user-name">{{message.sender.userNickname}}</td>
                 </tr>
                 <tr>
                 <td class="user-message">{{message.message}}</td>
@@ -36,7 +36,7 @@
             </table>
             <table class="message-table my-message" v-else>
                 <tr class="user-profile">
-                <td class="user-name">{{message.sender.userName}}</td>
+                <td class="user-name">{{message.sender.userNickname}}</td>
                 <td class="user-img" rowspan="2"><v-icon color="white">fas fa-smile</v-icon></td>
                 </tr>
                 <tr>
@@ -48,11 +48,11 @@
         <div id="participant-container" v-if="showUsers">
             <div class="participant-info my-info">
                 <v-icon color="white">fas fa-smile</v-icon>
-                <p class="inline-p">{{JSON.parse(data.publisher.session.connection.data).userName}} (me)</p>
+                <p class="inline-p">{{JSON.parse(data.publisher.session.connection.data).userNickname}} (me)</p>
             </div>
             <div class="participant-info" v-for="(sub, index) in data.subscribers" :key="index">
                 <v-icon color="white">fas fa-smile</v-icon>
-                <p class="inline-p">{{JSON.parse(sub.stream.connection.data).userName}}</p>
+                <p class="inline-p">{{JSON.parse(sub.stream.connection.data).userNickname}}</p>
             </div>
         </div>
         <div id="input-container" v-if="showChatting">
@@ -73,6 +73,7 @@ export default {
             sendMessage : "",
             showChatting : false,
             showUsers : false,
+            user : {},
         }
     },
     props :{
@@ -83,6 +84,9 @@ export default {
         if(container.scrollHeight != null){
             container.scrollTop = container.scrollHeight;
         }
+    },
+    created() {
+        this.user = this.$store.getters.getUser;
     },
     methods: {
         send(){
