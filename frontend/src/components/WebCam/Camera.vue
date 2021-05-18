@@ -86,12 +86,15 @@ export default {
         videoDetail : undefined,
       },
       screenShare : false,
+      schoolName : '',
     }
   },
   props :{
     data : Object,
     location : String,
-    schoolName : String,
+  },
+  created() {
+    this.schoolName = this.$store.state.schoolName;
   },
   computed : {
     setWidth40 : function(){

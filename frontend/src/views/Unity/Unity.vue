@@ -2,7 +2,7 @@
     <div id="unity">
         <Nav/>
         <div id="unity-container">
-            <User :userName="userName"/>
+            <User/>
             <div id="unity-game-container">
                 <div id="game-container"></div>
             </div>
@@ -21,12 +21,7 @@ export default {
     },
     data() {
         return {
-            user:{},
-            schoolName : '',
         }
-    },
-    created(){
-        this.user=this.$store.getter.getUser;
     },
 }
 </script>

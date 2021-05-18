@@ -69,13 +69,13 @@ export default {
                             this.$router.push({name : 'QnaBoard'});
                             break;
                         case "computer": // 컴퓨터실 웹캠 - desk
-                            this.$router.push({name : 'Computer', params : {schoolName : this.schoolName, userName : this.userName}});
+                            this.$router.push({name : 'Computer'});
                             break;
                         case "rest": // 휴게실 웹캠 - vendingmachine
-                            this.$router.push({name : 'Rest', params : {schoolName : this.schoolName, userName : this.userName}});
+                            this.$router.push({name : 'Rest'});
                             break;
                         case "cook": // 급식실 웹캠 - table
-                            this.$router.push({name : 'Cook', params : {schoolName : this.schoolName, userName : this.userName}});
+                            this.$router.push({name : 'Cook'});
                             break;
                         case "calendar": // 공부 플래너
                             this.$router.push({name : 'Calendar'});

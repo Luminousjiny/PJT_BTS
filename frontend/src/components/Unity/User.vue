@@ -38,9 +38,6 @@ export default {
             usersName : "",
         }
     },
-    props : {
-        userName : String,
-    },
     created() {
         setInterval(()=>{
             if(document.getElementById('unity-users-name').innerHTML != this.usersName){
