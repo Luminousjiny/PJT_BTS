@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -94,22 +95,20 @@ public class UserController {
     @ApiOperation(value = "사용자 정보 수정(마이페이지)", notes = "정보 수정 성공 시 이미지 url 반환 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/{userId}") // 전체 수정은 put
     public BaseResponse updateUser(@ApiParam(value = "사용자 로그인 아이디")@PathVariable String userId,
-                                   @ApiParam(value = "사용자 객체")@RequestBody UserRequest request,
+                                   @ApiParam(value = "사용자 객체")@RequestPart(value = "request", required = true) UserRequest request,
                                    @ApiParam(value = "프로필 사진", required=true) @RequestPart(value = "file", required=false) MultipartFile file) {
         BaseResponse response = null;
         try {
             // 이미지 쪽 처리
             String url=null;
             User user = userService.findByUserId(userId);
-            System.out.println(file);
             if(file != null){ // 파일이 있는 경우만
-                User u = userService.findByUserId(userId);
-                if(u.getUserImg() != null) s3Service.delete(url); // s3 이미지 삭제
+                if(!user.getUserImg().equals("")) s3Service.delete(user.getUserImg()); // s3 이미지 삭제
+
                 url = s3Service.upload(file); // s3에 이미지 업로드 후 url 반환
                 user.setUserImg(url);// 이미지 주소 변경
             }else{ // 파일이 없다면 원래 저장된 것
                 url = user.getUserImg();
-                System.out.println(user.getUserImg());
             }
             // 나머지 정보 수정
             userService.updateUser(userId, request);
@@ -121,13 +120,14 @@ public class UserController {
     }
 
     @ApiOperation(value = "회원 프로필 이미지 기본(null)으로 변경하기 - 초기 or 삭제", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = Boolean.class)
-    @PostMapping("/defaultImg")
-    public BaseResponse initUserImg(@ApiParam(value = "아이디")@RequestBody String userId) {
+    @PostMapping("/defaultImg/{userId}")
+    public BaseResponse initUserImg(@ApiParam(value = "아이디")@PathVariable String userId) {
         BaseResponse response = null;
         try {
             User user = userService.findByUserId(userId);
-            user.setUserImg(null);
-            userService.updateUser(user);
+            if(!user.getUserImg().equals("")) s3Service.delete(user.getUserImg()); // s3 이미지 삭제
+            user.setUserImg("");
+            userService.updateUserImg(user);
             response = new BaseResponse("success", "수정 성공");
         } catch (Exception e) {
             response = new BaseResponse("fail", e.getMessage());
