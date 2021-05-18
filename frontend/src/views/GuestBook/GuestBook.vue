@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       roomId: 1,
-      userId: "dovvn",
+      userId: "hoyeon",
       users: [],
       nowNum: 0,
     };

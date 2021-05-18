@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,12 +38,19 @@ public class GuestBookController {
         BaseResponse response = null;
 
         try{
-            GuestBook guestBook = GuestBook.createGuestBook();
-            User user = userService.findByUserId(userId);
             Room room = roomService.findByRoomId(roomId);
-            guestBook.setRoom(room);
-            guestBook.setUser(user);
-            guestBookService.save(guestBook);
+            User user = userService.findByUserId(userId);
+
+            GuestBook guestBook = guestBookService.findByRoomAndUser(room, user);
+            if(guestBook == null){ //넣기
+                GuestBook gb = GuestBook.createGuestBook();
+                gb.setRoom(room);
+                gb.setUser(user);
+                guestBookService.save(gb);
+            }else{ //수정
+                guestBook.setVisitDate(new Date());
+                guestBookService.updateGuestBook(room, user, guestBook);
+            }
 
             List<GuestBook> guestBookList  = guestBookService.findByRoom(room);
             List<GuestBookDTO> collect = guestBookList.stream()
