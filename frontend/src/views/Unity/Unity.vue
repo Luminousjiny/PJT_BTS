@@ -28,12 +28,13 @@ export default {
     },
     data() {
         return {
-            userName : 'dovvn',
+            user:{},
             schoolName : '',
         }
     },
     created(){
         this.$emit('showMap');
+        this.user=this.$store.getter.getUser;
     },
 }
 </script>

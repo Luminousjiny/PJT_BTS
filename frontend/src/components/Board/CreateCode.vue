@@ -10,7 +10,10 @@
     </div>
 
     <div class="code__profile">
-      <div class="code__profile__image"></div>
+      <div class="code__profile__image">
+        <img :src="content.user.userImg" alt="" v-if="content.user && content.user.userImg!==''">
+        <img src="../../assets/profile.png" alt="" v-else>
+      </div>
       <div>
         <div class="code__profile__name">
           {{content.user.userNickname}}
@@ -196,6 +199,19 @@ export default {
                       this.isLoading=false;
                       if(output1===output2){
                         this.result="성공";
+                        http.post('v1/solve', JSON.stringify({prodId : this.content.proId, userId: this.$store.getters.getUserId})) 
+                          .then(res=>{
+                            if(res.data.data===1){
+                              const user = this.$store.getters.getUser;
+                              const point = user.userPoint+50;
+                              const rankList = ['bronze3','bronze2','bronze1','silver3','silver2','silver1','gold3','gold2','gold1'];
+                              const rank = rankList[point%500];
+                              this.$store.commit('setUser',{...user, userPoint: point, userLank: rank});
+                            }
+                          })
+                          .catch(err=>{
+                            console.error(err);
+                          })
                       } else{
                         this.result="실패";
                       }
@@ -207,9 +223,9 @@ export default {
                         codeMemory: `${this.memory}kB`,
                         codeTime: `${this.time}s`,
                         result: this.result,
-                        roomId:1,
+                        roomId: this.$store.getters.getSchoolId,
                         proId: this.content.proId,
-                        userId: 'jihyeong'
+                        userId: this.$store.getters.getUserId,
                       };                      
                       http.post('v1/code', JSON.stringify(data))
                         .then(res=>{
@@ -224,7 +240,8 @@ export default {
                         })
                         .catch(err => {
                           console.error(err);
-                        })                     
+                        })
+                                      
                     })
                     .catch(error3 => console.log('error', error3));
                 } else{
@@ -252,9 +269,9 @@ export default {
                     codeMemory: `${this.memory}kB`,
                     codeTime: `${this.time}s`,
                     result: this.result,
-                    roomId:1,
+                    roomId: this.$store.getters.getSchoolId,
                     proId: this.content.proId,
-                    userId: 'jihyeong'
+                    userId: this.$store.getters.getUserId,
                   };
                   http.post('v1/code', JSON.stringify(data))
                     .then(res=>{
@@ -399,24 +416,28 @@ export default {
   padding: 1em 0;
   display: flex;
   align-items: center;
-}
-.code__profile__image{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--color-pink);
-  display: inline-block;
-}
-.code__profile__name{
-  padding-left: 1rem;
-  font-size: var(--font-size-20);
-  font-family: "AppleSDGothicNeoB";
-}
-.code__profile__date{
-  padding-left: 1rem;
-  font-family: "AppleSDGothicNeoB";
-  font-size: var(--font-size-14);
-  color: var(--color-grey-2);
+  
+  &__image{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-block;
+  }
+  img{
+    width: 40px;
+    height: 40px;
+  }
+  &__name{
+    padding-left: 1rem;
+    font-size: var(--font-size-20);
+    font-family: "AppleSDGothicNeoB";
+  }
+  &__date{
+    padding-left: 1rem;
+    font-family: "AppleSDGothicNeoB";
+    font-size: var(--font-size-14);
+    color: var(--color-grey-2);
+  }
 }
 .code__title{
   padding: 1rem 0;

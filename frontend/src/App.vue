@@ -1,7 +1,7 @@
 <template>
   <div id="app" data-app>
     <router-view v-on:showMap="showMap"/>
-    <UnityGame v-if="login"/>
+    <UnityGame v-if="$store.state.user!==null"/>
   </div>
 </template>
 <script>
