@@ -28,6 +28,7 @@ export default {
     created(){
         this.user=this.$store.getter.getUser;
     },
+}
 </script>
 
 <style>
