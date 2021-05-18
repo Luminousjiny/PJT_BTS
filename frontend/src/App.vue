@@ -1,7 +1,7 @@
 <template>
   <div id="app" data-app>
-    <router-view/>
-    <UnityGame/>
+    <router-view />
+    <UnityGame v-if="$store.state.user!==null"/>
   </div>
 </template>
 <script>

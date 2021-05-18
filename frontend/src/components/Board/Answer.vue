@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="answer__btn__box">
+      <div v-if="user.userId===answer.user.userId" class="answer__btn__box">
         <button class="answer__btn__delete" @click="handleClickCommentDelete">
           <font-awesome-icon :icon="['far', 'trash-alt']" size="1x" />
           삭제
@@ -31,11 +31,20 @@
 <script>
 export default {
   name:'Answer',
+  data(){
+    return{
+      user:{},
+    }
+  },
   props:{
     answer: Object,
   },
+  created(){
+    this.user=this.$store.getters.getUser
+  },
   methods:{
     handleClickCommentDelete(){
+      if(this.user.userId!==this.answer.user.userId) return;
       this.$emit('handleClickCommentDelete',this.answer.comId);
     },
   }

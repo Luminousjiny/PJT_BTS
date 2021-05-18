@@ -18,11 +18,13 @@
 </template>
 <script>
 import Unity from 'vue-unity-webgl';
+import http from '../../util/http-common.js';
+
 export default {
     name : "UnityGame",
     data() {
         return {
-            userName : 'dovvn',
+            user: {},
             objectName : '',
             schoolName : '',
             linked : false,
@@ -31,6 +33,13 @@ export default {
         }
     },
     components : {Unity},
+    created(){
+      if(this.$store.state.user===null){
+        this.$router.push('/');
+      }
+      this.schoolName=this.$store.state.schoolName;
+      this.user=this.$store.getters.getUser;
+    },
     computed : {
         showMap : function(){
             if(this.$route.name == 'Unity'){
@@ -46,7 +55,7 @@ export default {
     },
     methods : {
         getUnityHook(){
-            this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.userName);
+            this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
             this.linked = true;
             this.objectName = "";
             setInterval(()=>{
@@ -84,9 +93,31 @@ export default {
                             break;
                     }
                     document.getElementById('unity-object-name').innerHTML = "";
-                }else if(document.getElementById('unity-school-name').innerHTML != this.schoolName){
+                }else if(document.getElementById('unity-school-name').innerHTML!=="" && document.getElementById('unity-school-name').innerHTML !== this.schoolName){
                     this.schoolName = document.getElementById('unity-school-name').innerHTML;
                     //get 해서 방번호 저장하기
+                    http.get(`v1/room/${this.schoolName}`)
+                      .then(res=>{
+                        console.log(res);
+                        if(res.data.data==="존재하지 않는 방입니다."){
+                          const data={
+                            roomName: this.schoolName
+                          }
+                          http.post(`v1/room`,JSON.stringify(data))
+                            .then(res2=>{
+                              this.$store.commit('setSchool',res2.data.data,this.schoolName);
+                              console.log('방 생성');
+                              console.log(res2.data.data,this.schoolName);
+                            })
+                            .catch(err=>{
+                              console.error(err);
+                            })
+                        } else{
+                          this.$store.commit('setSchool',res.data.data,this.schoolName);
+                          console.log('방 찾음');
+                          console.log(res.data.data,this.schoolName);
+                        }
+                      })
                 }
             },1000);
         },

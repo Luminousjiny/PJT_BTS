@@ -10,7 +10,10 @@
     </div>
 
     <div class="code__profile">
-      <div class="code__profile__image"></div>
+      <div class="code__profile__image">
+        <img :src="content.user.userImg" alt="" v-if="content.user && content.user.userImg!==''">
+        <img src="../../assets/profile.png" alt="" v-else>
+      </div>
       <div>
         <div class="code__profile__name">
           {{content.user.userNickname}}
@@ -130,11 +133,19 @@ export default {
         for(let i=0; i<this.content.codeList.length; i++){
           console.log(this.content.codeList[i].codeId,this.$route.params.codeId)
           if(this.content.codeList[i].codeId===Number(this.$route.params.codeId)){
+            if(this.$store.getters.getUserId!==this.content.codeList[i].user.userId){
+              this.$router.push({
+                name: 'CodeDetail',
+                params:{
+                  id: this.$route.params.id,
+                  codeId: this.route.params.codeId,
+                }
+              })
+            }
             this.code = this.content.codeList[i].codeContent;
             this.mode = this.content.codeList[i].codeLan;
             break;
           }
-          
         }
       }
     })
@@ -408,24 +419,28 @@ export default {
   padding: 1em 0;
   display: flex;
   align-items: center;
-}
-.code__profile__image{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--color-pink);
-  display: inline-block;
-}
-.code__profile__name{
-  padding-left: 1rem;
-  font-size: var(--font-size-20);
-  font-family: "AppleSDGothicNeoB";
-}
-.code__profile__date{
-  padding-left: 1rem;
-  font-family: "AppleSDGothicNeoB";
-  font-size: var(--font-size-14);
-  color: var(--color-grey-2);
+  
+  &__image{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-block;
+  }
+  img{
+    width: 40px;
+    height: 40px;
+  }
+  &__name{
+    padding-left: 1rem;
+    font-size: var(--font-size-20);
+    font-family: "AppleSDGothicNeoB";
+  }
+  &__date{
+    padding-left: 1rem;
+    font-family: "AppleSDGothicNeoB";
+    font-size: var(--font-size-14);
+    color: var(--color-grey-2);
+  }
 }
 .code__title{
   padding: 1rem 0;

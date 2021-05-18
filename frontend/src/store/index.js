@@ -12,26 +12,38 @@ export default new Vuex.Store({
   ],  
   state: {
     user:null,
-    roomId: null,
+    schoolId: null,
+    schoolName: null,
   },
   getters:{
     getUser(state){
+      if(state.user===null) return null;
       return {...state.user};
     },
-    getRoomId(state){
-      return state.roomId;
+    getUserId(state){
+      if(state.user===null) return null;
+      return state.user.userId;
+    },
+    getSchoolId(state){
+      if(state.schoolId===null) return null;
+      return state.schoolId;
     }
   },
   mutations: {
     login(state,user){
       state.user = user;
     },
-    logout(state){
-      state.user=null;
-      state.roomId= null;
+    setUser(state,user){
+      state.user = user;
     },
-    setRoomId(state,roomId){
-      state.roomId=roomId;
+    logout(state){
+      state.user= null;
+      state.schoolId= null;
+      state.schoolName= null;
+    },
+    setSchool(state,schoolId,schoolName){
+      state.schoolId=schoolId;
+      state.schoolName=schoolName;
     }
   },
   actions: {},

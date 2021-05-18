@@ -21,11 +21,13 @@ export default {
     },
     data() {
         return {
-            userName : 'dovvn',
+            user:{},
             schoolName : '',
         }
     },
-}
+    created(){
+        this.user=this.$store.getter.getUser;
+    },
 </script>
 
 <style>

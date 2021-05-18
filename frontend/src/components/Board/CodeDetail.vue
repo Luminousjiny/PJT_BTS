@@ -10,7 +10,10 @@
     </div>
 
     <div class="code__profile">
-      <div class="code__profile__image"></div>
+      <div class="code__profile__image">
+        <img :src="content.user.userImg" alt="" v-if="content.user && content.user.userImg!==''">
+        <img src="../../assets/profile.png" alt="" v-else>
+      </div>
       <div>
         <div class="code__profile__name">
           {{content.user && content.user.userNickname}}
@@ -36,7 +39,7 @@
       </select>
       <m-monaco-editor v-if="code.codeContent" v-model="code.codeContent" :mode="code.codeLan" theme="vs-dark" :readOnly="trueState"></m-monaco-editor>
     </div>
-    <div class="code__btn__box">
+    <div v-if="user.userId===code.user.userId" class="code__btn__box">
       <button class="code__btn code__btn__blue" @click="handleClickUpdate">수정하기</button>      
     </div>
   </div>
@@ -53,9 +56,11 @@ export default {
       content:{},
       code:{},
       trueState:true,
+      user:{},
     }
   },
   created(){
+    this.user=this.$store.getters.getUser;
     http.get(`v1/pro/detail/${this.$route.params.id}`)
     .then(res=>{
       this.content=res.data.data;
@@ -89,7 +94,7 @@ export default {
         params:{
           id: this.$route.params.id,
           codeId: this.$route.params.codeId,
-          userId: this.code.user.userId,
+          userId: this.user.userId,
         }
       })
     }
@@ -130,25 +135,30 @@ export default {
   padding: 1em 0;
   display: flex;
   align-items: center;
+  
+  &__image{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-block;
+  }
+  img{
+    width: 40px;
+    height: 40px;
+  }
+  &__name{
+    padding-left: 1rem;
+    font-size: var(--font-size-20);
+    font-family: "AppleSDGothicNeoB";
+  }
+  &__date{
+    padding-left: 1rem;
+    font-family: "AppleSDGothicNeoB";
+    font-size: var(--font-size-14);
+    color: var(--color-grey-2);
+  }
 }
-.code__profile__image{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--color-pink);
-  display: inline-block;
-}
-.code__profile__name{
-  padding-left: 1rem;
-  font-size: var(--font-size-20);
-  font-family: "AppleSDGothicNeoB";
-}
-.code__profile__date{
-  padding-left: 1rem;
-  font-family: "AppleSDGothicNeoB";
-  font-size: var(--font-size-14);
-  color: var(--color-grey-2);
-}
+
 .code__title{
   padding: 1rem 0;
   font-family: "AppleSDGothicNeoB";

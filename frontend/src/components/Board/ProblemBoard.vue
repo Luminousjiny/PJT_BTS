@@ -85,7 +85,7 @@ export default {
     else
       this.showCnt=2;
     window.addEventListener('resize',this.handleWindowSize);
-    http.get('v1/pro/list/1')
+    http.get(`v1/pro/list/${this.$store.getters.getSchoolId}`)
     .then((res)=>{
       if(res.status===200){
         this.proList=res.data.data.reverse();
@@ -180,8 +180,8 @@ export default {
         proContent,
         proInput,
         proOutput,
-        roomId:1,
-        userId: 'jihyeong'
+        roomId: this.$store.getters.getSchoolId,
+        userId: this.$store.getters.getUserId,
       };
       http.post('v1/pro', JSON.stringify(data))
       .then((res)=>{
