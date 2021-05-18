@@ -1,7 +1,7 @@
 <template>
   <div id="app" data-app>
-    <router-view v-on:showMap="showMap"/>
-    <UnityGame v-if="login"/>
+    <router-view/>
+    <UnityGame/>
   </div>
 </template>
 <script>
@@ -10,11 +10,6 @@ export default {
   name : "App",
   components : {
     UnityGame,
-  },
-  data() {
-    return {
-      login : true,
-    }
   },
 }
 </script>

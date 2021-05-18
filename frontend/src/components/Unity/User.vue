@@ -10,7 +10,7 @@
             </div>
             <div id="live-container">
                 <div id="live-circle"></div>
-                <div id="participant-counter">{{ participants }}명</div>
+                <div id="participant-counter">{{ users.length }}명</div>
             </div>
         </div>
     </div>
@@ -19,13 +19,9 @@
             <p>User</p>
         </div>
         <div id="participant-container">
-            <div class="participant-info my-info">
-                <v-icon color="white">fas fa-smile</v-icon>
-                <p class="inline-p">{{userName}} (me)</p>
-            </div>
             <div class="participant-info" v-for="(user, index) in users" :key="index">
-                <v-icon color="white">fas fa-smile</v-icon>
-                <p class="inline-p">{{user.userName}}</p>
+                <v-icon color="var(--color-white)">fas fa-user</v-icon>
+                <p class="inline-p">{{user}}</p>
             </div>
         </div>
     </div>
@@ -38,11 +34,21 @@ export default {
     data() {
         return {
             participants : 1,
-            users : []
+            users : [],
+            usersName : "",
         }
     },
     props : {
         userName : String,
+    },
+    created() {
+        setInterval(()=>{
+            if(document.getElementById('unity-users-name').innerHTML != this.usersName){
+                this.usersName = document.getElementById('unity-users-name').innerHTML;
+                this.users = this.usersName.split(',');
+                console.log(this.users);
+            }
+        },1000);
     },
     updated() {
         let container = this.$el.querySelector("#participant-container");

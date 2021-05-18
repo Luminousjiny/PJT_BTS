@@ -1,18 +1,19 @@
 <template>
-    <div id="unity-game" :class="{'small-map' : !showMap}" @click="test">
+    <div id="unity-game" :class="{'small-map':!showMap}" @click="goUnity">
         <div id="game-container">
             <unity
             src = "/unity/Build/webGL.json"
             unityLoader = "/unity/Build/UnityLoader.js"
-            width = '100%'
-            height = '100%'
             ref = "hookInstance"
+            :height = height
+            :width = width
             >
             </unity>
             <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
         </div>
         <div id="unity-school-name" hidden></div>
         <div id="unity-object-name" hidden></div>
+        <div id="unity-users-name" hidden></div>
     </div>
 </template>
 <script>
@@ -25,15 +26,22 @@ export default {
             objectName : '',
             schoolName : '',
             linked : false,
+            height : '700',
+            width : '950',
         }
     },
     components : {Unity},
     computed : {
         showMap : function(){
             if(this.$route.name == 'Unity'){
+                this.width = '950';
+                this.height = '700';
                 return true;
+            }else{
+                this.width = '150';
+                this.height = '100';
+                return false;
             }
-            else false;
         }
     },
     methods : {
@@ -44,29 +52,26 @@ export default {
             setInterval(()=>{
                 if(document.getElementById('unity-object-name').innerHTML != this.objectName){
                     this.objectName = document.getElementById('unity-object-name').innerHTML;
-                    // this.width = '150';
-                    // this.height = '100';
-                    this.showMap = false;
                     switch (this.objectName) {
-                        case "blackboard": // 정보공유/코드공유 - information
+                        case "information": // 정보공유/코드공유 - blackboard
                             this.$router.push({name : 'InfoBoard'});
                             break;
-                        case "noticeboard": // Q&A게시판 - qna
+                        case "qna": // Q&A게시판 - noticeboard
                             this.$router.push({name : 'QnaBoard'});
                             break;
-                        case "desk": // 컴퓨터실 웹캠 - computer
+                        case "computer": // 컴퓨터실 웹캠 - desk
                             this.$router.push({name : 'Computer', params : {schoolName : this.schoolName, userName : this.userName}});
                             break;
-                        case "vendingmachine": // 휴게실 웹캠 - rest
+                        case "rest": // 휴게실 웹캠 - vendingmachine
                             this.$router.push({name : 'Rest', params : {schoolName : this.schoolName, userName : this.userName}});
                             break;
-                        case "table": // 급식실 웹캠 - cook
+                        case "cook": // 급식실 웹캠 - table
                             this.$router.push({name : 'Cook', params : {schoolName : this.schoolName, userName : this.userName}});
                             break;
                         case "calendar": // 공부 플래너
                             this.$router.push({name : 'Calendar'});
                             break;
-                        case "advice": // 쓴소리 영상 - youtube
+                        case "youtube": // 쓴소리 영상 - advice
                             this.$router.push({name : 'Youtube'});
                             break;
                         case "guestbook":
@@ -78,15 +83,17 @@ export default {
                         default:
                             break;
                     }
+                    document.getElementById('unity-object-name').innerHTML = "";
                 }else if(document.getElementById('unity-school-name').innerHTML != this.schoolName){
                     this.schoolName = document.getElementById('unity-school-name').innerHTML;
                     //get 해서 방번호 저장하기
                 }
             },1000);
         },
-        test(){
+        goUnity(){
             if(!this.showMap){
-                this.showMap = true;
+                this.height = '700';
+                this.width = '950';
                 this.$router.push({name : "Unity"});
             }
         }
@@ -95,32 +102,29 @@ export default {
 </script>
 <style scoped>
 #unity-game{
+    width : 55%;
+    height: max-content;
     position: absolute;
-    right: 15%;
-    bottom: 0;
-    width : 80%;
+    bottom : 0;
+    right : 10%;
 }
 #game-container{
-    width: 100%;
-}
-.small-map{
-    top: 85vh!important;
-    left: 90vw!important;
-    width : 10%;
-    height: 10%;
-    cursor: pointer;
+    position: relative;
 }
 #link-btn{
-    position: absolute;
-    bottom : 10%;
-    left : 45%;
     background-color: var(--color-white);
+    padding : 10px;
     border : 1px solid var(--color-white);
     border-radius: 15px;
-    padding: 10px;
-    font-size : var(--font-size-18);
-    font-family: 'AppleSDGothicNeoB';
-    font-weight: var(--weight-regular);
-    color : var(--color-grey-1);
+    position : absolute;
+    bottom : 8%;
+    left : 45%;
+    font-size: var(--font-size-18);
+    color: var(--color-grey-1);
+    font-family: "AppleSDGothicNeoB";
+}
+.small-map{
+    right : 0!important;
+    width : 10%!important;
 }
 </style>
