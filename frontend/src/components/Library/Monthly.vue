@@ -131,7 +131,7 @@ export default {
             events : [],
             colors: ['var(--color-yellow2)', 'var(--color-green3)', 'var(--color-blue4)', 'var(--color-blue5)', 'var(--color-puple6)', 'var(--color-grey7)'],
             eventList : [],
-            userId : 'dovvn',
+            user : {},
             eventStyle : "",
             showEvent : false,
             showEvents : false,
@@ -158,6 +158,12 @@ export default {
                 day : 0,
             },
         }
+    },
+    created() {
+        if(this.$store.state.user == null){
+            this.$router.push("/");
+        }
+        this.user = this.$store.getters.getUser;
     },
     mounted() {
         this.$refs.calendar.checkChange()
@@ -206,7 +212,7 @@ export default {
         addEvent(){
             const date = new Date(this.add.startDay);
             const event = {
-                userId : this.userId,
+                userId : this.user.userId,
                 monYear : date.getFullYear(),
                 monMonth : date.getMonth()+1,
                 monStartDate : this.add.startDay,
@@ -214,7 +220,7 @@ export default {
                 monContent : this.add.name,
                 monColor : this.add.colorId,
             }
-            if(event.monStartDate != '' && event.monEndDate != '' && monContent != ''){
+            if(event.monStartDate != '' && event.monEndDate != '' && event.monContent != ''){
                 http.post('/v1/monthly', event)
                 .then(()=>{
                     const start = { month : event.monMonth, year : event.monYear};
@@ -236,7 +242,7 @@ export default {
             const date = new Date(this.modify.startDay);
             const event = {
                 monId : this.modify.id,
-                userId : this.userId,
+                userId : this.user.userId,
                 monYear : date.getFullYear(),
                 monMonth : date.getMonth()+1,
                 monStartDate : this.modify.startDay,
@@ -298,7 +304,7 @@ export default {
             };
         },
         getEventList ({ start}) {
-            http.get(`/v1/monthly/${this.userId}/${start.year}/${start.month}`).then(({data})=>{
+            http.get(`/v1/monthly/${this.user.userId}/${start.year}/${start.month}`).then(({data})=>{
                 this.eventList = data.data;
                 const events = [];
                 const eventCount = this.eventList.length;
