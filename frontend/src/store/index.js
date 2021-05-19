@@ -53,8 +53,10 @@ export default new Vuex.Store({
       state.schoolId= null;
       state.schoolName= null;
     },
-    setSchool(state,schoolId,schoolName){
+    setSchoolId(state,schoolId){
       state.schoolId=schoolId;
+    },
+    setSchoolName(state,schoolName){
       state.schoolName=schoolName;
     },
     setVideo(state,selected){

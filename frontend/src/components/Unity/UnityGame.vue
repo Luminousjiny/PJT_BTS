@@ -102,7 +102,8 @@ export default {
                         if(res.data.data==="존재하지 않는 방입니다."){
                           http.post(`v1/room/${this.schoolName}`)
                             .then(res2=>{
-                              this.$store.commit('setSchool',res2.data.data,this.schoolName);
+                              this.$store.commit('setSchoolId',res2.data.data);
+                              this.$store.commit('setSchoolName',this.schoolName);
                               console.log('방 생성');
                               console.log(res2.data.data,this.schoolName);
                             })
@@ -110,7 +111,8 @@ export default {
                               console.error(err);
                             })
                         } else{
-                          this.$store.commit('setSchool',res.data.data,this.schoolName);
+                          this.$store.commit('setSchoolId',res.data.data);
+                          this.$store.commit('setSchoolName',this.schoolName);
                           console.log('방 찾음');
                           console.log(res.data.data,this.schoolName);
                         }
