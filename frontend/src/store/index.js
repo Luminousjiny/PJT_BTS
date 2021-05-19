@@ -14,6 +14,8 @@ export default new Vuex.Store({
     user:null,
     schoolId: null,
     schoolName: null,
+    audio: null,
+    video: null,
   },
   getters:{
     getUser(state){
@@ -27,7 +29,13 @@ export default new Vuex.Store({
     getSchoolId(state){
       if(state.schoolId===null) return null;
       return state.schoolId;
-    }
+    },
+    getAudio(state){
+      return state.audio;
+    },
+    getVideo(state){
+      return state.video;
+    }    
   },
   mutations: {
     login(state,user){
@@ -44,6 +52,12 @@ export default new Vuex.Store({
     setSchool(state,schoolId,schoolName){
       state.schoolId=schoolId;
       state.schoolName=schoolName;
+    },
+    setVideo(state,selected){
+      state.video=selected;
+    },
+    setAudio(state,selected){
+      state.audio=selected;
     }
   },
   actions: {},
