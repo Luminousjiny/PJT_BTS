@@ -1,117 +1,20 @@
 <template>
   <div id="app" data-app>
     <router-view />
-    <!-- <UnityGame v-if="$store.state.user!==null"/> -->
-    <div id="unity-game">
-        <div id="game-container">
-            <unity
-            src = "./unity/Build/webGL.json"
-            unityLoader = "./unity/Build/UnityLoader.js"
-            ref = "hookInstance"
-            height = "700"
-            width = "950"
-            >
-            </unity>
-            <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
-        </div>
-        <div id="unity-school-name" hidden></div>
-        <div id="unity-object-name" hidden></div>
-        <div id="unity-users-name" hidden></div>
-    </div>
+    <UnityGame v-if="$store.state.user!==null"/>
   </div>
 </template>
 <script>
-import Unity from 'vue-unity-webgl';
-import http from './util/http-common.js';
-// import UnityGame from '@/components/Unity/UnityGame';
+import UnityGame from '@/components/Unity/UnityGame';
 export default {
   name : "App",
   data() {
     return {
       linked : false,
-      user : {},
     }
   },
   components : {
-    // UnityGame,
-    Unity,
-  },
-  created() {
-    // this.user = this.$store.getters.getUser;
-    this.user = { userNickname : '해지'};
-  },
-  methods: {
-    getUnityHook(){
-            this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
-            this.linked = true;
-            this.objectName = "";
-            setInterval(()=>{
-                if(document.getElementById('unity-object-name').innerHTML != this.objectName){
-                    this.objectName = document.getElementById('unity-object-name').innerHTML;
-                    switch (this.objectName) {
-                        case "information": // 정보공유/코드공유 - blackboard
-                            this.$router.push({name : 'InfoBoard'});
-                            break;
-                        case "qna": // Q&A게시판 - noticeboard
-                            this.$router.push({name : 'QnaBoard'});
-                            break;
-                        case "computer": // 컴퓨터실 웹캠 - desk
-                            this.$router.push({name : 'Computer'});
-                            break;
-                        case "rest": // 휴게실 웹캠 - vendingmachine
-                            this.$router.push({name : 'Rest'});
-                            break;
-                        case "cook": // 급식실 웹캠 - table
-                            this.$router.push({name : 'Cook'});
-                            break;
-                        case "calendar": // 공부 플래너
-                            this.$router.push({name : 'Calendar'});
-                            break;
-                        case "youtube": // 쓴소리 영상 - advice
-                            this.$router.push({name : 'Youtube'});
-                            break;
-                        case "guestbook":
-                            this.$router.push({name : 'GuestBook'});
-                            break;
-                        case "award":
-                            this.$router.push({name : 'Award'});
-                            break;
-                        default:
-                            break;
-                    }
-                    document.getElementById('unity-object-name').innerHTML = "";
-                }else if(document.getElementById('unity-school-name').innerHTML!=="" && document.getElementById('unity-school-name').innerHTML !== this.schoolName){
-                    this.schoolName = document.getElementById('unity-school-name').innerHTML;
-                    //get 해서 방번호 저장하기
-                    http.get(`v1/room/${this.schoolName}`)
-                      .then(res=>{
-                        console.log(res);
-                        if(res.data.data==="존재하지 않는 방입니다."){
-                          http.post(`v1/room/${this.schoolName}`)
-                            .then(res2=>{
-                              this.$store.commit('setSchool',res2.data.data,this.schoolName);
-                              console.log('방 생성');
-                              console.log(res2.data.data,this.schoolName);
-                            })
-                            .catch(err=>{
-                              console.error(err);
-                            })
-                        } else{
-                          this.$store.commit('setSchool',res.data.data,this.schoolName);
-                          console.log('방 찾음');
-                          console.log(res.data.data,this.schoolName);
-                        }
-                      })
-                }
-            },1000);
-        },
-        goUnity(){
-            if(!this.showMap){
-                this.height = '700';
-                this.width = '950';
-                this.$router.push({name : "Unity"});
-            }
-        }
+    UnityGame,
   },
 }
 </script>
