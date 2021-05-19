@@ -68,10 +68,10 @@ export default {
       location : String,
     },
     created(){
-      // if(this.$store.state.user===null || this.$store.state.schoolName===null){
-      //   this.$router.push('/');
-      //   return ;
-      // }
+      if(this.$store.state.user===null || this.$store.state.schoolName===null){
+        this.$router.push('/');
+        return ;
+      }
       this.user = this.$store.getters.getUser;
       this.schoolName = this.$store.getters.getSchoolName;
       this.data.setting.audioSource = this.$store.getters.getAudio;
