@@ -27,7 +27,10 @@
             <div class="message"  v-for="(message, index) in data.receiveMessage" :key="index">
             <table class="message-table" v-if="message.sender.userId !== user.userId">
                 <tr class="user-profile">
-                <td class="user-img" rowspan="2"><v-icon color="white">fas fa-smile</v-icon></td>
+                <td rowspan="2">
+                    <img class="user-img" v-if="message.sender.userImg===''" src="@/../public/Image/user_profile.png"/>
+                    <img class="user-img" v-else :src="message.sender.userImg"/>
+                </td>
                 <td class="user-name">{{message.sender.userNickname}}</td>
                 </tr>
                 <tr>
@@ -37,7 +40,10 @@
             <table class="message-table my-message" v-else>
                 <tr class="user-profile">
                 <td class="user-name">{{message.sender.userNickname}}</td>
-                <td class="user-img" rowspan="2"><v-icon color="white">fas fa-smile</v-icon></td>
+                <td rowspan="2">
+                    <img class="user-img" v-if="message.sender.userImg===''" src="@/../public/Image/user_profile.png" />
+                    <img class="user-img" v-else :src="message.sender.userImg"/>
+                </td>
                 </tr>
                 <tr>
                 <td class="user-message">{{message.message}}</td>
@@ -47,11 +53,13 @@
         </div>
         <div id="participant-container" v-if="showUsers">
             <div class="participant-info my-info">
-                <v-icon color="white">fas fa-smile</v-icon>
-                <p class="inline-p">{{JSON.parse(data.publisher.session.connection.data).userNickname}} (me)</p>
+                <img class="user-img" v-if="user.userImg===''" src="@/../public/Image/user_profile.png" />
+                <img class="user-img" v-else :src="user.userImg"/>
+                <p class="inline-p">{{user.userNickname}} (me)</p>
             </div>
             <div class="participant-info" v-for="(sub, index) in data.subscribers" :key="index">
-                <v-icon color="white">fas fa-smile</v-icon>
+                <img class="user-img" v-if="JSON.parse(sub.stream.connection.data).userImg===''" src="@/../public/Image/user_profile.png" />
+                <img class="user-img" v-else :src="JSON.parse(sub.stream.connection.data).userImg"/>
                 <p class="inline-p">{{JSON.parse(sub.stream.connection.data).userNickname}}</p>
             </div>
         </div>
@@ -84,10 +92,6 @@ export default {
         if(container.scrollHeight != null){
             container.scrollTop = container.scrollHeight;
         }
-        // document.getElementById('sendMessage').addEventListener('focus', ()=>{
-        //     document.getElementById('bts-unity').setAttribute('tabindex','-1');
-        //     console.log('focus');
-        // })
     },
     created() {
         this.user = this.$store.getters.getUser;
