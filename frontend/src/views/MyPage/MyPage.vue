@@ -85,13 +85,7 @@ export default {
   data() {
     return {
       newAgency: ["SKT", "KT", "LG U+"],
-      user: {
-        userId: 'testest',
-        userImg: '',
-        userNickname:'다우니',
-        userPhone:'01012341234',
-        userPw:'',
-      },
+      user: {},
       passwordCheck:'',
       originalPhone:'', //수정전 원래 폰번호
       checkPhone:false, //폰중복검사
@@ -103,14 +97,14 @@ export default {
   },
   created(){
     //vuex에서 가져오는 부분 추가예정
+    this.user = this.$store.getters.getUser;
     this.originalPhone = this.user.userPhone;
+    this.imageUrl=this.user.userImg;
     console.log("지금 내 번호:"+this.originalPhone);
   },
   methods:{
     update:function(){
       this.user.userImg = this.imageUrl;
-
-
       if(this.user.userNickname.length<=0 || this.user.userNickname.length>6){
         Swal.fire({
           icon: "error",

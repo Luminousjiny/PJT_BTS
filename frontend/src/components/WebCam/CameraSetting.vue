@@ -126,11 +126,13 @@ export default {
     changeCamera(){
       this.publisher.stream.outboundStreamOpts.publisherProperties.videoSource = this.selectWebCam;
       this.publisher.publishVideo(true);
+      this.$store.commit('setVideo',this.selectWebCam);
       console.log("change camera =>",this.publisher);
     },
     changeAudio(){
       this.publisher.stream.outboundStreamOpts.publisherProperties.audioSource = this.selectAudio;
       this.publisher.publishAudio(true);
+      this.$store.commit('setAudio',this.selectAudio);
       console.log("change audio =>",this.publisher);
     },
     joinSession() {
