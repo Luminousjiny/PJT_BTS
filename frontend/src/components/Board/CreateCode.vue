@@ -290,7 +290,7 @@ export default {
                 }
               })
               .catch(error2 => console.log('error', error2));
-          },3000);
+          },5000);
         })
         .catch(error => console.log('error', error));
     },
@@ -357,7 +357,7 @@ export default {
 
                 })
             .catch(error2 => console.error('error', error2));
-        },3000);
+        },5000);
         })
         .catch(error => console.error('error', error));
     },
