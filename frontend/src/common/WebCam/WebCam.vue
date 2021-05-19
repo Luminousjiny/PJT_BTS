@@ -83,6 +83,7 @@ export default {
       this.joinSession();
     },
     destroyed(){
+      if (this.data.session) this.data.session.disconnect();
       this.data.session = undefined;
       this.data.mainStreamManager = undefined;
       this.data.publisher = undefined;
