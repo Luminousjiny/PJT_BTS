@@ -7,6 +7,7 @@
             ref = "hookInstance"
             :height = height
             :width = width
+            :hideFooter="true"
             >
             </unity>
             <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
@@ -139,7 +140,7 @@ export default {
     width : 55%;
     height: max-content;
     position: absolute;
-    bottom : 0;
+    bottom :20px;
     right : 10%;
 }
 #game-container{
