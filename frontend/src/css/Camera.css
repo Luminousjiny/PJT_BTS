@@ -138,7 +138,7 @@
 .inactive-user-img{
     width : 30%;
     border-radius: 50%;
-    background-color: var(--color-white);
+    background-color: none;
     display: block;
     margin: auto;
     margin-top : 10%;
