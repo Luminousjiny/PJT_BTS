@@ -42,6 +42,20 @@ export default {
       this.schoolName=this.$store.state.schoolName;
       this.user=this.$store.getters.getUser;
     },
+    mounted() {
+        document.addEventListener(
+        "click",
+        function (event) {
+            if (event.target.closest("#game-container")){ // 유니티 가능
+                this.$refs.hookInstance.message('Game Manager','focusing',"true");
+                console.log("true");
+            }else{ // 윈도우 인풋 가능
+                this.$refs.hookInstance.message('Game Manager','focusing',"false");
+                console.log("false");
+            }
+        }.bind(this)
+        );
+    },
     destroyed(){
         clearInterval(this.interval);
     },
@@ -131,13 +145,12 @@ export default {
                 this.width = '950';
                 this.$router.push({name : "Unity"});
             }
-        }
+        },
     }
 }
 </script>
 <style scoped>
 #unity-game{
-    width : 55%;
     height: max-content;
     position: absolute;
     bottom :20px;
