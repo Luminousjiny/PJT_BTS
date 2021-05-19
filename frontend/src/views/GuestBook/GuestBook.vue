@@ -36,15 +36,22 @@ export default {
   components: {},
   data() {
     return {
-      roomId: 1,
-      userId: "hoyeon",
+      schoolId: 0,
+      user: {},
       users: [],
       nowNum: 0,
     };
   },
   created() {
+    if(this.$store.getters.getUser === null && this.$store.getters.getSchoolId === null){
+      this.$router.push('/');
+    }
+
+    this.user=this.$store.getters.getUser;
+    this.schoolId = this.$store.getters.getSchoolId;
+
      http
-      .post(`/v1/gb/${this.roomId}/${this.userId}`)
+      .post(`/v1/gb/${this.schoolId}/${this.user.userId}`)
       .then((res) => {
         this.users = res.data.data;
       })
