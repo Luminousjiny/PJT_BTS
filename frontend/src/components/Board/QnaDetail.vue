@@ -67,11 +67,11 @@
       <div class="qna__answer__header">
         <div class="qna__answer__profile">
           <div class="qna__answer__profile__image">
-            <img :src="question.user.userImg" alt="" v-if="question.user && question.user.userImg!==''">
+            <img :src="user.userImg" alt="" v-if="user && user.userImg!==''">
             <img src="../../assets/profile.png" alt="" v-else>
           </div>
           <div class="qna__answer__profile__name">
-            {{question.user && question.user.userNickname}}
+            {{user && user.userNickname}}
           </div>
         </div>
         <div class="qna__answer__btn__box">
