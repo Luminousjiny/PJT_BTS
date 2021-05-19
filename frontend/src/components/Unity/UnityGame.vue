@@ -2,8 +2,8 @@
     <div id="unity-game" :class="{'small-map':!showMap}" @click="goUnity">
         <div id="game-container">
             <unity
-            src = "../../../public/unity/Build/webGL.json"
-            unityLoader = "../../../public/unity/Build/UnityLoader.js"
+            src = "./unity/Build/webGL.json"
+            unityLoader = "./unity/Build/UnityLoader.js"
             ref = "hookInstance"
             height = "700"
             width = "950"
