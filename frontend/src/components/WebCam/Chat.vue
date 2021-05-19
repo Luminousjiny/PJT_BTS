@@ -5,8 +5,9 @@
             <img src="@/../public/Image/bts_favicon.png" id="bts-icon">
         </div>
         <div class="icon-bottom">
-            <div @click="showChange(1)">
+            <div @click="showChange(1)" class="messenger">
                 <v-icon id="message-icon" :class="{active : showChatting}">fas fa-comments</v-icon>
+                <v-icon class="bell" v-if="showBell">fas fa-bell</v-icon>
             </div>
             <div @click="showChange(2)">
                 <v-icon id="participant-icon" :class="{active : showUsers}">fas fa-users</v-icon>
@@ -34,7 +35,7 @@
                 <td class="user-name">{{message.sender.userNickname}}</td>
                 </tr>
                 <tr>
-                <td class="user-message">{{message.message}}</td>
+                <td><p class="user-message">{{message.message}}</p></td>
                 </tr>
             </table>
             <table class="message-table my-message" v-else>
@@ -46,7 +47,7 @@
                 </td>
                 </tr>
                 <tr>
-                <td class="user-message">{{message.message}}</td>
+                <td><p class="user-message">{{message.message}}</p></td>
                 </tr>
             </table>
             </div>
@@ -88,23 +89,33 @@ export default {
         data : Object,
     },
     updated() {
-        let container = this.$el.querySelector("#receive-container");
-        if(container.scrollHeight != null){
-            container.scrollTop = container.scrollHeight;
-        }
+        let container = this.$el.querySelector("#receive-container,#participant-container");
+        container.scrollTop = container.scrollHeight;
     },
     created() {
         this.user = this.$store.getters.getUser;
     },
+    computed : {
+        showBell : function(){
+            if(this.showChatting){
+                this.data.receiveMessageBell = false;
+                return false;
+            }
+            return this.data.receiveMessageBell;
+        },
+    },
     methods: {
         send(){
-            this.$emit('sendMessage', this.sendMessage);
-            this.sendMessage = '';
+            if(this.sendMessage.length > 0){
+                this.$emit('sendMessage', this.sendMessage);
+                this.sendMessage = '';
+            }
         },
         showChange(type){
             if(type == 1){
                 this.showChatting = true;
                 this.showUsers = false;
+                this.data.receiveMessageBell = false;
             }else if(type == 2){
                 this.showChatting = false;
                 this.showUsers = true;
