@@ -12,7 +12,7 @@
           <div class="left_img">
             <img
               class="user_img"
-               v-if="imageUrl==''||imageUrl==null"
+              v-if="imageUrl==''||imageUrl==null"
               src="../../../public/Image/user_profile.png"
             />
             <img v-else :src="imageUrl"/>
@@ -22,14 +22,14 @@
             </div>
             <ul class="left_ul">
               <li class="delete" @click="delPicture()">삭제</li>
-           </ul>
+          </ul>
           <p class="mid_header">닉네임</p>
           <v-text-field class="input" v-model="user.userNickname" single-line></v-text-field>
         </div>
         <div class="top_rightBox">
-          <router-link class="goCamera" to="/camSetting"
-            >카메라 설정 변경 >></router-link
-          >
+          <router-link class="goCamera" to="/camSetting">
+            카메라 설정 변경 >>
+          </router-link>
 
           <p class="mid_header">비밀번호</p>
           <v-text-field class="input" v-model="user.userPw" type="password" single-line></v-text-field>
@@ -69,7 +69,7 @@
       </div>
       <!--완료-->
       <div class="content_btm">
-        <v-btn class="modify_btn" @click="update()" rounded color="#04338C" dark>완료</v-btn>
+        <v-btn class="modify_btn" @click="update()" rounded color="#04338C" dark>{{isChanged ? '변경하기' : '게임으로'}}</v-btn>
         <a href="#" class="goDelete" @click="deleteUser()">탈퇴하기</a>
       </div>
     </div>
@@ -99,8 +99,21 @@ export default {
     //vuex에서 가져오는 부분 추가예정
     this.user = this.$store.getters.getUser;
     this.originalPhone = this.user.userPhone;
+    this.passwordCheck=this.user.userPw;
     this.imageUrl=this.user.userImg;
     console.log("지금 내 번호:"+this.originalPhone);
+  },
+  computed:{
+    isChanged(){
+      const origin = this.$store.state.user;
+      let flag=false;
+      Object.keys(origin).forEach(key=>{
+        console.log(key,this.user[key],origin[key])
+        if(this.user[key]!==origin[key])
+          flag=true;
+      })
+      return flag
+    }
   },
   methods:{
     update:function(){
@@ -115,7 +128,7 @@ export default {
         return;
       }
 
-       if(this.user.userPw.length<8 || this.user.userPw.length>=12){
+      if(this.user.userPw.length<8 || this.user.userPw.length>=12){
         Swal.fire({
           icon: "error",
           text: "비밀번호는 8 ~ 11자입니다. ",
@@ -125,7 +138,7 @@ export default {
         return;
       }
 
-       if(this.user.userPw != this.passwordCheck){
+      if(this.user.userPw != this.passwordCheck){
         Swal.fire({
           icon: "error",
           text: "비밀번호가 일치하지 않습니다. ",
@@ -153,17 +166,21 @@ export default {
       }
 
 
-    if(!this.checkAuth){
-        Swal.fire({
-          icon: "error",
-          text: "인증번호가 올바르지 않습니다. ",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-        return;
+      if(!this.checkAuth){
+          Swal.fire({
+            icon: "error",
+            text: "인증번호가 올바르지 않습니다. ",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          return;
       }
-
-      
+      if(!this.isChanged){
+        this.$router.push({
+          name: 'Unity'
+        })
+        return
+      }
       const formData = new FormData();
       formData.append("file", this.file);
       formData.append("request", new Blob([JSON.stringify(this.user)], { type: "application/json" }));
@@ -176,26 +193,28 @@ export default {
       })
       .then((res) => {
         if(res.data.status === "success"){
-              Swal.fire({
-                icon: "success",
-                html: "회원수정이 완료되었습니다",
-                showConfirmButton: false,
-                timer: 2000,
-              });
+          Swal.fire({
+            icon: "success",
+            html: "회원수정이 완료되었습니다",
+            showConfirmButton: false,
+            timer: 2000,
+          });
 
-              this.user.userImg = res.data.data;
-              this.imageUrl = res.data.data;
-              //this.$store.commit('setUserInfo',this.userInfo);
-              //this.$router.push("/")
-            }else{
-              Swal.fire({
-              icon: "error",
+          this.user.userImg = res.data.data;
+          this.imageUrl = res.data.data;
+          this.$store.commit('setUser',this.userInfo);
+          this.$router.push({
+            name: 'Unity'
+          })
+        } else{
+          Swal.fire({
+            icon: "error",
             text: "회원정보 수정에 실패하였습니다.",
-           showConfirmButton: false,
+            showConfirmButton: false,
             timer: 1000,
-        });
-        return;
-          }
+          });
+          return;
+        }
       })
       .catch((err) => {
         console.error(err);

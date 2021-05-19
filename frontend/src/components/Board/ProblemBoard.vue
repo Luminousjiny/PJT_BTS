@@ -187,6 +187,20 @@ export default {
       .then((res)=>{
         if(res.status===200){
           this.proList=res.data.data.reverse();
+          this.proList.forEach(pro => {
+            const dis1 = Hangul.disassemble(pro.proTitle, true);
+            const dis2 = Hangul.disassemble(pro.user.userNickname, true);
+            const cho1 = dis1.reduce(function (prev, elem) {
+                  elem = elem[0] ? elem[0] : elem;
+                  return prev + elem;
+              }, "");
+            const cho2 = dis2.reduce(function (prev, elem) {
+                  elem = elem[0] ? elem[0] : elem;
+                  return prev + elem;
+              }, "");
+            pro['proTitleCho']=cho1;
+            pro['proUserCho']=cho2;
+          })          
           this.showModal=false;
         }
       })

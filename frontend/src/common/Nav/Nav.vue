@@ -91,7 +91,7 @@ export default {
   created(){
     this.user=this.$store.getters.getUser;
     if(this.user===null){
-      this.$router.push('/');
+      window.location.href="https://k4b107.p.ssafy.io:8000/"
     }
   },
   mounted() {
@@ -108,11 +108,11 @@ export default {
       this.showMenu = !this.showMenu;
     },
     handleMypage(){
-      this.$router.push("/mypage");
+      window.location.href="https://k4b107.p.ssafy.io:8000/mypage"
     },
     handleLogout(){
       this.$store.commit('logout');
-      this.$router.push('/')
+      window.location.href="https://k4b107.p.ssafy.io:8000/"
     },
   },
 };

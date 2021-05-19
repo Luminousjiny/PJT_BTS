@@ -12,6 +12,9 @@
             <user-video id="preview-camera" class="publisher flex-item" :stream-manager="publisher"></user-video>
           </div>
           <div class="right_box">
+            <router-link class="goCamera" to="/mypage">
+              내정보 변경 >>
+            </router-link>
             <ul class="box_ul">
               <li>
                 <v-container>
@@ -61,7 +64,7 @@
             </ul>
           </div>
         </div>
-        <v-btn class="modify_btn" rounded color="#04338C" dark @click="changeSetting">변경 완료</v-btn>
+        <v-btn class="modify_btn" rounded color="#04338C" dark @click="changeSetting">설정 완료</v-btn>
       </div>
     </div>
   </div>
