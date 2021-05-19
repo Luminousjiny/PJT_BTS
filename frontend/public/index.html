@@ -15,11 +15,10 @@
   </body>
   <script src="./unity/Build/UnityLoader.js"></script>
   <script>
-    // var unityInstance = UnityLoader.instantiate(
-    //   'unityContainer',
-    //   './unity/Build/WebGL.json',
-    //   "./unity/Build/UnityLoader.js"
-    // );
+    var unityInstance = UnityLoader.instantiate(
+      'unityContainer',
+      './unity/Build/WebGL.json',
+    );
     function _funcJShook(object){
         document.getElementById('unity-object-name').innerHTML = object;
     }
