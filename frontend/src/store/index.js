@@ -30,6 +30,10 @@ export default new Vuex.Store({
       if(state.schoolId===null) return null;
       return state.schoolId;
     },
+    getSchoolName(state){
+      if(state.schoolName===null) return null;
+      return state.schoolName;
+    },
     getAudio(state){
       return state.audio;
     },
