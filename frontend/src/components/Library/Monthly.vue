@@ -20,6 +20,7 @@
                         color="var(--color-midBlue)"
                         :events="events"
                         :event-color="getEventColor"
+                        :event-more="false"
                         type="month"
                         @click:event="openEvent"
                         @click:more="openEvents"
@@ -167,6 +168,11 @@ export default {
     },
     mounted() {
         this.$refs.calendar.checkChange()
+    },
+    updated() {
+        document.getElementsByClassName('v-calendar-weekly__week').forEach((elem, index) => {
+            elem.setAttribute("style","flex:1 auto !important");
+        });
     },
     methods: {
         getEventColor (event) {
