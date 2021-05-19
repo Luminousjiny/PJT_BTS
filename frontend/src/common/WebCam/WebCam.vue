@@ -54,6 +54,7 @@ export default {
             mirror: false,
           },
           receiveMessage: [],
+          receiveMessageBell : false,
           share : {
             active : false,
             screen : undefined,
@@ -77,7 +78,7 @@ export default {
       this.data.setting.audioSource = this.$store.getters.getAudio;
       this.data.setting.videoSource = this.$store.getters.getVideo;
       let inko = new Inko();
-      this.data.roomName = inko.ko2en(this.schoolName)+"-"+this.location;
+      this.data.roomName = inko.ko2en(this.schoolName.replace(' ',''))+"-"+this.location;
       // console.log(this.data.roomName);
 
       this.joinSession();
@@ -123,6 +124,7 @@ export default {
         });
         this.data.session.on("signal:my-chat", (event) => {
           this.data.receiveMessage.push({sender : JSON.parse(event.from.data), message : event.data});
+          this.data.receiveMessageBell = true;
         });
 
         // this.data.session.on("publisherStartSpeaking", (event) => {
@@ -245,7 +247,7 @@ export default {
           this.data.setting.publishVideo = !this.data.setting.publishVideo;
           this.data.publisher.publishVideo(this.data.setting.publishVideo);
         }
-      }
+      },
     },
 }
 </script>
