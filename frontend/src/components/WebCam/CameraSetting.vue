@@ -5,7 +5,7 @@
     <!--가운데 내용-->
     <div class="camSetting_content">
       <div class="content_inner">
-        <p class="h">마이페이지</p>
+        <p class="h">카메라 설정</p>
         <p class="p">카메라 환경설정을 해주세요</p>
         <div class="boxes">
           <div class="left_box">
@@ -83,7 +83,6 @@ export default {
       OV : undefined,
       roomName : 'setting',
       session : undefined,
-      userName : 'dovvn',
       publisher : undefined,
       webcam: [],
       mic: [],
@@ -99,10 +98,12 @@ export default {
         insertMode: "APPEND",
         mirror: false,
       },
+      user : {},
     };
   },
   created(){
     this.joinSession();
+    this.user = this.$store.getters.getUser;
   },
   destroyed(){
     this.leaveSession();
@@ -144,7 +145,7 @@ export default {
 
       this.getToken(this.roomName).then((token) => {
         this.session
-          .connect(token, { userName: this.userName })
+          .connect(token, this.user)
           .then(() => {
             this.findDevices();
             let publisher = this.OV.initPublisher(undefined, this.setting);
