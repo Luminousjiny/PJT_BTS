@@ -44,7 +44,7 @@ export default {
   mounted(){
     const watch = document.querySelector('.watch');
     console.log(window.innerWidth-100);
-    watch.style.transform=`translate(${window.innerWidth-300}px,50px)`;
+    watch.style.transform=`translate(${window.innerWidth-300}px,180px)`;
   },
   methods:{
     handleWindowMode(){
