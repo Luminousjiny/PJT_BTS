@@ -66,7 +66,6 @@
             id="menus"
             :class="{ 'menu-inactive': !showMenu, 'menu-active': showMenu }"
           >
-            <li><button @click="handleCharacter">캐릭터 변경</button></li>
             <li><button @click="handleMypage">마이페이지</button></li>
             <li><button @click="handleLogout">로그아웃</button></li>
           </ul>
@@ -107,9 +106,6 @@ export default {
   methods: {
     showMenus() {
       this.showMenu = !this.showMenu;
-    },
-    handleCharacter(){
-
     },
     handleMypage(){
       this.$router.push("/mypage");
