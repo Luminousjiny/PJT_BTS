@@ -78,8 +78,9 @@ export default {
       this.data.setting.audioSource = this.$store.getters.getAudio;
       this.data.setting.videoSource = this.$store.getters.getVideo;
       let inko = new Inko();
-      this.data.roomName = inko.ko2en(this.schoolName.replace(' ',''))+"-"+this.location;
-      // console.log(this.data.roomName);
+      let name = this.schoolName.replaceAll(" ","");
+      this.data.roomName = inko.ko2en(name)+"-"+this.location;
+      console.log(this.data.roomName);
 
       this.joinSession();
     },
