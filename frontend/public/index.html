@@ -13,20 +13,16 @@
   <body>
     <div id="app"></div>
   </body>
-  <script src="./unity/Build/UnityLoader.js"></script>
   <script>
-    var unityInstance = UnityLoader.instantiate(
-      'unityContainer',
-      './unity/Build/WebGL.json',
-    );
     function _funcJShook(object){
-        document.getElementById('unity-object-name').innerHTML = object;
+      document.getElementById('unity-object-name').innerHTML = object;
     }
     function _roomJShook(school){
-        document.getElementById('unity-school-name').innerHTML = school;
+      document.getElementById('unity-school-name').innerHTML = school;
     }
     function _userJShook(users){
-        document.getElementById('unity-users-name').innerHTML = users;
+      document.getElementById('unity-users-name').innerHTML = users;
     }
   </script>
+  <!-- <script src="./unity/Build/UnityLoader.js"></script> -->
 </html>
