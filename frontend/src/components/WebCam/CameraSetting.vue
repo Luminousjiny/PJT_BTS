@@ -83,7 +83,6 @@ export default {
       OV : undefined,
       roomName : 'setting',
       session : undefined,
-      userName : 'dovvn',
       publisher : undefined,
       webcam: [],
       mic: [],
@@ -99,10 +98,12 @@ export default {
         insertMode: "APPEND",
         mirror: false,
       },
+      usere : {},
     };
   },
   created(){
     this.joinSession();
+    user = this.$store.getters.getUser;
   },
   destroyed(){
     this.leaveSession();
@@ -141,7 +142,7 @@ export default {
 
       this.getToken(this.roomName).then((token) => {
         this.session
-          .connect(token, { userName: this.userName })
+          .connect(token, user)
           .then(() => {
             this.findDevices();
             let publisher = this.OV.initPublisher(undefined, this.setting);
