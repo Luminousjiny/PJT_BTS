@@ -36,16 +36,20 @@ export default {
             participants : 1,
             users : [],
             usersName : "",
+            interval : '',
         }
     },
     created() {
-        setInterval(()=>{
-            if(document.getElementById('unity-users-name').innerHTML != this.usersName){
+        this.interval = setInterval(()=>{
+            if(document.getElementById('unity-users-name') !== null && document.getElementById('unity-users-name').innerHTML != this.usersName){
                 this.usersName = document.getElementById('unity-users-name').innerHTML;
                 this.users = this.usersName.split(',');
                 console.log(this.users);
             }
         },1000);
+    },
+    destroyed(){
+        clearInterval(this.interval);
     },
     updated() {
         let container = this.$el.querySelector("#participant-container");
