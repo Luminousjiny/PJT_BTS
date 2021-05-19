@@ -88,15 +88,6 @@ export default {
     created() {
         this.user = this.$store.getters.getUser;
     },
-    mounted() {
-        document.addEventListener(
-            "click",
-            function (event) {
-                if (event.target.closest("#unity-game")) return;
-                document.getElementById('sendMessage').focus();
-            }.bind(this)
-        );
-    },
     methods: {
         send(){
             this.$emit('sendMessage', this.sendMessage);
