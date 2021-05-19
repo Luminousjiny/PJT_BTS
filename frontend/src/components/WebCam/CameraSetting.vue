@@ -111,6 +111,9 @@ export default {
     changeSetting(){
       // 설정 변경
       this.leaveSession();
+      this.$router.push({
+        name:'Unity',
+      })
     },
     findDevices(){
       this.OV.getDevices().then(devices => {

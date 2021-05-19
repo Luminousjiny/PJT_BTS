@@ -1,7 +1,7 @@
 <template>
     <div id="youtube-detail">
         <div class="youtube-video flex-item">
-            <iframe type="text/html" :src="'https://www.youtube.com/embed/'+videoID" frameborder="0" allowfullscreen></iframe>
+            
         </div>
         <div class="youtube-info flex-item scroll">
             <p class="youtube-title" v-html="videoDetail.snippet.title"/>
@@ -9,7 +9,7 @@
             <div class="youtube-description">
                 <br>
                 <p class="btnShowDesc" v-if="!showDescription" @click="showDescription = true">더보기</p>
-                <p v-if="showDescription" v-html="videoDetail.snippet.description"/>
+                <p v-if="showDescription">{{videoDetail.snippet.description}}</p>
                 <br>
                 <p v-if="showDescription" class="btnShowDesc" @click="showDescription = false">간략히</p>
             </div>
@@ -28,6 +28,12 @@ export default {
     props : {
         videoDetail : Object,
     },
+    mounted(){
+      document.querySelector('.youtube-video').innerHTML = `<iframe type="text/html" id="player" src="https://www.youtube.com/embed/${this.videoID}" frameborder="0" allowfullscreen></iframe>`
+    },
+    beforeUpdate(){
+      document.querySelector('.youtube-video').innerHTML = `<iframe type="text/html" id="player" src="https://www.youtube.com/embed/${this.videoID}" frameborder="0" allowfullscreen></iframe>`
+    },
     computed : {
         videoID : function(){
             if(typeof(this.videoDetail.id) != "object"){
@@ -36,7 +42,7 @@ export default {
                 return this.videoDetail.id.videoId;
             }
         }
-    }
+    },
 }
 </script>
 

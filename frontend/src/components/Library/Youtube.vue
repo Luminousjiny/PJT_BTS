@@ -42,7 +42,16 @@ export default {
             },
             location : "library",
             dialog : false,
+            player :  null,
         }
+    },
+    watch:{
+      dialog: function(){
+        if(!this.dialog){
+          const a = document.querySelector('#player');
+          a && a.remove();
+        }
+      }
     },
     methods: {
         showVideoDetail(video){
