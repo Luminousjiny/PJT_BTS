@@ -143,7 +143,7 @@
             {{code.user.userNickname}}
           </td>
           <td>{{code.codeMemory.slice(0,code.codeMemory.length-2)}}<span>{{code.codeMemory.slice(code.codeMemory.length-2,)}}</span></td>
-          <td>{{code.codeTime.slice(0,code.codeTime.length-2)}}<span>{{code.codeTime.slice(code.codeTime.length-1,)}}</span></td>
+          <td>{{code.codeTime.slice(0,code.codeTime.length-1)}}<span>{{code.codeTime.slice(code.codeTime.length-1,)}}</span></td>
           <td>{{code.codeResult}}</td>
           <td>{{code.codeLan}}</td>
           <td>{{$moment(code.codeDate).format('YYYY-MM-DD')}}</td>
