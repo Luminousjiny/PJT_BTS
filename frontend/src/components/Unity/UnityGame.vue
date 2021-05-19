@@ -2,11 +2,11 @@
     <div id="unity-game" :class="{'small-map':!showMap}" @click="goUnity">
         <div id="game-container">
             <unity
-            src = "./unity/Build/webGL.json"
-            unityLoader = "./unity/Build/UnityLoader.js"
+            src = "../../../public/unity/Build/webGL.json"
+            unityLoader = "../../../public/unity/Build/UnityLoader.js"
             ref = "hookInstance"
-            :height = height
-            :width = width
+            height = "700"
+            width = "950"
             >
             </unity>
             <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
