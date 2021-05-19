@@ -5,8 +5,8 @@
             src = "./unity/Build/webGL.json"
             unityLoader = "./unity/Build/UnityLoader.js"
             ref = "hookInstance"
-            height = "700"
-            width = "950"
+            :height = height
+            :width = width
             >
             </unity>
             <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
