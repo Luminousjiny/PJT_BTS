@@ -41,8 +41,6 @@ public class GuestBookController {
             Room room = roomService.findByRoomId(roomId);
             User user = userService.findByUserId(userId);
 
-            System.out.println(roomId+","+userId);
-
             GuestBook guestBook = guestBookService.findByRoomAndUser(room, user);
             if(guestBook == null){ //넣기
                 GuestBook gb = GuestBook.createGuestBook();
