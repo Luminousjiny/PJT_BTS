@@ -128,6 +128,10 @@
     border-top-right-radius: 20px;
     width : 100%;
     margin : 0px!important;
+    min-width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .inactive-user{
     position: absolute;
@@ -145,7 +149,6 @@
     margin-bottom: 5%;
 }
 .inactive-user-name{
-    font-size : var(--font-size-30);
     font-family: 'AppleSDGothicNeoSB';
     font-weight: var(--weight-regular);
     color : var(--color-white);
@@ -183,7 +186,12 @@
 .width-40{
     max-width: 40%;
 }
-.width-30{
+
+.width-40 .inactive-user-name{
+    font-size: var(--font-size-30);
+}
+
+.width-30 {
     max-width : 30%;
 }
 
