@@ -23,6 +23,7 @@
 #user-icon{
     height: 55px;
     width: 55px;
+    border-radius: 50%;
 }
 #user-level{
     display: inline-block;
