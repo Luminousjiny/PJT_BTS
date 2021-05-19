@@ -233,7 +233,7 @@ export default {
                             this.$router.push({
                               name: 'ProblemDetail',
                               params:{
-                                id: this.proId,
+                                id: this.content.proId,
                               }
                             })
                           }
