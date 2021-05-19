@@ -73,8 +73,9 @@ export default {
       //   return ;
       // }
       this.user = this.$store.getters.getUser;
-      this.schoolName = this.$store.state.SchoolName;
-
+      this.schoolName = this.$store.getters.getSchoolName;
+      this.data.setting.audioSource = this.$store.getters.getAudio;
+      this.data.setting.videoSource = this.$store.getters.getVideo;
       let inko = new Inko();
       this.data.roomName = inko.ko2en(this.schoolName)+"-"+this.location;
       // console.log(this.data.roomName);
