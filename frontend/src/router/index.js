@@ -42,11 +42,6 @@ const routes = [
     component: Login,
     children: [
       {
-        path: "character",
-        name: "Character",
-        component: Character,
-      },
-      {
         path: "camera",
         name: "Camera",
         component: Camera,
@@ -97,18 +92,6 @@ const routes = [
     name: "CamSetting",
     component: CamSetting,
   },
-  // { // 게임 부분 수정 필요 - 잘모름
-  //   path: '/school',
-  //   name: 'School',
-  //   componenet: School,
-  //   children: [
-  //     {
-  //       path:"",
-  //       name:"SchoolList",
-  //       component: SchoolList
-  //     },
-  //   ]
-  // },
   {
     path: "/computer",
     name: "Computer",
@@ -192,16 +175,6 @@ const routes = [
     path: "/rest",
     name: "Rest",
     component: Rest,
-  },
-  {
-    path: "/play",
-    name: "Play",
-    component: Play,
-  },
-  {
-    path: "/office",
-    name: "Office",
-    component: Office,
   },
   {
     path: "/award",
