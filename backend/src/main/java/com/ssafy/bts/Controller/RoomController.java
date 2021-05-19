@@ -19,13 +19,15 @@ public class RoomController {
     private final RoomService roomService;
 
     @ApiOperation(value = "최초 방 생성시", notes = "유니티에서 생성된 학교이름을 받아서 db에 방정보 넣고 roomId반환", response = BaseResponse.class)
-    @PostMapping
-    public BaseResponse createRoom(@ApiParam(value = "학교이름") @RequestBody String roomName) throws IOException {
+    @PostMapping("/{roomName}")
+    public BaseResponse createRoom(@ApiParam(value = "학교이름") @PathVariable String roomName) throws IOException {
         BaseResponse response = null;
 
         try {
-            Room room = Room.createRoom(roomName);
-            roomService.save(room);
+            if(roomService.findByRoomName(roomName) == null){ // 존재하지 않을 때만 DB에 추가
+                Room room = Room.createRoom(roomName);
+                roomService.save(room);
+            }
             int roomId = roomService.findByRoomName(roomName).getRoomId();
             response = new BaseResponse("success", roomId);
         } catch (IllegalStateException e) {
