@@ -84,6 +84,10 @@ export default {
         if(container.scrollHeight != null){
             container.scrollTop = container.scrollHeight;
         }
+        // document.getElementById('sendMessage').addEventListener('focus', ()=>{
+        //     document.getElementById('bts-unity').setAttribute('tabindex','-1');
+        //     console.log('focus');
+        // })
     },
     created() {
         this.user = this.$store.getters.getUser;
