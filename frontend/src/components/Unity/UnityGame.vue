@@ -30,6 +30,7 @@ export default {
             linked : false,
             height : '700',
             width : '950',
+            interval : '',
         }
     },
     components : {Unity},
@@ -39,6 +40,9 @@ export default {
       }
       this.schoolName=this.$store.state.schoolName;
       this.user=this.$store.getters.getUser;
+    },
+    destroyed(){
+        clearInterval(this.interval);
     },
     computed : {
         showMap : function(){
@@ -58,29 +62,29 @@ export default {
             this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
             this.linked = true;
             this.objectName = "";
-            setInterval(()=>{
+            this.interval = setInterval(()=>{
                 if(document.getElementById('unity-object-name').innerHTML != this.objectName){
                     this.objectName = document.getElementById('unity-object-name').innerHTML;
                     switch (this.objectName) {
-                        case "blackboard": // 정보공유/코드공유 - blackboardinformation
+                        case "information": // 정보공유/코드공유 - blackboard
                             this.$router.push({name : 'InfoBoard'});
                             break;
-                        case "noticeboard": // Q&A게시판 - noticeboardqna
+                        case "qna": // Q&A게시판 - noticeboard
                             this.$router.push({name : 'QnaBoard'});
                             break;
-                        case "desk": // 컴퓨터실 웹캠 - computer
+                        case "computer": // 컴퓨터실 웹캠 - desk
                             this.$router.push({name : 'Computer'});
                             break;
-                        case "vendingmachine": // 휴게실 웹캠 - rest
+                        case "rest": // 휴게실 웹캠 - vendingmachine
                             this.$router.push({name : 'Rest'});
                             break;
-                        case "table": // 급식실 웹캠 - cook
+                        case "cook": // 급식실 웹캠 - table
                             this.$router.push({name : 'Cook'});
                             break;
                         case "calendar": // 공부 플래너
                             this.$router.push({name : 'Calendar'});
                             break;
-                        case "advice": // 쓴소리 영상 - youtube
+                        case "youtube": // 쓴소리 영상 - advice
                             this.$router.push({name : 'Youtube'});
                             break;
                         case "guestbook":

@@ -18,7 +18,7 @@ export default {
   },
   computed : {
     showUnity : function(){
-      if(this.$route.name === "Camera" || this.$route.name === "MyPage" || this.$route.name === "CamSetting"){
+      if(this.$route.name === "MyPage" || this.$route.name === "CamSetting"){
         return false;
       }
       return true;
