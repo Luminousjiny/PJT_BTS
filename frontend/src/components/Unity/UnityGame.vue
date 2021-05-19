@@ -100,10 +100,7 @@ export default {
                       .then(res=>{
                         console.log(res);
                         if(res.data.data==="존재하지 않는 방입니다."){
-                          const data={
-                            roomName: this.schoolName
-                          }
-                          http.post(`v1/room`,JSON.stringify(data))
+                          http.post(`v1/room/${this.schoolName}`)
                             .then(res2=>{
                               this.$store.commit('setSchool',res2.data.data,this.schoolName);
                               console.log('방 생성');

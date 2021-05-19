@@ -127,7 +127,9 @@ export default {
          const token = res.data["auth_token"];
          if(token){
             this.$store.commit('login',res.data.user);
-            this.$router.push("/computer"); // 경로 수정 ✅ 
+            this.$router.push({
+              name:'CamSetting'
+            }); // 경로 수정 ✅ 
           }
           else{
             alert(res.data['message']);
