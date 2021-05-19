@@ -62,25 +62,25 @@ export default {
                 if(document.getElementById('unity-object-name').innerHTML != this.objectName){
                     this.objectName = document.getElementById('unity-object-name').innerHTML;
                     switch (this.objectName) {
-                        case "information": // 정보공유/코드공유 - blackboard
+                        case "blackboard": // 정보공유/코드공유 - blackboardinformation
                             this.$router.push({name : 'InfoBoard'});
                             break;
-                        case "qna": // Q&A게시판 - noticeboard
+                        case "noticeboard": // Q&A게시판 - noticeboardqna
                             this.$router.push({name : 'QnaBoard'});
                             break;
-                        case "computer": // 컴퓨터실 웹캠 - desk
+                        case "desk": // 컴퓨터실 웹캠 - computer
                             this.$router.push({name : 'Computer'});
                             break;
-                        case "rest": // 휴게실 웹캠 - vendingmachine
+                        case "vendingmachine": // 휴게실 웹캠 - rest
                             this.$router.push({name : 'Rest'});
                             break;
-                        case "cook": // 급식실 웹캠 - table
+                        case "table": // 급식실 웹캠 - cook
                             this.$router.push({name : 'Cook'});
                             break;
                         case "calendar": // 공부 플래너
                             this.$router.push({name : 'Calendar'});
                             break;
-                        case "youtube": // 쓴소리 영상 - advice
+                        case "advice": // 쓴소리 영상 - youtube
                             this.$router.push({name : 'Youtube'});
                             break;
                         case "guestbook":

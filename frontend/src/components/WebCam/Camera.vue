@@ -94,7 +94,8 @@ export default {
     location : String,
   },
   created() {
-    this.schoolName = this.$store.state.schoolName;
+    this.schoolName = this.$store.getters.getSchoolName;
+    console.log(this.$store.getters.getSchoolName);
   },
   computed : {
     setWidth40 : function(){

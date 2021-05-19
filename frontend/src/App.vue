@@ -1,7 +1,7 @@
 <template>
   <div id="app" data-app>
     <router-view />
-    <UnityGame v-if="$store.state.user!==null"/>
+    <UnityGame v-if="$store.state.user!==null && showUnity"/>
   </div>
 </template>
 <script>
@@ -16,6 +16,14 @@ export default {
   components : {
     UnityGame,
   },
+  computed : {
+    showUnity : function(){
+      if(this.$route.name === "Camera" || this.$route.name === "MyPage" || this.$route.name === "CamSetting"){
+        return false;
+      }
+      return true;
+    }
+  }
 }
 </script>
 <style>
