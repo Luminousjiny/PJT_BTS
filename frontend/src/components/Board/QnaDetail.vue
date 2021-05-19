@@ -8,7 +8,7 @@
             글 목록보기
           </button>
         </div>
-        <div class="qna__question__header__right">        
+        <div v-if="user.userId===question.user.userId" class="qna__question__header__right">        
           <button class="qna__question__header__editbtn" @click="handleClickEdit">
             <font-awesome-icon :icon="['fas', 'pencil-alt']" size="1x" />
             수정
@@ -113,10 +113,11 @@ export default {
     return{
       question:{},
       showModal: false,
-      codeList:[]
+      user:{},
     }
   },
   created(){
+    this.user=this.$store.getters.getUser;
     http.get(`v1/qna/detail/${this.$route.params.id}`)
     .then((res)=>{
       if(res.status===200){
@@ -147,6 +148,7 @@ export default {
       },1);
     },
     handleClickDelete(){
+      if(this.user.userId!==this.question.user.userId)  return;
       http.delete(`v1/qna/${this.question.qnaId}`)
       .then((res)=>{
         this.$router.push({
@@ -164,8 +166,8 @@ export default {
         qnaTitle,
         qnaContent,
         qnaId:this.question.qnaId,
-        roomId:this.question.room.roomId,
-        userId: 'jihyeong'
+        roomId: this.$store.getters.getSchoolId,
+        userId: this.user.userId,
       };
       http.put('v1/qna', JSON.stringify(data))
       .then((res)=>{
@@ -186,8 +188,8 @@ export default {
       const data = {
         comContent,
         qnaId:this.question.qnaId,
-        roomId:this.question.room.roomId,
-        userId: 'jihyeong'
+        roomId: this.$store.getters.getSchoolId,
+        userId: this.user.userId,
       };
       http.post('v1/comment', JSON.stringify(data))
       .then((res)=>{

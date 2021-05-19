@@ -17,14 +17,12 @@
             />
             <img v-else :src="imageUrl"/>
           </div>
-          <ul class="left_ul">
-            <li>
+            <div class="input_file">
               <input type="file" id="file" ref="file" accept=".jpg, .png, .jpeg" v-on:change="handleFileUpload()" @change="onChangeImages"/>
-            </li>
-            <li @click="onClickImageUpload()">수정</li>
-            <li>|</li>
-            <li @click="delPicture()">삭제</li>
-          </ul>
+            </div>
+            <ul class="left_ul">
+              <li class="delete" @click="delPicture()">삭제</li>
+           </ul>
           <p class="mid_header">닉네임</p>
           <v-text-field class="input" v-model="user.userNickname" single-line></v-text-field>
         </div>
@@ -58,7 +56,7 @@
             <v-col cols="12" sm="8">
               <v-text-field
                 class="input input_certify"
-                placeholder="발송된 인증번호 6자리를 입력해주세요"
+                placeholder="인증번호 6자리 입력"
                 v-model="authNumber"
                 single-line
               ></v-text-field>
@@ -91,7 +89,7 @@ export default {
         userId: 'testest',
         userImg: '',
         userNickname:'다우니',
-        userPhone:'01071231815',
+        userPhone:'01012341234',
         userPw:'',
       },
       passwordCheck:'',
@@ -105,16 +103,12 @@ export default {
   },
   created(){
     //vuex에서 가져오는 부분 추가예정
-    this.originalPhone = user.userPhone;
-
+    this.originalPhone = this.user.userPhone;
+    console.log("지금 내 번호:"+this.originalPhone);
   },
   methods:{
     update:function(){
-      this.userInfo.userImg = this.imageUrl;
-
-      const formData = new FormData();
-      formData.append("file", this.file);
-      formData.append("user", new Blob([JSON.stringify(this.user)], { type: "application/json" }));
+      this.user.userImg = this.imageUrl;
 
 
       if(this.user.userNickname.length<=0 || this.user.userNickname.length>6){
@@ -147,6 +141,12 @@ export default {
         return;
       }
 
+      //핸드폰 수정 안했으면 바로 true
+      if(this.user.userPhone == this.originalPhone){
+        this.checkPhone = true;
+        this.checkAuth = true;
+      }
+
       
       if(!this.checkPhone){
         Swal.fire({
@@ -169,17 +169,30 @@ export default {
         return;
       }
 
+      
+      const formData = new FormData();
+      formData.append("file", this.file);
+      formData.append("request", new Blob([JSON.stringify(this.user)], { type: "application/json" }));
+
       http
       .put(`v1/user/${this.user.userId}`, formData, {
         headers:{
           "Content-Type":`multipart/form-data`,
         }
       })
-      .then(({data}) => {
+      .then((res) => {
         if(res.data.status === "success"){
-              this.user.userImg = data;
+              Swal.fire({
+                icon: "success",
+                html: "회원수정이 완료되었습니다",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+
+              this.user.userImg = res.data.data;
+              this.imageUrl = res.data.data;
               //this.$store.commit('setUserInfo',this.userInfo);
-              //this.$router.push("/home")
+              //this.$router.push("/")
             }else{
               Swal.fire({
               icon: "error",
@@ -218,7 +231,7 @@ export default {
 		  }
 		})
     },
-    sendSns:function(){ 
+    sendSns:function(){ //핸드폰 중복확인 후 인증번호 발송
       if(this.user.userPhone.length != 11){
         Swal.fire({
           icon: "error",
@@ -229,8 +242,14 @@ export default {
         return;
       }
 
+     
       //핸드폰번호 바꿀때만 인증번호 전송
       if(this.user.userPhone != this.originalPhone){
+         const phone = {
+            phoneNumber: this.user.userPhone,
+            valid : true
+         }
+
         http
           .post("v1/auth", JSON.stringify(phone))
           .then((res) => {
@@ -255,18 +274,30 @@ export default {
           .catch((err) => {
               console.error(err);
           });
+      }else{
+        Swal.fire({
+          icon: "error",
+          text: "현재 등록된 휴대전화 정보와 동일합니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
-    certify:function(){
-       // 인증번호 확인
+    certify:function(){ //인증번호 확인
       http
       .get(`v1/auth/${this.user.userPhone}/${this.authNumber}`)
       .then((res) => {
         if(res.data.status === "success"){
           if(res.data.data == "true"){
-            checkAuth = true;
+            this.checkAuth = true;
+            Swal.fire({
+                icon: "success",
+                html: "본인인증이 완료되었습니다.",
+                showConfirmButton: false,
+                timer: 1000,
+              });
           }else {
-            checkAuth = false;
+            this.checkAuth = false;
             Swal.fire({
               icon: "error",
               text: "인증번호가 일치하지 않습니다. ",
@@ -292,25 +323,30 @@ export default {
         this.file = this.$refs.file.files[0];
     },
     onChangeImages(e) {
-        // console.log(e.target.files)
         const file = e.target.files[0];
         this.imageUrl = URL.createObjectURL(file);
     },
     delPicture(){
       http
-        .post(`v1/user/defaultImg`+this.user.userId)
+        .post(`v1/user/defaultImg/${this.user.userId}`)
         .then((res) => {
           if (res.data.status === "success") {
              Swal.fire({
                 icon: "success",
-                html: "프로필 사진이 삭제되었습니다",
+                html: "프로필 사진이 삭제되었습니다.",
                 showConfirmButton: false,
                 timer: 2000,
               });
-          } else if (data) {
             this.user.userImg = ""; 
             this.imageUrl = ""; //미리보기 삭제 
             //this.$store.commit('setUserInfo',this.user);
+          }else{
+             Swal.fire({
+            icon: "error",
+            text: "프로필 사진 삭제에 실패했습니다. ",
+            showConfirmButton: false,
+            timer: 1000,
+          });
           }
         })
         .catch((err) => {

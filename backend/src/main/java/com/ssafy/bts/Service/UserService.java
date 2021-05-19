@@ -151,4 +151,17 @@ public class UserService {
         return top10List;
     }
 
+    /**
+     * 유저 사진 초기화
+     */
+    @Transactional
+    public void updateUserImg(User user) {
+        Optional<User> findUser = Optional.ofNullable(userRepository.findByUserId(user.getUserId()));
+        if(findUser.isPresent()) { // 값이 있는지 확인 => .isPresent()
+            findUser.get().setUserImg(user.getUserImg());
+        }
+        else{
+            throw new IllegalStateException("잘못된 유저 아이디입니다.");
+        }
+    }
 }

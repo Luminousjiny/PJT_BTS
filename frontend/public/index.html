@@ -9,17 +9,28 @@
     <title>Back To School</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <base href="/" />
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <script src="./unity/Build/UnityLoader.js"></script>
     <script>
+      var unityInstance = UnityLoader.instantiate(
+        'unityContainer',
+        './unity/Build/WebGL.json'
+      );
       function _funcJShook(object){
           document.getElementById('unity-object-name').innerHTML = object;
       };
       function _roomJShook(school){
           document.getElementById('unity-school-name').innerHTML = school;
+          console.log(school);
+      };
+      function _userJShook(users){
+          document.getElementById('unity-users-name').innerHTML = users;
+          console.log(users);
       };
     </script>
     <div id="app"></div>

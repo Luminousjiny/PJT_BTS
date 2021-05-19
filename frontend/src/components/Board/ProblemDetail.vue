@@ -7,7 +7,7 @@
           글 목록보기
         </button>
       </div>
-      <div class="detail__header__right">        
+      <div v-if="user.userId===content.user.userId" class="detail__header__right">        
         <button class="detail__header__editbtn" @click="handleClickEdit">
           <font-awesome-icon :icon="['fas', 'pencil-alt']" size="1x" />
           수정
@@ -41,7 +41,10 @@
     </div>
 
     <div class="detail__profile">
-      <div class="detail__profile__image"></div>
+      <div class="detail__profile__image">
+        <img :src="content.user.userImg" alt="" v-if="content.user && content.user.userImg!==''">
+        <img src="../../assets/profile.png" alt="" v-else>
+      </div>
       <div>
         <div class="detail__profile__name">
           {{content.user && content.user.userNickname}}
@@ -91,7 +94,54 @@
         <th>언어</th>
         <th>제출날짜</th>
         <tr v-for="(code, idx) in content.codeList" :key="idx" @click="function(){ handleClickCode(content.proId,code.codeId) }">
-          <td>{{code.user.userNickname}}</td>
+          <td>
+            <img
+              v-if="user.userLank==='bronze1'"
+              src="@/../public/Image/level/level_bronze1.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='bronze2'"
+              src="@/../public/Image/level/level_bronze2.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='bronze3'"
+              src="@/../public/Image/level/level_bronze3.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='silver1'"
+              src="@/../public/Image/level/level_silver1.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='silver2'"
+              src="@/../public/Image/level/level_silver2.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='silver3'"
+              src="@/../public/Image/level/level_silver3.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='gold1'"
+              src="@/../public/Image/level/level_gold1.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='gold2'"
+              src="@/../public/Image/level/level_gold2.png"
+              id="level-icon"
+            />
+            <img
+              v-else-if="user.userLank==='gold3'"
+              src="@/../public/Image/level/level_gold3.png"
+              id="level-icon"
+            />
+            {{code.user.userNickname}}
+          </td>
           <td>{{code.codeMemory.slice(0,code.codeMemory.length-2)}}<span>{{code.codeMemory.slice(code.codeMemory.length-2,)}}</span></td>
           <td>{{code.codeTime.slice(0,code.codeTime.length-2)}}<span>{{code.codeTime.slice(code.codeTime.length-2,)}}</span></td>
           <td>{{code.codeResult}}</td>
@@ -113,11 +163,13 @@ export default {
   },
   data(){
     return{
+      user:{},
       content:{},
       showModal: false,
     }
   },
   created(){
+    this.user=this.$store.getters.getUser;
     http.get(`v1/pro/detail/${this.$route.params.id}`)
     .then((res)=>{
       if(res.status===200){
@@ -164,8 +216,8 @@ export default {
         proContent,
         proInput,
         proOutput,
-        proId:this.content.proId,
-        userId: 'jihyeong'
+        proId: this.content.proId,
+        userId: this.user.userId,
       };
       http.put('v1/pro', JSON.stringify(data))
       .then((res)=>{
@@ -231,24 +283,28 @@ export default {
   padding: 1em 0;
   display: flex;
   align-items: center;
-}
-.detail__profile__image{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--color-pink);
-  display: inline-block;
-}
-.detail__profile__name{
-  padding-left: 1rem;
-  font-size: var(--font-size-20);
-  font-family: "AppleSDGothicNeoB";
-}
-.detail__profile__date{
-  padding-left: 1rem;
-  font-family: "AppleSDGothicNeoB";
-  font-size: var(--font-size-14);
-  color: var(--color-grey-2);
+  
+  &__image{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-block;
+  }
+  img{
+    width: 40px;
+    height: 40px;
+  }
+  &__name{
+    padding-left: 1rem;
+    font-size: var(--font-size-20);
+    font-family: "AppleSDGothicNeoB";
+  }
+  &__date{
+    padding-left: 1rem;
+    font-family: "AppleSDGothicNeoB";
+    font-size: var(--font-size-14);
+    color: var(--color-grey-2);
+  }
 }
 .detail__title{
   padding: 1rem 0;
@@ -329,6 +385,11 @@ export default {
       font-family: "AppleSDGothicNeoB";
       span{
         color: var(--color-red);
+      }
+      img{
+        transform: translate(-6px,6px);
+        width: 25px;
+        height: 25px;
       }
     }
     td:nth-child(1){

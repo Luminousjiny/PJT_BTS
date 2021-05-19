@@ -7,7 +7,7 @@
           글 목록보기
         </button>
       </div>
-      <div class="infodetail__header__right">        
+      <div v-if="user.userId===content.user.userId" class="infodetail__header__right">        
         <button class="infodetail__header__editbtn" @click="handleClickEdit">
           <font-awesome-icon :icon="['fas', 'pencil-alt']" size="1x" />
           수정
@@ -42,7 +42,10 @@
     </div>
 
     <div class="infodetail__profile">
-      <div class="infodetail__profile__image"></div>
+      <div class="infodetail__profile__image">
+        <img :src="content.user.userImg" alt="" v-if="content.user && content.user.userImg!==''">
+        <img src="../../assets/profile.png" alt="" v-else>
+      </div>
       <div>
         <div class="infodetail__profile__name">{{content.user.userNickname}}</div>
         <div class="infodetail__profile__date">
@@ -72,6 +75,7 @@ export default {
   },
   data(){
     return{
+      user:{},
       content:{
         infoContent:'',
         infoData:'',
@@ -90,6 +94,7 @@ export default {
     }
   },
   created(){
+    this.user=this.$store.getters.getUser;
     http.get(`v1/info/detail/${this.$route.params.id}`)
     .then((res)=>{
       if(res.status===200){
@@ -140,7 +145,7 @@ export default {
         infoTitle : input.value,
         infoContent : html,
         infoId: this.content.infoId,
-        userId : 'jihyeong',
+        userId : this.user.userId,
       };
       http.put('v1/info',JSON.stringify(data))
       .then((res)=>{
@@ -191,25 +196,30 @@ export default {
   padding: 1em 0;
   display: flex;
   align-items: center;
+  
+  &__image{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-block;
+  }
+  img{
+    width: 40px;
+    height: 40px;
+  }
+  &__name{
+    padding-left: 1rem;
+    font-size: var(--font-size-20);
+    font-family: "AppleSDGothicNeoB";
+  }
+  &__date{
+    padding-left: 1rem;
+    font-family: "AppleSDGothicNeoB";
+    font-size: var(--font-size-14);
+    color: var(--color-grey-2);
+  }
 }
-.infodetail__profile__image{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--color-pink);
-  display: inline-block;
-}
-.infodetail__profile__name{
-  padding-left: 1rem;
-  font-size: var(--font-size-20);
-  font-family: "AppleSDGothicNeoB";
-}
-.infodetail__profile__date{
-  padding-left: 1rem;
-  font-family: "AppleSDGothicNeoB";
-  font-size: var(--font-size-14);
-  color: var(--color-grey-2);
-}
+
 .infodetail__title{
   padding: 1rem 0;
   font-family: "AppleSDGothicNeoB";

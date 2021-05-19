@@ -25,6 +25,9 @@ export default {
     }
   },
   created(){
+    if(this.$store.getters.getUser === null && this.$store.getters.getSchoolId === null){
+      this.$router.push('/');
+    }
     if(this.$route.name==="Board"){
       this.$router.push({
         name:'InfoBoard'

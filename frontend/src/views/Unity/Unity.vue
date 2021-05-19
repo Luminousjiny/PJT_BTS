@@ -2,16 +2,9 @@
     <div id="unity">
         <Nav/>
         <div id="unity-container">
-            <User :userName="userName"/>
+            <User/>
             <div id="unity-game-container">
-                <div id="game-container">
-                    <!-- <div id="unity-title">
-                        <div id="school-title">
-                            <img src="@/../public/Image/school_icon.png" id="school-icon">
-                            <p>{{schoolName}}</p>
-                        </div>
-                    </div> -->
-                </div>
+                <div id="game-container"></div>
             </div>
         </div>
     </div>
@@ -28,12 +21,7 @@ export default {
     },
     data() {
         return {
-            userName : 'dovvn',
-            schoolName : '',
         }
-    },
-    created(){
-        this.$emit('showMap');
     },
 }
 </script>
