@@ -14,7 +14,6 @@
         </div>
         <div id="unity-school-name" hidden></div>
         <div id="unity-object-name" hidden></div>
-        <div id="unity-users-name" hidden></div>
     </div>
 </template>
 <script>
@@ -150,9 +149,9 @@ export default {
 <style scoped>
 #unity-game{
     height: max-content;
-    position: absolute;
-    bottom :20px;
-    right : 10%;
+    position: fixed;
+    top: 20%;
+    left: 40%;
 }
 #game-container{
     position: relative;
@@ -170,7 +169,7 @@ export default {
     font-family: "AppleSDGothicNeoB";
 }
 .small-map{
-    right : 0!important;
-    width : 10%!important;
+    left: 90% !important;
+    top: 85% !important;
 }
 </style>
