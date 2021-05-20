@@ -38,6 +38,7 @@
               class="join_input_c" 
               placeholder="8자~11자입니다. " 
               single-line
+              type="password"
             ></v-text-field>
 
             <label class="mid_join_header" for="userpw_check">비밀번호 확인</label>
@@ -48,6 +49,7 @@
               class="join_input_c" 
               placeholder="비밀번호를 다시 입력해주세요. " 
               single-line
+              type="password"
             ></v-text-field>
 
             <p class="move join_next" style="color:#04338C" @click="next" >NEXT >></p>
