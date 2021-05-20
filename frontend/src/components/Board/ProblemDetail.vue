@@ -192,6 +192,7 @@ export default {
       if(res.status===200){
         this.content=res.data.data;
         this.endIdx=Math.ceil(this.content.codeList.length/5);
+        this.content.codeList=this.content.codeList.reverse();
         this.btnList=Array(this.endIdx+1).fill().map((a,idx)=> idx);
         setTimeout(()=>{
           document.getElementById(String(this.currIdx)).classList.add('active');
