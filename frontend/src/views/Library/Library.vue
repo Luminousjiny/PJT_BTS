@@ -3,9 +3,10 @@
         <Nav/>
         <div class="tooltip">
             <audio autoplay controls loop>
-                <source src="../../../public/music/noise-extra-loop.mp3">
+              <!-- <source src="../../../public/music/2021_pop.mp3"> -->
+              <source src="../../../public/music/study_music.mp3">
             </audio>
-            <span class="tooltiptext">백색소음으로 공부에 집중해보세요.</span>
+            <span class="tooltiptext">음악으로 학습효과에 도움을 받아보세요.</span>
         </div>
         <div id="library-container">
             <router-view/>
@@ -43,7 +44,7 @@ export default {
 }
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 200px;
+  width: 240px;
   background-color: #555;
   color: #fff;
   text-align: center;
