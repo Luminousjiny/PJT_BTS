@@ -48,10 +48,8 @@ export default {
         function (event) {
             if (event.target.closest("#game-container")){ // 유니티 가능
                 this.$refs.hookInstance.message('Game Manager','focusing',"true");
-                console.log("true");
             }else{ // 윈도우 인풋 가능
                 this.$refs.hookInstance.message('Game Manager','focusing',"false");
-                console.log("false");
             }
         }.bind(this)
         );

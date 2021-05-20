@@ -80,7 +80,7 @@ export default {
       let inko = new Inko();
       let name = this.schoolName.replaceAll(" ","");
       this.data.roomName = inko.ko2en(name)+"-"+this.location;
-      console.log(this.data.roomName);
+      // console.log(this.data.roomName);
 
       this.joinSession();
     },
