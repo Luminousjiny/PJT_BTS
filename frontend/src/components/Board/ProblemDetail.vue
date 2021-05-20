@@ -93,7 +93,7 @@
         <th>통과여부</th>
         <th>언어</th>
         <th>제출날짜</th>
-        <tr v-for="(code, idx) in content.codeList" :key="idx" @click="function(){ handleClickCode(content.proId,code.codeId) }">
+        <tr v-for="(code, idx) in content.codeList.slice((this.currIdx-1)*5,this.currIdx*5)" :key="idx" @click="function(){ handleClickCode(content.proId,code.codeId) }">
           <td>
             <img
               v-if="user.userLank==='bronze1'"
@@ -142,13 +142,24 @@
             />
             {{code.user.userNickname}}
           </td>
-          <td>{{code.codeMemory.slice(0,code.codeMemory.length-2)}}<span>{{code.codeMemory.slice(code.codeMemory.length-2,)}}</span></td>
-          <td>{{code.codeTime.slice(0,code.codeTime.length-1)}}<span>{{code.codeTime.slice(code.codeTime.length-1,)}}</span></td>
+          <td v-if="code.codeMemory.length>1">{{code.codeMemory.slice(0,code.codeMemory.length-2)}}<span>{{code.codeMemory.slice(code.codeMemory.length-2,)}}</span></td>
+          <td v-else><span>{{code.codeMemory}}</span></td>
+          <td v-if="code.codeTime.length>1">{{code.codeTime.slice(0,code.codeTime.length-1)}}<span>{{code.codeTime.slice(code.codeTime.length-1,)}}</span></td>
+          <td v-else><span>{{code.codeTime}}</span></td>
           <td>{{code.codeResult}}</td>
           <td>{{code.codeLan}}</td>
           <td>{{$moment(code.codeDate).format('YYYY-MM-DD')}}</td>
         </tr>
       </table>
+      <div class="pagenation">
+        <button class="pagenation__btn pagenation__btn__left" @click="handleClickLeft">
+          <font-awesome-icon :icon="['fas', 'chevron-left']" size="1x"/>
+        </button>
+        <button class="pagenation__btn pagenation__btn__number" v-for="(idx) in btnList.slice(startIdx,startIdx+5)" :key="idx*(-1)" :id="idx" @click="handleClickNumber">{{idx}}</button>
+        <button class="pagenation__btn pagenation__right" @click="handleClickRight">
+          <font-awesome-icon :icon="['fas', 'chevron-right']" size="1x"/>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -166,6 +177,10 @@ export default {
       user:{},
       content:{},
       showModal: false,
+      startIdx:1,
+      currIdx:1,
+      endIdx:0,
+      btnList:[],
     }
   },
   created(){
@@ -174,17 +189,54 @@ export default {
     .then((res)=>{
       if(res.status===200){
         this.content=res.data.data;
-        console.log(this.content);
+        this.endIdx=Math.ceil(this.content.codeList.length/5);
+        this.btnList=Array(this.endIdx+1).fill().map((a,idx)=> idx);
+        setTimeout(()=>{
+          document.getElementById(String(this.currIdx)).classList.add('active');
+        },100)
       }
     })
     .catch((err)=>{
       console.error(err);
     })
   },
-
-  mounted(){
-  },
   methods:{
+    handleClickLeft(){
+      if(this.currIdx===1) return;
+      this.currIdx-=1
+      if(this.currIdx<this.startIdx){
+        this.startIdx--;
+        setTimeout(()=>{
+          document.getElementById(String(this.currIdx+1)).classList.remove('active');
+          document.getElementById(String(this.currIdx)).classList.add('active');
+        },30)
+      } else{
+        document.getElementById(String(this.currIdx+1)).classList.remove('active');
+        document.getElementById(String(this.currIdx)).classList.add('active');
+      }
+      
+    },
+    handleClickRight(){
+      if(this.currIdx===this.endIdx) return;
+      this.currIdx+=1
+      if(this.currIdx>this.startIdx+4){
+        this.startIdx++;
+        setTimeout(()=>{
+          document.getElementById(String(this.currIdx-1)).classList.remove('active');
+          document.getElementById(String(this.currIdx)).classList.add('active');
+        },30)
+      } else{
+        document.getElementById(String(this.currIdx-1)).classList.remove('active');
+        document.getElementById(String(this.currIdx)).classList.add('active');
+      }
+
+    },
+    handleClickNumber(e){
+      const num = e.target.innerText;
+      document.getElementById(num).classList.add('active');
+      document.getElementById(String(this.currIdx)).classList.remove('active');
+      this.currIdx=Number(num);
+    },
     handleClickList(){
       this.$router.push({
         name:'ProblemBoard'
@@ -401,5 +453,28 @@ export default {
       color: var(--color-grey-3);
     }
   }
+}
+.pagenation{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  &__btn{
+    font-family: "AppleSDGothicNeoB";
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-grey-4);
+    margin: 0 0.25rem;
+    color: var(--color-grey-1);
+    vertical-align: middle;
+    text-align: center;
+  }
+  &__btn:hover{
+    background-color: var(--color-mainBlue);
+    color: var(--color-white);
+  }
+}
+.active{
+  background-color: var(--color-mainBlue);
+  color: var(--color-white);
 }
 </style>

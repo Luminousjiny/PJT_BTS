@@ -1,11 +1,13 @@
 <template>
   <div id="app" data-app>
+    <loader :isLoading="$store.getters.getIsSubmit"/>
     <router-view />
     <UnityGame v-if="$store.state.user!==null && showUnity"/>
   </div>
 </template>
 <script>
 import UnityGame from '@/components/Unity/UnityGame';
+import Loader from './common/Loader/Loader.vue';
 export default {
   name : "App",
   data() {
@@ -14,6 +16,10 @@ export default {
   },
   components : {
     UnityGame,
+    Loader,
+  },
+  created(){
+    this.$store.commit('setIsSubmit',false)
   },
   computed : {
     showUnity : function(){

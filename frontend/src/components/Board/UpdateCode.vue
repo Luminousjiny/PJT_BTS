@@ -131,7 +131,7 @@ export default {
       if(res.status===200){
         this.content=res.data.data;
         for(let i=0; i<this.content.codeList.length; i++){
-          console.log(this.content.codeList[i].codeId,this.$route.params.codeId)
+          console.error(this.content.codeList[i].codeId,this.$route.params.codeId)
           if(this.content.codeList[i].codeId===Number(this.$route.params.codeId)){
             if(this.$store.getters.getUserId!==this.content.codeList[i].user.userId){
               this.$router.push({
@@ -206,7 +206,6 @@ export default {
             fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
               .then(response2 => response2.json())
               .then(result2 => {
-                console.log(result2);
                 if(result2.result.status.code===15){
                   fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
                     .then(response3 => response3.text())
@@ -245,9 +244,13 @@ export default {
                         })
                         .catch(err => {
                           console.error(err);
+                          this.$store.commit('setIsSubmit',false);
                         })                     
                     })
-                    .catch(error3 => console.log('error', error3));
+                    .catch(error3 => {
+                      console.error('error', error3);
+                      this.$store.commit('setIsSubmit',false);
+                    });
                 } else{
                   switch (result2.result.status.code){
                     case 11:
@@ -291,14 +294,20 @@ export default {
                     })
                     .catch(err => {
                       console.error(error);
+                      this.$store.commit('setIsSubmit',false);
                     }) 
                 }
               })
-              .catch(error2 => console.log('error', error2));
+              .catch(error2 => {
+                console.error('error', error2);
+                this.$store.commit('setIsSubmit',false);
+              });
           },5000);
         })
-        .catch(error => console.log('error', error));
-      this.$store.commit('setIsSubmit',false);
+        .catch(error => {
+          console.error('error', error);
+          this.$store.commit('setIsSubmit',false);
+        });
     },
     handleCompile(){
       // 1 c++
@@ -316,7 +325,6 @@ export default {
       formdata.append("source", this.code);
       formdata.append("compilerId", compiler[this.mode]);
       formdata.append("input", this.input);
-      console.log(typeof this.input);
       var requestOptions = {
         method: 'POST',
         body: formdata,
@@ -342,7 +350,6 @@ export default {
           fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
             .then(response2 => response2.json())
             .then(result2 => {
-              console.log(result2);
               if(result2.result.status.code===15){
                 fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
                   .then(response3 => response3.text())
@@ -350,7 +357,7 @@ export default {
                     this.output+=`메모리 용량 : ${result2.result.memory}kB, 실행 시간 : ${result2.result.time}s\n`
                     this.output+=`${result3}\n`;
                   })
-                  .catch(error3 => console.log('error', error3));
+                  .catch(error3 => console.error('error', error3));
               } else{
                 fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/error?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
                   .then(response3 => response3.text())

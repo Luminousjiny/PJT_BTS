@@ -208,7 +208,7 @@ export default {
                 this.data.session.publish(this.data.publisher);
                 })
                 .catch((error) => {
-                console.log(
+                console.error(
                     "There was an error connecting to the session:",
                     error.code,
                     error.message
@@ -294,7 +294,7 @@ export default {
                     to: [],
                     type: "my-chat",
                 }).then(() => {
-                    console.log("Message successfully sent");
+                  
                 }).catch((error) => {
                     console.error(error);
                 });

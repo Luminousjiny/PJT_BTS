@@ -11,6 +11,11 @@ export default {
   components : {
     CameraSetting,
   },
+  created(){
+    if(this.$store.getters.getUser === null){
+      this.$router.push('/');
+    } 
+  }
 }
 </script>
 

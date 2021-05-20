@@ -63,6 +63,11 @@ export default {
     }
   },
   created(){
+    if(this.$store.getters.getUser!==null){
+      this.$router.push({
+        name:'Unity'
+      })
+    }
     this.component = this;
     this.passwordSchema
       .is()

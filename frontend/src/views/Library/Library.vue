@@ -21,6 +21,15 @@ export default {
     components : {
       Nav,
     },
+    created(){
+        if(this.$store.getters.getUser === null){
+          this.$router.push('/');
+        } else if(this.$store.getters.getSchoolId === null) {
+          this.$router.push({
+            name: 'Unity',
+          })
+        }         
+    }
 }
 </script>
 

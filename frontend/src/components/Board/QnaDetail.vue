@@ -129,7 +129,6 @@ export default {
     .then((res)=>{
       if(res.status===200){
         this.question=res.data.data;
-        console.log(this.question);
       }
     })
     .catch((err)=>{
