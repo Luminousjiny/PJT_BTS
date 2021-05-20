@@ -9,7 +9,7 @@
     <div id="webcam-main">
       <div id="share-container" v-if="data.share.active">
         <div id="share-screen" v-if="data.share.screen">
-          <user-video class="flex-item screen-video" :stream-manager="data.share.screen"></user-video>
+          <user-video class="flex-item screen-video" :stream-manager="data.share.screen" :maxHeight="maxHeight"></user-video>
         </div>
         <div id="youtube-container" v-if="youtubeShare.active">
           <div id="mostPopular-title">
@@ -17,8 +17,8 @@
               <p>인기 동영상</p>
               <v-icon id="btnLeaveYoutube" @click="leaveYoutube">fas fa-times</v-icon>
           </div>
-          <youtube-list :youtubeShare="youtubeShare" v-on:showVideoDetail="showVideoDetail" v-if="youtubeShare.showList"/>
-          <youtube-detail :videoDetail="youtubeShare.videoDetail" v-if="youtubeShare.showDetail"/>
+          <youtube-list :youtubeShare="youtubeShare" v-on:showVideoDetail="showVideoDetail" v-if="youtubeShare.showList" :maxHeight="maxHeight"/>
+          <youtube-detail :videoDetail="youtubeShare.videoDetail" v-if="youtubeShare.showDetail" :maxHeight="maxHeight"/>
         </div>
       </div>
       <div id="video-container" :class="{'flex-column': data.share.active, 'screen-share' : data.share.active}">
@@ -87,6 +87,7 @@ export default {
       },
       screenShare : false,
       schoolName : '',
+      maxHeight : 0,
     }
   },
   props :{
@@ -97,21 +98,27 @@ export default {
     this.schoolName = this.$store.getters.getSchoolName;
     console.log(this.$store.getters.getSchoolName);
   },
+  mounted() {
+    const target = document.querySelector('#webcam-main')
+    const targetRect = target.getBoundingClientRect();
+    this.maxHeight = targetRect.height;
+    document.querySelector('.screen-video video').setAttribute('style',`max-height : ${this.maxHeight-50}px !important`);
+  },
   computed : {
     setWidth40 : function(){
-      if(this.data.subscribers.length < 4 && !this.data.share.active){
+      if(this.data.subscribers.length < 2 && !this.data.share.active){
         return true;
       }
       return false;
     },
     setWidth30 : function(){
-      if(this.data.subscribers.length >= 4 && !this.data.share.active){
+      if(this.data.subscribers.length >= 2 && !this.data.share.active){
         return true;
       }
       return false;
     },
     next : function(){
-      if((!this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*6 > 0 ) || (this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*5 > 0 )){
+      if((!this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*6 > 0 ) || (this.data.share.active && this.data.subscribers.length+1 - (this.page+1)*4 > 0 )){
         return true;
       }
       return false;
@@ -135,12 +142,12 @@ export default {
         if(!this.data.share.active){
           return this.data.subscribers.slice(0,5);
         }
-        return this.data.subscribers.slice(0,4);
+        return this.data.subscribers.slice(0,3);
       }else{
         if(!this.data.share.active){
           return this.data.subscribers.slice(this.page*5, Math.min(this.page*5+6,this.data.subscribers.length));
         }
-        return this.data.subscribers.slice(this.page*4, Math.min(this.page*4+5,this.data.subscribers.length));
+        return this.data.subscribers.slice(this.page*3, Math.min(this.page*3+4,this.data.subscribers.length));
       }
     }
   },

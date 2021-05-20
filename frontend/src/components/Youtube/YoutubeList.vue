@@ -25,6 +25,7 @@ export default {
     props : {
         youtubeShare : Object,
         location : String,
+        maxHeight : Number,
     },
     created() {
         console.log(this.location);
@@ -33,6 +34,10 @@ export default {
         }else{
             this.getYoutubeVideosMostPopular();
         }
+    },
+    mounted() {
+        console.log(document.querySelector('#youtube-videos'));
+        document.querySelector('#youtube-videos').setAttribute('style',`max-height : ${this.maxHeight-80}px !important`);
     },
     methods: {
         getYoutubeVideosMostPopular(){
