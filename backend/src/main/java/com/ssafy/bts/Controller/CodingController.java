@@ -1,6 +1,8 @@
 package com.ssafy.bts.Controller;
 
+import com.google.gson.Gson;
 import com.ssafy.bts.Controller.Request.CodeRequest;
+import com.ssafy.bts.Controller.Request.ComplieRequest;
 import com.ssafy.bts.Controller.Request.ProblemRequest;
 import com.ssafy.bts.Controller.Request.SolveRequest;
 import com.ssafy.bts.Domain.Coding.*;
@@ -11,9 +13,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import okhttp3.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -278,6 +286,55 @@ public class CodingController {
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "컴파일할 때 사용", notes = "String 형식으로 반환", response = BaseResponse.class)
+    @PostMapping("/compile")
+    public BaseResponse Compile(@ApiParam(value = "compile 객체")@RequestBody ComplieRequest request){
+        BaseResponse response = null;
+        try{
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            MediaType mediaType = MediaType.parse("text/plain");
+            MultipartBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("source",request.getSource())
+                    .addFormDataPart("compilerId",Integer.toString(request.getCompilerId()))
+                    .addFormDataPart("input", request.getInput())
+                    .build();
+            Request req = new Request.Builder()
+                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions?access_token=639abfff21416e283799c03557905154")
+                    .method("POST", body)
+                    .build();
+            Response result = client.newCall(req).execute();
+
+            response = new BaseResponse("success", result.body().string());
+        }
+        catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "제출 결과", notes = "String 형식으로 반환", response = BaseResponse.class)
+    @PostMapping("/result/{resultId}")
+    public BaseResponse Result(@ApiParam(value = "결과 번호")@PathVariable int resultId){
+        BaseResponse response = null;
+        try{
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            MediaType mediaType = MediaType.parse("text/plain");
+            Request req = new Request.Builder()
+                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"?access_token=639abfff21416e283799c03557905154")
+                    .build();
+            Response result = client.newCall(req).execute();
+            
+
+            response = new BaseResponse("success", result.body().string());
+        }
+        catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

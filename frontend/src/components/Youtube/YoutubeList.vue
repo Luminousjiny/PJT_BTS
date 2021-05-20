@@ -33,6 +33,9 @@ export default {
             this.getYoutubeVideosMostPopular();
         }
     },
+    mounted() {
+        document.querySelector('#youtube-videos').setAttribute('style',`max-height : ${this.maxHeight-80}px !important`);
+    },
     methods: {
         getYoutubeVideosMostPopular(){
             let http = 'https://www.googleapis.com/youtube/v3/videos?';
