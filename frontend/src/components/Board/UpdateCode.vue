@@ -185,41 +185,45 @@ export default {
         'python':116
       };
       this.code=this.editor.getValue();
-      var formdata = new FormData();
-      formdata.append("source", this.code);
-      formdata.append("compilerId", compiler[this.mode]);
-      formdata.append("input", this.content.proInput);
-      var requestOptions = {
-        method: 'POST',
-        body: formdata,
-        redirect: 'follow'
-      };
       this.$store.commit('setIsSubmit',true);
-      fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          const requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-          };
+      const data={
+        source: this.code,
+        compilerId: compiler[this.mode],
+        input: this.input,
+      }
+      http.post('v1/compile',JSON.stringify(data))
+        .then((res)=>{
+          const json = JSON.parse(res.data.data);
           setTimeout(()=>{
-            fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-              .then(response2 => response2.json())
-              .then(result2 => {
-                if(result2.result.status.code===15){
-                  fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-                    .then(response3 => response3.text())
-                    .then(result3 => {
-                      let output1=result3.replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/(\s*)/g,"");
-                      let output2=this.content.proOutput.replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/(\s*)/g,"");
-                      this.isLoading=false;
+            http.get(`v1/result/${json.id}`)
+              .then((res)=>{
+                const json2 = JSON.parse(res.data.data);
+                if(json2.result.status.code===15){
+                  http.get(`v1/output/${json.id}`)
+                    .then((res)=>{
+                      const output1=res.data.data.replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/(\s*)/g,"");
+                      const output2=this.content.proOutput.replace(/(\r\n\t|\n|\r\t)/gm,"").replace(/(\s*)/g,"");
                       if(output1===output2){
                         this.result="성공";
+                        http.post('v1/solve', JSON.stringify({proId : this.content.proId, userId: this.$store.getters.getUserId})) 
+                          .then(res=>{
+                            if(res.data.data===1){
+                              const user = this.$store.getters.getUser;
+                              const point = user.userPoint+50;
+                              const rankList = ['bronze3','bronze2','bronze1','silver3','silver2','silver1','gold3','gold2','gold1'];
+                              const rank = rankList[point%500];
+                              this.$store.commit('setUser',{...user, userPoint: point, userLank: rank});
+                            }
+                          })
+                          .catch(err=>{
+                            this.$store.commit('setIsSubmit',false);
+                            console.error(err);
+                          })
                       } else{
                         this.result="실패";
                       }
-                      this.memory = result2.result.memory;
-                      this.time = result2.result.time;
+                      this.memory = json2.result.memory;
+                      this.time = json2.result.time;
                       const data = {
                         codeContent: this.code,
                         codeLan : this.mode,
@@ -245,75 +249,27 @@ export default {
                         .catch(err => {
                           console.error(err);
                           this.$store.commit('setIsSubmit',false);
-                        })                     
-                    })
-                    .catch(error3 => {
-                      console.error('error', error3);
-                      this.$store.commit('setIsSubmit',false);
-                    });
-                } else{
-                  switch (result2.result.status.code){
-                    case 11:
-                      this.result="컴파일에러";
-                      break;
-                    case 12:
-                      this.result="런타임 에러"
-                      break;
-                    case 13:
-                      this.result="시간 초과"
-                      break;
-                    case 17:
-                      this.result="메모리 초과"
-                      break;
-                    default:
-                      this.result="실패"
-                  }
-                  this.memory = result2.result.memory;
-                  this.time = result2.result.time;
-                  const data = {
-                    codeContent: this.code,
-                    codeLan : this.mode,
-                    codeMemory: '-',
-                    codeTime: '-',
-                    result: this.result,
-                    roomId: this.$store.getters.getSchoolId,
-                    proId: this.content.proId,
-                    userId: this.$store.getters.getUserId,
-                  };
-                  http.post('v1/code', JSON.stringify(data))
-                    .then(res=>{
-                      if(res.status===200){
-                        this.$store.commit('setIsSubmit',false);
-                        this.$router.push({
-                          name: 'ProblemDetail',
-                          params:{
-                            id: this.content.proId,
-                          }
                         })
-                      }
                     })
-                    .catch(err => {
-                      console.error(error);
+                    .catch((err)=>{
+                      console.error(err);
                       this.$store.commit('setIsSubmit',false);
-                    }) 
+                    })
                 }
               })
-              .catch(error2 => {
-                console.error('error', error2);
+              .catch((err)=>{
+                console.error(err);
                 this.$store.commit('setIsSubmit',false);
-              });
-          },5000);
+              })
+
+          },5000)
         })
-        .catch(error => {
-          console.error('error', error);
+        .catch((err)=>{
+          console.error(err);
           this.$store.commit('setIsSubmit',false);
-        });
+        })
     },
     handleCompile(){
-      // 1 c++
-      // 11 c
-      // 10 java
-      // 99 python
       const compiler={
         'c':11,
         'cpp':1,
@@ -321,58 +277,47 @@ export default {
         'python':116
       };
       this.code=this.editor.getValue();
-      var formdata = new FormData();
-      formdata.append("source", this.code);
-      formdata.append("compilerId", compiler[this.mode]);
-      formdata.append("input", this.input);
-      var requestOptions = {
-        method: 'POST',
-        body: formdata,
-        redirect: 'follow'
-      };
-      fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-        const requestOptions = {
-          method: 'GET',
-          redirect: 'follow'
-        };
-        // 0 waiting
-        // 1 compilation
-        // 3 execution
-        // 11 compilation error
-        // 12 runtime error (ex. division zero)
-        // 13 time limit exceded
-        // 15 success
-        // 17 memory limit exceeded
-        this.output+='소스 코드를 컴파일 중 입니다...\n'
-        setTimeout(()=>{
-          fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-            .then(response2 => response2.json())
-            .then(result2 => {
-              if(result2.result.status.code===15){
-                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/output?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-                  .then(response3 => response3.text())
-                  .then(result3 => {
-                    this.output+=`메모리 용량 : ${result2.result.memory}kB, 실행 시간 : ${result2.result.time}s\n`
-                    this.output+=`${result3}\n`;
-                  })
-                  .catch(error3 => console.error('error', error3));
-              } else{
-                fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions/${result.id}/error?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
-                  .then(response3 => response3.text())
-                  .then(result3 => {
-                    this.output+=`error : ${result2.result.status.name}\n`;
-                    this.output+=`${result3}\n`;
-                  })
-                  .catch(error3 => console.error('error', error3));
-              }
-
-                })
-            .catch(error2 => console.error('error', error2));
-        },5000);
+      const data={
+        source: this.code,
+        compilerId: compiler[this.mode],
+        input: this.input,
+      }
+      http.post('v1/compile',JSON.stringify(data))
+        .then((res)=>{
+          const json = JSON.parse(res.data.data);
+          this.output+='소스 코드를 컴파일 중 입니다...\n';
+          setTimeout(()=>{
+            http.get(`v1/result/${json.id}`)
+              .then((res)=>{
+                const json2 = JSON.parse(res.data.data);
+                if(json2.result.status.code===15){
+                  http.get(`v1/output/${json.id}`)
+                    .then((res)=>{
+                      this.output+=`메모리 용량 : ${json2.result.memory}kB, 실행 시간 : ${json2.result.time}s\n`
+                      this.output+=`${res.data.data}\n`;
+                    })
+                    .catch((err)=>{
+                      console.error(err);
+                    })
+                } else{
+                  http.get(`v1/error/${json.id}`)
+                    .then((res)=>{
+                      this.output+=`error : ${json2.result.status.name}\n`;
+                      this.output+=`${res.data.data}\n`;
+                    })
+                    .catch((err)=>{
+                      console.error(err);
+                    })
+                }
+              })
+              .catch((err)=>{
+                console.error(err);
+              })
+          },5000)
         })
-        .catch(error => console.error('error', error));
+        .catch((err)=>{
+          console.error(err);
+        })
     },
   }
 }

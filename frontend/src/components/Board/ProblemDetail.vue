@@ -7,7 +7,7 @@
           글 목록보기
         </button>
       </div>
-      <div v-if="user.userId===content.user.userId" class="detail__header__right">        
+      <div v-if="user.userId && content.user && user.userId===content.user.userId" class="detail__header__right">        
         <button class="detail__header__editbtn" @click="handleClickEdit">
           <font-awesome-icon :icon="['fas', 'pencil-alt']" size="1x" />
           수정
@@ -51,15 +51,15 @@
         </div>
         <div class="detail__profile__date">
           <font-awesome-icon :icon="['far', 'calendar-alt']" size="1x" />
-          {{$moment(content.proDate).format('YYYY-MM-DD')}}
+          {{content.proDate && $moment(content.proDate).format('YYYY-MM-DD')}}
         </div>
       </div>
     </div>
     <div class="detail__title">
-      {{content.proTitle}}
+      {{content.proTitle && content.proTitle}}
     </div>
     <div class="detail__problem">
-      {{content.proContent}}
+      {{content.proTitle && content.proContent}}
     </div>
     <div class="detail__btn__box">
       <button class="modal_btn" @click="handleClickCreate">코드 작성하기</button>
@@ -175,7 +175,9 @@ export default {
   data(){
     return{
       user:{},
-      content:{},
+      content:{
+        codeList:[],
+      },
       showModal: false,
       startIdx:1,
       currIdx:1,
