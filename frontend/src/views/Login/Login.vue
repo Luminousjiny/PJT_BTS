@@ -9,7 +9,7 @@
           <h1 class="login_header">로그인</h1>
           <p class="text">환영합니다. 로그인 해주세요</p> 
 
-          <form @submit="onSubmit" class="login-form">
+          <form @submit="onSubmit" v-on:keyup.enter="onSubmit" class="login-form">
             <label class="login_mid_header" for="user-id">아이디</label>
             <v-text-field
               id="user-id"
@@ -129,7 +129,7 @@ export default {
             this.$store.commit('login',res.data.user);
             this.$router.push({
               name:'CamSetting'
-            }); // 경로 수정 ✅ 
+            }); 
           }
           else{
             alert(res.data['message']);
