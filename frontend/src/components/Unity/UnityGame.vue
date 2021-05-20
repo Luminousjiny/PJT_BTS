@@ -42,6 +42,18 @@ export default {
       this.user=this.$store.getters.getUser;
     },
     mounted() {
+        const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
+        console.log(top);
+        const target = document.querySelector('#unity-game-container')
+        const targetRect = target.getBoundingClientRect();
+        this.width = targetRect.width;
+        // this.height = document.querySelector('#unity').getBoundingClientRect().height-top;
+        this.height = window.innerHeight-102;
+        const unity = document.querySelector('#unity-game');
+        unity.style.transform = `translate(${targetRect.left}px,102px)`;
+        console.log(targetRect);
+        console.log(window.innerWidth,window.innerHeight);
+        console.log(this.width, this.height);
         document.addEventListener(
         "click",
         function (event) {
@@ -150,8 +162,8 @@ export default {
 #unity-game{
     height: max-content;
     position: fixed;
-    top: 20%;
-    left: 40%;
+    top: 0;
+    left: 0;
 }
 #game-container{
     position: relative;
