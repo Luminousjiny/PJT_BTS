@@ -2,7 +2,7 @@
     <div id="library">
         <Nav/>
         <div class="tooltip">
-            <audio controls loop>
+            <audio autoplay controls loop>
               <!-- <source src="../../../public/music/2021_pop.mp3"> -->
               <source src="../../../public/music/study_music.mp3">
             </audio>
