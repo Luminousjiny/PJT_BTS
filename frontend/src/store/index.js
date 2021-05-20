@@ -16,6 +16,7 @@ export default new Vuex.Store({
     schoolName: null,
     audio: null,
     video: null,
+    isSubmit: false,
   },
   getters:{
     getUser(state){
@@ -39,7 +40,10 @@ export default new Vuex.Store({
     },
     getVideo(state){
       return state.video;
-    }    
+    },
+    getIsSubmit(state){
+      return state.isSubmit;
+    }
   },
   mutations: {
     login(state,user){
@@ -64,6 +68,9 @@ export default new Vuex.Store({
     },
     setAudio(state,selected){
       state.audio=selected;
+    },
+    setIsSubmit(state,status){
+      state.isSubmit=status;
     }
   },
   actions: {},

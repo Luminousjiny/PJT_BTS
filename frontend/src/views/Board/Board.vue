@@ -1,6 +1,8 @@
 <template>
   <div class="board__wrap">
+    <loader :isLoading="$store.getters.getIsSubmit"/>
     <Nav/>
+    <stop-watch v-if="showLink3"/>
     <div class="board__link__box" v-if="showLink">
       <router-link id="information" class="board__link" :to="{name:'InfoBoard'}">정보공유</router-link>
       <span class="board__link__divider">|</span>
@@ -14,14 +16,17 @@
 </template>
 
 <script>
+import Loader from '../../common/Loader/Loader.vue';
 import Nav from '../../common/Nav/Nav.vue'
+import StopWatch from '../../components/Library/StopWatch.vue';
 export default {
-  components: { Nav },
+  components: { Nav,StopWatch, Loader },
   name:'Board',
   data(){
     return {
-      showLink:true,
+      showLink: true,
       showLink2:0,
+      showLink3: false,
     }
   },
   created(){
@@ -47,7 +52,12 @@ export default {
       this.showLink2=3;
     } else{
       this.showLink2=0;
-    }    
+    }
+    if(this.$route.name==='CreateCode' || this.$route.name==='UpdateCode'){
+      this.showLink3=true
+    } else{
+      this.showLink3=false
+    }
   },
   beforeUpdate(){
     if(this.$route.name==='InfoBoard' || this.$route.name==='ProblemBoard'){
@@ -65,13 +75,18 @@ export default {
     } else{
       this.showLink2=0;
     }
+    if(this.$route.name==='CreateCode' || this.$route.name==='UpdateCode'){
+      this.showLink3=true
+    } else{
+      this.showLink3=false
+    }    
   }
 }
 </script>
 
 <style lang="scss">
 .board__wrap{
-  
+  position: relative;
 }
 .board__link__box{
   text-align: center;

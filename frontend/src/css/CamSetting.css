@@ -51,11 +51,13 @@
     border-radius:20px;
 }
 .goCamera {
-  float: left;
+  float: right;
   height: 10px;
-  padding-left: 13rem;
+  padding-right: 1rem;
   font-family: 'AppleSDGothicNeoR';
+  color: var(--color-grey-2);
   font-size: var(--font-size-14);
+  text-decoration: none;
 }
 .box_ul{
     margin-left:5%;

@@ -7,7 +7,6 @@
             </audio>
             <span class="tooltiptext">백색소음으로 공부에 집중해보세요.</span>
         </div>
-        <stop-watch/>
         <div id="library-container">
             <router-view/>
         </div>
@@ -16,12 +15,10 @@
 
 <script>
 import Nav from "@/common/Nav/Nav"
-import StopWatch from '../../components/Library/StopWatch.vue'
 export default {
     name : 'Library',
     components : {
       Nav,
-      StopWatch,
     },
 }
 </script>

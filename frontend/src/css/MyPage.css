@@ -113,7 +113,9 @@ input::placeholder {
   height: 10px;
   padding-left: 13rem;
   font-family: 'AppleSDGothicNeoR';
+  color: var(--color-grey-2);
   font-size: var(--font-size-14);
+  text-decoration: none;
 }
 
 .modify_btn {

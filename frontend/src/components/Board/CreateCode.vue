@@ -87,12 +87,10 @@
 import UpdateProblem from './UpdateProblem.vue';
 import http from '@/util/http-common.js';
 import Swal from 'sweetalert2'
-import Loader from '../../common/Loader/Loader.vue';
 export default {
   name:'CreateCode',
   components:{
     UpdateProblem,
-    Loader,
     Swal,
   },
   data(){
@@ -177,7 +175,7 @@ export default {
         body: formdata,
         redirect: 'follow'
       };
-      this.isLoading=true;
+      this.$store.commit('setIsSubmit',true);
       fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
         .then(response => response.json())
         .then(result => {
@@ -230,6 +228,7 @@ export default {
                       http.post('v1/code', JSON.stringify(data))
                         .then(res=>{
                           if(res.status===200){
+                            this.$store.commit('setIsSubmit',false);
                             this.$router.push({
                               name: 'ProblemDetail',
                               params:{
@@ -266,8 +265,8 @@ export default {
                   const data = {
                     codeContent: this.code,
                     codeLan : this.mode,
-                    codeMemory: `${this.memory}kB`,
-                    codeTime: `${this.time}s`,
+                    codeMemory: '-',
+                    codeTime: '-',
                     result: this.result,
                     roomId: this.$store.getters.getSchoolId,
                     proId: this.content.proId,
@@ -276,6 +275,7 @@ export default {
                   http.post('v1/code', JSON.stringify(data))
                     .then(res=>{
                       if(res.status===200){
+                        this.$store.commit('setIsSubmit',false);
                         this.$router.push({
                           name: 'ProblemDetail',
                           params:{
@@ -293,6 +293,7 @@ export default {
           },5000);
         })
         .catch(error => console.log('error', error));
+      this.$store.commit('setIsSubmit',false);
     },
     handleCompile(){
       // 1 c++
@@ -384,6 +385,7 @@ export default {
 </style>
 <style lang="scss" scoped>
 .code__wrap{
+  position:relative;
   width: 80%;
   margin: auto;
 }

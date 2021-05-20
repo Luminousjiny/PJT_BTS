@@ -44,7 +44,7 @@ export default {
   mounted(){
     const watch = document.querySelector('.watch');
     console.log(window.innerWidth-100);
-    watch.style.transform=`translate(${window.innerWidth-300}px,180px)`;
+    watch.style.transform=`translate(${window.innerWidth-430}px,100px)`;
   },
   methods:{
     handleWindowMode(){
@@ -57,8 +57,8 @@ export default {
     },
     handleDragEnd(e){
       const watch = document.querySelector('.watch');
-      // console.log(Math.abs(e.clientX-this.dragX), Math.abs(e.pageY-this.dragY));
-      watch.style.transform=`translate(${e.pageX-125}px,${e.pageY}px)`;
+      console.log(Math.abs(e.pageX-125), Math.abs(e.pageY));
+      watch.style.transform=`translate(${e.pageX-125}px,${e.pageY-100}px)`;
     },
     handleDragStart(e){
       // const watch = document.querySelector('.watch__init');

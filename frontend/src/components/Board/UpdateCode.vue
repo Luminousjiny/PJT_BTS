@@ -194,7 +194,7 @@ export default {
         body: formdata,
         redirect: 'follow'
       };
-      this.isLoading=true;
+      this.$store.commit('setIsSubmit',true);
       fetch(`https://${process.env.VUE_APP_ENDPOINT}.compilers.sphere-engine.com/api/v4/submissions?access_token=${process.env.VUE_APP_SPHERE_API_TOKEN}`, requestOptions)
         .then(response => response.json())
         .then(result => {
@@ -234,6 +234,7 @@ export default {
                       http.post('v1/code', JSON.stringify(data))
                         .then(res=>{
                           if(res.status===200){
+                            this.$store.commit('setIsSubmit',false);
                             this.$router.push({
                               name: 'ProblemDetail',
                               params:{
@@ -269,16 +270,17 @@ export default {
                   const data = {
                     codeContent: this.code,
                     codeLan : this.mode,
-                    codeMemory: `${this.memory}kB`,
-                    codeTime: `${this.time}s`,
+                    codeMemory: '-',
+                    codeTime: '-',
                     result: this.result,
-                    roomId:1,
+                    roomId: this.$store.getters.getSchoolId,
                     proId: this.content.proId,
-                    userId: 'jihyeong'
+                    userId: this.$store.getters.getUserId,
                   };
                   http.post('v1/code', JSON.stringify(data))
                     .then(res=>{
                       if(res.status===200){
+                        this.$store.commit('setIsSubmit',false);
                         this.$router.push({
                           name: 'ProblemDetail',
                           params:{
@@ -296,6 +298,7 @@ export default {
           },5000);
         })
         .catch(error => console.log('error', error));
+      this.$store.commit('setIsSubmit',false);
     },
     handleCompile(){
       // 1 c++
