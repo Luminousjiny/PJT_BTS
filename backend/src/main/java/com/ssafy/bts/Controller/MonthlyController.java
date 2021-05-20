@@ -56,9 +56,11 @@ public class MonthlyController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Calendar cal = Calendar.getInstance();
             cal.setTime(request.getMonStartDate());
+            cal.add(Calendar.HOUR, -9);
             String startTime = sdf.format(cal.getTime());
 
             cal.setTime(request.getMonEndDate());
+            cal.add(Calendar.HOUR, -9);
             String endTime = sdf.format(cal.getTime());
 
             request.setMonStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(startTime));
