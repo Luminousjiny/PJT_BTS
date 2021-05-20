@@ -159,8 +159,15 @@ export default {
         },
         goUnity(){
             if(!this.showMap){
-                this.height = '700';
-                this.width = '950';
+                const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
+                console.log(top);
+                const target = document.querySelector('#unity-game-container')
+                const targetRect = target.getBoundingClientRect();
+                this.width = targetRect.width;
+                // this.height = document.querySelector('#unity').getBoundingClientRect().height-top;
+                this.height = window.innerHeight-102;
+                const unity = document.querySelector('#unity-game');
+                unity.style.transform = `translate(${targetRect.left}px,102px)`;
                 this.$router.push({name : "Unity"});
             }
         },
@@ -189,8 +196,7 @@ export default {
     color: var(--color-grey-1);
     font-family: "AppleSDGothicNeoB";
 }
-.small-map{
-    left: 90% !important;
-    top: 85% !important;
-}
+/* .small-map{
+    
+} */
 </style>
