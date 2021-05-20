@@ -9,7 +9,7 @@
     <div id="webcam-main">
       <div id="share-container" v-if="data.share.active">
         <div id="share-screen" v-if="data.share.screen">
-          <user-video class="flex-item screen-video" :stream-manager="data.share.screen" :maxHeight="maxHeight"></user-video>
+          <user-video class="flex-item screen-video" :stream-manager="data.share.screen"></user-video>
         </div>
         <div id="youtube-container" v-if="youtubeShare.active">
           <div id="mostPopular-title">
@@ -96,13 +96,11 @@ export default {
   },
   created() {
     this.schoolName = this.$store.getters.getSchoolName;
-    console.log(this.$store.getters.getSchoolName);
   },
   mounted() {
     const target = document.querySelector('#webcam-main')
     const targetRect = target.getBoundingClientRect();
     this.maxHeight = targetRect.height;
-    document.querySelector('.screen-video video').setAttribute('style',`max-height : ${this.maxHeight-50}px !important`);
   },
   computed : {
     setWidth40 : function(){
@@ -124,7 +122,6 @@ export default {
       return false;
     },
     prev : function(){
-      console.log(this.data);
       if(this.page > 0){
         return true;
       }
@@ -149,7 +146,27 @@ export default {
         }
         return this.data.subscribers.slice(this.page*3, Math.min(this.page*3+4,this.data.subscribers.length));
       }
-    }
+    },
+    watchedScreenShare : function(){
+      return this.data.share.screen;
+    },
+  },
+  watch : {
+    watchedScreenShare : function(newVal){
+      if(this.youtubeShare.active && newVal !== undefined){
+        this.youtubeShare.active = false;
+        this.youtubeShare.showList = false;
+        this.youtubeShare.showDetail = false;
+        this.youtubeShare.videoDetail = undefined;
+      }
+      if(this.data.share.active){
+        const target = document.querySelector('#webcam-main')
+        const targetRect = target.getBoundingClientRect();
+        this.maxHeight = targetRect.height;
+        console.log(document.querySelector('#share-container video'));
+        document.querySelector('#share-container video').setAttribute('style', `max-height:${this.maxHeight-80}px;`);
+      }
+    },
   },
   methods: {
     updateMainVideoStreamManager(stream) {
@@ -171,7 +188,6 @@ export default {
           .getMediaStream()
           .getVideoTracks()[0]
           .addEventListener("ended", () => {
-            console.log('User pressed the "Stop sharing" button');
             this.data.session.unpublish(screen);
             this.screenShare = false;
             this.data.share.active = false;
@@ -204,7 +220,7 @@ export default {
     },
     getYoutubeVideo(){
       this.data.share.active = true;
-      this.data.share.screen = false;
+      this.data.share.screen = undefined;
       this.youtubeShare.active = true;
       this.youtubeShare.showList = true;
       this.screenShare = false;

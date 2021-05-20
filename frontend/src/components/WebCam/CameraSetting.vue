@@ -126,21 +126,17 @@ export default {
 
         this.webcam = videoDevices;
         this.mic = audioDevices;
-        console.log(videoDevices);
-        console.log(audioDevices);
       });
     },
     changeCamera(){
       this.publisher.stream.outboundStreamOpts.publisherProperties.videoSource = this.selectWebCam;
       this.publisher.publishVideo(true);
       this.$store.commit('setVideo',this.selectWebCam);
-      console.log("change camera =>",this.publisher);
     },
     changeAudio(){
       this.publisher.stream.outboundStreamOpts.publisherProperties.audioSource = this.selectAudio;
       this.publisher.publishAudio(true);
       this.$store.commit('setAudio',this.selectAudio);
-      console.log("change audio =>",this.publisher);
     },
     joinSession() {
       this.OV = new OpenVidu();
@@ -155,7 +151,6 @@ export default {
             this.publisher = publisher;
 
             this.session.publish(this.publisher);
-            console.log(this.publisher);
           })
           .catch((error) => {
             console.log(
