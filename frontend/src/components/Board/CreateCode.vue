@@ -67,7 +67,7 @@
         <div class="code__example__title">
           입력
         </div>
-        <textarea name="" id="" cols="30" rows="10" class="code__example__input" v-model="input"></textarea>
+        <textarea name="" id="" cols="30" rows="10" class="code__example__input" v-model="input" placeholder="Input 값을 입력해주세요"></textarea>
       </div>
       <div class="code__example__box">
         <div class="code__example__title">

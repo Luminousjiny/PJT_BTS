@@ -25,19 +25,13 @@ export default {
     props : {
         youtubeShare : Object,
         location : String,
-        maxHeight : Number,
     },
     created() {
-        console.log(this.location);
         if(this.location == "library"){
             this.getYoutubeVideosStudy();
         }else{
             this.getYoutubeVideosMostPopular();
         }
-    },
-    mounted() {
-        console.log(document.querySelector('#youtube-videos'));
-        document.querySelector('#youtube-videos').setAttribute('style',`max-height : ${this.maxHeight-80}px !important`);
     },
     methods: {
         getYoutubeVideosMostPopular(){
@@ -46,9 +40,8 @@ export default {
 
             axios.get(http).then(( data ) => {
                 this.videoList = data.data.items;
-                console.log(data);
             }).catch((error) => {
-                console.log(error);
+                console.error(error);
             })
         },
         getYoutubeVideosStudy(){
@@ -57,9 +50,8 @@ export default {
 
             axios.get(http).then(( data ) => {
                 this.videoList = data.data.items;
-                console.log(data);
             }).catch((error) => {
-                console.log(error);
+                console.error(error);
             })
         },
         showVideoDetail(video){
