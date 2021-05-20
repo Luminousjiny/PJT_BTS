@@ -27,9 +27,11 @@ export default {
     },
     props : {
         videoDetail : Object,
+        maxHeight : Number,
     },
     mounted(){
       document.querySelector('.youtube-video').innerHTML = `<iframe type="text/html" id="player" src="https://www.youtube.com/embed/${this.videoID}" frameborder="0" allowfullscreen></iframe>`
+      document.querySelector('#youtube-detail').setAttribute('style',`max-height : ${this.maxHeight-80}px !important`);
     },
     beforeUpdate(){
       document.querySelector('.youtube-video').innerHTML = `<iframe type="text/html" id="player" src="https://www.youtube.com/embed/${this.videoID}" frameborder="0" allowfullscreen></iframe>`

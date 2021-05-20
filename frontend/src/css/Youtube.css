@@ -94,10 +94,11 @@
 #youtube-detail{
     width: 80%;
     margin: auto;
-    min-height: 600px;
+    /* min-height: 600px; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: 600px;
 }
 #youtube-detail p{
     text-align: left;
@@ -108,7 +109,8 @@
 }
 #youtube-detail .youtube-video iframe{
     width: 100%;
-    height: 400px;
+    /* height: 400px; */
+    height : 300px;
 }
 #btnLeaveYoutube{
     color : var(--color-grey-2);

@@ -85,6 +85,12 @@
 .flex-column{
     flex-direction: column!important;
 }
+.flex-column #next button{
+    height: auto!important;
+}
+.flex-column #prev button{
+    height: auto!important;
+}
 /* .flex-column p{
     display: none!important;
 }
