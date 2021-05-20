@@ -197,7 +197,7 @@ export default {
                       this.isLoading=false;
                       if(output1===output2){
                         this.result="성공";
-                        http.post('v1/solve', JSON.stringify({prodId : this.content.proId, userId: this.$store.getters.getUserId})) 
+                        http.post('v1/solve', JSON.stringify({proId : this.content.proId, userId: this.$store.getters.getUserId})) 
                           .then(res=>{
                             if(res.data.data===1){
                               const user = this.$store.getters.getUser;

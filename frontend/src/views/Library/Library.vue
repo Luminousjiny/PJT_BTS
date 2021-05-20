@@ -36,9 +36,10 @@ export default {
     flex : 1;
 }
 .tooltip {
-    margin-left: 70%;
-    margin-top: 10px;
-    height: 0px;
+  margin-left: 70%;
+  margin-top: 10px;
+  height: 0px;
+  z-index: 10;
   position: relative;
   display: inline-block;
 }

@@ -14,8 +14,8 @@ export default new Vuex.Store({
     user:null,
     schoolId: null,
     schoolName: null,
-    audio: null,
-    video: null,
+    audio: undefined,
+    video: undefined,
     isSubmit: false,
   },
   getters:{
