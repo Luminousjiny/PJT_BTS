@@ -2,7 +2,7 @@
   <div id="calendar">
     <div id="calendar-header">
       <img src="@/../public/Image/calendar_icon.png" id="calendar-icon">
-      <p id="calendar-title">calendar</p>
+      <p id="calendar-title">플래너</p>
     </div>
     <div id="calendar-container">
       <Monthly/>
