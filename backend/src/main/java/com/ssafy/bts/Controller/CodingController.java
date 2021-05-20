@@ -319,7 +319,7 @@ public class CodingController {
     }
 
     @ApiOperation(value = "제출 결과", notes = "String 형식으로 반환", response = BaseResponse.class)
-    @PostMapping("/result/{resultId}")
+    @GetMapping("/result/{resultId}")
     public BaseResponse Result(@ApiParam(value = "결과 번호")@PathVariable int resultId){
         BaseResponse response = null;
         try{
@@ -330,7 +330,51 @@ public class CodingController {
                     .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"?access_token=639abfff21416e283799c03557905154")
                     .build();
             Response result = client.newCall(req).execute();
-            
+
+
+            response = new BaseResponse("success", result.body().string());
+        }
+        catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "출력값", notes = "String 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/output/{resultId}")
+    public BaseResponse Output(@ApiParam(value = "결과 번호")@PathVariable int resultId){
+        BaseResponse response = null;
+        try{
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            MediaType mediaType = MediaType.parse("text/plain");
+            Request req = new Request.Builder()
+                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"/output?access_token=639abfff21416e283799c03557905154")
+                    .build();
+            Response result = client.newCall(req).execute();
+
+
+            response = new BaseResponse("success", result.body().string());
+        }
+        catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "에러값", notes = "String 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/error/{resultId}")
+    public BaseResponse Error(@ApiParam(value = "결과 번호")@PathVariable int resultId){
+        BaseResponse response = null;
+        try{
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            MediaType mediaType = MediaType.parse("text/plain");
+            Request req = new Request.Builder()
+                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"/error?access_token=639abfff21416e283799c03557905154")
+                    .build();
+            Response result = client.newCall(req).execute();
+
 
             response = new BaseResponse("success", result.body().string());
         }
