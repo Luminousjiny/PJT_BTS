@@ -168,8 +168,8 @@ export default {
         const target = document.querySelector('#webcam-main')
         const targetRect = target.getBoundingClientRect();
         this.maxHeight = targetRect.height;
-        console.log(document.querySelector('#share-container video'));
-        document.querySelector('#share-container video').setAttribute('style', `max-height:${this.maxHeight-80}px;`);
+        console.log(document.querySelector('.screen-video video'));
+        document.querySelector('.screen-video video').setAttribute('style', `max-height:${this.maxHeight-80}px;`);
       }
     }
   },

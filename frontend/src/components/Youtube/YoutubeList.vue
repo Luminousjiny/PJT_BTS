@@ -28,7 +28,6 @@ export default {
         maxHeight : Number,
     },
     created() {
-        console.log(this.location);
         if(this.location == "library"){
             this.getYoutubeVideosStudy();
         }else{
@@ -36,7 +35,6 @@ export default {
         }
     },
     mounted() {
-        console.log(document.querySelector('#youtube-videos'));
         document.querySelector('#youtube-videos').setAttribute('style',`max-height : ${this.maxHeight-80}px !important`);
     },
     methods: {
@@ -46,7 +44,6 @@ export default {
 
             axios.get(http).then(( data ) => {
                 this.videoList = data.data.items;
-                console.log(data);
             }).catch((error) => {
                 console.log(error);
             })
@@ -57,7 +54,6 @@ export default {
 
             axios.get(http).then(( data ) => {
                 this.videoList = data.data.items;
-                console.log(data);
             }).catch((error) => {
                 console.log(error);
             })
