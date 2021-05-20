@@ -107,9 +107,6 @@ export default {
             }
         }
     },
-    props : {
-        schoolName : String,
-    },
     computed : {
         showBell : function(){
             if(this.showChatting){
