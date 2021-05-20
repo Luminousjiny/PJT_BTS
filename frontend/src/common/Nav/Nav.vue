@@ -66,7 +66,6 @@
             id="menus"
             :class="{ 'menu-inactive': !showMenu, 'menu-active': showMenu }"
           >
-            <li><button @click="handleCharacter">캐릭터 변경</button></li>
             <li><button @click="handleMypage">마이페이지</button></li>
             <li><button @click="handleLogout">로그아웃</button></li>
           </ul>
@@ -92,7 +91,7 @@ export default {
   created(){
     this.user=this.$store.getters.getUser;
     if(this.user===null){
-      this.$router.push('/');
+      window.location.href="https://k4b107.p.ssafy.io:8000/"
     }
   },
   mounted() {
@@ -108,15 +107,12 @@ export default {
     showMenus() {
       this.showMenu = !this.showMenu;
     },
-    handleCharacter(){
-
-    },
     handleMypage(){
-      this.$router.push("/mypage");
+      window.location.href="https://k4b107.p.ssafy.io:8000/mypage"
     },
     handleLogout(){
       this.$store.commit('logout');
-      this.$router.push('/')
+      window.location.href="https://k4b107.p.ssafy.io:8000/"
     },
   },
 };

@@ -131,6 +131,20 @@ export default {
       .then((res)=>{
         if(res.status===200){
           this.qnaList=res.data.data.reverse();
+          this.qnaList.forEach(qna => {
+            const dis1 = Hangul.disassemble(qna.qnaTitle, true);
+            const dis2 = Hangul.disassemble(qna.user.userNickname, true);
+            const cho1 = dis1.reduce(function (prev, elem) {
+                  elem = elem[0] ? elem[0] : elem;
+                  return prev + elem;
+              }, "");
+            const cho2 = dis2.reduce(function (prev, elem) {
+                  elem = elem[0] ? elem[0] : elem;
+                  return prev + elem;
+              }, "");
+            qna['qnaTitleCho']=cho1;
+            qna['qnaUserCho']=cho2;
+          })
           this.showModal=false;
         }
       })

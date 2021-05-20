@@ -1,12 +1,13 @@
 <template>
     <div id="unity-game" :class="{'small-map':!showMap}" @click="goUnity">
         <div id="game-container">
-            <unity
-            src = "/unity/Build/webGL.json"
-            unityLoader = "/unity/Build/UnityLoader.js"
+            <unity id="bts-unity"
+            src = "./unity/Build/webGL.json"
+            unityLoader = "./unity/Build/UnityLoader.js"
             ref = "hookInstance"
             :height = height
             :width = width
+            :hideFooter="true"
             >
             </unity>
             <button id="link-btn" @click="getUnityHook" v-if="!linked">계정 연동</button>
@@ -30,6 +31,7 @@ export default {
             linked : false,
             height : '700',
             width : '950',
+            interval : '',
         }
     },
     components : {Unity},
@@ -39,6 +41,21 @@ export default {
       }
       this.schoolName=this.$store.state.schoolName;
       this.user=this.$store.getters.getUser;
+    },
+    mounted() {
+        document.addEventListener(
+        "click",
+        function (event) {
+            if (event.target.closest("#game-container")){ // 유니티 가능
+                this.$refs.hookInstance.message('Game Manager','focusing',"true");
+            }else{ // 윈도우 인풋 가능
+                this.$refs.hookInstance.message('Game Manager','focusing',"false");
+            }
+        }.bind(this)
+        );
+    },
+    destroyed(){
+        clearInterval(this.interval);
     },
     computed : {
         showMap : function(){
@@ -58,7 +75,7 @@ export default {
             this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
             this.linked = true;
             this.objectName = "";
-            setInterval(()=>{
+            this.interval = setInterval(()=>{
                 if(document.getElementById('unity-object-name').innerHTML != this.objectName){
                     this.objectName = document.getElementById('unity-object-name').innerHTML;
                     switch (this.objectName) {
@@ -100,12 +117,10 @@ export default {
                       .then(res=>{
                         console.log(res);
                         if(res.data.data==="존재하지 않는 방입니다."){
-                          const data={
-                            roomName: this.schoolName
-                          }
-                          http.post(`v1/room`,JSON.stringify(data))
+                          http.post(`v1/room/${this.schoolName}`)
                             .then(res2=>{
-                              this.$store.commit('setSchool',res2.data.data,this.schoolName);
+                              this.$store.commit('setSchoolId',res2.data.data);
+                              this.$store.commit('setSchoolName',this.schoolName);
                               console.log('방 생성');
                               console.log(res2.data.data,this.schoolName);
                             })
@@ -113,7 +128,8 @@ export default {
                               console.error(err);
                             })
                         } else{
-                          this.$store.commit('setSchool',res.data.data,this.schoolName);
+                          this.$store.commit('setSchoolId',res.data.data);
+                          this.$store.commit('setSchoolName',this.schoolName);
                           console.log('방 찾음');
                           console.log(res.data.data,this.schoolName);
                         }
@@ -127,16 +143,15 @@ export default {
                 this.width = '950';
                 this.$router.push({name : "Unity"});
             }
-        }
+        },
     }
 }
 </script>
 <style scoped>
 #unity-game{
-    width : 55%;
     height: max-content;
     position: absolute;
-    bottom : 0;
+    bottom :20px;
     right : 10%;
 }
 #game-container{

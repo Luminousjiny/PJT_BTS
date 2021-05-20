@@ -39,6 +39,7 @@ public class GuestBookDTO {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(guestBook.getVisitDate());
+        cal.add(Calendar.HOUR, +9);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.visitDate = df.format(cal.getTime());
     }

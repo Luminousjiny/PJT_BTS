@@ -144,10 +144,3 @@ a.router-link-exact-active .router-div p{
     font-weight: var(--weight-regular);
     color : var(--color-grey-2);
 }
-
-/* div.v-application.v-application--is-ltr.theme--light .v-application--wrap .row.fill-height .col .v-sheet.theme--light .v-calendar-monthly.v-calendar-weekly.v-calendar.theme--light.v-calendar-events .v-calendar-weekly__week{
-    flex : 1 auto!important;
-}
-.v-calendar-weekly__week{
-    flex : 1 auto!important;
-} */

@@ -5,13 +5,16 @@
     <!--가운데 내용-->
     <div class="camSetting_content">
       <div class="content_inner">
-        <p class="h">마이페이지</p>
+        <p class="h">카메라 설정</p>
         <p class="p">카메라 환경설정을 해주세요</p>
         <div class="boxes">
           <div class="left_box">
             <user-video id="preview-camera" class="publisher flex-item" :stream-manager="publisher"></user-video>
           </div>
           <div class="right_box">
+            <router-link class="goCamera" to="/mypage">
+              내정보 변경 >>
+            </router-link>
             <ul class="box_ul">
               <li>
                 <v-container>
@@ -61,7 +64,7 @@
             </ul>
           </div>
         </div>
-        <v-btn class="modify_btn" rounded color="#04338C" dark @click="changeSetting">변경 완료</v-btn>
+        <v-btn class="modify_btn" rounded color="#04338C" dark @click="changeSetting">설정 완료</v-btn>
       </div>
     </div>
   </div>
@@ -83,7 +86,6 @@ export default {
       OV : undefined,
       roomName : 'setting',
       session : undefined,
-      userName : 'dovvn',
       publisher : undefined,
       webcam: [],
       mic: [],
@@ -99,10 +101,12 @@ export default {
         insertMode: "APPEND",
         mirror: false,
       },
+      user : {},
     };
   },
   created(){
     this.joinSession();
+    this.user = this.$store.getters.getUser;
   },
   destroyed(){
     this.leaveSession();
@@ -111,6 +115,9 @@ export default {
     changeSetting(){
       // 설정 변경
       this.leaveSession();
+      this.$router.push({
+        name:'Unity',
+      })
     },
     findDevices(){
       this.OV.getDevices().then(devices => {
@@ -126,11 +133,13 @@ export default {
     changeCamera(){
       this.publisher.stream.outboundStreamOpts.publisherProperties.videoSource = this.selectWebCam;
       this.publisher.publishVideo(true);
+      this.$store.commit('setVideo',this.selectWebCam);
       console.log("change camera =>",this.publisher);
     },
     changeAudio(){
       this.publisher.stream.outboundStreamOpts.publisherProperties.audioSource = this.selectAudio;
       this.publisher.publishAudio(true);
+      this.$store.commit('setAudio',this.selectAudio);
       console.log("change audio =>",this.publisher);
     },
     joinSession() {
@@ -139,7 +148,7 @@ export default {
 
       this.getToken(this.roomName).then((token) => {
         this.session
-          .connect(token, { userName: this.userName })
+          .connect(token, this.user)
           .then(() => {
             this.findDevices();
             let publisher = this.OV.initPublisher(undefined, this.setting);

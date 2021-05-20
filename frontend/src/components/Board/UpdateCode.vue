@@ -227,9 +227,9 @@ export default {
                         codeMemory: `${this.memory}kB`,
                         codeTime: `${this.time}s`,
                         result: this.result,
-                        roomId:1,
+                        roomId: this.$store.getters.getSchoolId,
                         proId: this.content.proId,
-                        userId: 'jihyeong'
+                        userId: this.$store.getters.getUserId,
                       };                      
                       http.post('v1/code', JSON.stringify(data))
                         .then(res=>{
@@ -237,7 +237,7 @@ export default {
                             this.$router.push({
                               name: 'ProblemDetail',
                               params:{
-                                id: this.proId,
+                                id: this.content.proId,
                               }
                             })
                           }
@@ -293,7 +293,7 @@ export default {
                 }
               })
               .catch(error2 => console.log('error', error2));
-          },3000);
+          },5000);
         })
         .catch(error => console.log('error', error));
     },
@@ -360,7 +360,7 @@ export default {
 
                 })
             .catch(error2 => console.error('error', error2));
-        },3000);
+        },5000);
         })
         .catch(error => console.error('error', error));
     },

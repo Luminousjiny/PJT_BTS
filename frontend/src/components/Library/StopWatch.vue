@@ -133,8 +133,7 @@ export default {
     width: 100%;
     height: 30px;
     display: flex;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-radius: 16px;
     justify-content: flex-end;
     border: 3px solid var(--color-mainBlue);
     background-color: var(--color-mainBlue);
