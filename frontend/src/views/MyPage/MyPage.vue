@@ -202,7 +202,7 @@ export default {
 
           this.user.userImg = res.data.data;
           this.imageUrl = res.data.data;
-          this.$store.commit('setUser',this.userInfo);
+          this.$store.commit('setUser',this.user);
           this.$router.push({
             name: 'Unity'
           })

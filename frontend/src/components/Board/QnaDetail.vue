@@ -86,11 +86,17 @@
         <span class="qna__answer__count__cnt">{{question.commentDTOList.length}}개</span>
       </div>
       <Answer
-        v-for="answer in question.commentDTOList"
+        v-for="answer in question.commentDTOList.slice(0,idx)"
         :key="answer.comId"
         :answer="answer"
         @handleClickCommentDelete="handleClickCommentDelete"
       />
+      <div class="qna__answer__more" v-if="idx < question.commentDTOList.length">
+        <button class="qna__answer__more__btn" @click="handleMore">
+          더 보기<br/>
+          <font-awesome-icon :icon="['fas', 'chevron-down']" size="1x"/>
+        </button>
+      </div>      
     </div>
   </div>
 </template>
@@ -114,6 +120,7 @@ export default {
       question:{},
       showModal: false,
       user:{},
+      idx:4,
     }
   },
   created(){
@@ -133,6 +140,9 @@ export default {
     // document.querySelector('.editor__content').innerHTML=this.content.problem;
   },
   methods:{
+    handleMore(){
+      this.idx+=4;
+    },    
     handleClickList(){
       this.$router.push({
         name:'QnaBoard'
@@ -351,6 +361,14 @@ export default {
       font-family: "AppleSDGothicNeoR";
     }
     &__cnt{
+      font-family: "AppleSDGothicNeoB";
+    }
+  }
+  &__more{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__btn{
       font-family: "AppleSDGothicNeoB";
     }
   }

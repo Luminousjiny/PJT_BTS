@@ -29,11 +29,17 @@
     </div>
     <div class="qna__q__box">
       <Question
-        v-for="question in keywordList"
+        v-for="question in keywordList.slice(0,idx)"
         :key="question.qnaId"
         :question="question"
         @handleClickQustion="handleClickQuestion"
       />
+    </div>
+    <div class="qna__more" v-if="idx < keywordList.length">
+      <button class="qna__btn__more" @click="handleMore">
+        더 보기<br/>
+        <font-awesome-icon :icon="['fas', 'chevron-down']" size="1x"/>
+      </button>
     </div>
   </div>
 </template>
@@ -56,7 +62,8 @@ export default {
       qnaList:[],
       showModal: false,
       keyword: "",
-      category:"title",      
+      category:"title",
+      idx: 4,
     }
   },
   created(){
@@ -90,6 +97,7 @@ export default {
         return this.qnaList;
       const search1 = this.keyword;
       const search2 = Hangul.disassemble(search1).join("");
+      this.idx=4;
       if(this.category==="title"){
         return this.qnaList.filter(qna => 
           qna.qnaTitle.includes(search1) || qna.qnaTitleCho.includes(search2)
@@ -101,6 +109,9 @@ export default {
     }
   },  
   methods:{
+    handleMore(){
+      this.idx+=4;
+    },
     handleSearch(val){
       this.keyword=val;
     },
@@ -174,6 +185,11 @@ export default {
     font-family: "AppleSDGothicNeoSB";
   }
 }
+.qna__more{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .qna__btn{
   font-family: "AppleSDGothicNeoB";
   padding: 0.5rem 1rem;
@@ -191,6 +207,9 @@ export default {
   &__blue{
     color: var(--color-white);
     background-color: var(--color-mainBlue);
+  }
+  &__more{
+    font-family: "AppleSDGothicNeoB";
   }
 }
 .modal_btn_box{

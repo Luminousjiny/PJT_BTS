@@ -24,12 +24,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrashAlt, faCalendarAlt, faCommentDots, faWindowMinimize, faWindowMaximize} from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt, faChevronLeft,faChevronRight, faLink,faBold,faItalic
   ,faStrikethrough,faUnderline,faCode,faFileCode,faParagraph,faListOl,faListUl,
-  faQuoteLeft,faUndo,faRedo,faImage,
+  faQuoteLeft,faUndo,faRedo,faImage,faChevronDown
 }from '@fortawesome/free-solid-svg-icons';
 library.add(faPencilAlt,faChevronLeft,faChevronRight,faLink,faBold,faItalic,
   faStrikethrough,faUnderline,faCode,faFileCode,faParagraph,faListOl,
   faListUl,faQuoteLeft,faWindowMinimize,faWindowMaximize,faUndo,faRedo,faImage,
-  faTrashAlt,faCalendarAlt,faCommentDots);
+  faTrashAlt,faCalendarAlt,faCommentDots,faChevronDown);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Modal',VueModal);
 new Vue({
