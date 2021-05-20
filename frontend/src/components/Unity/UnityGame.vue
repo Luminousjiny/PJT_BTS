@@ -71,8 +71,17 @@ export default {
     computed : {
         showMap : function(){
             if(this.$route.name == 'Unity'){
-                this.width = '950';
-                this.height = '700';
+                // this.width = '950';
+                // this.height = '700';
+                const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
+                console.log(top);
+                const target = document.querySelector('#unity-game-container')
+                const targetRect = target.getBoundingClientRect();
+                this.width = targetRect.width;
+                // this.height = document.querySelector('#unity').getBoundingClientRect().height-top;
+                this.height = window.innerHeight-102;
+                const unity = document.querySelector('#unity-game');
+                unity.style.transform = `translate(${targetRect.left}px,102px)`;
                 return true;
             }else{
                 this.width = '150';
