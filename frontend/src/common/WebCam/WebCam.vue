@@ -69,10 +69,6 @@ export default {
       location : String,
     },
     created(){
-      // if(this.$store.state.user===null || this.$store.state.schoolName===null){
-      //   this.$router.push('/');
-      //   return ;
-      // }
       this.user = this.$store.getters.getUser;
       this.schoolName = this.$store.getters.getSchoolName;
       this.data.setting.audioSource = this.$store.getters.getAudio;
@@ -80,7 +76,6 @@ export default {
       let inko = new Inko();
       let name = this.schoolName.replaceAll(" ","");
       this.data.roomName = inko.ko2en(name)+"-"+this.location;
-      // console.log(this.data.roomName);
 
       this.joinSession();
     },
@@ -127,14 +122,6 @@ export default {
           this.data.receiveMessage.push({sender : JSON.parse(event.from.data), message : event.data});
           this.data.receiveMessageBell = true;
         });
-
-        // this.data.session.on("publisherStartSpeaking", (event) => {
-        //   console.log( "Publisher " + event.connection.connectionId + " start speaking" );
-        // });
-
-        // this.data.session.on("publisherStopSpeaking", (event) => {
-        //   console.log( "Publisher " + event.connection.connectionId + " stop speaking" );
-        // });
 
         this.getToken(this.data.roomName).then((token) => {
           this.data.session
@@ -234,8 +221,6 @@ export default {
             data: sendMessage,
             to: [],
             type: "my-chat",
-        }).then(() => {
-            console.log("Message successfully sent");
         }).catch((error) => {
             console.error(error);
         });

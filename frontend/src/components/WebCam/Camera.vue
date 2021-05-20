@@ -147,26 +147,31 @@ export default {
         return this.data.subscribers.slice(this.page*3, Math.min(this.page*3+4,this.data.subscribers.length));
       }
     },
-    watchedScreenShare : function(){
+    watchedScreen : function(){
       return this.data.share.screen;
     },
+    watchedScreenShare : function(){
+      return this.data.share.active;
+    }
   },
   watch : {
-    watchedScreenShare : function(newVal){
+    watchedScreen : function(newVal){
       if(this.youtubeShare.active && newVal !== undefined){
         this.youtubeShare.active = false;
         this.youtubeShare.showList = false;
         this.youtubeShare.showDetail = false;
         this.youtubeShare.videoDetail = undefined;
       }
-      if(this.data.share.active){
+    },
+    watchedScreenShare : function(newVal){
+      if(newVal){
         const target = document.querySelector('#webcam-main')
         const targetRect = target.getBoundingClientRect();
         this.maxHeight = targetRect.height;
         console.log(document.querySelector('#share-container video'));
         document.querySelector('#share-container video').setAttribute('style', `max-height:${this.maxHeight-80}px;`);
       }
-    },
+    }
   },
   methods: {
     updateMainVideoStreamManager(stream) {
