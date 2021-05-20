@@ -42,6 +42,10 @@ export default {
       this.user=this.$store.getters.getUser;
     },
     mounted() {
+        this.$store.commit('setIsSubmit',true);
+        setTimeout(()=>{
+          this.$store.commit('setIsSubmit',false);
+        },5000)      
         const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
         const target = document.querySelector('#unity-game-container')
         const targetRect = target.getBoundingClientRect();

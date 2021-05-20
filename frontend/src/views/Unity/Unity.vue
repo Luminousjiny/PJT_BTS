@@ -32,12 +32,6 @@ export default {
         })
       }         
     },
-    mounted(){
-      this.$store.commit('setIsSubmit',true);
-      setTimeout(()=>{
-        this.$store.commit('setIsSubmit',false);
-      },5000)
-    }
 }
 </script>
 

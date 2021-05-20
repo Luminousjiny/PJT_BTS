@@ -104,14 +104,12 @@ export default {
     this.originalPhone = this.user.userPhone;
     this.passwordCheck=this.user.userPw;
     this.imageUrl=this.user.userImg;
-    console.log("지금 내 번호:"+this.originalPhone);
   },
   computed:{
     isChanged(){
       const origin = this.$store.state.user;
       let flag=false;
       Object.keys(origin).forEach(key=>{
-        console.log(key,this.user[key],origin[key])
         if(this.user[key]!==origin[key])
           flag=true;
       })
