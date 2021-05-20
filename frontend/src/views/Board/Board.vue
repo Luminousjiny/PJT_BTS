@@ -1,6 +1,5 @@
 <template>
   <div class="board__wrap">
-    <loader :isLoading="$store.getters.getIsSubmit"/>
     <Nav/>
     <stop-watch v-if="showLink3"/>
     <div class="board__link__box" v-if="showLink">
@@ -16,11 +15,10 @@
 </template>
 
 <script>
-import Loader from '../../common/Loader/Loader.vue';
 import Nav from '../../common/Nav/Nav.vue'
 import StopWatch from '../../components/Library/StopWatch.vue';
 export default {
-  components: { Nav,StopWatch, Loader },
+  components: { Nav,StopWatch },
   name:'Board',
   data(){
     return {
@@ -30,8 +28,12 @@ export default {
     }
   },
   created(){
-    if(this.$store.getters.getUser === null && this.$store.getters.getSchoolId === null){
+    if(this.$store.getters.getUser === null){
       this.$router.push('/');
+    } else if(this.$store.getters.getSchoolId === null) {
+      this.$router.push({
+        name: 'Unity',
+      })
     }
     if(this.$route.name==="Board"){
       this.$router.push({

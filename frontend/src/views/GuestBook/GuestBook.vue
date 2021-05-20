@@ -43,9 +43,13 @@ export default {
     };
   },
   created() {
-    if(this.$store.getters.getUser === null && this.$store.getters.getSchoolId === null){
+    if(this.$store.getters.getUser === null){
       this.$router.push('/');
-    }
+    } else if(this.$store.getters.getSchoolId === null) {
+      this.$router.push({
+        name: 'Unity',
+      })
+    }   
 
     this.user=this.$store.getters.getUser;
     this.schoolId = this.$store.getters.getSchoolId;

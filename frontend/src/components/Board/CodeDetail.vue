@@ -65,7 +65,6 @@ export default {
     .then(res=>{
       this.content=res.data.data;
       for(let i=0; i<this.content.codeList.length; i++){
-        console.log(this.content.codeList[i].codeId,this.$route.params.codeId)
         if(this.content.codeList[i].codeId===Number(this.$route.params.codeId)){
           this.code=this.content.codeList[i];
           break;

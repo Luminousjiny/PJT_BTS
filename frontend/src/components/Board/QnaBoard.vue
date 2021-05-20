@@ -67,6 +67,13 @@ export default {
     }
   },
   created(){
+    if(this.$store.getters.getUser === null){
+      this.$router.push('/');
+    } else if(this.$store.getters.getSchoolId === null) {
+      this.$router.push({
+        name: 'Unity',
+      })
+    }
     http.get(`v1/qna/list/${this.$store.getters.getSchoolId}`)
     .then((res)=>{
       if(res.status===200){

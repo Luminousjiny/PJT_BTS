@@ -43,7 +43,6 @@ export default {
     },
     mounted() {
         const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
-        console.log(top);
         const target = document.querySelector('#unity-game-container')
         const targetRect = target.getBoundingClientRect();
         this.width = targetRect.width;
@@ -51,9 +50,6 @@ export default {
         this.height = window.innerHeight-102;
         const unity = document.querySelector('#unity-game');
         unity.style.transform = `translate(${targetRect.left}px,102px)`;
-        console.log(targetRect);
-        console.log(window.innerWidth,window.innerHeight);
-        console.log(this.width, this.height);
         document.addEventListener(
         "click",
         function (event) {
@@ -95,7 +91,6 @@ export default {
         showMap : function(newVal){
             if(newVal){
                 const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
-                console.log(top);
                 const target = document.querySelector('#unity-game-container')
                 const targetRect = target.getBoundingClientRect();
                 this.width = targetRect.width;
@@ -153,14 +148,11 @@ export default {
                     //get 해서 방번호 저장하기
                     http.get(`v1/room/${this.schoolName}`)
                       .then(res=>{
-                        console.log(res);
                         if(res.data.data==="존재하지 않는 방입니다."){
                           http.post(`v1/room/${this.schoolName}`)
                             .then(res2=>{
                               this.$store.commit('setSchoolId',res2.data.data);
                               this.$store.commit('setSchoolName',this.schoolName);
-                              console.log('방 생성');
-                              console.log(res2.data.data,this.schoolName);
                             })
                             .catch(err=>{
                               console.error(err);
@@ -168,8 +160,6 @@ export default {
                         } else{
                           this.$store.commit('setSchoolId',res.data.data);
                           this.$store.commit('setSchoolName',this.schoolName);
-                          console.log('방 찾음');
-                          console.log(res.data.data,this.schoolName);
                         }
                       })
                 }

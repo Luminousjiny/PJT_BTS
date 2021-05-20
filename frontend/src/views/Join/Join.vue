@@ -6,7 +6,14 @@
 
 <script>
 export default {
-    name: "Join"
+    name: "Join",
+    created(){
+        if(this.$store.getters.getUser!==null){
+          this.$router.push({
+            name:'Unity'
+          })
+        }      
+    }
 }
 </script>
 

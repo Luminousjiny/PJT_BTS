@@ -277,7 +277,6 @@ export default {
             http.delete(`/v1/monthly/${this.selectedEvent.id}`)
             .then(()=>{
                 const start = {month : this.selectedEvent.start.getMonth()+1, year : this.selectedEvent.start.getFullYear()};
-                console.log(start);
                 this.getEventList({start});
                 this.closeEvent();
             })
