@@ -50,13 +50,11 @@ public class Monthly {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         cal.setTime(request.getMonStartDate());
-        cal.add(Calendar.HOUR, -9);
         String startTime = sdf.format(cal.getTime());
 
         monthlyInput.setMonStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(startTime));
 
         cal.setTime(request.getMonEndDate());
-        cal.add(Calendar.HOUR, -9);
         String endTime = sdf.format(cal.getTime());
 
         monthlyInput.setMonEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(endTime));
