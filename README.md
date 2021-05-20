@@ -5,14 +5,13 @@
   <br/><b>Z세대를 위한 학습 메타버스 플랫폼</b>
   <p align="center">
  <img src="https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript">
- <img src="https://img.shields.io/badge/Vue.js-v4.5.10-green?logo=vue.js">
+ <img src="https://img.shields.io/badge/Vue.js-v2.6.11-green?logo=vue.js">
  <img src="https://img.shields.io/badge/Vuetify-v3-green?logo=Vuetify">
  <img src="https://img.shields.io/badge/Java-v1.8-blue?logo=java">
- <img src="https://img.shields.io/badge/spring JPA-v3.9.15-blue?logo=spring">
- <img src="https://img.shields.io/badge/spring Boot-v3.9.15-blue?logo=spring">
+ <img src="https://img.shields.io/badge/spring boot-v2.4.3-blue?logo=spring">
  <img src="https://img.shields.io/badge/AWS%20RDS----blue?logo=amazonaws">
  <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
- <img src="https://img.shields.io/badge/Unity-v4.0-yellow?logo=unity">
+ <img src="https://img.shields.io/badge/Unity-v2019.4.25-yellow?logo=unity">
  <img src="https://img.shields.io/badge/C-v4.0-yellow?logo=C">
  <img src="https://img.shields.io/badge/Photon2-v2.0-yellow?logo=Photon2">
   </p>
