@@ -116,13 +116,6 @@ export default {
         }
     },
     created() {
-        // this.interval = setInterval(()=>{
-        //     if(document.getElementById('unity-users-name') !== null && document.getElementById('unity-users-name').innerHTML != this.usersName){
-        //         this.usersName = document.getElementById('unity-users-name').innerHTML;
-        //         this.users = this.usersName.split(',');
-        //         console.log(this.users);
-        //     }
-        // },1000);
         if(this.$store.state.user===null){
             this.$router.push('/');
             return ;
@@ -139,7 +132,6 @@ export default {
         this.joinSession();
     },
     destroyed(){
-        // clearInterval(this.interval);
         if (this.data.session) this.data.session.disconnect();
         this.data.session = undefined;
         this.data.publisher = undefined;
