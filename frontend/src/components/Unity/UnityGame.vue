@@ -65,28 +65,46 @@ export default {
         }.bind(this)
         );
     },
+    // updated(){
+    //     if(!this.showMap && this.width===150 && this.height===100){
+    //         const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
+    //         const target = document.querySelector('#unity-game-container')
+    //         const targetRect = target.getBoundingClientRect();
+    //         this.width = targetRect.width;
+    //         this.height = window.innerHeight-102;
+    //         const unity = document.querySelector('#unity-game');
+    //         unity.style.transform = `translate(${targetRect.left}px,102px)`;
+    //     } else{
+    //         this.width = '150';
+    //         this.height = '100';
+    //     }
+    // },
     destroyed(){
         clearInterval(this.interval);
     },
     computed : {
         showMap : function(){
-            if(this.$route.name == 'Unity'){
-                // this.width = '950';
-                // this.height = '700';
+            if(this.$route.name === 'Unity'){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    },
+    watch : {
+        showMap : function(newVal){
+            if(newVal){
                 const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
                 console.log(top);
                 const target = document.querySelector('#unity-game-container')
                 const targetRect = target.getBoundingClientRect();
                 this.width = targetRect.width;
-                // this.height = document.querySelector('#unity').getBoundingClientRect().height-top;
                 this.height = window.innerHeight-102;
                 const unity = document.querySelector('#unity-game');
                 unity.style.transform = `translate(${targetRect.left}px,102px)`;
-                return true;
             }else{
                 this.width = '150';
                 this.height = '100';
-                return false;
             }
         }
     },
@@ -159,15 +177,6 @@ export default {
         },
         goUnity(){
             if(!this.showMap){
-                const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
-                console.log(top);
-                const target = document.querySelector('#unity-game-container')
-                const targetRect = target.getBoundingClientRect();
-                this.width = targetRect.width;
-                // this.height = document.querySelector('#unity').getBoundingClientRect().height-top;
-                this.height = window.innerHeight-102;
-                const unity = document.querySelector('#unity-game');
-                unity.style.transform = `translate(${targetRect.left}px,102px)`;
                 this.$router.push({name : "Unity"});
             }
         },
@@ -196,7 +205,9 @@ export default {
     color: var(--color-grey-1);
     font-family: "AppleSDGothicNeoB";
 }
-/* .small-map{
-    
-} */
+.small-map{
+    transform: none !important;
+    top: 85% !important;
+    left: 90% !important;
+}
 </style>
