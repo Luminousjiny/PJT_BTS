@@ -14,7 +14,6 @@
         </div>
         <div id="unity-school-name" hidden></div>
         <div id="unity-object-name" hidden></div>
-        <div id="unity-users-name" hidden></div>
     </div>
 </template>
 <script>
@@ -43,6 +42,18 @@ export default {
       this.user=this.$store.getters.getUser;
     },
     mounted() {
+        const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
+        console.log(top);
+        const target = document.querySelector('#unity-game-container')
+        const targetRect = target.getBoundingClientRect();
+        this.width = targetRect.width;
+        // this.height = document.querySelector('#unity').getBoundingClientRect().height-top;
+        this.height = window.innerHeight-102;
+        const unity = document.querySelector('#unity-game');
+        unity.style.transform = `translate(${targetRect.left}px,102px)`;
+        console.log(targetRect);
+        console.log(window.innerWidth,window.innerHeight);
+        console.log(this.width, this.height);
         document.addEventListener(
         "click",
         function (event) {
@@ -150,9 +161,9 @@ export default {
 <style scoped>
 #unity-game{
     height: max-content;
-    position: absolute;
-    bottom :20px;
-    right : 10%;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 #game-container{
     position: relative;
@@ -170,7 +181,7 @@ export default {
     font-family: "AppleSDGothicNeoB";
 }
 .small-map{
-    right : 0!important;
-    width : 10%!important;
+    left: 90% !important;
+    top: 85% !important;
 }
 </style>
