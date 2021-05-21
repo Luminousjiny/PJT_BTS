@@ -1,13 +1,26 @@
 mergeInto(LibraryManager.library, {
 
   Hello: function () {
-    window.alert("Hello, world!");
+    this.text = 123;
+    window.alert("hello");
   },
 
   HelloString: function (str) {
     window.alert(Pointer_stringify(str));
   },
 
+  UnityfuncHook: function (str){
+    _funcJShook(Pointer_stringify(str));
+  },
+  UnityroomHook: function (str){
+    _roomJShook(Pointer_stringify(str));
+  },
+  UnityuserHook: function (str){
+    _userJShook(Pointer_stringify(str));
+  },
+  unityStartEnd : function (str){
+ 
+   },
   PrintFloatArray: function (array, size) {
     for(var i = 0; i < size; i++)
     console.log(HEAPF32[(array >> 2) + i]);
@@ -18,7 +31,7 @@ mergeInto(LibraryManager.library, {
   },
 
   StringReturnValueFunction: function () {
-    var returnStr = "bla";
+    var returnStr = "plz this text recived";
     var bufferSize = lengthBytesUTF8(returnStr) + 1;
     var buffer = _malloc(bufferSize);
     stringToUTF8(returnStr, buffer, bufferSize);

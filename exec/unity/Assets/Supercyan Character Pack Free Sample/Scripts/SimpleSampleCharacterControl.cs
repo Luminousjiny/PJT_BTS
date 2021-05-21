@@ -171,7 +171,6 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
         transform.position += transform.forward * m_currentV * m_moveSpeed * Time.deltaTime;
         transform.Rotate(0, m_currentH * m_turnSpeed * Time.deltaTime, 0);
-
         m_animator.SetFloat("MoveSpeed", m_currentV);
 
         JumpingAndLanding();
@@ -183,6 +182,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         {
             return;
         }
+        
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
 
@@ -208,14 +208,14 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
         if (direction != Vector3.zero)
         {
-            m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation);
+            m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation * 3f);
 
             transform.rotation = Quaternion.LookRotation(m_currentDirection);
             transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
 
             m_animator.SetFloat("MoveSpeed", direction.magnitude);
         }
-
+        
         JumpingAndLanding();
     }
 

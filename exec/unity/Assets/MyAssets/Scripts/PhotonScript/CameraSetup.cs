@@ -13,6 +13,10 @@ public class CameraSetup : MonoBehaviourPun
     private Vector3 worldDefalutForward;
     private const int zoomSpeed = 50;
 
+    private bool view = false;
+
+    private Vector3 headPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,7 @@ public class CameraSetup : MonoBehaviourPun
             followCam.LookAt = transform;
             worldDefalutForward = transform.forward;
         }
+        
     }
 
     // Update is called once per frame
@@ -35,30 +40,49 @@ public class CameraSetup : MonoBehaviourPun
         // 로컬 플레이어
         if (photonView.IsMine)
         {
-            // 스크롤 속도 
-            float scroll = Input.GetAxis("Mouse ScrollWheel") * speed * -1;
 
-            //최대 줌인
-
-            if (followCam.m_Lens.FieldOfView <= 10.0f && scroll < 0)
+            if (Input.GetKeyDown(KeyCode.V))
             {
-                followCam.m_Lens.FieldOfView = 10.0f;
+                view = !view;
+                if(!view)
+                {
+                    followCam.Follow = transform;
+                    followCam.LookAt = transform;
+                }else
+                {
+                    followCam.Follow = null;
+                    followCam.LookAt = null;
+                }
             }
-            // 최대 줌 아웃
-
-            else if (followCam.m_Lens.FieldOfView >= 60.0f && scroll > 0)
+            if (!view)
             {
-                followCam.m_Lens.FieldOfView = 60.0f;
-            }
-            // 줌인 아웃 하기.
+                float scroll = Input.GetAxis("Mouse ScrollWheel") * speed * -1;
 
-            else
+                //최대 줌인
+                if (followCam.m_Lens.FieldOfView <= 10.0f && scroll < 0)
+                {
+                    followCam.m_Lens.FieldOfView = 10.0f;
+                }
+
+                // 최대 줌 아웃
+                else if (followCam.m_Lens.FieldOfView >= 60.0f && scroll > 0)
+                {
+                    followCam.m_Lens.FieldOfView = 60.0f;
+                }
+
+                // 줌인 아웃 하기.
+                else
+                {
+                    followCam.m_Lens.FieldOfView += scroll;
+                }
+            }
+            else if (view)
             {
-                followCam.m_Lens.FieldOfView += scroll;
+                headPosition = new Vector3(this.transform.position.x, this.transform.position.y + 1.0f, this.transform.position.z+0.36f);
+                followCam.transform.position = Vector3.Lerp(followCam.transform.position, headPosition, Time.deltaTime * 5.0f);
+                followCam.transform.rotation = Quaternion.Euler(this.transform.eulerAngles);
             }
-
 
         }
     }
-
 }

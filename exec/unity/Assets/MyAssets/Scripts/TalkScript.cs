@@ -1,28 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using Photon.Pun;
+using TMPro;
 
-public class TalkScript : MonoBehaviour
+public class TalkScript : MonoBehaviourPun
 {
-    public string sentences;
-    public Transform charTr;
-    public GameObject chatBoxPrefab;
+    public TextMeshPro chat;
+    public static string s_chat = null;
+    public static string p_id;
     // Start is called before the first frame update
     public void Start()
     {
-
+        p_id = PhotonNetwork.LocalPlayer.UserId;
+    }
+    public void setId(string id)
+    {
+        p_id = id;
+    }
+    public  string getId()
+    {
+        return p_id;
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        CinemachineVirtualCamera Cam =
+                       FindObjectOfType<CinemachineVirtualCamera>();
+        chat.transform.rotation = Cam.transform.rotation;
+        if (s_chat != null)
         {
-            Talk();
+            chat.text = s_chat;
+            Invoke("initChat", 3.0f);
+            s_chat = null;
         }
+    }public void initChat()
+    {
+        chat.text = null;
     }
     // Update is called once per frame
-    public void Talk()
+    public void Talk(string text)
     {
-        GameObject go = Instantiate(chatBoxPrefab);
-        go.GetComponent<ChatSystem>().Ondialogue(sentences, charTr);
+        s_chat = text;
     }
 }

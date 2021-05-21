@@ -7,6 +7,15 @@ TagManager:
   - Item
   - LobbyText
   - MainBtn
+  - Room
+  - FollowCam
+  - LocationInfo
+  - ball
+  - ballbox
+  - CharExitBtn
+  - Help
+  - CharSaveBtn
+  - Character
   layers:
   - Default
   - TransparentFX

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonRealtime", "PhotonRea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{518622B2-9050-A153-E465-3E4BD155181A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OEBIF", "OEBIF.csproj", "{74271D5F-F45D-3B62-0AAD-6915C90164E8}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonUnityNetworking.Editor", "PhotonUnityNetworking.Editor.csproj", "{DD3662ED-7916-24DB-41E1-41BE0D62F340}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PunDemos.DemoHubEditor", "PunDemos.DemoHubEditor.csproj", "{9211E6B9-BD5F-9DF5-C951-66AB4A92F278}"
@@ -59,6 +61,10 @@ Global
 		{518622B2-9050-A153-E465-3E4BD155181A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{518622B2-9050-A153-E465-3E4BD155181A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{518622B2-9050-A153-E465-3E4BD155181A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74271D5F-F45D-3B62-0AAD-6915C90164E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74271D5F-F45D-3B62-0AAD-6915C90164E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74271D5F-F45D-3B62-0AAD-6915C90164E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74271D5F-F45D-3B62-0AAD-6915C90164E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD3662ED-7916-24DB-41E1-41BE0D62F340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD3662ED-7916-24DB-41E1-41BE0D62F340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD3662ED-7916-24DB-41E1-41BE0D62F340}.Release|Any CPU.ActiveCfg = Release|Any CPU

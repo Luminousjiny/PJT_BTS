@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class item : MonoBehaviour
 {
-    public enum Type { WebCam, Audio, Metting,Study}
+    public enum Type { blackboard, noticeboard, desk, vendingMachine, table, calendar, advice ,award, guestbook, broadcast }
     public Type type;
-    public int value;
 
     private void Update()
     {
-        transform.Rotate(Vector3.up * 20 * Time.deltaTime);
+       
     }
 }
