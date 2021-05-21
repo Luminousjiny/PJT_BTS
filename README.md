@@ -311,23 +311,33 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 ### ✔ 와이어프레임    
 > [XD 바로가기](https://xd.adobe.com/view/9c9f0544-d27c-4e7f-98c7-b88dbd335c41-c9cc/)    
 
-![명예의전당](/uploads/8a0b2ce6c6050bbb5e6c09f52cba09ed/명예의전당.gif)   
-코드를 가장 많이 푼 상위 랭킹 10위까지의 학생들을 확인할 수 있습니다.   
+![슬라이드1](/uploads/7878ad3ee935cc061b0f992fcc57e95d/슬라이드1.PNG)
 
-![급식실_웹캠-유튜브](/uploads/e173092d6eb493d7dab371d2d20b20b8/급식실_웹캠-유튜브.gif)  
-최신 유튜브 리스트 정보를 제공받을 수 있습니다.  
+![슬라이드2](/uploads/c750c0ebf41133657533a45f85b3359e/슬라이드2.PNG)
 
-![웹캠-화면공유](/uploads/c1d953c0633df3a97eff48991a36780a/웹캠-화면공유.gif)  
-화상미팅에서 나의 모니터 화면을 실시간으로 공유할 수 있습니다.   
+![슬라이드3](/uploads/6477c67a2cf1e166bd8880a38fb9ee1e/슬라이드3.PNG)
 
-![캘린더](/uploads/534e0fd39050d30429431eadb021a6c9/캘린더.gif)  
-캘린더에서 주간/월간 플랜을 작성하고 관리할 수 있습니다.  
+![슬라이드4](/uploads/23d66564137b1bca6e24b5c18ef58b48/슬라이드4.PNG)
 
-![정보공유_코드공유](/uploads/180f1ca886ae63d4750238bc3d936795/정보공유_코드공유.gif)   
-정보 또는 코드를 학생들과 공유할 수 있습니다. 코드 공유게시판에서는 풀리지 않는 알고리즘 문제를 풀고, 다른 학생들이 제출한 코드 목록을 확인하여 비교할 수 있습니다.  
+![슬라이드5](/uploads/a448d1cb5b49136d3ed512f9e104a05e/슬라이드5.PNG)
 
-![Qna](/uploads/fec1b71228f88d67333eb449ad185bbd/Qna.gif)   
-공부를 하다가 모르는 것이 생겼을때 QnA게시판에 질문을 올리고, 다른 학생들로 부터 답변을 받을 수 있습니다.   
+![슬라이드6](/uploads/2f8968dd6122054b0123ae2f47ac1390/슬라이드6.PNG)
+
+![슬라이드7](/uploads/42cc744d668c6804472971d046ff8209/슬라이드7.PNG)
+
+![슬라이드8](/uploads/9a77ec7edb3730eb8e51f1ed2ae54676/슬라이드8.PNG)
+
+![슬라이드9](/uploads/69b3a7b466fc9f873bd606630ddc9d25/슬라이드9.PNG)
+
+![슬라이드10](/uploads/5b2abc0d613e32c530ccdaa300e175b6/슬라이드10.PNG)
+
+![슬라이드11](/uploads/e5dcde2714f252301b67064e692df280/슬라이드11.PNG)
+
+![슬라이드12](/uploads/faa7bbcb6d6c2530f6cbc517f4d886d7/슬라이드12.PNG)
+
+![슬라이드13](/uploads/b08331ce0030c1860cc11c68d0476232/슬라이드13.PNG)
+
+![슬라이드14](/uploads/a796381ff8669e3b9ba557ea4200d58a/슬라이드14.PNG)
 
 <br />
 
