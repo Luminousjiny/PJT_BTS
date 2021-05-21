@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LFollowCamera : MonoBehaviour
 {
-    public Transform target;
     public GameObject mapObject;
 
     public BTNType currentType;
@@ -26,7 +26,9 @@ public class LFollowCamera : MonoBehaviour
     private Quaternion scene2;
     private Quaternion scene3;
     private Quaternion scene4;
-    private GameObject mainPlayer;
+
+    private GameObject ScrollBtn;
+    private GameObject CharExitBtn;
 
     // Start is called before the first frame update
     void Start()
@@ -35,35 +37,43 @@ public class LFollowCamera : MonoBehaviour
         scene2 = Quaternion.Euler(0, -90, 90);
         scene3 = Quaternion.Euler(0, 0, 180);
         scene4 = Quaternion.Euler(90, 0, 90);
-        mainPlayer = GameObject.FindGameObjectWithTag("Player");
-        mainPlayer.active = false;
+
+        ScrollBtn = GameObject.FindGameObjectWithTag("MainBtn");
+        CharExitBtn = GameObject.FindGameObjectWithTag("CharExitBtn");
     }
+
+
     void FixedUpdate()
     {
         if (check)
         {
             float angle = Quaternion.Angle(mapObject.transform.rotation, this.transform.rotation);
-            Vector3 Postion = new Vector3(target.transform.position.x, target.transform.position.y + 4.0f, target.transform.position.z - 7.0f);
-            Vector3 dir = target.transform.position - this.transform.position;
+            Vector3 dir = new Vector3(30.0f, 0f, 0f);
+
 
             if (createChrCheck)
             {
-                if (!create_temp)
-                {
-                    target.position = new Vector3(0, 2.0f, 0);
-                }
-                Postion = new Vector3(target.transform.position.x - 0.5f, target.transform.position.y + 2f, target.transform.position.z - 2.0f);
+                Vector3 Postion = new Vector3(0f, -17f, -7.5f);
                 transform.position = Vector3.Lerp(transform.position, Postion, 3f * Time.deltaTime);
-                transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 3f);
-                create_temp = true;
+                transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.Euler(dir), Time.deltaTime * 3f);
+
+                if (ScrollBtn.GetComponent<Canvas>().enabled == true)
+                {
+                    ScrollBtn.GetComponent<Canvas>().enabled = false;
+                    CharExitBtn.GetComponent<Canvas>().enabled = true;
+                }
+
             }
             else
             {
-                mainPlayer.active = false;
-                target.position = new Vector3(0, 1.6f, -0.6f);
-                Postion = new Vector3(target.transform.position.x, target.transform.position.y + 4.0f, target.transform.position.z - 7.0f);
+                Vector3 Postion = new Vector3(0f, 5.6f, -7.5f);
                 transform.position = Vector3.Lerp(transform.position, Postion, 3f * Time.deltaTime);
-                transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 3f);
+                transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.Euler(dir), Time.deltaTime * 3f);
+                if (CharExitBtn.GetComponent<Canvas>().enabled == true)
+                {
+                    CharExitBtn.GetComponent<Canvas>().enabled = false;
+                    ScrollBtn.GetComponent<Canvas>().enabled = true;
+                }
             }
 
 
@@ -79,41 +89,37 @@ public class LFollowCamera : MonoBehaviour
                 case 3:
                     mapObject.transform.rotation = Quaternion.Lerp(mapObject.transform.rotation, scene3, Time.deltaTime * 3f);
                     break;
-                case 5:
-                    mapObject.transform.rotation = Quaternion.Lerp(mapObject.transform.rotation, scene4, Time.deltaTime * 3f);
-                    break;
             }
             //GameObject mainPlayer = GameObject.FindGameObjectWithTag("Player");
             //mainPlayer.GetComponent<MeshRenderer>().enabled = true;
             //mainPlayer.transform.position = new Vector3(0, 1.6f, -0.6f);
-            if (angle >= 29.5 && angle <= 30.5 && !createRoomCheck)
-            {
-                LookMain();
-            }
-            else if (angle >= 179 && angle <= 180.5 && !createChrCheck)
-            {
-                LookOption();
-            }
-            else if (angle >= 138 && angle <= 140)
-            {
-                LookManual();
-            }else if(angle>= 105 && angle <= 111.5)
-            {
-                 mainPlayer.active = true;
-            }
-            else
-            {
-                CanvasGroupOff(manualGroup);
-                CanvasGroupOff(mainGroup);
-                CanvasGroupOff(optionGroup);
-            }
+            LazeAround(angle);
+        }
+    }
+    void LazeAround(float angle)
+    {
+        if (lookDir==1&&angle >= 29.5 && angle <= 30.5 && !createRoomCheck)
+        {
+            LookMain();
+        }
+        else if (lookDir == 3&&angle >= 179 && angle <= 180.5 && !createChrCheck)
+        {
+            LookOption();
+        }
+        else if (lookDir == 2&&angle >= 138 && angle <= 140)
+        {
+            LookManual();
+        }
+        else
+        {
+            CanvasGroupOff(manualGroup);
+            CanvasGroupOff(mainGroup);
+            CanvasGroupOff(optionGroup);
         }
     }
     public void LeftClick()
     {
         createRoomCheck = false;
-        createChrCheck = false;
-        create_temp = false;
         lookDir--;
         if (lookDir <= 0)
         {
@@ -123,8 +129,6 @@ public class LFollowCamera : MonoBehaviour
     public void RightClick()
     {
         createRoomCheck = false;
-        createChrCheck = false;
-        create_temp = false;
         lookDir++;
         if (lookDir >= 4)
         {
@@ -135,20 +139,25 @@ public class LFollowCamera : MonoBehaviour
     {
         LobbyObject.GetComponent<Animator>().enabled = false;
         CanvasGroupOff(connGroup);
-        lookDir = 1;
+        createChrCheck = true;
         check = true;
+
         GameObject[] mainTxt = GameObject.FindGameObjectsWithTag("LobbyText");
         for (int i = 0; i < mainTxt.Length; i++)
         {
             mainTxt[i].GetComponent<MeshRenderer>().enabled = true;
         }
+
         GameObject mainBtn = GameObject.FindGameObjectWithTag("MainBtn");
         mainBtn.GetComponent<Canvas>().enabled = true;
-        target.transform.position = new Vector3(0, 1.6f, -0.6f);
+
     }
+
     public void LookMain()
     {
+        lookDir = 1;
         createRoomCheck = false;
+        createChrCheck = false;
         CanvasGroupOff(manualGroup);
         CanvasGroupOff(optionGroup);
         CanvasGroupOff(createGroup);
@@ -156,6 +165,7 @@ public class LFollowCamera : MonoBehaviour
     }
     public void LookOption()
     {
+        createChrCheck = false;
         CanvasGroupOff(manualGroup);
         CanvasGroupOff(mainGroup);
         CanvasGroupOff(createGroup);
@@ -178,7 +188,6 @@ public class LFollowCamera : MonoBehaviour
     }
     public void LookCharacter()
     {
-        lookDir = 5;
         createChrCheck = true;
         CanvasGroupOff(optionGroup);
 

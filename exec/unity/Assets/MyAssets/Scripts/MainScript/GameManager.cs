@@ -39,18 +39,29 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private static GameManager m_instance; // 싱글톤이 할당될 static 변수
 
-    public GameObject playerPrefab; // 생성할 플레이어 캐릭터 프리팹
-    public TextMesh userName;
+    public GameObject[] playerPrefab; // 생성할 플레이어 캐릭터 프리팹
 
     // 주기적으로 자동 실행되는, 동기화 메서드
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
+        if (stream.IsWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            // Network player, receive data
+            this.transform.position = (Vector3)stream.ReceiveNext();
+            this.transform.rotation = (Quaternion)stream.ReceiveNext();
+        }
     }
     public void init()
     {
-        userName = GameObject.Find("UserName").GetComponent<TextMesh>();
-        userName.text = photonView.Owner.NickName;
+        //userName = GameObject.Find("UserName").GetComponent<TextMesh>();
+        //userName.text = photonView.Owner.NickName;
+        //Debug.Log("username" + userName.text);
         //원격지의 플레이어 nickname을 가져오는 
         string GetNickNameByActorNumber(int actorNumber)
         {
@@ -94,8 +105,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Send()
     {
-        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
-        ChatInput.text = "";
+        if (ChatInput.text != "")
+        {
+            PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
+            ChatInput.text = "";
+        }
     }
 
     [PunRPC] // RPC는 플레이어가 속해있는 방 모든 인원에게 전달한다
@@ -129,11 +143,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         // 생성할위치 지정
-        Vector3 SpawnPos = new Vector3(0, 3, 15);
+        Vector3 SpawnPos = new Vector3(3, 1, -46.5f);
 
         // 네트워크 상의 모든 클라이언트들에서 생성 실행
         // 단, 해당 게임 오브젝트의 주도권은, 생성 메서드를 직접 실행한 클라이언트에게 있음
-        PhotonNetwork.Instantiate(playerPrefab.name, SpawnPos, Quaternion.identity);
+        PhotonNetwork.Instantiate(playerPrefab[CharacterScript.playerNumber].name, SpawnPos, Quaternion.identity);
+        
         init();
     }
 

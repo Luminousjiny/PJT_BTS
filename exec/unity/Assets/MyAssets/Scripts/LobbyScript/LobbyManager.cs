@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.InteropServices;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
@@ -12,6 +13,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private readonly string gameVersion = "1.0";
 
+    [DllImport("__Internal")]
+    private static extern void UnityroomHook(string str);
+    [DllImport("__Internal")]
+    private static extern void UnityuserHook(string str);
+
     public TextMeshProUGUI connectionInfoText;
     public Button connectionBtn;
 
@@ -20,13 +26,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public TMP_InputField RoomNameInput;
     public TMP_InputField RoomPullInput;
+    public TMP_InputField playerName;
+
     public Toggle RoomprivateToggle;
 
     public TextMeshProUGUI WelcomeText;
     public Button[] CellBtn;
     public Button PreviousBtn;
     public Button NextBtn;
+    public Button changeUsernameBtn;
+    public TextMeshProUGUI linkdText;
 
+    private int confirm=0;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,26 +48,58 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         //접속 버튼 비활성화
         connectionBtn.interactable = false;
-        connectionInfoText.text = "마스터 서버에 접속 중......";
+        connectionInfoText.text = "Connecting to the Master Server......";
 
+        InvokeRepeating("confirmLink", 0.5f,0.5f);
+
+    }
+    private void confirmLink()
+    {
+        if (confirm == 0)
+        {
+            linkdText.text = "계정 연동을 위해 BTS 웹 페이지의 \n\n 연동 버튼을 클릭해주세요.....";
+            confirm++;
+        }else if (confirm == 1)
+        {
+            linkdText.text = "계정 연동을 위해 BTS 웹 페이지의 \n\n 연동 버튼을 클릭해주세요.";
+            confirm++;
+        }
+        else if (confirm == 2)
+        {
+            linkdText.text = "계정 연동을 위해 BTS 웹 페이지의 \n\n 연동 버튼을 클릭해주세요..";
+            confirm++;
+        }
+        else if (confirm == 3)
+        {
+            linkdText.text = "계정 연동을 위해 BTS 웹 페이지의 \n\n 연동 버튼을 클릭해주세요...";
+            confirm++;
+        }
+        else if (confirm == 4)
+        {
+            linkdText.text = "계정 연동을 위해 BTS 웹 페이지의 \n\n 연동 버튼을 클릭해주세요....";
+            confirm = 0;
+        }
     }
     // 마스터 서버에 접속 성공했을 때 
     public override void OnConnectedToMaster()
     {
-        connectionBtn.interactable = true;
-        connectionInfoText.text = "온라인 : 마스터 서버와 연결됨";
+        //connectionBtn.interactable = true;
+        connectionInfoText.text = "Online: Connected to the Master Server";
     }
     // 로비 연결
     public void JoinLobby()
     {
+        CancelInvoke("confirmLink");
         PhotonNetwork.JoinLobby();
     }
     // 로비 연결 성공했을 때
     public override void OnJoinedLobby()
     {
-        PhotonNetwork.LocalPlayer.NickName = "황호연";
-        //WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다!";
-        connectionInfoText.text = "온라인 : 로비와 연결됨";
+        if(PhotonNetwork.LocalPlayer.NickName == ""|| PhotonNetwork.LocalPlayer.NickName == null)
+        {
+            PhotonNetwork.LocalPlayer.NickName = "대전 B107";
+        }
+        connectionInfoText.text = "Online: Connected to the Lobby";
         myList.Clear();
     }
 
@@ -64,20 +107,49 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         connectionBtn.interactable = false;
-        connectionInfoText.text = $"오프라인 : 마스터 서버와 연결되지 않음\n {cause.ToString()}";
+        connectionInfoText.text = $"Offline: No connection with the master server\n {cause.ToString()}";
 
         PhotonNetwork.ConnectUsingSettings();
     }
-
+    public void changePlayerName()
+    {
+        if (playerName.text == "" || playerName.text == null)
+        {
+            playerName.text = "대전 B107";
+        }else
+        {
+            PhotonNetwork.LocalPlayer.NickName = playerName.text;
+        }
+    }
+    public void initPlayerName(string initName)
+    {
+        if (initName!=null)
+        {
+            PhotonNetwork.LocalPlayer.NickName = initName;
+            connectionBtn.interactable = true;
+        }
+    }
     // 방 만들기
     public void CreateRoom()
     {
         string maxPlayer = RoomPullInput.text;
-        if(maxPlayer == "")
+        if (maxPlayer == "")
         {
             maxPlayer = "4";
         }
-        PhotonNetwork.CreateRoom(RoomNameInput.text == "" ? "Room" + UnityEngine.Random.Range(0, 100) : RoomNameInput.text, new RoomOptions { MaxPlayers = Convert.ToByte(maxPlayer), IsVisible = !RoomprivateToggle.isOn, CleanupCacheOnLeave = true});
+        if(RoomNameInput.text == "")
+        {
+            string RoomName = "School" + UnityEngine.Random.Range(0, 100);
+            UnityroomHook(RoomName);
+            PhotonNetwork.CreateRoom(RoomName, new RoomOptions { MaxPlayers = Convert.ToByte(maxPlayer), IsVisible = !RoomprivateToggle.isOn, CleanupCacheOnLeave = true });
+        }
+        else
+        {
+            UnityroomHook(RoomNameInput.text);
+            PhotonNetwork.CreateRoom(RoomNameInput.text, new RoomOptions { MaxPlayers = Convert.ToByte(maxPlayer), IsVisible = !RoomprivateToggle.isOn, CleanupCacheOnLeave = true });
+        }
+
+
     }
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
@@ -96,12 +168,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         connectionBtn.interactable = false;
         if (PhotonNetwork.IsConnected)
         {
-            connectionInfoText.text = "방에 연결 중....";
+            connectionInfoText.text = "Connecting to the School....";
             PhotonNetwork.JoinRandomRoom();
         }
         else
         {
-            connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음 \n 접속 재시도 중.....";
+            connectionInfoText.text = "Offline: No connection with the master server \n Retrying connection.....";
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -113,13 +185,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         else if (num == -1) ++currentPage;
         else
         {
+            UnityroomHook(myList[multiple + num].Name);
             PhotonNetwork.JoinRoom(myList[multiple + num].Name);
         }
         MyListRenewal();
-    }
-    void Go()
-    {
-        // 행동 
     }
     void MyListRenewal()
     {
@@ -152,9 +221,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         MyListRenewal();
     }
+
     // Update is called once per frame
     void Update()
     {
+        if (PhotonNetwork.LocalPlayer.NickName == playerName.text)
+        {
+            changeUsernameBtn.interactable = false;
+        }else
+        {
+            changeUsernameBtn.interactable = true;
+        }
 
     }
 }
