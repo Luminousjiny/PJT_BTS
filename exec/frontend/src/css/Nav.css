@@ -88,3 +88,6 @@
 #menus li:hover{
     background-color: var(--color-grey-5);
 }
+.logo{
+    min-height: 102px;
+}

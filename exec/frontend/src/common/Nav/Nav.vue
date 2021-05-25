@@ -2,7 +2,7 @@
   <div id="nav">
     <div class="nav-container">
       <div class="logo">
-        <img src="@/../public/Image/bts_logo.png" id="bts-icon" />
+        <img src="@/../public/Image/bts_logo.png" id="bts-icon" v-if="this.$route.name !== 'About'"/>
       </div>
       <div id="user-container">
         <div v-if="user!==null" id="user-img">
