@@ -35,14 +35,14 @@
 
 .gb_ul {
   float: left;
-  padding: 1.3rem 0 0 2rem;
+  padding: 1.3rem 0 0 4rem;
   list-style: none;
   font-size: var(--font-size-12);
   font-family: AppleSDGothicNeoM;
   border-spacing: 0 2.1vh;
 }
 
-.user_id {
+.user_nickname {
   padding-right: 0.1rem;
 }
 
