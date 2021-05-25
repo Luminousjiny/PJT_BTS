@@ -28,7 +28,7 @@ public class GuestBook {
     @Column(nullable = false)
     private Date attendDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date finishDate;
 
     public static GuestBook createGuestBook(){

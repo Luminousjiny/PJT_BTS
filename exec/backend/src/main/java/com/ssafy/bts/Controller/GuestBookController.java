@@ -2,8 +2,6 @@ package com.ssafy.bts.Controller;
 
 import com.ssafy.bts.Domain.GuestBook.GuestBook;
 import com.ssafy.bts.Domain.GuestBook.GuestBookDTO;
-import com.ssafy.bts.Domain.Info.Info;
-import com.ssafy.bts.Domain.Info.InfoDTO;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Service.GuestBookService;
@@ -14,8 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -49,14 +47,16 @@ public class GuestBookController {
                 gb.setUser(user);
                 guestBookService.save(gb);
             }else{ //수정
+                Date now = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date time = guestBook.getAttendDate();
+                String current = sdf.format(time);
+                Date attendDate = sdf.parse(current); //db 등교시간
+                if(attendDate.compareTo(now) == -1){ //00시 넘으면 하교 삭제, 등교 갱신
+                    guestBook.setFinishDate(null);
+                    guestBook.setAttendDate(new Date());
+                }else guestBook.setAttendDate(new Date()); //계속 하교만 갱신
 
-
-                //만약에 현재 시간이 등교날의 다음날이면 등교o, 하교x
-                //등교:21-05-25 시간, 하교:
-                //if()
-
-                //하교
-                guestBook.setAttendDate(new Date());
                 guestBookService.updateGuestBook(room, user, guestBook);
             }
 
@@ -65,7 +65,7 @@ public class GuestBookController {
                     .map(m-> new GuestBookDTO(m))
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
-        }catch(IllegalStateException e){
+        }catch(IllegalStateException | ParseException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

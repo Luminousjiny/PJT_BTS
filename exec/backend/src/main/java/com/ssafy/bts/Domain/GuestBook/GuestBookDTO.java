@@ -21,8 +21,8 @@ public class GuestBookDTO {
     private int guestId;
     private RoomDTO room;
     private UserDTO user;
-    private String attendDate;
-    private String finishDate;
+    private Date attendDate;
+    private Date finishDate;
 
     public GuestBookDTO(GuestBook guestBook) {
         this.guestId = guestBook.getGuestId();
@@ -38,10 +38,5 @@ public class GuestBookDTO {
             this.user.setUserNickname(guestBook.getUser().getUserNickname());
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(guestBook.getAttendDate());
-        cal.add(Calendar.HOUR, +9);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.attendDate = df.format(cal.getTime());
     }
 }
