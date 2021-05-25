@@ -41,12 +41,6 @@ public class GuestBook {
 
     @PrePersist
     private void onCreate() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-
-        cal.setTime(new Date());
-        cal.add(Calendar.HOUR, +9);
-        String attendString = sdf.format(cal.getTime());
-        this.attendDate = sdf.parse(attendString);//db 등교시간
+        this.attendDate = new Date();
     }
 }

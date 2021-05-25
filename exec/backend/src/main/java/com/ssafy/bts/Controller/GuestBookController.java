@@ -53,14 +53,12 @@ public class GuestBookController {
                 Calendar cal = Calendar.getInstance();
 
                 cal.setTime(guestBook.getAttendDate());
+                cal.add(Calendar.HOUR, +9);
                 String attendString = sdf.format(cal.getTime());
                 Date attendDate = sdf.parse(attendString);//db 등교시간
 
                 String nowString = sdf.format(now);
                 Date nowDate = sdf.parse(nowString); //현재 시간
-
-                System.out.println(attendDate+", "+nowDate);
-                System.out.println(attendDate.compareTo(nowDate));
 
                 if(attendDate.compareTo(now) < 0){ //00시 넘으면 하교 삭제, 등교 갱신
                     guestBook.setFinishDate(null);
