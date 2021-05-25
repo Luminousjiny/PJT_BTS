@@ -35,9 +35,9 @@
 
 .gb_ul {
   float: left;
-  padding: 1.3rem 0 0 4rem;
+  padding: 1.3rem 0 0 2rem;
   list-style: none;
-  font-size: var(--font-size-12);
+  font-size: var(--font-size-14);
   font-family: AppleSDGothicNeoM;
   border-spacing: 0 2.1vh;
 }
