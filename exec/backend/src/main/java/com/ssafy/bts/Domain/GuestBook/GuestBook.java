@@ -26,7 +26,10 @@ public class GuestBook {
     private User user;
 
     @Column(nullable = false)
-    private Date visitDate;
+    private Date attendDate;
+
+    @Column(nullable = false)
+    private Date finishDate;
 
     public static GuestBook createGuestBook(){
         GuestBook inputGuestBook = new GuestBook();
@@ -34,5 +37,7 @@ public class GuestBook {
     }
 
     @PrePersist
-    private void onCreate() { this.visitDate = new Date(); }
+    private void onCreate() {
+        this.attendDate = new Date();
+    }
 }

@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,13 +43,20 @@ public class GuestBookController {
             User user = userService.findByUserId(userId);
 
             GuestBook guestBook = guestBookService.findByRoomAndUser(room, user);
-            if(guestBook == null){ //넣기
+            if(guestBook == null){ //처음 넣기
                 GuestBook gb = GuestBook.createGuestBook();
                 gb.setRoom(room);
                 gb.setUser(user);
                 guestBookService.save(gb);
             }else{ //수정
-                guestBook.setVisitDate(new Date());
+
+
+                //만약에 현재 시간이 등교날의 다음날이면 등교o, 하교x
+                //등교:21-05-25 시간, 하교:
+                //if()
+
+                //하교
+                guestBook.setAttendDate(new Date());
                 guestBookService.updateGuestBook(room, user, guestBook);
             }
 
