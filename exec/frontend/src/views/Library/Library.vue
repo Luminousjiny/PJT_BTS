@@ -60,7 +60,7 @@ export default {
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 10;
+  z-index: 999;
   bottom: 125%;
   left: 50%;
   margin-left: -60px;
