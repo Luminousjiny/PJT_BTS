@@ -98,7 +98,7 @@ export default {
     },
     updated(){
         window.addEventListener('resize', () => {
-            if(this.mapHeight !== document.querySelector('#unity-game-container').getBoundingClientRect().height || this.mapWidth !== document.querySelector('#unity-game-container').getBoundingClientRect().width){
+            if(this.showMap && (this.mapHeight !== document.querySelector('#unity-game-container').getBoundingClientRect().height || this.mapWidth !== document.querySelector('#unity-game-container').getBoundingClientRect().width)){
                 // const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
                 const target = document.querySelector('#unity-game-container')
                 const targetRect = target.getBoundingClientRect();
