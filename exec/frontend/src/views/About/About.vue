@@ -479,7 +479,7 @@ export default {
     img{
       position: absolute;
       width: 280px;
-      bottom: -45px;
+      bottom: -60px;
     }
   }
   &__card{
@@ -617,7 +617,7 @@ export default {
     &__content{
       img{
         width: 260px;
-        bottom: -55px;
+        bottom: -75px;
       }
     }
     &__card{
@@ -680,7 +680,7 @@ export default {
     &__content{
       img{
         width: 230px;
-        bottom: -65px;
+        bottom: -85px;
       }
     }
     &__card{
@@ -781,6 +781,7 @@ export default {
     &__content{
       img{
         width: 200px;
+        bottom: -90px;
       }
     }
     &__card{
