@@ -43,11 +43,13 @@ public class GuestBookDTO {
 
         if(guestBook.getAttendDate() != null){
             cal.setTime(guestBook.getAttendDate());
+            cal.add(Calendar.HOUR, +9);
             this.attendDate = df.format(cal.getTime());
         }
 
         if(guestBook.getFinishDate() != null){
             cal.setTime(guestBook.getFinishDate());
+            cal.add(Calendar.HOUR, +9);
             this.finishDate = df.format(cal.getTime());
         }
     }
