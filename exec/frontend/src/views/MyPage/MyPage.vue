@@ -98,8 +98,8 @@ export default {
   created(){
     //vuex에서 가져오는 부분 추가예정
     if(this.$store.getters.getUser === null){
-      this.$router.push('/');
-    }    
+      this.$router.push('/login');
+    }
     this.user = this.$store.getters.getUser;
     this.originalPhone = this.user.userPhone;
     this.passwordCheck=this.user.userPw;

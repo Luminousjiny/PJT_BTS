@@ -13,7 +13,7 @@ export default {
   },
   created(){
     if(this.$store.getters.getUser === null){
-      this.$router.push('/');
+      this.$router.push('/login');
     } 
   }
 }

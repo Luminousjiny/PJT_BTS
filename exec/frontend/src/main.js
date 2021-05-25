@@ -5,15 +5,15 @@ import store from "./store";
 import VueModal from '@kouts/vue-modal';
 import '@kouts/vue-modal/dist/vue-modal.css';
 import VueMoment from 'vue-moment'
-Vue.use(VueMoment);
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-Vue.use(Vuetify);
-Vue.config.productionTip = false;
 import MMonacoEditor from 'vue-m-monaco-editor';
-Vue.use(MMonacoEditor);
 import VueLoading from 'vue-loading-template';
+Vue.config.productionTip = false;
+Vue.use(VueMoment);
+Vue.use(MMonacoEditor);
 Vue.use(VueLoading);
+Vue.use(Vuetify);
 
 var VueCookie = require('vue-cookie');
 //쿠키를 사용한다.

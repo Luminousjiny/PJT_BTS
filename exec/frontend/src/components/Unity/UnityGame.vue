@@ -51,7 +51,7 @@ export default {
     components : {Unity},
     created(){
       if(this.$store.state.user===null){
-        this.$router.push('/');
+        this.$router.push('/login');
       }
       this.schoolName=this.$store.state.schoolName;
       this.user=this.$store.getters.getUser;
