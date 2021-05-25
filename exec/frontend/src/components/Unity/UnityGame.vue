@@ -3,12 +3,13 @@
         <div id="game-container">
             <div id="mini-map-alt" class="map-alt" v-if="!showMap">
                 <div class="mini-alt">
-                    <v-icon id="map-alt-icon">fas fa-sign-in-alt</v-icon>
-                    <p id="map-alt-text">학교로 <br> 돌아가기</p>
+                    <v-icon id="mini-alt-icon">fas fa-sign-in-alt</v-icon>
+                    <p id="mini-alt-text">학교로 <br> 돌아가기</p>
                 </div>
             </div>
             <div id="keydown-map-alt" class="map-alt" v-if="keydownAlt">
-                <p id="kedown-alt-text">캐릭터를 움직이기 위해선 게임 화면을 클릭해주세요.</p>
+                <v-icon id="keydown-alt-icon">fas fa-exclamation-circle</v-icon>
+                <p id="keydown-alt-text">캐릭터를 움직이기 위해선 게임 화면을 클릭해 주세요.</p>
             </div>
             <unity id="bts-unity"
             src = "./unity/Build/webGL.json"

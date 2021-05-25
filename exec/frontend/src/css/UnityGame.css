@@ -38,15 +38,18 @@
     top: 5px;
     left: 5px;
 }
-#map-alt-icon{
+#mini-alt-icon{
     color : var(--color-white);
     font-size: var(--font-size-35);
 }
 #keydown-map-alt{
     display: flex;
     align-items: center;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
 }
-#map-alt-text{
+#mini-alt-text{
     color : var(--color-white);
     font-size: var(--font-size-18);
     font-family: 'AppleSDGothicNeoB';
@@ -55,11 +58,15 @@
     vertical-align: top;
     margin-left: 10px;
 }
-#kedown-alt-text{
+#keydown-alt-text{
     color : var(--color-white);
     font-size: var(--font-size-22);
     font-family: 'AppleSDGothicNeoB';
     font-weight: var(--weight-regular);
-    margin : auto;
-    text-align: center;
+    margin: 20px 0px;
 }
+#keydown-alt-icon{
+    color : var(--color-white);
+    font-size: var(--font-size-40);
+}
+
