@@ -2,7 +2,7 @@
   <div id="nav">
     <div class="nav-container">
       <div class="logo">
-        <img src="@/../public/Image/bts_logo.png" id="bts-icon" />
+        <img src="@/../public/Image/bts_logo.png" id="bts-icon" v-if="this.$route.name !== 'About'"/>
       </div>
       <div id="user-container">
         <div v-if="user!==null" id="user-img">
@@ -65,7 +65,18 @@
           <ul
             id="menus"
             :class="{ 'menu-inactive': !showMenu, 'menu-active': showMenu }"
+            v-if="this.user === null"
           >
+            <li><button @click="handleAbout">About</button></li>
+            <li><button @click="handleLogin">로그인</button></li>
+            <li><button @click="handleJoin">회원가입</button></li>
+          </ul>
+          <ul
+            id="menus"
+            :class="{ 'menu-inactive': !showMenu, 'menu-active': showMenu }"
+            v-else
+          >
+            <li><button @click="handleAbout">About</button></li>
             <li><button @click="handleMypage">마이페이지</button></li>
             <li><button @click="handleLogout">로그아웃</button></li>
           </ul>
@@ -81,18 +92,14 @@ export default {
   data() {
     return {
       showMenu: false,
-      menus: [
-        { title: "마이페이지" },
-        { title: "로그아웃" },
-      ],
       user:{},
     };
   },
   created(){
     this.user=this.$store.getters.getUser;
-    if(this.user===null){
-      window.location.href="https://k4b107.p.ssafy.io:8000/"
-    }
+    // if(this.user===null){
+    //   window.location.href="https://k4b107.p.ssafy.io:8000/"
+    // }
   },
   mounted() {
     document.addEventListener(
@@ -114,6 +121,15 @@ export default {
       this.$store.commit('logout');
       window.location.href="https://k4b107.p.ssafy.io:8000/"
     },
+    handleAbout(){
+      window.location.href="https://k4b107.p.ssafy.io:8000/about"
+    },
+    handleLogin(){
+      this.$router.push('/');
+    },
+    handleJoin(){
+      this.$router.push('/join');
+    }
   },
 };
 </script>

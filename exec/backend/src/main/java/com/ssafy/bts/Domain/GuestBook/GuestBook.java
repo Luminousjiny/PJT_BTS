@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.Date;
 
 @Entity
@@ -37,7 +38,7 @@ public class GuestBook {
     }
 
     @PrePersist
-    private void onCreate() {
+    private void onCreate() throws ParseException {
         this.attendDate = new Date();
     }
 }

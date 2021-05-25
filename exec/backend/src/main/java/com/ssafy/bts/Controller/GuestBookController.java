@@ -57,13 +57,17 @@ public class GuestBookController {
                 String attendString = sdf.format(cal.getTime());
                 Date attendDate = sdf.parse(attendString);//db 등교시간
 
-                String nowString = sdf.format(now);
+
+                cal.setTime(now);
+                cal.add(Calendar.HOUR, +9);
+                String nowString = sdf.format(cal.getTime());
                 Date nowDate = sdf.parse(nowString); //현재 시간
 
+                System.out.println(guestBook.getAttendDate()+", "+now);
                 System.out.println(attendDate+", "+nowDate);
                 System.out.println(attendDate.compareTo(nowDate));
 
-                if(attendDate.compareTo(now) < 0){ //00시 넘으면 하교 삭제, 등교 갱신
+                if(attendDate.compareTo(nowDate) < 0){ //00시 넘으면 하교 삭제, 등교 갱신
                     guestBook.setFinishDate(null);
                     guestBook.setAttendDate(new Date());
                 }else guestBook.setFinishDate(new Date()); //계속 하교만 갱신

@@ -6,21 +6,26 @@
         <i class="fas fa-chevron-left fa-2x"></i>
       </div>
       <div class="gb_book">
+        <div class="div_txt">
+            <span class="attend">등교🌞</span>
+            <span class="finish">하교🌙</span>
+            <span class="attend1">등교🌞</span>
+            <span class="finish1">하교🌙</span>
+        </div>
+
         <table class="gb_ul ul1">
           <tr v-for="(u, index) in users.slice(nowNum*24,(nowNum*24)+12)" :key="index">
-            <td class="user_id">{{u.user.userId}}</td>
             <td class="user_nickname">{{u.user.userNickname}}</td>
-            <td class="visit_date">{{u.attendDate}}</td>
-            <td class="visit_date">{{u.finishDate}}</td>
+            <td class="attend_date">{{u.attendDate}}</td>
+            <td class="finish_date">{{u.finishDate}}</td>
           </tr>
         </table>
 
         <table class="gb_ul ul2">
           <tr v-for="(u, index) in users.slice((nowNum*24)+12,(nowNum*24)+24)" :key="index">
-            <td class="user_id">{{u.user.userId}}</td>
             <td class="user_nickname">{{u.user.userNickname}}</td>
-            <td class="visit_date">{{u.attendDate}}</td>
-            <td class="visit_date">{{u.finishDate}}</td>
+            <td class="attend_date">{{u.attendDate}}</td>
+            <td class="finish_date">{{u.finishDate}}</td>
           </tr>
         </table>
       </div>

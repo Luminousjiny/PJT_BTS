@@ -91,12 +91,10 @@
 .flex-column #prev button{
     height: auto!important;
 }
-/* .flex-column p{
-    display: none!important;
+.flex-column .inactive-user-name{
+    font-size: initial;
 }
-.flex-column .flex-item:hover p{
-    display: inline-block!important;
-} */
+
 .page-button{
     margin : 0px;
     width : 80%;
@@ -138,6 +136,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    vertical-align: bottom;
+    text-align: center;
 }
 .inactive-user{
     position: absolute;
@@ -157,6 +157,7 @@
 .inactive-user-name{
     font-family: 'AppleSDGothicNeoSB';
     font-weight: var(--weight-regular);
+    font-size: var(--font-size-30);
     color : var(--color-white);
     text-align: center;
 }

@@ -5,10 +5,8 @@ import com.ssafy.bts.Controller.Request.QnaRequest;
 import com.ssafy.bts.Domain.Comment.Comment;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
