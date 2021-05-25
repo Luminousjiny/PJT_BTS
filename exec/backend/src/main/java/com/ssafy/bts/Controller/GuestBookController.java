@@ -57,7 +57,10 @@ public class GuestBookController {
                 String attendString = sdf.format(cal.getTime());
                 Date attendDate = sdf.parse(attendString);//db 등교시간
 
-                String nowString = sdf.format(now);
+
+                cal.setTime(now);
+                cal.add(Calendar.HOUR, +9);
+                String nowString = sdf.format(cal.getTime());
                 Date nowDate = sdf.parse(nowString); //현재 시간
 
                 System.out.println(guestBook.getAttendDate()+", "+now);
