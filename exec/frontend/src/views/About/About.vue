@@ -241,6 +241,9 @@ export default {
 .home1 {
   background: center no-repeat url("../../assets/main_page.png");
   background-size:100vw 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .blue{
   color: var(--color-mainBlue);
@@ -429,7 +432,6 @@ export default {
     &__img2{
       height: 35px;
       background: center / contain no-repeat url("../../assets/youtube.png");
-      background-size: 100% 100%;
     }
     &__img3{
       margin: 10px 0;
