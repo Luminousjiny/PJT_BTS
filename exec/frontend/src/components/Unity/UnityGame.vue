@@ -78,11 +78,11 @@ export default {
             "click",
             function (event) {
                 if (event.target.closest("#game-container")){ // 유니티 가능
-                    this.$refs.hookInstance.message('Game Manager','focusing',"true");
+                    if(this.$refs.hookInstance !== undefined) this.$refs.hookInstance.message('Game Manager','focusing',"true");
                     this.unityFocus = true;
                     this.keydownAlt = false;
                 }else{ // 윈도우 인풋 가능
-                    this.$refs.hookInstance.message('Game Manager','focusing',"false");
+                    if(this.$refs.hookInstance !== undefined)  this.$refs.hookInstance.message('Game Manager','focusing',"false");
                     this.unityFocus = false;
                 }
             }.bind(this)
@@ -141,7 +141,7 @@ export default {
     },
     methods : {
         getUnityHook(){
-            this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
+            if(this.$refs.hookInstance !== undefined) this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
             this.linked = true;
             this.objectName = "";
             this.interval = setInterval(()=>{
