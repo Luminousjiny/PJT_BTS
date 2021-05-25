@@ -10,7 +10,8 @@
           <tr v-for="(u, index) in users.slice(nowNum*24,(nowNum*24)+12)" :key="index">
             <td class="user_id">{{u.user.userId}}</td>
             <td class="user_nickname">{{u.user.userNickname}}</td>
-            <td class="visit_date">{{u.visitDate}}</td>
+            <td class="visit_date">{{u.attendDate}}</td>
+            <td class="visit_date">{{u.finishDate}}</td>
           </tr>
         </table>
 
@@ -18,7 +19,8 @@
           <tr v-for="(u, index) in users.slice((nowNum*24)+12,(nowNum*24)+24)" :key="index">
             <td class="user_id">{{u.user.userId}}</td>
             <td class="user_nickname">{{u.user.userNickname}}</td>
-            <td class="visit_date">{{u.visitDate}}</td>
+            <td class="visit_date">{{u.attendDate}}</td>
+            <td class="visit_date">{{u.finishDate}}</td>
           </tr>
         </table>
       </div>
@@ -57,6 +59,7 @@ export default {
      http
       .post(`/v1/gb/${this.schoolId}/${this.user.userId}`)
       .then((res) => {
+        console.log("오셈"+JSON.stringify(res.data.data));
         this.users = res.data.data;
       })
       .catch((err) => console.error(err));
