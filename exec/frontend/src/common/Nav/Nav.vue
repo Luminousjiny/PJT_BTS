@@ -119,7 +119,7 @@ export default {
     },
     handleLogout(){
       this.$store.commit('logout');
-      window.location.href="https://k4b107.p.ssafy.io:8000/login"
+      window.location.href="https://k4b107.p.ssafy.io:8000/"
     },
     handleAbout(){
       window.location.href="https://k4b107.p.ssafy.io:8000/"
