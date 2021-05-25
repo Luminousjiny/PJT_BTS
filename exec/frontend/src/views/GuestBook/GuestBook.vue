@@ -1,6 +1,6 @@
 <template>
   <div class="guestbook">
-    <h1 class="h1">방명록</h1>
+    <h1 class="h1">출석체크</h1>
     <div class="gb_area">
       <div class="left_btn" v-on:click="goLeft">
         <i class="fas fa-chevron-left fa-2x"></i>
