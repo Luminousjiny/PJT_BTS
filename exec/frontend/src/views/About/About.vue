@@ -1,6 +1,5 @@
 <template>
   <div id="home">
-    <Nav/>
     <div class="sections-menu">
       <span
         class="menu-point"
@@ -11,7 +10,7 @@
       </span>
     </div>
     <section class="fullpage home1">
-      <div></div>
+      <Nav/>
     </section>
     <section class="fullpage home2">
       <div class="home2__box">

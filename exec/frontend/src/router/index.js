@@ -41,12 +41,12 @@ const routes = [
     path: "/",
     name: "About",
     component: About,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
     children: [
-      {
-        path: "login",
-        name: "Login",
-        component: Login,
-      },
       {
         path: "camera",
         name: "Camera",
