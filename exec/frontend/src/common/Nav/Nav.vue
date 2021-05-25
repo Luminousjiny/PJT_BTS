@@ -98,7 +98,7 @@ export default {
   created(){
     this.user=this.$store.getters.getUser;
     // if(this.user===null){
-    //   window.location.href="https://k4b107.p.ssafy.io:8000/"
+    //   window.location.href="https://k4b107.p.ssafy.io:8000/login"
     // }
   },
   mounted() {
@@ -119,13 +119,13 @@ export default {
     },
     handleLogout(){
       this.$store.commit('logout');
-      window.location.href="https://k4b107.p.ssafy.io:8000/"
+      window.location.href="https://k4b107.p.ssafy.io:8000/login"
     },
     handleAbout(){
-      window.location.href="https://k4b107.p.ssafy.io:8000/about"
+      window.location.href="https://k4b107.p.ssafy.io:8000/"
     },
     handleLogin(){
-      this.$router.push('/');
+      this.$router.push('/login');
     },
     handleJoin(){
       this.$router.push('/join');

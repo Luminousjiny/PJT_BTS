@@ -117,7 +117,7 @@ export default {
     },
     created() {
         if(this.$store.state.user===null){
-            this.$router.push('/');
+            this.$router.push('/login');
             return ;
         }
         this.user = this.$store.getters.getUser;
