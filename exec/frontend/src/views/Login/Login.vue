@@ -17,6 +17,7 @@
               class="login_input_c"
               placeholder="최대 10자입니다. "
               single-line
+              max=10
             ></v-text-field>
 
             <label class="login_mid_header" for="user-pw">비밀번호</label>
@@ -27,6 +28,7 @@
               class="login_input_c"
               placeholder="8자~11자입니다. "
               single-line
+              max=11
             ></v-text-field>
 
             <input type="checkbox" id="checkbox" v-model="checked" />
@@ -137,7 +139,12 @@ export default {
             }); 
           }
           else{
-            alert(res.data['message']);
+            Swal.fire({
+            icon: "error",
+            text: res.data['message'],
+            showConfirmButton: false,
+            timer: 1000,
+            });
           }
       })
       .catch((err) => {
