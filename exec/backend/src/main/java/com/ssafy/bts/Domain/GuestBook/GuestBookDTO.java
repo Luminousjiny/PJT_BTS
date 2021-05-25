@@ -1,18 +1,14 @@
 package com.ssafy.bts.Domain.GuestBook;
 
-import com.ssafy.bts.Domain.Room.Room;
+
 import com.ssafy.bts.Domain.Room.RoomDTO;
 import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sun.java2d.pipe.SpanShapeRenderer;
-
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor

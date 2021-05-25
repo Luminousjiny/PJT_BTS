@@ -1,7 +1,6 @@
 package com.ssafy.bts.Domain.Coding;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ssafy.bts.Controller.Request.CodeRequest;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;

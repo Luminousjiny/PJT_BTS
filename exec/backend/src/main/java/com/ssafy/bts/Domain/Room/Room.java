@@ -8,7 +8,6 @@ import com.ssafy.bts.Domain.Info.Info;
 import com.ssafy.bts.Domain.Qna.Qna;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

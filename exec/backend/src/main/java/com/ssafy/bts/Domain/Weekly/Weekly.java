@@ -1,7 +1,6 @@
 package com.ssafy.bts.Domain.Weekly;
 
 import com.ssafy.bts.Controller.Request.WeeklyRequest;
-import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
