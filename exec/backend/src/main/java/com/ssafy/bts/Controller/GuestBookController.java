@@ -52,10 +52,17 @@ public class GuestBookController {
                 Date time = guestBook.getAttendDate();
                 String current = sdf.format(time);
                 Date attendDate = sdf.parse(current); //db 등교시간
-                if(attendDate.compareTo(now) == -1){ //00시 넘으면 하교 삭제, 등교 갱신
+
+                String nowString = sdf.format(now);
+                Date nowDate = sdf.parse(nowString);
+
+                System.out.println(attendDate+", "+nowDate);
+                System.out.println(attendDate.compareTo(nowDate));
+
+                if(attendDate.compareTo(now) < 0){ //00시 넘으면 하교 삭제, 등교 갱신
                     guestBook.setFinishDate(null);
                     guestBook.setAttendDate(new Date());
-                }else guestBook.setAttendDate(new Date()); //계속 하교만 갱신
+                }else guestBook.setFinishDate(new Date()); //계속 하교만 갱신
 
                 guestBookService.updateGuestBook(room, user, guestBook);
             }
