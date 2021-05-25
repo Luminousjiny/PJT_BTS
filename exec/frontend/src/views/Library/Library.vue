@@ -48,7 +48,6 @@ export default {
   margin-left: 70%;
   margin-top: 10px;
   height: 0px;
-  z-index: 10;
   position: relative;
   display: inline-block;
 }
@@ -61,7 +60,7 @@ export default {
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 10;
   bottom: 125%;
   left: 50%;
   margin-left: -60px;
