@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,12 +50,15 @@ public class GuestBookController {
             }else{ //수정
                 Date now = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date time = guestBook.getAttendDate();
-                String current = sdf.format(time);
-                Date attendDate = sdf.parse(current); //db 등교시간
+                Calendar cal = Calendar.getInstance();
+
+                cal.setTime(guestBook.getAttendDate());
+                cal.add(Calendar.HOUR, +9);
+                String attendString = sdf.format(cal.getTime());
+                Date attendDate = sdf.parse(attendString);//db 등교시간
 
                 String nowString = sdf.format(now);
-                Date nowDate = sdf.parse(nowString);
+                Date nowDate = sdf.parse(nowString); //현재 시간
 
                 System.out.println(attendDate+", "+nowDate);
                 System.out.println(attendDate.compareTo(nowDate));
