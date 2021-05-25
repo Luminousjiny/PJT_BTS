@@ -52,6 +52,7 @@ public class GuestBookService {
         Optional<GuestBook> gb = Optional.ofNullable(guestBookRepository.findByRoomAndUser(room, user));
         if(gb.isPresent()) { // 값이 있는지 확인 => .isPresent()
             gb.get().setAttendDate(guestBook.getAttendDate());
+            gb.get().setFinishDate(guestBook.getFinishDate());
         }
         else{
             throw new IllegalStateException("잘못된 유저 아이디입니다.");
