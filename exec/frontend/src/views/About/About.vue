@@ -244,6 +244,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  #nav{
+    border: none;
+  }
 }
 .blue{
   color: var(--color-mainBlue);
