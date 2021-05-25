@@ -60,6 +60,7 @@ public class GuestBookController {
                 String nowString = sdf.format(now);
                 Date nowDate = sdf.parse(nowString); //현재 시간
 
+                System.out.println(guestBook.getAttendDate()+", "+now);
                 System.out.println(attendDate+", "+nowDate);
                 System.out.println(attendDate.compareTo(nowDate));
 
