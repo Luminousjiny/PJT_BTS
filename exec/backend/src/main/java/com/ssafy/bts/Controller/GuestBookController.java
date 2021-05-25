@@ -60,6 +60,9 @@ public class GuestBookController {
                 String nowString = sdf.format(now);
                 Date nowDate = sdf.parse(nowString); //현재 시간
 
+                System.out.println(attendDate+", "+nowDate);
+                System.out.println(attendDate.compareTo(nowDate));
+
                 if(attendDate.compareTo(nowDate) < 0){ //00시 넘으면 하교 삭제, 등교 갱신
                     guestBook.setFinishDate(null);
                     guestBook.setAttendDate(new Date());
