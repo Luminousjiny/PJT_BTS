@@ -53,7 +53,6 @@ public class GuestBookController {
                 Calendar cal = Calendar.getInstance();
 
                 cal.setTime(guestBook.getAttendDate());
-                cal.add(Calendar.HOUR, +9);
                 String attendString = sdf.format(cal.getTime());
                 Date attendDate = sdf.parse(attendString);//db 등교시간
 
