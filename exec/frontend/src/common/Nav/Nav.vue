@@ -77,6 +77,7 @@
             v-else
           >
             <li><button @click="handleAbout">About</button></li>
+            <li><button @click="handleUnity">학교가기</button></li>
             <li><button @click="handleMypage">마이페이지</button></li>
             <li><button @click="handleLogout">로그아웃</button></li>
           </ul>
@@ -129,6 +130,9 @@ export default {
     },
     handleJoin(){
       this.$router.push('/join');
+    },
+    handleUnity(){
+      this.$router.push({name : 'Unity'});
     }
   },
 };
