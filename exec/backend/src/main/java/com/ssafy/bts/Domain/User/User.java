@@ -4,7 +4,6 @@ import com.ssafy.bts.Controller.Request.UserRequest;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity

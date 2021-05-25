@@ -5,7 +5,6 @@ import com.ssafy.bts.Domain.User.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
 @Data
