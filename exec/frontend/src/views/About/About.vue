@@ -281,7 +281,7 @@ export default {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
   }
   &__title{
@@ -291,14 +291,14 @@ export default {
     display: flex;
     position: relative;
     &__left{
-      width: 535px;
-      height: 300px;
+      width: 700px;
+      height: 600px;
       background: center no-repeat url("../../assets/main_unity.gif");
       background-size: 100% auto;
-      margin-right: 12rem;
+      margin-right: 11rem;
     }
     &__right{
-      font-size: var(--font-size-20);
+      font-size: var(--font-size-24);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -319,7 +319,7 @@ export default {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
   }  
   &__title{
@@ -338,7 +338,8 @@ export default {
     align-items: center;
   }
   &__card{
-    width: 300px;
+    width: 330px;
+    height: 450px;
     padding: 1rem;
     margin: 0 1rem;
     border-radius: 20px;
@@ -346,25 +347,25 @@ export default {
     background-color: var(--color-white);
     &__img{
       border-radius: 20px;
-      height: 240px;
+      height: 310px;
       background: center no-repeat url("../../assets/webcam.png");
       background-size: 100% 100%;
     }
     &__img2{
       border-radius: 20px;
-      height: 240px;
+      height: 310px;
       background: center no-repeat url("../../assets/share_info.png");
       background-size: 100% 100%;
     }
     &__img3{
       border-radius: 20px;
-      height: 240px;
+      height: 310px;
       background: center no-repeat url("../../assets/QNA.png");
       background-size: 100% 100%;
     }
     &__img4{
       border-radius: 20px;
-      height: 240px;
+      height: 310px;
       background: center no-repeat url("../../assets/code.png");
       background-size: 100% 100%;
     }
@@ -391,7 +392,7 @@ export default {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
   }
   &__title{
@@ -409,13 +410,14 @@ export default {
     justify-content: center;
     align-items: center;    
     width: 80%;
+    height: 450px;
     background-color: var(--color-white);
     position: relative;
     border-radius: 20px;
     img{
       position: absolute;
       width: 350px;
-      top: -70px;
+      top: -80px;
     }
     &__plus{
       width: 100px;
@@ -459,7 +461,7 @@ export default {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
   }
   &__title{
@@ -481,24 +483,26 @@ export default {
     position: relative;
     img{
       position: absolute;
-      width: 280px;
-      bottom: -60px;
+      width: 300px;
+      bottom: -80px;
     }
   }
   &__card{
-    width: 330px;
+    width: 400px;
     margin: 0 8rem;
     &__img{
       border-radius: 50%;
       border: 4px solid var(--color-white);
-      height: 326px;
+      width: 396px;
+      height: 396px;
       background: center no-repeat url("../../assets/calender_check.png");
       background-size: 100% 100%;
     }
     &__img2{
       border-radius: 50%;
       border: 4px solid var(--color-white);      
-      height: 326px;
+      width: 396px;
+      height: 396px;
       background: center / contain no-repeat url("../../assets/study.png");
       background-size: 100% 100%;
     }
@@ -531,7 +535,20 @@ export default {
   opacity: 1;
   transform: scale(1.5);
 }
-
+@media screen and(max-width: 1750px) {
+  .home3{
+    &__content{
+      &__left{
+        width: 500px;
+        height: 600px;
+        margin-right: 8rem;
+      }
+      &__right{
+        font-size: var(--font-size-22); 
+      }
+    }
+  }
+}
 @media screen and (max-width: 1500px) {
   .home3{
     &__content{
@@ -565,16 +582,16 @@ export default {
     &__card{
       width: 250px;
       &__img{
-        height: 200px;
+        height: 320px;
       }
       &__img2{
-        height: 200px;
+        height: 320px;
       }
       &__img3{
-        height: 200px;
+        height: 320px;
       }
       &__img4{
-        height: 200px;
+        height: 320px;
       }
       &__title{
         font-size: var(--font-size-18);
@@ -589,6 +606,7 @@ export default {
       font-size: var(--font-size-30);
     }
     &__content{
+      height: auto;
       img{
         width: 300px;
       }
@@ -620,16 +638,18 @@ export default {
     &__content{
       img{
         width: 260px;
-        bottom: -75px;
+        bottom: -90px;
       }
     }
     &__card{
-      width: 280px;
+      width: 300px;
       &__img{
-        height: 276px;
+        width: 296px;
+        height: 296px;
       }
       &__img2{
-        height: 276px;
+        width: 296px;
+        height: 296px;
       }
       &__title{
         font-size: var(--font-size-18);
@@ -657,19 +677,28 @@ export default {
 }
 @media screen and (max-width: 1100px) {
   .home4{
+    &__content{
+      width: 60%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
     &__card{
-      width: 200px;
+      width: 230px;
+      height: 240px;
+      margin-bottom: 3rem;
       &__img{
-        height: 160px;
+        height: 170px;
       }
       &__img2{
-        height: 160px;
+        height: 170px;
       }
       &__img3{
-        height: 160px;
+        height: 170px;
       }
       &__img4{
-        height: 160px;
+        height: 170px;
       }
       &__content{
         display: none;
@@ -681,18 +710,20 @@ export default {
       font-size: var(--font-size-30);
     }
     &__content{
+      flex-direction: column;
       img{
-        width: 230px;
-        bottom: -85px;
+        display: none;
       }
     }
     &__card{
       width: 240px;
       margin: 0 5rem;
       &__img{
+        width: 236px;
         height: 236px;
       }
       &__img2{
+        width: 236px;
         height: 236px;
       }
       &__title{
@@ -708,8 +739,8 @@ export default {
     }
     &__content{
       &__left{
-        width: 350px;
-        margin-right: 0;
+        width: 400px;
+        margin-right: 3rem;
       }
       &__right{
         font-size: var(--font-size-14); 
@@ -736,18 +767,19 @@ export default {
   }
   .home4{
     &__card{
-      width: 150px;
+      width: 40%;
+      height: 60%;
       &__img{
-        height: 120px;
+        height: 70%;
       }
       &__img2{
-        height: 120px;
+        height: 70%;
       }
       &__img3{
-        height: 120px;
+        height: 70%;
       }
       &__img4{
-        height: 120px;
+        height: 70%;
       }  
     }
   }
