@@ -26,8 +26,9 @@
 > 개발 기간: 2021.04.12 ~ 2021.05.28 (약 7주)       
 
 ## 📑 문서 
-> [1️⃣기획문서](https://www.notion.so/_SUB1-5fbe04ad315141db9f23d63805cd60dd)   
-> [2️⃣개발문서](https://www.notion.so/BTS_2-6fe1e0b0cc4949078da839c07f24dd55)     
+> [1️⃣기획문서](https://www.notion.so/_1-5fbe04ad315141db9f23d63805cd60dd)   
+> [2️⃣개발문서](https://www.notion.so/2-c04b4ec1c65a4270976c0dff6aaec2ad)     
+> [3️⃣발표문서](https://www.notion.so/BTS_3-d233c7458fd24adca2d48e020574e729)
 > 
 <br/>  
 <br/> 
