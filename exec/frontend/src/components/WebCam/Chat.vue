@@ -90,7 +90,7 @@ export default {
     },
     updated() {
         let container = this.$el.querySelector("#receive-container,#participant-container");
-        container.scrollTop = container.scrollHeight;
+        if(container !== null) container.scrollTop = container.scrollHeight;
     },
     created() {
         this.user = this.$store.getters.getUser;
