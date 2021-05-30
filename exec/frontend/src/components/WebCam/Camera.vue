@@ -102,6 +102,12 @@ export default {
     const targetRect = target.getBoundingClientRect();
     this.maxHeight = targetRect.height;
   },
+  updated(){
+    const container = document.querySelector('#mostPopular-title');
+    if(container !== null) container.setAttribute('style', `z-index:unset;`);
+    const screen = document.querySelector('.screen-video video');
+    if(screen !== null) screen.setAttribute('style', `max-height:${this.maxHeight-80}px;`);
+  },
   computed : {
     setWidth40 : function(){
       if(this.data.subscribers.length < 2 && !this.data.share.active){
@@ -147,30 +153,6 @@ export default {
         return this.data.subscribers.slice(this.page*3, Math.min(this.page*3+4,this.data.subscribers.length));
       }
     },
-    watchedScreen : function(){
-      return this.data.share.screen;
-    },
-    watchedScreenShare : function(){
-      return this.data.share.active;
-    }
-  },
-  watch : {
-    watchedScreen : function(newVal){
-      if(this.youtubeShare.active && newVal !== undefined){
-        this.youtubeShare.active = false;
-        this.youtubeShare.showList = false;
-        this.youtubeShare.showDetail = false;
-        this.youtubeShare.videoDetail = undefined;
-      }
-    },
-    watchedScreenShare : function(newVal){
-      if(newVal){
-        const target = document.querySelector('#webcam-main')
-        const targetRect = target.getBoundingClientRect();
-        this.maxHeight = targetRect.height;
-        document.querySelector('.screen-video video').setAttribute('style', `max-height:${this.maxHeight-80}px;`);
-      }
-    }
   },
   methods: {
     updateMainVideoStreamManager(stream) {
@@ -223,11 +205,21 @@ export default {
         this.$emit('leaveSession');
     },
     getYoutubeVideo(){
-      this.data.share.active = true;
-      this.data.share.screen = undefined;
-      this.youtubeShare.active = true;
-      this.youtubeShare.showList = true;
-      this.screenShare = false;
+      if(this.data.share.screen === undefined){
+        if(!this.youtubeShare.active){
+          this.data.share.active = true;
+          this.youtubeShare.active = true;
+          this.youtubeShare.showList = true;
+        }else{
+          this.data.share.active = false;
+          this.youtubeShare.active = false;
+          this.youtubeShare.showList = false;
+          this.youtubeShare.showDetail = false;
+          this.youtubeShare.videoDetail = undefined;
+        }
+          this.data.share.screen = undefined;
+          this.screenShare = false;
+      }
     },
     showVideoDetail(video){
       this.youtubeShare.showList = false;
