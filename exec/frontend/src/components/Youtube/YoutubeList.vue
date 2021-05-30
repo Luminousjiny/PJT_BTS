@@ -25,6 +25,7 @@ export default {
     props : {
         youtubeShare : Object,
         location : String,
+        maxHeight : Number,
     },
     created() {
         if(this.location == "library"){
