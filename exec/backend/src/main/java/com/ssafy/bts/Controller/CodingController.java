@@ -304,7 +304,7 @@ public class CodingController {
                     .addFormDataPart("input", request.getInput())
                     .build();
             Request req = new Request.Builder()
-                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions?access_token=639abfff21416e283799c03557905154")
+                    .url("https://eb56ea66.compilers.sphere-engine.com/api/v4/submissions?access_token=2f5bb0fc920e4bce940936ab96f90ffe")
                     .method("POST", body)
                     .build();
             Response result = client.newCall(req).execute();
@@ -326,7 +326,7 @@ public class CodingController {
                     .build();
             MediaType mediaType = MediaType.parse("text/plain");
             Request req = new Request.Builder()
-                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"?access_token=639abfff21416e283799c03557905154")
+                    .url("https://eb56ea66.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"?access_token=2f5bb0fc920e4bce940936ab96f90ffe")
                     .build();
             Response result = client.newCall(req).execute();
 
@@ -348,7 +348,7 @@ public class CodingController {
                     .build();
             MediaType mediaType = MediaType.parse("text/plain");
             Request req = new Request.Builder()
-                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"/output?access_token=639abfff21416e283799c03557905154")
+                    .url("https://eb56ea66.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"/output?access_token=2f5bb0fc920e4bce940936ab96f90ffe")
                     .build();
             Response result = client.newCall(req).execute();
 
@@ -370,7 +370,7 @@ public class CodingController {
                     .build();
             MediaType mediaType = MediaType.parse("text/plain");
             Request req = new Request.Builder()
-                    .url("https://23ec3c35.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"/error?access_token=639abfff21416e283799c03557905154")
+                    .url("https://eb56ea66.compilers.sphere-engine.com/api/v4/submissions/"+resultId+"/error?access_token=2f5bb0fc920e4bce940936ab96f90ffe")
                     .build();
             Response result = client.newCall(req).execute();
 
