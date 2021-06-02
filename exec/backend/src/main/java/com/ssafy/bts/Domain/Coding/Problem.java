@@ -1,14 +1,11 @@
 package com.ssafy.bts.Domain.Coding;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ssafy.bts.Controller.Request.ProblemRequest;
-import com.ssafy.bts.Domain.Comment.Comment;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;

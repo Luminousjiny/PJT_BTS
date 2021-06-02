@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface GuestBookRepository extends JpaRepository<GuestBook, Long> {
-    @Query("select g from GuestBook g where g.room = :room order by g.visitDate desc")
+    @Query("select g from GuestBook g where g.room = :room order by g.attendDate desc")
     List<GuestBook> findByRoom(Room room);
 
     @Query("select g from GuestBook g where g.room = :room and g.user = :user")

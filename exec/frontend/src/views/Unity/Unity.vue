@@ -25,7 +25,7 @@ export default {
     },
     created(){
       if(this.$store.getters.getUser === null){
-        this.$router.push('/');
+        this.$router.push('/login');
       } else if(this.$store.getters.getSchoolId === null) {
         this.$router.push({
           name: 'Unity',
@@ -35,53 +35,5 @@ export default {
 }
 </script>
 
-<style>
-#unity{
-    display: flex;
-    height : 100vh;
-    overflow: hidden;
-    flex-direction: column;
-}
-#unity-container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: stretch;
-    width : 80%;
-    height : 100%;
-    margin : 0 auto;
-    text-align: center;
-    flex : 1;
-}
-#unity-game-container{
-    width : 100%;
-}
-#unity-title{
-    width: 100%;
-    text-align: left;
-}
-#unity-title #school-title{
-    width: 90%;
-    margin: 30px auto 0px;
-}
-#unity-title #school-title p{
-    display: inline-block;
-    margin : 0px 0px 0px 10px;
-    font-size : var(--font-size-30);
-    font-family: 'AppleSDGothicNeoEB';
-    font-weight: var(--weight-regular);
-    vertical-align: bottom;
-}
-#school-icon{
-    display: inline-block;
-    height : 50px;
-    width : 50px;
-    vertical-align: middle;
-}
-#unity-main{
-    width: 100%;
-    flex-grow: 9;
-    flex-basis: 0;
-}
+<style scoped src="../../css/Unity.css">
 </style>

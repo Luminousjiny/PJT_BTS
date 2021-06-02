@@ -2,7 +2,7 @@
     <div id="library">
         <Nav/>
         <div class="tooltip">
-            <audio autoplay controls loop>
+            <audio controls loop>
               <!-- <source src="../../../public/music/2021_pop.mp3"> -->
               <source src="../../../public/music/study_music.mp3">
             </audio>
@@ -23,7 +23,7 @@ export default {
     },
     created(){
         if(this.$store.getters.getUser === null){
-          this.$router.push('/');
+          this.$router.push('/login');
         } else if(this.$store.getters.getSchoolId === null) {
           this.$router.push({
             name: 'Unity',
@@ -48,7 +48,6 @@ export default {
   margin-left: 70%;
   margin-top: 10px;
   height: 0px;
-  z-index: 10;
   position: relative;
   display: inline-block;
 }
@@ -61,7 +60,7 @@ export default {
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   bottom: 125%;
   left: 50%;
   margin-left: -60px;

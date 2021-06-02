@@ -1,6 +1,16 @@
 <template>
     <div id="unity-game" :class="{'small-map':!showMap}" @click="goUnity">
         <div id="game-container">
+            <div id="mini-map-alt" class="map-alt" v-if="!showMap">
+                <div class="mini-alt">
+                    <v-icon id="mini-alt-icon">fas fa-sign-in-alt</v-icon>
+                    <p id="mini-alt-text">학교로 <br> 돌아가기</p>
+                </div>
+            </div>
+            <div id="keydown-map-alt" class="map-alt" v-if="keydownAlt">
+                <v-icon id="keydown-alt-icon">fas fa-exclamation-circle</v-icon>
+                <p id="keydown-alt-text">캐릭터를 움직이기 위해선 게임 화면을 클릭해 주세요.</p>
+            </div>
             <unity id="bts-unity"
             src = "./unity/Build/webGL.json"
             unityLoader = "./unity/Build/UnityLoader.js"
@@ -31,22 +41,32 @@ export default {
             height : '700',
             width : '950',
             interval : '',
+            mapHeight : 0,
+            mapWidth : 0,
+            unityFocus : false,
+            keydownAlt : false,
+            enterMap : false,
         }
     },
     components : {Unity},
     created(){
       if(this.$store.state.user===null){
-        this.$router.push('/');
+        this.$router.push('/login');
       }
       this.schoolName=this.$store.state.schoolName;
       this.user=this.$store.getters.getUser;
     },
     mounted() {
+        this.enterMap = false;
+        this.schoolName = "";
         this.$store.commit('setIsSubmit',true);
         setTimeout(()=>{
           this.$store.commit('setIsSubmit',false);
-        },5000)      
-        const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
+        },5000)
+        this.mapHeight = document.querySelector('#unity-game-container').getBoundingClientRect().height;
+        this.mapWidth = document.querySelector('#unity-game-container').getBoundingClientRect().width;
+        
+        // const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
         const target = document.querySelector('#unity-game-container')
         const targetRect = target.getBoundingClientRect();
         this.width = targetRect.width;
@@ -55,30 +75,42 @@ export default {
         const unity = document.querySelector('#unity-game');
         unity.style.transform = `translate(${targetRect.left}px,102px)`;
         document.addEventListener(
-        "click",
-        function (event) {
-            if (event.target.closest("#game-container")){ // 유니티 가능
-                this.$refs.hookInstance.message('Game Manager','focusing',"true");
-            }else{ // 윈도우 인풋 가능
-                this.$refs.hookInstance.message('Game Manager','focusing',"false");
-            }
-        }.bind(this)
+            "click",
+            function (event) {
+                if (event.target.closest("#game-container")){ // 유니티 가능
+                    if(this.$refs.hookInstance !== undefined) this.$refs.hookInstance.message('Game Manager','focusing',"true");
+                    this.unityFocus = true;
+                    this.keydownAlt = false;
+                }else{ // 윈도우 인풋 가능
+                    if(this.$refs.hookInstance !== undefined)  this.$refs.hookInstance.message('Game Manager','focusing',"false");
+                    this.unityFocus = false;
+                }
+            }.bind(this)
+        );
+        document.addEventListener(
+            "keydown",
+            function (event) {
+                if(this.$route.name === "Unity" && !this.unityFocus && this.enterMap){
+                    this.keydownAlt = true;
+                }
+            }.bind(this)
         );
     },
-    // updated(){
-    //     if(!this.showMap && this.width===150 && this.height===100){
-    //         const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
-    //         const target = document.querySelector('#unity-game-container')
-    //         const targetRect = target.getBoundingClientRect();
-    //         this.width = targetRect.width;
-    //         this.height = window.innerHeight-102;
-    //         const unity = document.querySelector('#unity-game');
-    //         unity.style.transform = `translate(${targetRect.left}px,102px)`;
-    //     } else{
-    //         this.width = '150';
-    //         this.height = '100';
-    //     }
-    // },
+    updated(){
+        window.addEventListener('resize', () => {
+            if(this.showMap && (this.mapHeight !== document.querySelector('#unity-game-container').getBoundingClientRect().height || this.mapWidth !== document.querySelector('#unity-game-container').getBoundingClientRect().width)){
+                // const top = document.querySelector('#nav').getBoundingClientRect().height + 1;
+                const target = document.querySelector('#unity-game-container')
+                const targetRect = target.getBoundingClientRect();
+                this.width = targetRect.width;
+                this.height = window.innerHeight-102;
+                const unity = document.querySelector('#unity-game');
+                unity.style.transform = `translate(${targetRect.left}px,102px)`;
+                this.mapHeight = document.querySelector('#unity-game-container').getBoundingClientRect().height;
+                this.mapWidth = document.querySelector('#unity-game-container').getBoundingClientRect().width;
+            }
+        })
+    },
     destroyed(){
         clearInterval(this.interval);
     },
@@ -109,7 +141,7 @@ export default {
     },
     methods : {
         getUnityHook(){
-            this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
+            if(this.$refs.hookInstance !== undefined) this.$refs.hookInstance.message('LobbyManager','initPlayerName',this.user.userNickname);
             this.linked = true;
             this.objectName = "";
             this.interval = setInterval(()=>{
@@ -166,6 +198,8 @@ export default {
                           this.$store.commit('setSchoolName',this.schoolName);
                         }
                       })
+                    this.unityFocus = false;
+                    this.enterMap = true;
                 }
             },1000);
         },
@@ -177,31 +211,5 @@ export default {
     }
 }
 </script>
-<style scoped>
-#unity-game{
-    height: max-content;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-#game-container{
-    position: relative;
-}
-#link-btn{
-    background-color: var(--color-white);
-    padding : 10px;
-    border : 1px solid var(--color-white);
-    border-radius: 15px;
-    position : absolute;
-    bottom : 8%;
-    left : 45%;
-    font-size: var(--font-size-18);
-    color: var(--color-grey-1);
-    font-family: "AppleSDGothicNeoB";
-}
-.small-map{
-    transform: none !important;
-    top: 85% !important;
-    left: 90% !important;
-}
+<style scoped src="../../css/UnityGame.css">
 </style>

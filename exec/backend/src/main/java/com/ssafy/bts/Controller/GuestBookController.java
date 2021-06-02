@@ -2,8 +2,6 @@ package com.ssafy.bts.Controller;
 
 import com.ssafy.bts.Domain.GuestBook.GuestBook;
 import com.ssafy.bts.Domain.GuestBook.GuestBookDTO;
-import com.ssafy.bts.Domain.Info.Info;
-import com.ssafy.bts.Domain.Info.InfoDTO;
 import com.ssafy.bts.Domain.Room.Room;
 import com.ssafy.bts.Domain.User.User;
 import com.ssafy.bts.Service.GuestBookService;
@@ -14,8 +12,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,13 +42,36 @@ public class GuestBookController {
             User user = userService.findByUserId(userId);
 
             GuestBook guestBook = guestBookService.findByRoomAndUser(room, user);
-            if(guestBook == null){ //넣기
+            if(guestBook == null){ //처음 넣기
                 GuestBook gb = GuestBook.createGuestBook();
                 gb.setRoom(room);
                 gb.setUser(user);
                 guestBookService.save(gb);
             }else{ //수정
-                guestBook.setVisitDate(new Date());
+                Date now = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar cal = Calendar.getInstance();
+
+                cal.setTime(guestBook.getAttendDate());
+                cal.add(Calendar.HOUR, +9);
+                String attendString = sdf.format(cal.getTime());
+                Date attendDate = sdf.parse(attendString);//db 등교시간
+
+
+                cal.setTime(now);
+                cal.add(Calendar.HOUR, +9);
+                String nowString = sdf.format(cal.getTime());
+                Date nowDate = sdf.parse(nowString); //현재 시간
+
+                System.out.println(guestBook.getAttendDate()+", "+now);
+                System.out.println(attendDate+", "+nowDate);
+                System.out.println(attendDate.compareTo(nowDate));
+
+                if(attendDate.compareTo(nowDate) < 0){ //00시 넘으면 하교 삭제, 등교 갱신
+                    guestBook.setFinishDate(null);
+                    guestBook.setAttendDate(new Date());
+                }else guestBook.setFinishDate(new Date()); //계속 하교만 갱신
+
                 guestBookService.updateGuestBook(room, user, guestBook);
             }
 
@@ -57,7 +80,7 @@ public class GuestBookController {
                     .map(m-> new GuestBookDTO(m))
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
-        }catch(IllegalStateException e){
+        }catch(IllegalStateException | ParseException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

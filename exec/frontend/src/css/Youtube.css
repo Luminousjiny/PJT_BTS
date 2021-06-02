@@ -82,6 +82,7 @@
     color : var(--color-grey-1);
     margin : 5px;
     position: relative;
+    z-index: -1;
 }
 #mostPopular-title p{
     display: inline-block;
@@ -117,6 +118,7 @@
     font-size : 25px;
     position: absolute;
     right: 5px;
+    cursor: pointer;
 }
 .youtube-info{
     width : 100%;

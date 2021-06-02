@@ -6,7 +6,14 @@
 
 <script>
 export default {
-    name: "findPw"
+    name: "findPw",
+    created(){
+        if(this.$store.getters.getUser!==null){
+          this.$router.push({
+            name:'Unity'
+          })
+        }      
+    }    
 }
 </script>
 

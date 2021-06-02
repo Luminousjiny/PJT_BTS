@@ -32,12 +32,18 @@ import CamSetting from "../views/MyPage/CamSetting.vue";
 import Award from "../views/Award/Award.vue";
 import Unity from "../views/Unity/Unity.vue";
 import GuestBook from "../views/GuestBook/GuestBook.vue";
+import About from '../views/About/About.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
+    name: "About",
+    component: About,
+  },
+  {
+    path: "/login",
     name: "Login",
     component: Login,
     children: [

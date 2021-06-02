@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.Date;
 
 @Entity
@@ -26,7 +27,10 @@ public class GuestBook {
     private User user;
 
     @Column(nullable = false)
-    private Date visitDate;
+    private Date attendDate;
+
+    @Column(nullable = true)
+    private Date finishDate;
 
     public static GuestBook createGuestBook(){
         GuestBook inputGuestBook = new GuestBook();
@@ -34,5 +38,7 @@ public class GuestBook {
     }
 
     @PrePersist
-    private void onCreate() { this.visitDate = new Date(); }
+    private void onCreate() throws ParseException {
+        this.attendDate = new Date();
+    }
 }
