@@ -312,33 +312,23 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 ### ✔ 와이어프레임    
 > [XD 바로가기](https://xd.adobe.com/view/9c9f0544-d27c-4e7f-98c7-b88dbd335c41-c9cc/)    
 
-![슬라이드1](/uploads/7878ad3ee935cc061b0f992fcc57e95d/슬라이드1.PNG)
+![슬라이드1](https://user-images.githubusercontent.com/72757829/121561689-b4d6bb80-ca53-11eb-9adf-f117c0ef5914.PNG)
+![슬라이드2](https://user-images.githubusercontent.com/72757829/121561696-b607e880-ca53-11eb-9669-8252afaa32fe.PNG)
+![슬라이드3](https://user-images.githubusercontent.com/72757829/121561703-b7391580-ca53-11eb-8ead-d42912c3f936.PNG)
+![슬라이드4](https://user-images.githubusercontent.com/72757829/121561706-b7391580-ca53-11eb-9575-607b8e1ddb9d.PNG)
+![슬라이드5](https://user-images.githubusercontent.com/72757829/121561707-b7d1ac00-ca53-11eb-96af-126a0e987657.PNG)
+![슬라이드6](https://user-images.githubusercontent.com/72757829/121561710-b7d1ac00-ca53-11eb-801b-53f5af9f7351.PNG)
+![슬라이드7](https://user-images.githubusercontent.com/72757829/121561713-b86a4280-ca53-11eb-92d3-821d10a941c2.PNG)
+![슬라이드8](https://user-images.githubusercontent.com/72757829/121561718-b86a4280-ca53-11eb-800f-32b7c300a2ba.PNG)
+![슬라이드9](https://user-images.githubusercontent.com/72757829/121561720-b902d900-ca53-11eb-86cb-a1a06f0b871f.PNG)
+![슬라이드10](https://user-images.githubusercontent.com/72757829/121561722-b902d900-ca53-11eb-8dc2-ee19a6adca30.PNG)
+![슬라이드11](https://user-images.githubusercontent.com/72757829/121561724-b99b6f80-ca53-11eb-8042-6c03c44139b0.PNG)
+![슬라이드12](https://user-images.githubusercontent.com/72757829/121561727-b99b6f80-ca53-11eb-9ac8-0b1094a2e2c6.PNG)
+![슬라이드13](https://user-images.githubusercontent.com/72757829/121561729-ba340600-ca53-11eb-9aa5-fba764e4f2b8.PNG)
+![슬라이드14](https://user-images.githubusercontent.com/72757829/121561735-bacc9c80-ca53-11eb-9a87-94d12a15a3f8.PNG)
+![슬라이드15](https://user-images.githubusercontent.com/72757829/121561741-bb653300-ca53-11eb-9067-6ba93ac3e788.PNG)
+![슬라이드16](https://user-images.githubusercontent.com/72757829/121561743-bb653300-ca53-11eb-8afe-23032c71c31e.PNG)
 
-![슬라이드2](/uploads/c750c0ebf41133657533a45f85b3359e/슬라이드2.PNG)
-
-![슬라이드3](/uploads/6477c67a2cf1e166bd8880a38fb9ee1e/슬라이드3.PNG)
-
-![슬라이드4](/uploads/23d66564137b1bca6e24b5c18ef58b48/슬라이드4.PNG)
-
-![슬라이드5](/uploads/a448d1cb5b49136d3ed512f9e104a05e/슬라이드5.PNG)
-
-![슬라이드6](/uploads/2f8968dd6122054b0123ae2f47ac1390/슬라이드6.PNG)
-
-![슬라이드7](/uploads/42cc744d668c6804472971d046ff8209/슬라이드7.PNG)
-
-![슬라이드8](/uploads/9a77ec7edb3730eb8e51f1ed2ae54676/슬라이드8.PNG)
-
-![슬라이드9](/uploads/69b3a7b466fc9f873bd606630ddc9d25/슬라이드9.PNG)
-
-![슬라이드10](/uploads/5b2abc0d613e32c530ccdaa300e175b6/슬라이드10.PNG)
-
-![슬라이드11](/uploads/e5dcde2714f252301b67064e692df280/슬라이드11.PNG)
-
-![슬라이드12](/uploads/faa7bbcb6d6c2530f6cbc517f4d886d7/슬라이드12.PNG)
-
-![슬라이드13](/uploads/b08331ce0030c1860cc11c68d0476232/슬라이드13.PNG)
-
-![슬라이드14](/uploads/a796381ff8669e3b9ba557ea4200d58a/슬라이드14.PNG)
 
 <br />
 
