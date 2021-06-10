@@ -306,7 +306,7 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 > 2. 와이어프레임  
 
 ### ✔ ER 다이어그램      
-![bts_db](/uploads/7a88d8c7ed1b55781fb0ddb3c40a62f2/bts_db.png)    
+![bts_db](https://user-images.githubusercontent.com/72757829/121561900-e5b6f080-ca53-11eb-9ee9-fc737ed31c88.png)
 
 
 ### ✔ 와이어프레임    
