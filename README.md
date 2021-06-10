@@ -1,7 +1,7 @@
 # 🏫 BTS(Back To School)
 <div>
 <p align="center">
-  <img width="200px;" src="/uploads/921b91e4c2c9765b82866f4427043133/school.png" />
+  <img width="200px;" src="https://user-images.githubusercontent.com/72757829/121562115-19921600-ca54-11eb-9f82-0f4ea1babd63.png" />
   <br/><b>Z세대를 위한 학습 메타버스 플랫폼</b>
   <p align="center">
  <img src="https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript">
