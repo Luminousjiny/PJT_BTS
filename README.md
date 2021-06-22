@@ -266,3 +266,7 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 
 
 
+## Awards
+- 🥇 삼성청년SW아카데미 2학기 자율PJT 1위 수상
+- 🥈 삼성청년SW아카데미 2학기 자율PJT 전국 2위 수상
+- 🥇 삼성청년SW아카데미 2학기 자율PJT UCC 1위 수상
