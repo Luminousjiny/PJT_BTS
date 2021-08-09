@@ -30,7 +30,7 @@
 
 
 ## 🎬 프로젝트 UCC 영상       
-<https://youtu.be/xiCIa_jdMRk>       
+<https://youtu.be/jfglk0y6vqM>       
 <br/>
 <br/>
 
