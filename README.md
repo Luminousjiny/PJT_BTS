@@ -9,6 +9,7 @@
  <img src="https://img.shields.io/badge/Vuetify-v3-green?logo=Vuetify">
  <img src="https://img.shields.io/badge/Java-v1.8-blue?logo=java">
  <img src="https://img.shields.io/badge/spring boot-v2.4.3-blue?logo=spring">
+ <img src="https://img.shields.io/badge/spring data jpa -v2.5-blue?logo=spring">
  <img src="https://img.shields.io/badge/AWS%20RDS----blue?logo=amazonaws">
  <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
  <img src="https://img.shields.io/badge/Unity-v2019.4.25-yellow?logo=unity">
@@ -24,6 +25,18 @@
 > 서비스명: BTS       
 > 팀명: 끄덕끄덕  
 > 개발 기간: 2021.04.12 ~ 2021.05.28 (약 7주)       
+<br/>
+<br/>
+
+
+## 🎬 프로젝트 UCC 영상       
+<https://youtu.be/xiCIa_jdMRk>       
+<br/>
+<br/>
+
+
+
+
 
 ## 📑 문서 
 > [1️⃣기획문서](https://www.notion.so/_1-5fbe04ad315141db9f23d63805cd60dd)   
@@ -36,7 +49,7 @@
 ## 👨 팀원 역할   
 | 이름   | 역할 | 내용                        |
 | ------ | ---- | --------------------------- |
-| 유진이 | 팀장 | 풀스택 개발, UI/UX디자인,       |
+| 유진이 | 팀장 | 풀스택 개발, UI/UX디자인       |
 | 김지형 | 팀원 | 프론트앤드 개발                        |
 | 정다운 | 팀원 | 풀스택 개발, QA(Jira관리), UI/UX디자인 |
 | 황호연 | 팀원 | 유니티 개발, QA(Jira관리), 영상제작    |
@@ -51,15 +64,12 @@
 ![bts2](https://user-images.githubusercontent.com/59414210/122215514-44fa8200-cee6-11eb-8060-c4e300638ad5.png)  
 ![bts3](https://user-images.githubusercontent.com/59414210/122215520-462baf00-cee6-11eb-9c42-f828a941db96.png)  
 
-
 <br/>  
 <br/>     
 
 
 ## 📑 서비스 개요      
 코로나19로 인해 최근 비대면 공부 플랫폼과 코딩교육의 중요성이 증가하는 사회현상에 맞추어 코딩 학습에 특화된 공부 플랫폼에 가상학교 환경을 제공함으로써, 친구들과 학습하고 일상을 공유하면서 비대면의 일상화를 기대할 수 있는 코딩학습 메타버스 플랫폼입니다.  
-
-
 
 
 <br/>  
