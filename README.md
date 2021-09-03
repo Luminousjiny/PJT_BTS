@@ -35,8 +35,11 @@
 <br/>
 
 
+## ◾ 서비스 URL 
+<https://k4b107.p.ssafy.io/ >
 
-
+<br/>
+<br/>
 
 ## 📑 문서 
 > [1️⃣기획문서](https://www.notion.so/_1-5fbe04ad315141db9f23d63805cd60dd)   
@@ -156,7 +159,7 @@ Jenkins : 9090
 > 2. 프론트 실행 : sudo service nginx start     
 > 3. 폴더 이동 : cd /var/www/html     
 > 4. 백앤드 실행 : sudo java -jar bts-0.0.1-SNAPSHOT.jar   
-> 5. 페이지 접속 : https://k4b107.p.ssafy.io:8000/ 
+> 5. 페이지 접속 : https://k4b107.p.ssafy.io/ 
 
 <br/><br/>
 
