@@ -1,10 +1,10 @@
 server:
   port: 8080
-  ssl:
-    enabled: true
-    key-store: classpath:cert_and_key.p12
-    key-store-type: PKCS12
-    key-store-password: 1234
+  # ssl:
+  #   enabled: true
+  #   key-store: classpath:cert_and_key.p12
+  #   key-store-type: PKCS12
+  #   key-store-password: 1234
   servlet:
     context-path: /api
 spring:
@@ -34,9 +34,9 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://btsdb.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com:3306/btsDB?serverTimezone=UTC&useSSL=false&characterEncoding=UTF-8
-    username: admin
-    password: btsbts123
+    url: jdbc:mysql://mysql.ssafy.io:3306/bts?serverTimezone=UTC&useSSL=false&characterEncoding=UTF-8
+    username: bts
+    password: bts!^^20210823
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:

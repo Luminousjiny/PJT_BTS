@@ -1,7 +1,7 @@
 # 🏫 BTS(Back To School)
 <div>
 <p align="center">
-  <img width="200px;" src="https://user-images.githubusercontent.com/72757829/121562115-19921600-ca54-11eb-9f82-0f4ea1babd63.png" />
+  <img width="200px;" src="/uploads/921b91e4c2c9765b82866f4427043133/school.png" />
   <br/><b>Z세대를 위한 학습 메타버스 플랫폼</b>
   <p align="center">
  <img src="https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript">
@@ -9,7 +9,6 @@
  <img src="https://img.shields.io/badge/Vuetify-v3-green?logo=Vuetify">
  <img src="https://img.shields.io/badge/Java-v1.8-blue?logo=java">
  <img src="https://img.shields.io/badge/spring boot-v2.4.3-blue?logo=spring">
- <img src="https://img.shields.io/badge/spring data jpa -v2.5-blue?logo=spring">
  <img src="https://img.shields.io/badge/AWS%20RDS----blue?logo=amazonaws">
  <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
  <img src="https://img.shields.io/badge/Unity-v2019.4.25-yellow?logo=unity">
@@ -25,23 +24,23 @@
 > 서비스명: BTS       
 > 팀명: 끄덕끄덕  
 > 개발 기간: 2021.04.12 ~ 2021.05.28 (약 7주)       
-<br/>
-<br/>
 
 
-## 🎬 프로젝트 UCC 영상       
-<https://youtu.be/jfglk0y6vqM>       
-<br/>
-<br/>
+
+## 🎬 프로젝트 UCC 영상
+
+https://youtu.be/jfglk0y6vqM
 
 
-## ◾ 서비스 URL 
-👉 https://k4b107.p.ssafy.io/ 
 
-<br/>
-<br/>
+## ◾ 서비스 URL
+
+👉 https://k4b107.p.ssafy.io/
+
+
 
 ## 📑 문서 
+
 > [1️⃣기획문서](https://www.notion.so/_1-5fbe04ad315141db9f23d63805cd60dd)   
 > [2️⃣개발문서](https://www.notion.so/2-c04b4ec1c65a4270976c0dff6aaec2ad)     
 > [3️⃣발표문서](https://www.notion.so/BTS_3-d233c7458fd24adca2d48e020574e729)
@@ -52,7 +51,7 @@
 ## 👨 팀원 역할   
 | 이름   | 역할 | 내용                        |
 | ------ | ---- | --------------------------- |
-| 유진이 | 팀장 | 풀스택 개발, UI/UX디자인       |
+| 유진이 | 팀장 | 풀스택 개발, UI/UX디자인, 발표     |
 | 김지형 | 팀원 | 프론트앤드 개발                        |
 | 정다운 | 팀원 | 풀스택 개발, QA(Jira관리), UI/UX디자인 |
 | 황호연 | 팀원 | 유니티 개발, QA(Jira관리), 영상제작    |
@@ -63,9 +62,80 @@
 
 
 ## 📑 Gantt Chart     
-![bts1](https://user-images.githubusercontent.com/59414210/122215521-462baf00-cee6-11eb-8856-55565ae27471.png)  
-![bts2](https://user-images.githubusercontent.com/59414210/122215514-44fa8200-cee6-11eb-8060-c4e300638ad5.png)  
-![bts3](https://user-images.githubusercontent.com/59414210/122215520-462baf00-cee6-11eb-9c42-f828a941db96.png)  
+
+```mermaid
+gantt
+    title BTS 진행상황
+    dateFormat  YYYY-MM-DD
+    section 프로젝트 기획 및 산출물
+    프로젝트 기획 및 명세서제작 : done, 2021-04-12, 5d
+    jira,Git 생성  :done, 2021-04-15, 6h
+    UI/UX 다지인  : done,   2021-04-19, 2d
+    로고제작 : done, 2021-05-01, 2d
+    와이어프레임ppt : done, 2021-05-20, 1d
+    사전학습  : done, 2021-04-14, 10d
+    교보재 jpa 학습 : done, 2021-04-26, 2d
+    교보재 2차 학습 : done, 2021-05-17, 4d
+    ucc 기획 : done, 2021-05-13, 1d
+    ucc 촬영 : done, 2021-05-14, 1d
+    ucc 제작 : done, 2021-05-16, 5d
+    리드미 작성 : done, 2021-05-10, 1d
+
+    section Frontend
+    웹캠페이지 : done, 2021-04-21, 10d
+    채팅 : done, 2021-04-24, 3d
+    유트브 : done, 2021-04-29, 6d
+    셋팅 페이지 : done, 2021-05-16, 3d
+    로그인/회원가입/비번찾기 페이지 : done, 2021-04-27, 4d
+    로그인/회원가입/비번찾기 페이지 백연결 : done, 2021-05-15, 3d
+    마이페이지 : done, 2021-04-26, 5d
+    마이페이지 백연결 : done, 2021-05-14, 5d
+    정보공유 게시판 : done, 2021-04-26, 4d
+    Qna 게시판 : done, 2021-05-02, 8d
+    코드공유 게시판 : done, 2021-04-30, 8d
+    게시판 백연결 : done, 2021-05-08, 4d
+    플래너 + 백연결 : done, 2021-05-07, 12d
+    백색소음(음악) : done, 2021-05-18, 1d
+    스톱워치 : done, 2021-05-17, 1d
+    명예의 전당 + 백연결 : done, 2021-05-07, 1d
+    방명록 + 백연결 : done, 2021-05-15, 2d
+    검색 + 백연결 : done, 2021-05-15, 2d 
+    vuex 관리 : done, 2021-05-17, 1d
+    nav바 : done, 2021-05-17, 1d
+    유니티 이벤트 처리 : done, 2021-05-17, 4d
+    
+    section Backend
+    배포하기 : done, 2021-05-07, 2d
+    S3 연결 : done, 2021-05-06, 2d
+    DB설계 : done, 2021-04-21, 2d
+    매핑관계 설정 : done, 2021-04-28, 1d
+    유저 CRUD : done, 2021-04-30, 2d
+    jwt토큰, 핸드폰 인증 : done, 2021-05-02,2d 
+    정보공유 게시판 : done, 2021-04-30, 3d
+    플래너 : done, 2021-05-03, 1d
+    Qna 게시판 + 댓글 : done, 2021-05-04, 1d
+    코드공유 게시판 + 명예의 전당 : done, 2021-05-04, 1d 
+    백 + DB 수정 : done, 2021-05-11, 2d
+    
+    section Game
+	네트워크 동기화 : done, 2021-04-22, 3d
+	로컬 리모트 및 호스트 : done, 2021-04-23 1d
+	채팅 : done, 2021-04-24, 2d
+	로비 구현 : done, 2021-04-27, 10d
+    방 리스트 : done, 2021-04-24, 4d
+    게임(운동장) : done, 2021-05-07,6d
+    구역 나누기 : done, 2021-05-06, 4d
+    유니티 보완작업 : done, 2021-04-28, 10d
+    빌드해서 합치기 : done, 2021-05-12, 1d
+    
+    section 발표관리
+    중간발표 ppt 제작 : done, 2021-04-22, 1d
+    중간발표준비 : done, 2021-04-22, 1d
+    최종 ucc 제작 : done, 2021-05-15, 6d
+    최종발표 ppt 제작 : done, 2021-05-18, 2d
+    최종발표준비 : done, 2021-05-19, 2d
+    최종시연준비 : done, 2021-05-19, 2d
+```
 
 <br/>  
 <br/>     
@@ -73,6 +143,7 @@
 
 ## 📑 서비스 개요      
 코로나19로 인해 최근 비대면 공부 플랫폼과 코딩교육의 중요성이 증가하는 사회현상에 맞추어 코딩 학습에 특화된 공부 플랫폼에 가상학교 환경을 제공함으로써, 친구들과 학습하고 일상을 공유하면서 비대면의 일상화를 기대할 수 있는 코딩학습 메타버스 플랫폼입니다.  
+
 
 
 <br/>  
@@ -159,7 +230,7 @@ Jenkins : 9090
 > 2. 프론트 실행 : sudo service nginx start     
 > 3. 폴더 이동 : cd /var/www/html     
 > 4. 백앤드 실행 : sudo java -jar bts-0.0.1-SNAPSHOT.jar   
-> 5. 페이지 접속 : https://k4b107.p.ssafy.io/ 
+> 5. 페이지 접속 : https://k4b107.p.ssafy.io:8000/ 
 
 <br/><br/>
 
@@ -223,13 +294,13 @@ develop - feature/기능명/fe or be
 git commit -m "{지라이슈번호} [작업분류] : {FE or BE} - 작업커밋내용"
 git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환경 세팅"
 
-**프론트** : "{지라이슈번호 하나}_[작업분류] : FE_날짜:완성한 기능(작업내용)" 
+프론트 : "{지라이슈번호 하나}_[작업분류] : FE_날짜:완성한 기능(작업내용)" 
 		ex) S04P22B107-56_ [feat] : FE_0118:피드작성 컴포넌트 추가/수정/삭제
 
-**백** : "{지라이슈번호 하나}_[작업분류] : BE_날짜: 완성한 기능(작업내용)" 
+백 : "{지라이슈번호 하나}_[작업분류] : BE_날짜: 완성한 기능(작업내용)" 
 		ex) S04P22B107-56__ [feat] : BE_0118: 피드작성 컴포넌트 추가/수정/삭제
 
-**리드미** : "README_날짜: 수정한 부분" 
+리드미 : "README_날짜: 수정한 부분" 
 		ex) S04P22B107-56_ [feat] : README_0118: 와이어프레임 수정
 
 ```
@@ -243,7 +314,7 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 - test : 테스트 코드, 리펙토링 테스트 코드 추가
 - chore : 빌드 업무 수정, 패키지 매니저 수정
 ```
-<br />   
+<br />
 
 
 ## 📑산출물  
@@ -251,35 +322,41 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 > 2. 와이어프레임  
 
 ### ✔ ER 다이어그램      
-![bts_db](https://user-images.githubusercontent.com/72757829/121561900-e5b6f080-ca53-11eb-9ee9-fc737ed31c88.png)
+![bts_db](/uploads/7a88d8c7ed1b55781fb0ddb3c40a62f2/bts_db.png)    
 
 
 ### ✔ 와이어프레임    
 > [XD 바로가기](https://xd.adobe.com/view/9c9f0544-d27c-4e7f-98c7-b88dbd335c41-c9cc/)    
 
-![슬라이드1](https://user-images.githubusercontent.com/72757829/121561689-b4d6bb80-ca53-11eb-9adf-f117c0ef5914.PNG)
-![슬라이드2](https://user-images.githubusercontent.com/72757829/121561696-b607e880-ca53-11eb-9669-8252afaa32fe.PNG)
-![슬라이드3](https://user-images.githubusercontent.com/72757829/121561703-b7391580-ca53-11eb-8ead-d42912c3f936.PNG)
-![슬라이드4](https://user-images.githubusercontent.com/72757829/121561706-b7391580-ca53-11eb-9575-607b8e1ddb9d.PNG)
-![슬라이드5](https://user-images.githubusercontent.com/72757829/121561707-b7d1ac00-ca53-11eb-96af-126a0e987657.PNG)
-![슬라이드6](https://user-images.githubusercontent.com/72757829/121561710-b7d1ac00-ca53-11eb-801b-53f5af9f7351.PNG)
-![슬라이드7](https://user-images.githubusercontent.com/72757829/121561713-b86a4280-ca53-11eb-92d3-821d10a941c2.PNG)
-![슬라이드8](https://user-images.githubusercontent.com/72757829/121561718-b86a4280-ca53-11eb-800f-32b7c300a2ba.PNG)
-![슬라이드9](https://user-images.githubusercontent.com/72757829/121561720-b902d900-ca53-11eb-86cb-a1a06f0b871f.PNG)
-![슬라이드10](https://user-images.githubusercontent.com/72757829/121561722-b902d900-ca53-11eb-8dc2-ee19a6adca30.PNG)
-![슬라이드11](https://user-images.githubusercontent.com/72757829/121561724-b99b6f80-ca53-11eb-8042-6c03c44139b0.PNG)
-![슬라이드12](https://user-images.githubusercontent.com/72757829/121561727-b99b6f80-ca53-11eb-9ac8-0b1094a2e2c6.PNG)
-![슬라이드13](https://user-images.githubusercontent.com/72757829/121561729-ba340600-ca53-11eb-9aa5-fba764e4f2b8.PNG)
-![슬라이드14](https://user-images.githubusercontent.com/72757829/121561735-bacc9c80-ca53-11eb-9a87-94d12a15a3f8.PNG)
-![슬라이드15](https://user-images.githubusercontent.com/72757829/121561741-bb653300-ca53-11eb-9067-6ba93ac3e788.PNG)
-![슬라이드16](https://user-images.githubusercontent.com/72757829/121561743-bb653300-ca53-11eb-8afe-23032c71c31e.PNG)
+![슬라이드1](/uploads/7878ad3ee935cc061b0f992fcc57e95d/슬라이드1.PNG)
 
+![슬라이드2](/uploads/c750c0ebf41133657533a45f85b3359e/슬라이드2.PNG)
+
+![슬라이드3](/uploads/6477c67a2cf1e166bd8880a38fb9ee1e/슬라이드3.PNG)
+
+![슬라이드4](/uploads/23d66564137b1bca6e24b5c18ef58b48/슬라이드4.PNG)
+
+![슬라이드5](/uploads/a448d1cb5b49136d3ed512f9e104a05e/슬라이드5.PNG)
+
+![슬라이드6](/uploads/2f8968dd6122054b0123ae2f47ac1390/슬라이드6.PNG)
+
+![슬라이드7](/uploads/42cc744d668c6804472971d046ff8209/슬라이드7.PNG)
+
+![슬라이드8](/uploads/9a77ec7edb3730eb8e51f1ed2ae54676/슬라이드8.PNG)
+
+![슬라이드9](/uploads/69b3a7b466fc9f873bd606630ddc9d25/슬라이드9.PNG)
+
+![슬라이드10](/uploads/5b2abc0d613e32c530ccdaa300e175b6/슬라이드10.PNG)
+
+![슬라이드11](/uploads/e5dcde2714f252301b67064e692df280/슬라이드11.PNG)
+
+![슬라이드12](/uploads/faa7bbcb6d6c2530f6cbc517f4d886d7/슬라이드12.PNG)
+
+![슬라이드13](/uploads/b08331ce0030c1860cc11c68d0476232/슬라이드13.PNG)
+
+![슬라이드14](/uploads/a796381ff8669e3b9ba557ea4200d58a/슬라이드14.PNG)
 
 <br />
 
 
 
-## Awards
-- 🥇 삼성청년SW아카데미 2학기 자율PJT 1위 수상
-- 🥈 삼성청년SW아카데미 2학기 자율PJT 전국 2위 수상
-- 🥇 삼성청년SW아카데미 2학기 자율PJT UCC 1위 수상
