@@ -1,7 +1,7 @@
 # 🏫 BTS(Back To School)
 <div>
 <p align="center">
-  <img width="200px;" src="/uploads/921b91e4c2c9765b82866f4427043133/school.png" />
+  <img width="200px;" src="https://user-images.githubusercontent.com/72757829/132273567-6d429b40-ff06-49f1-bd6d-56462356e11a.png" />
   <br/><b>Z세대를 위한 학습 메타버스 플랫폼</b>
   <p align="center">
  <img src="https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript">
@@ -31,13 +31,15 @@
 
 https://youtu.be/jfglk0y6vqM
 
-
+<br/>  
+<br/> 
 
 ## ◾ 서비스 URL
 
 👉 https://k4b107.p.ssafy.io/
 
-
+<br/>  
+<br/> 
 
 ## 📑 문서 
 
@@ -63,79 +65,9 @@ https://youtu.be/jfglk0y6vqM
 
 ## 📑 Gantt Chart     
 
-```mermaid
-gantt
-    title BTS 진행상황
-    dateFormat  YYYY-MM-DD
-    section 프로젝트 기획 및 산출물
-    프로젝트 기획 및 명세서제작 : done, 2021-04-12, 5d
-    jira,Git 생성  :done, 2021-04-15, 6h
-    UI/UX 다지인  : done,   2021-04-19, 2d
-    로고제작 : done, 2021-05-01, 2d
-    와이어프레임ppt : done, 2021-05-20, 1d
-    사전학습  : done, 2021-04-14, 10d
-    교보재 jpa 학습 : done, 2021-04-26, 2d
-    교보재 2차 학습 : done, 2021-05-17, 4d
-    ucc 기획 : done, 2021-05-13, 1d
-    ucc 촬영 : done, 2021-05-14, 1d
-    ucc 제작 : done, 2021-05-16, 5d
-    리드미 작성 : done, 2021-05-10, 1d
-
-    section Frontend
-    웹캠페이지 : done, 2021-04-21, 10d
-    채팅 : done, 2021-04-24, 3d
-    유트브 : done, 2021-04-29, 6d
-    셋팅 페이지 : done, 2021-05-16, 3d
-    로그인/회원가입/비번찾기 페이지 : done, 2021-04-27, 4d
-    로그인/회원가입/비번찾기 페이지 백연결 : done, 2021-05-15, 3d
-    마이페이지 : done, 2021-04-26, 5d
-    마이페이지 백연결 : done, 2021-05-14, 5d
-    정보공유 게시판 : done, 2021-04-26, 4d
-    Qna 게시판 : done, 2021-05-02, 8d
-    코드공유 게시판 : done, 2021-04-30, 8d
-    게시판 백연결 : done, 2021-05-08, 4d
-    플래너 + 백연결 : done, 2021-05-07, 12d
-    백색소음(음악) : done, 2021-05-18, 1d
-    스톱워치 : done, 2021-05-17, 1d
-    명예의 전당 + 백연결 : done, 2021-05-07, 1d
-    방명록 + 백연결 : done, 2021-05-15, 2d
-    검색 + 백연결 : done, 2021-05-15, 2d 
-    vuex 관리 : done, 2021-05-17, 1d
-    nav바 : done, 2021-05-17, 1d
-    유니티 이벤트 처리 : done, 2021-05-17, 4d
-    
-    section Backend
-    배포하기 : done, 2021-05-07, 2d
-    S3 연결 : done, 2021-05-06, 2d
-    DB설계 : done, 2021-04-21, 2d
-    매핑관계 설정 : done, 2021-04-28, 1d
-    유저 CRUD : done, 2021-04-30, 2d
-    jwt토큰, 핸드폰 인증 : done, 2021-05-02,2d 
-    정보공유 게시판 : done, 2021-04-30, 3d
-    플래너 : done, 2021-05-03, 1d
-    Qna 게시판 + 댓글 : done, 2021-05-04, 1d
-    코드공유 게시판 + 명예의 전당 : done, 2021-05-04, 1d 
-    백 + DB 수정 : done, 2021-05-11, 2d
-    
-    section Game
-	네트워크 동기화 : done, 2021-04-22, 3d
-	로컬 리모트 및 호스트 : done, 2021-04-23 1d
-	채팅 : done, 2021-04-24, 2d
-	로비 구현 : done, 2021-04-27, 10d
-    방 리스트 : done, 2021-04-24, 4d
-    게임(운동장) : done, 2021-05-07,6d
-    구역 나누기 : done, 2021-05-06, 4d
-    유니티 보완작업 : done, 2021-04-28, 10d
-    빌드해서 합치기 : done, 2021-05-12, 1d
-    
-    section 발표관리
-    중간발표 ppt 제작 : done, 2021-04-22, 1d
-    중간발표준비 : done, 2021-04-22, 1d
-    최종 ucc 제작 : done, 2021-05-15, 6d
-    최종발표 ppt 제작 : done, 2021-05-18, 2d
-    최종발표준비 : done, 2021-05-19, 2d
-    최종시연준비 : done, 2021-05-19, 2d
-```
+![image](https://user-images.githubusercontent.com/72757829/132273680-ad65adc9-2851-4319-9a36-c32f493dbe29.png)
+![image](https://user-images.githubusercontent.com/72757829/132273707-01931494-1763-4231-b382-84d8c3e1f5cc.png)
+![image](https://user-images.githubusercontent.com/72757829/132273735-7e3ec452-4f56-474a-9b74-2f1a4289ed33.png)
 
 <br/>  
 <br/>     
@@ -322,39 +254,30 @@ git commit -m "S04P22B107-56 [feat] : BE_0415 - AWS RDS, S3 서버 및 기본환
 > 2. 와이어프레임  
 
 ### ✔ ER 다이어그램      
-![bts_db](/uploads/7a88d8c7ed1b55781fb0ddb3c40a62f2/bts_db.png)    
+![image](https://user-images.githubusercontent.com/72757829/132273386-ee9660fc-e25c-436b-98af-17599f8a737e.png)
+ 
 
 
 ### ✔ 와이어프레임    
 > [XD 바로가기](https://xd.adobe.com/view/9c9f0544-d27c-4e7f-98c7-b88dbd335c41-c9cc/)    
 
-![슬라이드1](/uploads/7878ad3ee935cc061b0f992fcc57e95d/슬라이드1.PNG)
+![슬라이드1](https://user-images.githubusercontent.com/72757829/132273478-06b78b5f-763a-478c-83fa-7d6dbd0dcfc4.PNG)
+![슬라이드2](https://user-images.githubusercontent.com/72757829/132273480-5ce0ffd3-72e3-4919-9765-c079a14e0221.PNG)
+![슬라이드3](https://user-images.githubusercontent.com/72757829/132273481-1a4f9d19-44f5-4c4f-90a8-399e49471504.PNG)
+![슬라이드4](https://user-images.githubusercontent.com/72757829/132273483-1ef73843-5104-40c4-b0b9-0f491e347c9d.PNG)
+![슬라이드5](https://user-images.githubusercontent.com/72757829/132273486-2d49c3f2-5277-4aa4-988e-8b1f6e51b079.PNG)
+![슬라이드6](https://user-images.githubusercontent.com/72757829/132273489-d27b6e6f-28e2-4bc2-828c-bfc80b30c437.PNG)
+![슬라이드7](https://user-images.githubusercontent.com/72757829/132273490-ae034fe0-1696-4489-9e8c-188a72c77dd2.PNG)
+![슬라이드8](https://user-images.githubusercontent.com/72757829/132273492-107574c4-97cd-4c31-960a-fb8706476f06.PNG)
+![슬라이드9](https://user-images.githubusercontent.com/72757829/132273493-1bc5568f-3c1e-4724-9d5a-6b839e9f107b.PNG)
+![슬라이드10](https://user-images.githubusercontent.com/72757829/132273494-a7cb3b60-e57c-4361-a9b2-4d5c700c1cea.PNG)
+![슬라이드11](https://user-images.githubusercontent.com/72757829/132273495-14246ab8-795f-47f3-b3fb-f49c19efa4f2.PNG)
+![슬라이드12](https://user-images.githubusercontent.com/72757829/132273497-a6830d42-ee3e-4e85-b6af-1d035e97ac87.PNG)
+![슬라이드13](https://user-images.githubusercontent.com/72757829/132273499-a8dc30ee-00e9-4cd2-bf61-cbdb873f33e4.PNG)
+![슬라이드14](https://user-images.githubusercontent.com/72757829/132273500-b302ddfc-6df6-4c4a-884e-3f95f4d10d15.PNG)
+![슬라이드15](https://user-images.githubusercontent.com/72757829/132273501-5d584326-c9c0-4872-8d38-8732b5be5e61.PNG)
+![슬라이드16](https://user-images.githubusercontent.com/72757829/132273503-48ef7c97-f6a6-41c3-ae0b-d8252d209e15.PNG)
 
-![슬라이드2](/uploads/c750c0ebf41133657533a45f85b3359e/슬라이드2.PNG)
-
-![슬라이드3](/uploads/6477c67a2cf1e166bd8880a38fb9ee1e/슬라이드3.PNG)
-
-![슬라이드4](/uploads/23d66564137b1bca6e24b5c18ef58b48/슬라이드4.PNG)
-
-![슬라이드5](/uploads/a448d1cb5b49136d3ed512f9e104a05e/슬라이드5.PNG)
-
-![슬라이드6](/uploads/2f8968dd6122054b0123ae2f47ac1390/슬라이드6.PNG)
-
-![슬라이드7](/uploads/42cc744d668c6804472971d046ff8209/슬라이드7.PNG)
-
-![슬라이드8](/uploads/9a77ec7edb3730eb8e51f1ed2ae54676/슬라이드8.PNG)
-
-![슬라이드9](/uploads/69b3a7b466fc9f873bd606630ddc9d25/슬라이드9.PNG)
-
-![슬라이드10](/uploads/5b2abc0d613e32c530ccdaa300e175b6/슬라이드10.PNG)
-
-![슬라이드11](/uploads/e5dcde2714f252301b67064e692df280/슬라이드11.PNG)
-
-![슬라이드12](/uploads/faa7bbcb6d6c2530f6cbc517f4d886d7/슬라이드12.PNG)
-
-![슬라이드13](/uploads/b08331ce0030c1860cc11c68d0476232/슬라이드13.PNG)
-
-![슬라이드14](/uploads/a796381ff8669e3b9ba557ea4200d58a/슬라이드14.PNG)
 
 <br />
 
